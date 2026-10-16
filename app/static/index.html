@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AMA telecom order-to-activation synthetic-data demonstration">
+  <title>AMA | Activation control tower</title>
+  <link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+<aside class="rail">
+  <a class="brand" href="/"><span class="brand-mark">a</span><span>AMA<span class="brand-sub">TELECOM INTELLIGENCE</span></span></a>
+  <div class="workspace">ENTERPRISE OPERATIONS <span class="workspace-dot"></span></div>
+  <nav aria-label="Main navigation">
+    <button class="nav active" data-page="overview"><span>◈</span> Control tower</button>
+    <button class="nav" data-page="orders"><span>≡</span> Order workspace</button>
+    <button class="nav" data-page="exceptions"><span>△</span> Exception desk <b id="exception-count">0</b></button>
+    <button class="nav" data-page="partners"><span>⇄</span> Wholesale partners</button>
+    <button class="nav" data-page="governance"><span>⊡</span> Trust &amp; governance</button>
+  </nav>
+  <div class="rail-bottom"><span class="pill light">CASE STUDY 30</span><p>From enterprise intent<br>to service activation.</p><small>Türkiye · Balkans · Caucasus</small></div>
+</aside>
+<div class="shell">
+  <div class="notice"><strong>SYNTHETIC DATA ONLY</strong><span>No live network changes. European Azure demo is not Türkiye-residency compliant.</span><a href="/docs" target="_blank" rel="noreferrer">API explorer ↗</a></div>
+  <header><div><span class="eyebrow">AMA / ENTERPRISE SERVICE OPERATIONS</span><h1 id="page-title">Activation control tower</h1></div><div class="header-actions"><span id="health" class="status-dot">Connecting</span><button id="access-button" class="button secondary">Demo access</button><button id="new-order" class="button primary">+ New order</button></div></header>
+  <main>
+    <section id="overview-page" class="page">
+      <div class="hero"><div><div class="eyebrow">ORDER → ACTIVATION</div><h2>Less handoff.<br>More forward.</h2><p>Five bounded agents. One auditable journey.<br>A realistic B2B telecom workflow, without real customer data.</p><button class="button dark" id="journey-button">Launch a demo journey ↗</button></div><div class="hero-visual"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="network-hub">AMA<small>SUPERVISOR</small></div><span class="network-point p1">İstanbul</span><span class="network-point p2">Ankara</span><span class="network-point p3">İzmir</span><div class="hero-caption">TÜRKİYE / SIMULATED SERVICE FOOTPRINT</div></div></div>
+      <div class="metrics" id="metrics"></div>
+      <div class="section-heading"><div><span class="eyebrow">AUTONOMY WITH GUARDRAILS</span><h2>Your agent team</h2></div><span class="muted" id="ai-mode"></span></div>
+      <div class="agents">
+        <article class="agent"><span class="agent-number">01</span><h3>Validate</h3><p>Address, feasibility<br>&amp; inventory checks</p><span class="pill">L3 · guarded action</span></article>
+        <article class="agent"><span class="agent-number">02</span><h3>Decompose</h3><p>Product → service<br>→ resource orders</p><span class="pill">L4 · autonomous</span></article>
+        <article class="agent"><span class="agent-number">03</span><h3>Provision</h3><p>Network, cloud<br>&amp; wholesale orchestration</p><span class="pill">L3 · change windows</span></article>
+        <article class="agent"><span class="agent-number">04</span><h3>Recover</h3><p>Diagnose fallout<br>&amp; run allowed playbooks</p><span class="pill">L3 · bounded retries</span></article>
+        <article class="agent"><span class="agent-number">05</span><h3>Communicate</h3><p>Proactive customer<br>updates in TR / EN</p><span class="pill">L3 · customer updates</span></article>
+      </div>
+      <div class="section-heading"><h2>Recent order journeys</h2><button class="text-button" data-page="orders">View all orders →</button></div>
+      <div class="card" id="recent-orders"></div>
+      <div class="baseline"><strong>The ambition, not a claimed result</strong><span>35 → &lt;7 days activation</span><span>30% → &lt;8% fallout</span><small>Assignment baseline and targets. Demo seconds do not validate production outcomes.</small></div>
+    </section>
+    <section id="orders-page" class="page hidden"><div class="section-heading"><div><h2>Enterprise order workspace</h2><p class="muted">Select an order to inspect every event, tool and customer update.</p></div><span class="pill">TMF622 / 641-inspired subset</span></div><div class="card" id="all-orders"></div></section>
+    <section id="exceptions-page" class="page hidden"><div class="section-heading"><div><h2>Human judgment, where it matters.</h2><p class="muted">Only authorized service managers can release policy holds.</p></div><span class="pill amber">No autonomous authority escalation</span></div><div id="exception-list"></div></section>
+    <section id="partners-page" class="page hidden">
+      <div class="partner-hero card"><span class="eyebrow">WHOLESALE SELF-SERVICE</span><h2>One interface. A connected ecosystem.</h2><p>Demo Balkan Wholesale uses an authenticated MCP JSON-RPC interface to check capacity and submit orders. All partner and network responses are simulated.</p><div class="partner-actions"><button id="partner-order" class="button primary">Create a partner order</button><button id="capacity-button" class="button secondary">Check Istanbul capacity</button></div><pre id="partner-result" aria-live="polite">Connect using a partner or manager demo token.</pre></div>
+      <div class="two-column"><article class="card padded"><h3>Implemented MCP tools</h3><code>check_partner_capacity</code><p>Read simulated public-city service inventory.</p><code>submit_partner_order</code><p>Creates a durable, idempotent synthetic order; cannot approve changes.</p></article><article class="card padded"><h3>Honest interoperability</h3><p>Stateless Streamable HTTP JSON responses at <code>/mcp</code>. Initialization, tool discovery and tool calls are implemented.</p><p>TM Forum-inspired REST subset at <code>/tmf-api/...</code>. Not a certified or full schema implementation.</p></article></div>
+    </section>
+    <section id="governance-page" class="page hidden">
+      <div class="governance-banner"><span class="eyebrow">DESIGNED FOR ACCOUNTABILITY</span><h2>Trust is a control, not a badge.</h2><p>This demo is not certified production infrastructure. Every boundary below is explicit.</p></div>
+      <div class="two-column"><article class="card padded"><h3>Data &amp; sovereignty</h3><p>Invented companies, orders, prices and capacity. Public CC0 city reference facts are attributed below.</p><p>West Europe demonstration only. All-data-and-inference-in-Türkiye production operation requires an approved Türkiye-hosted platform and legal/regulatory assessment.</p><div id="provenance"></div></article><article class="card padded"><h3>Execution boundaries</h3><p>Change windows, route-conflict holds, one-attempt recovery playbooks, idempotent orders and atomic persisted state transitions.</p><p>Optional live Azure OpenAI advice has no execution authority. Rules simulation is always clearly labelled.</p><p>Hash-linked audit records detect simple edits; they are not immutable regulatory evidence or a digital signature.</p><button id="audit-download" class="button secondary">Export authorized audit CSV</button><p id="audit-state" class="muted"></p></article></div>
+      <div class="section-heading"><h2>Recent audit trail</h2><span class="muted">Synthetic operational evidence</span></div><div class="card" id="audit-table"></div>
+    </section>
+  </main>
+  <footer><span>AMA TELECOM / CASE STUDY 30</span><span id="deployment-region">Loading environment…</span><span>SIMULATED OPERATIONS · REAL GUARDRAILS</span></footer>
+</div>
+<div id="drawer-backdrop" class="backdrop hidden"></div><aside id="order-drawer" class="drawer hidden" aria-label="Order details"><div class="drawer-header"><span class="eyebrow">ORDER INTELLIGENCE</span><button id="close-drawer" class="icon-button" aria-label="Close details">×</button></div><div id="order-detail"></div></aside>
+<dialog id="order-dialog"><form id="order-form"><div class="dialog-top"><div><span class="eyebrow">SYNTHETIC SERVICE REQUEST</span><h2>Start an order journey</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div><p class="muted">Use invented demo data only. No live service will be provisioned.</p><label>Demo enterprise<input name="customer" value="Demo Marmara Logistics" required pattern="Demo .+" maxlength="80"></label><div class="two-column"><label>Service city<select name="city"><option>Istanbul</option><option>Ankara</option><option>Izmir</option></select></label><label>Product<select name="product"><option value="connectivity">Dedicated Internet · 500 Mbps</option><option value="sdwan">Managed SD-WAN · 200 Mbps</option><option value="cloud">Cloud Connect · 1 Gbps</option></select></label></div><label>Demonstration scenario<select name="scenario"><option value="happy">Straight-through activation</option><option value="auto-recovery">Partner timeout → autonomous recovery</option><option value="human-exception">Route conflict → service-manager approval</option><option value="change-window">Closed change window → policy hold</option></select></label><div class="two-column"><label>Preferred language<select name="language"><option value="tr">Türkçe</option><option value="en">English</option></select></label><label>Submission channel<select name="channel" id="submission-channel"><option value="operator">Operator API</option><option value="partner">Wholesale MCP partner</option></select></label></div><p class="form-error" id="order-error" role="alert"></p><button class="button primary full" type="submit" id="submit-order">Submit synthetic order →</button></form></dialog>
+<dialog id="access-dialog"><form id="access-form"><div class="dialog-top"><h2>Demo access</h2><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div><p class="muted">Read-only synthetic views are public. Enter the manager or partner token from your local credentials file to perform authorized actions. Tokens stay in this tab’s memory only.</p><label>Access token<input name="token" type="password" required minlength="24" autocomplete="off"></label><button class="button primary full" type="submit">Use token for this tab</button><p class="muted small">Never enter an Azure password or a GitHub token here.</p></form></dialog>
+<div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>
