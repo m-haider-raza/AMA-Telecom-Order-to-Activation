@@ -1,0 +1,36 @@
+{
+  "edition": "solution-3d-v1",
+  "duration": 161.333333,
+  "existingVideosUnchanged": true,
+  "preservedVideos": {
+    "current-scenario.mp4": "8d5c3aac69f464304265890a4acc5541b34a25200762f1dc297919736b7b81d5",
+    "solution-tower-v1.mp4": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "sourceVoiceVideo": {
+    "file": "solution-tower-v1.mp4",
+    "sha256": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2"
+  },
+  "audioCopiedWithoutReencoding": true,
+  "rendering": {
+    "engine": "Three.js 0.180.0",
+    "projection": "perspective",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps": 24,
+    "shadows": true
+  },
+  "microsoftIcons": {
+    "source": "https://learn.microsoft.com/en-us/azure/architecture/icons/",
+    "archive": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+    "unchangedSvgSHA256": {
+      "azure-local.svg": "dfce1fa962f0dfd242235471214d46ae9af425d249f206537fa08bb1b1cce1cf",
+      "azure-arc.svg": "00f4a57d6e0391bec619a9298d114f783dbb7dd4165d44242202ca37d00d9bfa",
+      "container-registry.svg": "c134b0a442f203a7eeeb6f99a1f02ed34e51373d7fca59f96c9f125874c9d7d4",
+      "azure-monitor.svg": "1396f59a7d8fd7505a423842b987c9b343a092263d1ab5c7b0d94d58d8b17448"
+    },
+    "use": "Official product icons, upright and labelled with the actual product names."
+  }
+}

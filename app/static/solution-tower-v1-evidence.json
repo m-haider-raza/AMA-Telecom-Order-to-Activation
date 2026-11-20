@@ -1,0 +1,20 @@
+{
+  "edition": "solution-tower-v1",
+  "duration": 161.325,
+  "existingVideosUnchanged": true,
+  "preservedVideos": {
+    "current-scenario.mp4": "3ceaa486830b46042a4f181b546f8d374a77638bbc96be214774e624ba9bc8c6",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "sourceVoiceVideo": {
+    "file": "solution.mp4",
+    "sha256": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "voiceTreatment": {
+    "tempo": 1.1,
+    "pitchPreserved": true,
+    "presenceEQ": "3000 Hz / +2 dB",
+    "compressionRatio": 2,
+    "soundscape": "Original quiet pulse and transition accents"
+  }
+}

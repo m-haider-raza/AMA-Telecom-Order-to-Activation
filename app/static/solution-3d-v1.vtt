@@ -1,0 +1,85 @@
+WEBVTT
+
+00:00:00.164 --> 00:00:04.429
+An Istanbul customer needs connectivity. One click starts the journey.
+
+00:00:04.538 --> 00:00:11.028
+Follow this synthetic demonstration. Turkish telecom branding provides context, not endorsement.
+
+00:00:11.465 --> 00:00:16.571
+Submit sends the product order. An idempotency key prevents duplicates.
+
+00:00:16.680 --> 00:00:22.755
+Order and event persist together. The supervisor activates agents in sequence.
+
+00:00:23.191 --> 00:00:28.581
+First, validation checks the site, product and capacity. Other agents wait.
+
+00:00:28.690 --> 00:00:34.514
+Incorrect details pause for correction. Validated intent moves onward.
+
+00:00:34.951 --> 00:00:39.458
+Decomposition splits the product into access and Internet service orders.
+
+00:00:39.567 --> 00:00:45.467
+Linked resource identifiers preserve traceability. The planned event queues provisioning.
+
+00:00:45.904 --> 00:00:51.130
+Provisioning checks capacity, risk and change windows before reserving resources.
+
+00:00:51.239 --> 00:00:55.630
+A simulated partner timeout stops work and wakes recovery.
+
+00:00:56.066 --> 00:01:02.074
+Recovery retries an approved alternate route once. No unlimited autonomy.
+
+00:01:02.183 --> 00:01:06.106
+The recovered event resumes provisioning, without double reservation.
+
+00:01:06.542 --> 00:01:10.377
+A route conflict is different: hold for a human manager.
+
+00:01:10.486 --> 00:01:14.576
+The partner token is denied approval. Automation cannot bypass policy.
+
+00:01:15.012 --> 00:01:19.266
+Services activated wakes the final agent: customer updates.
+
+00:01:19.376 --> 00:01:24.472
+Turkish and English portal confirmations close the loop. No live network changes.
+
+00:01:24.909 --> 00:01:29.956
+Partners discover authenticated MCP tools to check capacity and submit orders.
+
+00:01:30.065 --> 00:01:34.932
+Their orders enter the same guarded flow, never a privileged shortcut.
+
+00:01:35.368 --> 00:01:43.942
+TMF622 inspires product ordering; TMF641, service ordering. MCP defines tool integration.
+
+00:01:44.051 --> 00:01:49.971
+These are simplified subsets, not certified interfaces. Production needs conformance testing.
+
+00:01:50.407 --> 00:01:55.352
+No Turkish Azure public region is listed. Bring Azure Local into Turkey.
+
+00:01:55.461 --> 00:02:01.613
+Proposed, not deployed: keep customer data, agents, inference, keys, logs and backups local.
+
+00:02:02.049 --> 00:02:08.213
+External Azure supplies approved images, Arc management and opt-in aggregate monitoring.
+
+00:02:08.322 --> 00:02:14.035
+Approve each metadata flow. Block customer payloads, prompts, raw logs and backups.
+
+00:02:14.472 --> 00:02:21.963
+Connected Arc sends system metadata. If even that cannot leave, evaluate disconnected operations.
+
+00:02:22.072 --> 00:02:27.892
+Eligibility and supported hardware are required. No live external cloud link.
+
+00:02:28.329 --> 00:02:34.237
+Earlier checks, durable handoffs and bounded recovery target less waiting and fallout.
+
+00:02:34.346 --> 00:02:41.052
+Under seven days and eight percent fallout: ambitions, not measured results. Prove them in a representative pilot.

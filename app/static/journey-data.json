@@ -1,0 +1,229 @@
+{
+  "title": "The waiting order",
+  "scope": "Current scenario and challenges only",
+  "source": {
+    "file": "AMA_Assignment30_HaiderRaza.pdf",
+    "page": 1,
+    "sections": [
+      "Business Challenge",
+      "Operating Region",
+      "Why Now (2026-2028)",
+      "Business Case"
+    ],
+    "note": "Original explanatory adaptation. The 35-day and 30% baselines come from the assignment, not measured software results. The order, reference mismatch, queues and customer dialogue are illustrative. No individual team's waiting time is claimed."
+  },
+  "baseline": {
+    "activationDays": 35,
+    "falloutPercent": 30
+  },
+  "narration": {
+    "kind": "local-preset-neural",
+    "model": "Kokoro-82M v1.0",
+    "disclosure": "Locally generated neural narration: Distinct British-English male preset; not the author's voice (Kokoro-82M v1.0 / bm_george). Brisk delivery with presence EQ and compression. No voice sample or script was uploaded.",
+    "voice": "bm_george",
+    "voiceDescription": "Distinct British-English male preset; not the author's voice",
+    "language": "en-gb",
+    "speed": 1.08,
+    "referenceAudioUsed": false,
+    "modelSHA256": {
+      "kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+    },
+    "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "modelLicense": "Apache-2.0",
+    "runtimeLicense": "MIT"
+  },
+  "operators": [
+    {
+      "name": "Turkcell",
+      "website": "https://www.turkcell.com.tr/",
+      "asset": "journey-turkcell.png",
+      "assetSource": "https://medya.turkcell.com.tr/wp-content/uploads/2017/02/favicon.png"
+    },
+    {
+      "name": "T\u00fcrk Telekom",
+      "website": "https://www.turktelekom.com.tr/",
+      "asset": "journey-turk-telekom.svg",
+      "assetSource": "https://asset.turktelekom.com.tr/SiteAssets/images/logo.svg"
+    },
+    {
+      "name": "Vodafone T\u00fcrkiye",
+      "website": "https://www.vodafone.com.tr/",
+      "asset": "journey-vodafone.svg",
+      "assetSource": "https://cms.vodafone.com.tr/static/img/content/23-01/31/logo.svg"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "promise",
+      "chapter": "THE PROMISE",
+      "title": "Connected country.\nDisconnected order.",
+      "label": "TURKISH MARKET CONTEXT / NOT A PERFORMANCE COMPARISON",
+      "duration": 13.27929,
+      "beats": [
+        {
+          "text": "A business orders a connection. Then waits thirty-five days for service.",
+          "start": 0.3,
+          "duration": 4.512
+        },
+        {
+          "text": "Turkcell, T\u00fcrk Telekom and Vodafone are familiar names. This story follows a fictional operator, not those companies.",
+          "start": 4.972,
+          "duration": 7.84729
+        }
+      ]
+    },
+    {
+      "id": "handoffs",
+      "chapter": "FIVE SEPARATE STEPS",
+      "title": "One order.\nFive separate worlds.",
+      "label": "CUSTOMER RECORDS > ORDER DESK > AVAILABLE CAPACITY > FIELD TEAMS > PARTNERS",
+      "duration": 11.38196,
+      "beats": [
+        {
+          "text": "One business order passes through customer records, the order desk, capacity checks, field teams and partners.",
+          "start": 0.3,
+          "duration": 7.08196
+        },
+        {
+          "text": "Each step means passing the details to someone else.",
+          "start": 7.54196,
+          "duration": 3.38
+        }
+      ]
+    },
+    {
+      "id": "rekey",
+      "chapter": "THE FRICTION",
+      "title": "Copy. Paste.\nCheck. Repeat.",
+      "label": "EXAMPLE OF A COPIED NUMBER / NOT A RECORDED INCIDENT",
+      "duration": 11.92533,
+      "beats": [
+        {
+          "text": "Staff type the same details again. Imagine one order number copied incorrectly.",
+          "start": 0.3,
+          "duration": 5.34267
+        },
+        {
+          "text": "Someone must check the mistake, correct it and type it again. The customer is still waiting.",
+          "start": 5.80267,
+          "duration": 5.66267
+        }
+      ]
+    },
+    {
+      "id": "partner",
+      "chapter": "WORKING WITH PARTNERS",
+      "title": "The order travels.\nStaff pass it along.",
+      "label": "TURKIYE / SERVICE PARTNERS IN THE BALKANS AND CAUCASUS",
+      "duration": 14.03733,
+      "beats": [
+        {
+          "text": "Partners across the Balkans and Caucasus cannot exchange order details directly with the operator's systems.",
+          "start": 0.3,
+          "duration": 7.796
+        },
+        {
+          "text": "Staff must pass information along. More chasing. Less clarity about progress.",
+          "start": 8.256,
+          "duration": 5.32133
+        }
+      ]
+    },
+    {
+      "id": "fallout",
+      "chapter": "ORDERS GET STUCK",
+      "title": "Not forward.\nBack around.",
+      "label": "30% NEED REWORK / CASE-STUDY FIGURE / NOT NECESSARILY LOST ORDERS",
+      "duration": 9.31396,
+      "beats": [
+        {
+          "text": "The case study says thirty percent of orders get stuck and need more work.",
+          "start": 0.3,
+          "duration": 4.832
+        },
+        {
+          "text": "The same work comes back, while new orders keep arriving.",
+          "start": 5.292,
+          "duration": 3.56196
+        }
+      ]
+    },
+    {
+      "id": "waiting",
+      "chapter": "THE DELAY",
+      "title": "A signature today.\nService weeks away.",
+      "label": "35 DAYS FROM ORDER TO SERVICE / NO WAIT TIMES ARE ASSIGNED TO TEAMS",
+      "duration": 11.85129,
+      "beats": [
+        {
+          "text": "Thirty-five days from order to working service. Five weeks before the customer can get started.",
+          "start": 0.3,
+          "duration": 6.18596
+        },
+        {
+          "text": "That is the overall delay, not a measured wait for any individual team.",
+          "start": 6.64596,
+          "duration": 4.74533
+        }
+      ]
+    },
+    {
+      "id": "visibility",
+      "chapter": "THE HUMAN COST",
+      "title": "Where is my order?\nWhen can we start?",
+      "label": "EXAMPLE CUSTOMER QUESTIONS / DELAYS RISK LOSING CUSTOMERS",
+      "duration": 12.38462,
+      "beats": [
+        {
+          "text": "The customer wants service quickly and clear progress updates. Instead, questions pile up.",
+          "start": 0.3,
+          "duration": 6.08933
+        },
+        {
+          "text": "Delays put business relationships at risk. Waiting becomes a reason to leave.",
+          "start": 6.54933,
+          "duration": 5.37529
+        }
+      ]
+    },
+    {
+      "id": "pressure",
+      "chapter": "WHY NOW / 2026-2028",
+      "title": "Demand accelerates.\nManual work cannot.",
+      "label": "GROWING BUSINESS DEMAND / ILLUSTRATIVE QUEUE, NOT MEASURED VOLUME",
+      "duration": 15.28729,
+      "beats": [
+        {
+          "text": "Demand for business connections and online services is growing faster than staff can handle by hand.",
+          "start": 0.3,
+          "duration": 7.12462
+        },
+        {
+          "text": "Partners are choosing providers that make exchanging orders easier. Repeated work makes it harder to compete.",
+          "start": 7.58462,
+          "duration": 7.24267
+        }
+      ]
+    },
+    {
+      "id": "summary",
+      "chapter": "THE COST OF WAITING",
+      "title": "Orders pile up.\nBusiness is at risk.",
+      "label": "TODAY'S CHALLENGES ONLY / NO PROPOSED SOLUTION",
+      "duration": 11.70525,
+      "beats": [
+        {
+          "text": "Thirty-five days to start service. Thirty percent of orders need more work. Customers wait.",
+          "start": 0.3,
+          "duration": 6.05796
+        },
+        {
+          "text": "Customer trust is at risk. Revenue waits. Competitors do not.",
+          "start": 6.51796,
+          "duration": 4.72729
+        }
+      ]
+    }
+  ]
+}

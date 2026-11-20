@@ -13,6 +13,8 @@ dependencies = [
   "azure-identity>=1.21,<2",
   "azure-storage-blob>=12.25,<13",
   "httpx>=0.28,<1",
+  "azure-communication-email>=1.0,<2",
+  "mssql-python>=1.17,<2",
 ]
 
 [project.optional-dependencies]

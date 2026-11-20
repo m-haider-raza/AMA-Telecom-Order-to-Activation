@@ -24,7 +24,7 @@ How the TürkBizTel order-to-activation demonstrator is built on Azure, and how 
 | Compute | `ama30-private-environment` | Container Apps environment, Consumption profile | Integrated into subnet `container-apps`, external, not zone redundant, mTLS off, logs to Log Analytics | `ama-bootstrap`, 5 Nov 12:55 |
 | Compute | `ama30-private-zm5qigrnxeyay` | Container App | Single-revision mode, container `activation`, 0.25 vCPU / 0.5 GiB, min = max = 1 replica, HTTPS ingress to port 8000 (`allowInsecure` off), liveness, readiness and startup probes on `/health`, image pulled with the managed identity, four Container Apps secrets | `ama-application`, 5 Nov 13:02. New revisions since, by `az containerapp update` |
 | Compute | `ama30acrzm5qigrnxeyay` | Container Registry, Basic | Admin user off, no anonymous pull, public endpoint, repositories `ama-activation` and `ama30` | `ama-bootstrap`, 5 Nov 12:52 |
-| Data | `ama30-sql-zm5qigrnxeyay` and `ama30-db` | Azure SQL server and database, Standard S0 (10 DTU, 2 GB) | Microsoft Entra-only authentication, TLS 1.2 minimum, transparent data encryption, locally redundant backups, private endpoint. The system database `master` is listed too | Azure CLI, direct writes, 12 Nov 20:30 to 20:32 |
+| Data | `ama30-sql-zm5qigrnxeyay` and `ama30-db` | Azure SQL server and database, Standard S0 (10 DTU, 2 GB) | Microsoft Entra-only authentication, TLS 1.2 minimum, transparent data encryption, locally redundant backups, private endpoint. Public network access was still Enabled on 20 Nov, with four client-IP firewall rules (see [hardening item 1](#hardening-checklist-for-any-use-beyond-a-demo)). The system database `master` is listed too | Azure CLI, direct writes, 12 Nov 20:30 to 20:32 |
 | Data | `ama30stzm5qigrnxeyay` | Storage account, StorageV2, Standard_LRS, Hot | Public network access disabled, shared-key access off, blob public access off, TLS 1.2 minimum, versioning, 7-day soft delete, private endpoint. One container, `orders` | `ama-bootstrap`, 5 Nov 12:52 |
 | AI | `ama30-ai-zm5qigrnxeyay` | Azure OpenAI, S0 | Key authentication disabled (Entra only). Deployment `telecom-advisor` is `gpt-4.1-mini` 2025-04-14, Standard, capacity 1, no auto-upgrade | `ama-bootstrap`, 5 Nov 12:57 |
 | Messaging | `myturkei-comm`, `myturkei-email` and `AzureManagedDomain` | Communication Services, Email Communication Service and an Azure-managed e-mail domain (global resources) | Data location Europe. SPF, DKIM and DMARC verified on the managed domain | Azure CLI, direct writes, 10 Nov 08:46 to 08:48 |
@@ -76,10 +76,10 @@ flowchart TB
 
 ### What the repository can and cannot reproduce
 
-- The 5 Nov core came from a Bicep template that currently exists **only in the owner's working copy**. It is the version of `infra/main.bicep` with the `enablePrivateStorage` and `enableSql` options. It has not been pushed.
-- `infra/` and `scripts/` on `main` are an **earlier snapshot**: West Europe only, public network access, and no virtual network, private endpoint, private DNS or SQL. Running `scripts/Deploy.ps1` from `main` creates that baseline, not the estate described here.
-- The SQL layer, the e-mail resources and the NSGs were added to the running estate by direct CLI commands or by governance policy. No template describes them yet.
-- To update the running app, build a new image tag (`az acr build`) and point the Container App at it (`az containerapp update`). Re-running `Deploy.ps1` creates a new resource group with new credentials.
+- The 5 Nov core was created by `scripts/Deploy.ps1` running `infra/main.bicep` with the private-network option (`-EnablePrivateStorage`): the virtual network, registry, storage account and its private endpoint, managed identity and roles, Log Analytics, Container Apps environment and app, Azure OpenAI and the budget. Both files are on `main`.
+- The template also offers `enableSql` (`-EnableSql`), which describes a SQL layer equivalent in design to the running one: a private, Entra-only server and database, a private endpoint and a one-off bootstrap job. The running SQL layer was created by direct CLI commands on 12 Nov, not by the template.
+- The e-mail resources (Communication Services, the Email Service and its managed domain) were created by direct CLI commands, and the two NSGs by governance policy. The template does not describe them.
+- To update the running app, build a new image tag (`az acr build`) and point the Container App at it (`az containerapp update`). Re-running `Deploy.ps1` creates a new resource group with new credentials, not a copy of this estate. To approach it, pass `-Location swedencentral -EnableSql -EnableOpenAI -OpenAiModel gpt-4.1-mini -OpenAiModelVersion 2025-04-14` after confirming that model's availability and quota, then add the e-mail resources yourself.
 
 ## Runtime flow
 
@@ -145,7 +145,7 @@ Every assignment is scoped to a single resource. The identity has nothing at res
 
 ### Hardening checklist for any use beyond a demo
 
-1. **SQL network exposure.** The design is private-endpoint access. Confirm that `publicNetworkAccess` is `Disabled` and remove any client-IP firewall rules that were added for administration (see [Verify it yourself](#verify-it-yourself)).
+1. **SQL network exposure.** The design is private-endpoint access, but on 20 Nov the deployed server had `publicNetworkAccess` **Enabled**, with four client-IP firewall rules of the kind the Azure portal adds for administration (the addresses are not published here). Set it to `Disabled` and delete those rules once administration no longer needs them. The app is unaffected, because it connects through the private endpoint. Check the current state with the commands in [Verify it yourself](#verify-it-yourself).
 2. **SQL auditing.** Server auditing is off. Turn it on and send it to Log Analytics, or to an in-country sink in production.
 3. **Registry exposure.** The Basic registry has a public endpoint. Private Link needs the Premium tier.
 4. **Edge protection.** There is no web application firewall or IP restriction in front of the app. Add one, with rate limiting, before exposing it beyond a demo.

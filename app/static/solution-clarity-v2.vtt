@@ -1,0 +1,61 @@
+WEBVTT
+
+00:00:00.250 --> 00:00:08.426
+An Istanbul business needs connectivity. Follow one order, with clear owners, explicit exceptions, and human decisions.
+
+00:00:08.576 --> 00:00:15.477
+This is a simulator. Amber production paths are proposals, not implemented features.
+
+00:00:16.227 --> 00:00:22.164
+Intake persists the order and event together. A stable key prevents duplicate work.
+
+00:00:22.314 --> 00:00:26.668
+Invalid requests return to the submitter, not downstream agents.
+
+00:00:28.227 --> 00:00:34.509
+Validation checks the site and capacity before planning. Bad references stop for customer confirmation.
+
+00:00:34.659 --> 00:00:40.188
+No capacity means manager review or rejection. Approval cannot invent inventory.
+
+00:00:45.227 --> 00:00:51.796
+Decomposition converts approved products into linked service and resource orders, reducing rekeying errors.
+
+00:00:51.946 --> 00:00:57.869
+Unsupported products are rejected at intake. Production planners must approve new catalogue mappings.
+
+00:01:02.227 --> 00:01:08.275
+Provisioning rechecks capacity and policy, then allocates once. A timeout activates recovery.
+
+00:01:08.425 --> 00:01:14.317
+Route risk or a closed change window stops before allocation, for a manager decision.
+
+00:01:19.227 --> 00:01:25.767
+Recovery handles one allowlisted partner timeout, retries once, and returns to provisioning.
+
+00:01:25.917 --> 00:01:33.012
+Unknown faults or exhausted retries need a proposed human triage path, not broader autonomous authority.
+
+00:01:36.227 --> 00:01:43.637
+The service manager owns high-risk decisions. Approval is audited, bounded, and cannot fabricate capacity.
+
+00:01:43.787 --> 00:01:48.660
+Approved work resumes its saved stage. Partners cannot approve.
+
+00:01:52.227 --> 00:01:58.071
+Customer updates persist bilingual portal status after activation, reducing avoidable chasing.
+
+00:01:58.221 --> 00:02:05.949
+External delivery failure needs a proposed service-desk path. This demo sends no SMS or email.
+
+00:02:09.227 --> 00:02:19.184
+Early checks prevent downstream errors. Linked identifiers remove rekeying. Persisted handoffs and bounded recovery reduce waiting.
+
+00:02:19.334 --> 00:02:27.486
+Under seven days and eight percent fallout are targets, not results. Measure lead time, first-time-right completion, and human-review waiting.
+
+00:02:29.227 --> 00:02:38.422
+TMF-inspired interfaces and MCP preserve interoperability. The proposed Azure Local workload keeps customer data in Turkiye.
+
+00:02:38.572 --> 00:02:46.613
+External metadata and services need approval. Stricter rules require eligible disconnected operation, not a live cloud link.

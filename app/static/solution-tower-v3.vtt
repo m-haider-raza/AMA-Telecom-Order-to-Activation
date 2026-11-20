@@ -1,0 +1,73 @@
+WEBVTT
+
+00:00:00.220 --> 00:00:07.004
+A business orders connectivity. Instead of disconnected handoffs, one guarded supervisor coordinates five specialist agents.
+
+00:00:07.184 --> 00:00:11.525
+The goal: less rework, faster activation, and a customer who knows what happens next.
+
+00:00:12.425 --> 00:00:17.898
+Intake saves the order and its event together. A stable request key prevents duplicate acceptance.
+
+00:00:18.078 --> 00:00:23.701
+Invalid requests return for correction. Accepted work stays traceable, without another manual handoff.
+
+00:00:24.601 --> 00:00:31.004
+Validation checks the site and capacity before planning. Catching bad references early prevents downstream rework.
+
+00:00:31.184 --> 00:00:37.082
+A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval.
+
+00:00:37.982 --> 00:00:43.553
+Decomposition turns an approved product into linked service and resource orders. No repeated rekeying.
+
+00:00:43.733 --> 00:00:49.654
+Unsupported products stop at intake. Catalogue governance keeps new mappings under the accountable planner's control.
+
+00:00:50.554 --> 00:00:55.238
+Provisioning rechecks capacity, risk and the change window, then allocates resources once.
+
+00:00:55.418 --> 00:01:00.710
+A partner timeout activates recovery. A policy conflict takes a different path: human review.
+
+00:01:01.610 --> 00:01:06.750
+Recovery handles one allowlisted timeout, retries once, and hands control back to provisioning.
+
+00:01:06.930 --> 00:01:12.860
+For faults outside that playbook, the delivery design requires service-desk integration and an accountable human owner.
+
+00:01:13.760 --> 00:01:18.270
+The service manager approves or rejects high-risk work. Every decision is audited.
+
+00:01:18.450 --> 00:01:23.768
+Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage.
+
+00:01:24.668 --> 00:01:30.927
+After activation, customer updates persist Turkish and English portal confirmations. Clear status reduces chasing.
+
+00:01:31.107 --> 00:01:38.198
+The portal provides the customer record. Email and text delivery require integrated channel services and service-desk ownership.
+
+00:01:39.098 --> 00:01:46.613
+TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow.
+
+00:01:46.793 --> 00:01:54.735
+Customer integration defines the exact schemas and conformance acceptance. Partner access never bypasses policy or human authority.
+
+00:01:55.635 --> 00:02:01.256
+The residency architecture places the customer workload on Azure Local at an approved Turkish operator site.
+
+00:02:01.436 --> 00:02:09.325
+Delivery requires supported local infrastructure, local inference, keys, logs and backups, with controlled egress and regulatory approval.
+
+00:02:10.225 --> 00:02:16.546
+External Azure services supply approved images, management and monitoring. Every metadata flow needs approval.
+
+00:02:16.726 --> 00:02:24.649
+Where platform metadata must also stay local, evaluate eligible disconnected operations, with its local control plane and support requirements.
+
+00:02:25.549 --> 00:02:33.925
+Early checks address avoidable rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery reduce unnecessary waiting.
+
+00:02:34.105 --> 00:02:41.397
+The customer objective is simple: shorter delivery, fewer avoidable exceptions, and a clear, accountable path from order to activation.

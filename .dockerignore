@@ -1,7 +1,10 @@
-.git
-.venv
-data
-tests
-__pycache__
-*.local.json
-.env
+*
+!Dockerfile
+!.dockerignore
+!pyproject.toml
+!app/
+!app/**
+**/__pycache__/
+**/*.py[cod]
+**/*.local.json
+**/.env

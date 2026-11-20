@@ -43,6 +43,25 @@ def test_public_read_and_write_authorization(client):
     assert client.get("/static/app.js").headers["content-security-policy"].startswith("default-src 'self'")
 
 
+def test_read_only_animation_assets(client):
+    page = client.get("/static/journey.html")
+    assert page.status_code == 200
+    assert "The waiting order" in page.text
+    assert "/static/journey.html" in client.get("/").text
+    for name in ("journey.js", "journey.css", "journey-data.json",
+                 "current-scenario-poster.jpg", "current-scenario.vtt"):
+        response = client.get(f"/static/{name}")
+        assert response.status_code == 200
+        assert response.headers["content-security-policy"].startswith("default-src 'self'")
+    data = client.get("/static/journey-data.json").json()
+    assert data["scope"] == "Current scenario and challenges only"
+    assert len(data["scenes"]) == 9
+    video = client.get("/static/current-scenario.mp4", headers={"Range": "bytes=0-1023"})
+    assert video.status_code == 206
+    assert video.headers["content-type"] == "video/mp4"
+    assert len(video.content) == 1024
+
+
 def test_api_idempotency_validation_and_advice_not_faked(client):
     headers = {"Authorization": f"Bearer {ADMIN}"}
     response = client.post("/api/orders", json=payload(), headers=headers)
@@ -154,3 +173,17 @@ def test_failed_live_ai_does_not_fake_advice_or_execute(client, monkeypatch):
     assert response.status_code == 502
     current = client.get("/api/state").json()["orders"][order["id"]]
     assert "aiAdvice" not in current and not current["reserved"]
+
+
+def test_contact_is_validated_and_never_exposed_unmasked(client):
+    headers = {"Authorization": f"Bearer {ADMIN}"}
+    body = {**payload(key="api-contact-order"), "contact": {
+        "contactName": "Demo Contact", "email": "ayse@example.com", "preferredChannel": "email",
+        "updateFrequency": "daily"}}
+    created = client.post("/api/orders", json=body, headers=headers)
+    assert created.status_code == 201 and created.json()["contact"]["email"] == "a***@example.com"
+    assert "ayse@example.com" not in client.get("/api/state").text
+    for bad in ({"preferredChannel": "sms"}, {"email": "not-an-email"}, {"updateFrequency": "hourly"}):
+        rejected = client.post("/api/orders", json={**payload(key="api-bad-contact"),
+                              "contact": {**body["contact"], **bad}}, headers=headers)
+        assert rejected.status_code == 422

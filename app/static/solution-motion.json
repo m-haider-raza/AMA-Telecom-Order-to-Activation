@@ -1,0 +1,198 @@
+[
+  {
+    "scene": "opening",
+    "mode": "implemented",
+    "changedPixels": 17354,
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "Customer selects a product",
+    "encodedChangedPixels": 17032
+  },
+  {
+    "scene": "intake",
+    "mode": "implemented",
+    "changedPixels": 14170,
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "POST productOrder / idempotency key",
+    "encodedChangedPixels": 14200
+  },
+  {
+    "scene": "validation",
+    "mode": "implemented",
+    "changedPixels": 28040,
+    "agentStates": [
+      "active",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "order.received -> validation agent",
+    "encodedChangedPixels": 28845
+  },
+  {
+    "scene": "decomposition",
+    "mode": "implemented",
+    "changedPixels": 47758,
+    "agentStates": [
+      "done",
+      "active",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "order.validated -> decomposition agent",
+    "encodedChangedPixels": 49339
+  },
+  {
+    "scene": "provisioning",
+    "mode": "implemented",
+    "changedPixels": 16378,
+    "agentStates": [
+      "done",
+      "done",
+      "active",
+      "standby",
+      "waiting"
+    ],
+    "event": "services.planned -> provisioning agent",
+    "encodedChangedPixels": 16683
+  },
+  {
+    "scene": "recovery",
+    "mode": "implemented",
+    "changedPixels": 13766,
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "active",
+      "waiting"
+    ],
+    "event": "fallout.detected -> retry-once playbook",
+    "encodedChangedPixels": 13760
+  },
+  {
+    "scene": "human",
+    "mode": "implemented",
+    "changedPixels": 16825,
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "standby",
+      "waiting"
+    ],
+    "event": "Order B / route conflict -> policy.hold",
+    "encodedChangedPixels": 17246
+  },
+  {
+    "scene": "communication",
+    "mode": "implemented",
+    "changedPixels": 26748,
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "active"
+    ],
+    "event": "services.activated -> customer update agent",
+    "encodedChangedPixels": 26869
+  },
+  {
+    "scene": "partners",
+    "mode": "implemented",
+    "changedPixels": 24940,
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "MCP / tools/list -> capacity check",
+    "encodedChangedPixels": 25702
+  },
+  {
+    "scene": "standards",
+    "mode": "implemented",
+    "changedPixels": 18270,
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "event": "TMF622 product -> TMF641 service -> resources",
+    "encodedChangedPixels": 18196
+  },
+  {
+    "scene": "residency",
+    "mode": "proposed",
+    "changedPixels": 13296,
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "event": "No T\u00fcrkiye Azure public region listed in referenced inventory",
+    "encodedChangedPixels": 14039
+  },
+  {
+    "scene": "hybrid",
+    "mode": "proposed",
+    "changedPixels": 35729,
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "event": "Approved cloud lane / artifacts in; reviewed metadata out",
+    "encodedChangedPixels": 38640
+  },
+  {
+    "scene": "strict",
+    "mode": "proposed",
+    "changedPixels": 12937,
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "event": "Connected Arc sends system metadata / cannot simply opt out",
+    "encodedChangedPixels": 13439
+  },
+  {
+    "scene": "impact",
+    "mode": "implemented",
+    "changedPixels": 14948,
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "done"
+    ],
+    "event": "Earlier validation + durable handoffs + bounded recovery",
+    "encodedChangedPixels": 15077
+  }
+]

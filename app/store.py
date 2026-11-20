@@ -88,3 +88,27 @@ class Store:
         if self.blob:
             self.client.close()
             self.credential.close()
+
+
+def legacy_state():
+    """What the Blob or file store holds, used once to seed Azure SQL. A brand-new install starts empty."""
+    local = Path(os.getenv("LOCAL_STATE_PATH", "data/state.json"))
+    if not os.getenv("AZURE_STORAGE_ACCOUNT_URL") and not local.exists():
+        return initial_state()
+    store = Store()
+    try:
+        return store._read()[0]
+    finally:
+        store.close()
+
+
+def open_store():
+    """Azure SQL when it is configured, otherwise the Blob or file snapshot store."""
+    server, database = os.getenv("AMA_SQL_SERVER"), os.getenv("AMA_SQL_DATABASE")
+    if bool(server) != bool(database):
+        raise RuntimeError("Set both AMA_SQL_SERVER and AMA_SQL_DATABASE to use Azure SQL, or neither")
+    if server:
+        from app.sqlstore import SqlStore
+
+        return SqlStore.from_env(legacy=legacy_state)
+    return Store()

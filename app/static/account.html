@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c4202f">
+  <meta name="robots" content="noindex">
+  <title>My orders · TürkBizTel</title>
+  <link rel="icon" href="/static/turkbiztel-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/account.css?v=tb1">
+  <script src="/static/ui.js?v=tb1" defer></script>
+  <script src="/static/account.js?v=tb1" defer></script>
+</head>
+<body class="account-page booting">
+  <a class="skip-link" href="#view">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="logo" id="logo" href="#orders"><img src="/static/turkbiztel-mark.svg" alt="" width="36" height="36">TürkBizTel</a>
+      <nav class="nav" aria-label="Account">
+        <a href="#orders" data-nav="orders">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#list"/></svg>
+          <span>My orders</span>
+          <span class="count" id="badge" hidden></span>
+        </a>
+        <a href="#new" data-nav="new">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#plus"/></svg>
+          <span>New order</span>
+        </a>
+        <a href="#profile" data-nav="profile">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#user"/></svg>
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="who">
+        <span class="avatar" id="avatar" aria-hidden="true"></span>
+        <span id="who-name"></span>
+        <button class="btn ghost small" id="signout" type="button" aria-label="Sign out">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#log-out"/></svg>
+          <span>Sign out</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="conn" id="connection" role="status" hidden>We can't reach TürkBizTel right now. We'll keep trying, and what you see may be out of date.</div>
+
+  <main class="view" id="view" tabindex="-1">
+    <p class="loading" role="status"><span class="spinner" aria-hidden="true"></span>Loading your orders…</p>
+    <noscript><p class="loading">TürkBizTel needs JavaScript to show your orders. Please turn it on and reload this page.</p></noscript>
+  </main>
+
+  <footer class="foot"><span class="live-dot" aria-hidden="true"></span>Updates appear here automatically. No need to refresh.</footer>
+  <div id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07142a">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator. The problem today, the architecture, the solution in action and the live app.">
+  <title>AMA Case Study 30 · Agentic order-to-activation | TürkBizTel</title>
+  <link rel="icon" href="/static/turkbiztel-mark.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="/static/case-study/hero-bosphorus.webp" type="image/webp">
+  <link rel="stylesheet" href="/static/case-study.css?v=tb1">
+  <script src="/static/case-study.js?v=tb1" defer></script>
+</head>
+<body data-scene="intro">
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v3h16v-3"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-cc" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10.5 10.2a2.2 2.2 0 1 0 0 3.6M17 10.2a2.2 2.2 0 1 0 0 3.6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#stage">Skip to the content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#/intro" aria-label="AMA Case Study 30, back to the start">
+      <img src="/static/turkbiztel-mark.svg" alt="" width="32" height="32">
+      <span class="brand-text"><strong>TürkBizTel</strong><small>AMA Case Study 30</small></span>
+    </a>
+    <nav class="rail" id="rail" aria-label="Chapters">
+      <div class="rail-line" aria-hidden="true"><span class="rail-fill"></span><span class="rail-packet"></span></div>
+      <ol class="rail-stops">
+        <li><a class="stop" href="#/today" data-stop="today"><span class="stop-dot" aria-hidden="true"><span class="stop-num">1</span><svg class="icon stop-check"><use href="#i-check"/></svg></span><span class="stop-label">Today</span></a></li>
+        <li><a class="stop" href="#/architecture" data-stop="architecture"><span class="stop-dot" aria-hidden="true"><span class="stop-num">2</span><svg class="icon stop-check"><use href="#i-check"/></svg></span><span class="stop-label">Architecture</span></a></li>
+        <li><a class="stop" href="#/solution" data-stop="solution"><span class="stop-dot" aria-hidden="true"><span class="stop-num">3</span><svg class="icon stop-check"><use href="#i-check"/></svg></span><span class="stop-label">Solution</span></a></li>
+        <li><a class="stop" href="#/app" data-stop="app"><span class="stop-dot" aria-hidden="true"><span class="stop-num">4</span><svg class="icon stop-check"><use href="#i-check"/></svg></span><span class="stop-label">Live app</span></a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <main id="stage" tabindex="-1">
+    <noscript>
+      <section class="noscript">
+        <p>The guided tour needs JavaScript. You can still open each part directly:</p>
+        <ul>
+          <li><a href="/static/current-scenario.mp4">The current state (film)</a></li>
+          <li><a href="/static/case-study/Agentic_Order_to_Activation_Architecture.pdf">The architecture (PDF)</a></li>
+          <li><a href="/static/solution-tower-v6.mp4">The solution in action (film)</a></li>
+          <li><a href="/">The live app</a></li>
+        </ul>
+      </section>
+    </noscript>
+
+    <!-- 0 · Start -->
+    <section class="scene scene-intro" id="scene-intro" data-scene="intro" aria-labelledby="h-intro">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span>AMA Assignment 30</span><span class="sep" aria-hidden="true">·</span><span>Case Study 30</span></p>
+          <h1 id="h-intro" tabindex="-1"><span class="h1-lead">AMA Case Study 30:</span> <span class="h1-key">agentic B2B <span class="keep">order-to-activation</span></span> <span class="h1-rest">for a Turkish telecommunications operator</span></h1>
+          <p class="lede">A proposed design in which five guarded agents and one supervisor per order take enterprise connectivity from signature to activation, with every decision auditable and all order data kept in Türkiye.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#/today">Start the journey <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+            <a class="btn btn-ghost" href="#/app">Skip to the live app</a>
+          </div>
+          <p class="byline"><strong>Haider Raza</strong><span>Sr Cloud Solution Architect · Microsoft UK</span></p>
+        </div>
+        <figure class="hero-art">
+          <img src="/static/case-study/hero-bosphorus.webp" alt="" width="1159" height="1254" fetchpriority="high">
+        </figure>
+      </div>
+
+      <div class="flow" aria-hidden="true">
+        <p class="flow-title">One supervisor per order · five agents · every step in the audit log</p>
+        <div class="flow-lane">
+          <div class="flow-track"><span class="flow-packet"></span></div>
+          <ol class="flow-nodes">
+            <li class="flow-node"><span class="flow-dot"></span><span class="flow-name">Order arrives</span></li>
+            <li class="flow-node"><span class="flow-dot"></span><span class="flow-name">Validation</span></li>
+            <li class="flow-node"><span class="flow-dot"></span><span class="flow-name">Decomposition</span></li>
+            <li class="flow-node"><span class="flow-dot"></span><span class="flow-name">Provisioning</span></li>
+            <li class="flow-node flow-end"><span class="flow-dot"></span><span class="flow-name">Service active</span></li>
+          </ol>
+        </div>
+        <p class="flow-support"><span>Fallout Resolution fixes stalls from playbooks</span><span>Customer Update informs on every change</span></p>
+      </div>
+
+      <div class="kpis" aria-label="Where the case study starts and where it aims to go">
+        <article class="kpi">
+          <h2 class="kpi-title">Order to activation</h2>
+          <div class="kpi-row"><span class="kpi-tag">Today</span><span class="kpi-bar" aria-hidden="true"><span class="kpi-fill kpi-now"></span></span><strong class="kpi-val">35 days</strong></div>
+          <div class="kpi-row"><span class="kpi-tag">Target</span><span class="kpi-bar" aria-hidden="true"><span class="kpi-fill kpi-goal kpi-goal-days"></span></span><strong class="kpi-val">&lt; 7 days</strong></div>
+        </article>
+        <article class="kpi">
+          <h2 class="kpi-title">Orders that fall out</h2>
+          <div class="kpi-row"><span class="kpi-tag">Today</span><span class="kpi-bar" aria-hidden="true"><span class="kpi-fill kpi-now"></span></span><strong class="kpi-val">30%</strong></div>
+          <div class="kpi-row"><span class="kpi-tag">Target</span><span class="kpi-bar" aria-hidden="true"><span class="kpi-fill kpi-goal kpi-goal-fallout"></span></span><strong class="kpi-val">&lt; 8%</strong></div>
+        </article>
+        <article class="kpi kpi-money">
+          <h2 class="kpi-title">Revenue brought forward</h2>
+          <p class="kpi-big">TRY <span class="count" data-count-to="900">900</span>M</p>
+          <p class="kpi-note">28 days sooner on 12,000 enterprise orders a year</p>
+        </article>
+      </div>
+      <p class="fineprint">The 35 days and 30% are the assignment baselines. The targets and the revenue figure are ambitions to prove in a pilot, not measured results.</p>
+
+      <h2 class="stops-title">Four stops, about ten minutes</h2>
+      <ol class="stops">
+        <li><a class="stop-card" href="#/today" data-stop="today"><span class="stop-card-num" aria-hidden="true">1</span><span class="stop-card-body"><strong>Today</strong><span>Why 35 days and 30% fallout hurt customers, partners and revenue.</span></span><span class="stop-card-meta">Film · 1 min 51 s</span></a></li>
+        <li><a class="stop-card" href="#/architecture" data-stop="architecture"><span class="stop-card-num" aria-hidden="true">2</span><span class="stop-card-body"><strong>Architecture</strong><span>Five agents, one supervisor, guardrails and in-country hosting.</span></span><span class="stop-card-meta">Deck · 14 slides</span></a></li>
+        <li><a class="stop-card" href="#/solution" data-stop="solution"><span class="stop-card-num" aria-hidden="true">3</span><span class="stop-card-body"><strong>Solution</strong><span>One order travels through the guarded agents, with recovery and human approval.</span></span><span class="stop-card-meta">Film · 2 min 55 s</span></a></li>
+        <li><a class="stop-card" href="#/app" data-stop="app"><span class="stop-card-num" aria-hidden="true">4</span><span class="stop-card-body"><strong>Live app</strong><span>The running app for customers, partners and the service team.</span></span><span class="stop-card-meta">Interactive</span></a></li>
+      </ol>
+    </section>
+
+    <!-- 1 · Today -->
+    <section class="scene scene-today" id="scene-today" data-scene="today" aria-labelledby="h-today" hidden>
+      <header class="scene-head">
+        <p class="chapter-tag"><span class="chapter-num" aria-hidden="true">1</span>The current state</p>
+        <h2 id="h-today" tabindex="-1">Today, one enterprise order takes <em>35 days</em></h2>
+        <p class="scene-lede">A business signs for connectivity, then waits. Watch how hand-offs across five systems, re-keyed by hand, turn into 30% fallout and a customer who keeps asking where the order is.</p>
+      </header>
+
+      <div class="cinema" data-film="today">
+        <video id="film-today" controls playsinline preload="none" poster="/static/current-scenario-poster.jpg" aria-label="Narrated film: how an enterprise order is fulfilled today">
+          <source src="/static/current-scenario.mp4" type="video/mp4">
+          <track kind="captions" src="/static/current-scenario.vtt" srclang="en" label="English">
+          Your browser cannot play this film. <a href="/static/current-scenario.mp4">Download the MP4</a>.
+        </video>
+        <div class="up-next" hidden>
+          <p class="up-next-kicker">Up next · Chapter 2</p>
+          <p class="up-next-title">The proposed architecture</p>
+          <div class="up-next-actions">
+            <a class="btn btn-primary" href="#/architecture">Continue <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+            <button class="btn btn-ghost" type="button" data-replay><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-replay"/></svg>Replay</button>
+          </div>
+        </div>
+      </div>
+      <p class="video-fail" hidden>This browser could not play the film. <a href="/static/current-scenario.mp4">Download the MP4</a> instead.</p>
+
+      <div class="tools">
+        <button class="tool" type="button" data-cc aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cc"/></svg>Captions</button>
+        <a class="tool" href="/static/current-scenario.mp4" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download film</a>
+        <span class="tool-note">1 min 51 s · British-English narration</span>
+      </div>
+
+      <h3 class="rail-title">Jump to a moment</h3>
+      <ol class="chapters" aria-label="Moments in the film">
+        <li><button type="button" class="chip" data-t="0"><span class="chip-time">0:00</span><span class="chip-name">Signed, then waiting</span></button></li>
+        <li><button type="button" class="chip" data-t="13.279"><span class="chip-time">0:13</span><span class="chip-name">Hand-off after hand-off</span></button></li>
+        <li><button type="button" class="chip" data-t="24.661"><span class="chip-time">0:25</span><span class="chip-name">The re-keying trap</span></button></li>
+        <li><button type="button" class="chip" data-t="36.587"><span class="chip-time">0:37</span><span class="chip-name">Partners without APIs</span></button></li>
+        <li><button type="button" class="chip" data-t="50.624"><span class="chip-time">0:51</span><span class="chip-name">30% fallout</span></button></li>
+        <li><button type="button" class="chip" data-t="59.938"><span class="chip-time">1:00</span><span class="chip-name">A 35-day baseline</span></button></li>
+        <li><button type="button" class="chip" data-t="71.789"><span class="chip-time">1:12</span><span class="chip-name">Customers wait</span></button></li>
+        <li><button type="button" class="chip" data-t="84.174"><span class="chip-time">1:24</span><span class="chip-name">Demand outpaces fulfilment</span></button></li>
+        <li><button type="button" class="chip" data-t="99.461"><span class="chip-time">1:39</span><span class="chip-name">Trust at risk</span></button></li>
+      </ol>
+
+      <nav class="scene-nav" aria-label="Chapter navigation">
+        <a class="btn btn-ghost" href="#/intro"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-l"/></svg>Start</a>
+        <a class="btn btn-primary" href="#/architecture">Next: the architecture <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+
+      <details class="transcript">
+        <summary>Read the narration</summary>
+        <div class="transcript-body" data-vtt="/static/current-scenario.vtt"><p class="transcript-wait">Loading the narration…</p></div>
+      </details>
+      <p class="fineprint">The story follows a fictional operator. Turkcell, Türk Telekom and Vodafone are named only as familiar examples of the market.</p>
+    </section>
+
+    <!-- 2 · Architecture -->
+    <section class="scene scene-architecture" id="scene-architecture" data-scene="architecture" aria-labelledby="h-architecture" hidden>
+      <header class="scene-head">
+        <p class="chapter-tag"><span class="chapter-num" aria-hidden="true">2</span>The architecture</p>
+        <h2 id="h-architecture" tabindex="-1">Five agents, one supervisor per order</h2>
+        <p class="scene-lede">The proposed design, slide by slide: why change, the agent architecture and its guardrails, data residency in Türkiye, a phased rollout, and what it costs to build and run. Use the arrow keys, swipe, or pick a slide below.</p>
+      </header>
+
+      <div class="deck" id="deck">
+        <div class="acts" role="group" aria-label="Jump to a part of the deck">
+          <button type="button" class="act" data-slide="1" data-last="1">Overview</button>
+          <button type="button" class="act" data-slide="2" data-last="4">Why change</button>
+          <button type="button" class="act" data-slide="5" data-last="8">The design</button>
+          <button type="button" class="act" data-slide="9" data-last="10">Trust</button>
+          <button type="button" class="act" data-slide="11" data-last="12">Delivery</button>
+          <button type="button" class="act" data-slide="13" data-last="14">Cost &amp; next steps</button>
+        </div>
+
+        <div class="deck-stage" id="deck-stage">
+          <img id="deck-img" src="/static/case-study/slide-01.webp" alt="" width="1920" height="1080" draggable="false">
+          <button type="button" class="deck-arrow deck-prev" id="deck-prev" aria-label="Previous slide"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-chev-l"/></svg></button>
+          <button type="button" class="deck-arrow deck-next" id="deck-next" aria-label="Next slide"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></button>
+          <div class="deck-hud">
+            <span class="deck-count" id="deck-count" aria-hidden="true">1 / 14</span>
+            <button type="button" class="hud-btn" id="deck-full" aria-pressed="false" aria-label="Full screen"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-expand"/></svg></button>
+          </div>
+        </div>
+
+        <p class="deck-caption" id="deck-caption" aria-live="polite"></p>
+
+        <ol class="filmstrip" id="filmstrip" aria-label="All 14 slides">
+          <li><button type="button" data-slide="1" data-kicker="Case study 30" data-title="Agentic B2B order-to-activation: solution architecture" data-src="/static/case-study/slide-01.webp" data-alt="Title slide. AMA Assignment 30, Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator. Solution architecture: a proposed design with TM Forum-aligned order agents on an in-country runtime. Haider Raza, Sr Cloud Solution Architect, Microsoft UK, October 2026. Beside the text, the Bosphorus Bridge at night with glowing network lines across the water."><img src="/static/case-study/thumb-01.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">1</span></button></li>
+          <li><button type="button" data-slide="2" data-kicker="The problem today" data-title="Orders crawl: 35 days, 30% fallout" data-src="/static/case-study/slide-02.webp" data-alt="The problem today: orders crawl, 35 days and 30% fallout. Enterprise order-to-activation for connectivity, SD-WAN and cloud takes 35 days. 30% of orders fall out and need rework. Every hand-off between CRM, order management, inventory, field services and partner systems is re-keyed by hand. Customers want real-time status, and wholesale partners across the Balkans and Caucasus have no API access."><img src="/static/case-study/thumb-02.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">2</span></button></li>
+          <li><button type="button" data-slide="3" data-kicker="Objective and target outcomes" data-title="From manual relay to agent-run orders" data-src="/static/case-study/slide-03.webp" data-alt="Objective and target outcomes: from manual relay to agent-run orders. Today: 35 days from order to activation and 30% order fallout, with manual re-keying and no visibility for customers or partners. Target: under 7 days and under 8% fallout, with agents running every order and people handling only the exceptions."><img src="/static/case-study/thumb-03.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">3</span></button></li>
+          <li><button type="button" data-slide="4" data-kicker="Business case and why now" data-title="28 days sooner, on every order" data-src="/static/case-study/slide-04.webp" data-alt="Business case: 28 days sooner on every order. About TRY 900 million of revenue brought forward across 12,000 enterprise orders a year, and TRY 150 million of fallout rework cut. Why now, 2026 to 2028: TM Forum Open APIs are the standard, the 2024 KVKK amendments changed cross-border transfer rules, and demand outpaces manual fulfilment."><img src="/static/case-study/thumb-04.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">4</span></button></li>
+          <li><button type="button" data-slide="5" data-kicker="Solution architecture · proposed" data-title="Five agents, one supervisor per order" data-src="/static/case-study/slide-05.webp" data-alt="Proposed architecture: five agents, one supervisor per order. Channels (enterprise customers, wholesale partners through MCP, and service managers) feed a per-order supervisor that coordinates the Order Validation, Order Decomposition, Provisioning Orchestration, Fallout Resolution and Customer Update agents. TM Forum Open APIs exposed as MCP tools through Azure API Management connect them to CRM, order management, inventory, field services and the network and cloud domains, running in-country on Azure Local in Türkiye. Governance covers KVKK localisation, change control, SLA enforcement, BTK auditability and Entra Agent ID."><img src="/static/case-study/thumb-05.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">5</span></button></li>
+          <li><button type="button" data-slide="6" data-kicker="End-to-end order flow" data-title="One order, end to end" data-src="/static/case-study/slide-06.webp" data-alt="One order, end to end. An order arrives, a supervisor is created, then validation, decomposition and provisioning run through the domains and partners until the service is active. If an order fails or stalls, the Fallout Resolution agent fixes it from playbooks and the order resumes. Only novel or unresolved issues reach the service manager's exception queue. The Customer Update agent notifies the customer on every state change, in Turkish or English."><img src="/static/case-study/thumb-06.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">6</span></button></li>
+          <li><button type="button" data-slide="7" data-kicker="Agent catalogue" data-title="Each agent owns one job" data-src="/static/case-study/slide-07.webp" data-alt="Agent catalogue: each agent owns one job. A table of the five agents with their autonomy level, what they own end to end, their scoped tools and their guardrails: Order Validation (L3), Order Decomposition (L4, autonomous), Provisioning Orchestration (L3, within change windows), Fallout Resolution (L3, within playbooks) and Customer Update (L3)."><img src="/static/case-study/thumb-07.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">7</span></button></li>
+          <li><button type="button" data-slide="8" data-kicker="Autonomy and guardrails" data-title="Autonomy enforced by permissions, not prompts" data-src="/static/case-study/slide-08.webp" data-alt="Autonomy is enforced by permissions, not prompts. Order Decomposition is L4 and autonomous. The other four agents are L3 and act only within bounds. Policy gates sit in front of every tool call: price or contract changes need human approval, activation needs an approved change window, fixes need a catalogued playbook, and a customer is never promised a date outside the SLA and contract."><img src="/static/case-study/thumb-08.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">8</span></button></li>
+          <li><button type="button" data-slide="9" data-kicker="Data residency and hosting · proposed" data-title="All order data stays in Türkiye" data-src="/static/case-study/slide-09.webp" data-alt="All order data stays in Türkiye. Because Azure's public region list shows no region in Türkiye, the proposal is hybrid. Agents, open-weight models, order data and logs run on AKS enabled by Azure Arc on Azure Local in the operator's Turkish datacenter. Azure cloud is used only to design, build and test with synthetic data. The residency approach must be validated with legal and KVKK counsel and Microsoft."><img src="/static/case-study/thumb-09.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">9</span></button></li>
+          <li><button type="button" data-slide="10" data-kicker="Governance, safety and evaluation" data-title="Every decision auditable, in Türkiye" data-src="/static/case-study/slide-10.webp" data-alt="Every decision is auditable, in Türkiye. Requirements mapped to the design: KVKK, BTK audit, change management and SLA commitments. Safety and evaluation: a least-privilege Entra Agent ID for each agent, replay of historical orders before every release, and continuous monitoring kept in country."><img src="/static/case-study/thumb-10.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">10</span></button></li>
+          <li><button type="button" data-slide="11" data-kicker="Phased rollout · proposed" data-title="Shadow, assist, act, then scale" data-src="/static/case-study/slide-11.webp" data-alt="Shadow, assist, act, then scale. Months 0 to 3, shadow: agents run alongside humans, who decide. Months 3 to 6, assist: agents recommend and humans approve. Months 6 to 9, act: agents work at agreed autonomy levels for one product. Then scale to SD-WAN, cloud services and more wholesale partners."><img src="/static/case-study/thumb-11.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">11</span></button></li>
+          <li><button type="button" data-slide="12" data-kicker="Success measures" data-title="Four measures prove the value" data-src="/static/case-study/slide-12.webp" data-alt="Four measures prove the value. Order-to-activation from 35 days today to under 7 days. Order fallout rate from 30% to under 8%. Partner self-service share, as wholesale partners move from no API access to self-service through agents. Enterprise NPS, expected to rise as activation gets faster and customers get proactive updates."><img src="/static/case-study/thumb-12.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">12</span></button></li>
+          <li><button type="button" data-slide="13" data-kicker="Cost of implementation · planning estimate" data-title="US$1.3M to build, repaid within a year of go-live" data-src="/static/case-study/slide-13.webp" data-alt="Cost of implementation, a planning estimate: US$1.3 million to build, repaid within a year of go-live. One-off build over nine months, about 65 million Turkish lira: shadow phase 10 people US$0.30 million, assist phase 12 people US$0.36 million, act phase 14 people US$0.42 million, plus 20% contingency US$0.22 million, 108 person-months and US$1.30 million in total. About US$0.4 million a year to run, hardware excluded, against about US$3.0 million a year saved on fallout rework, so the build pays back in roughly 6 months after go-live. Azure build and test environment at list price, US dollars a month: Container Apps 19.71, Azure SQL Database S0 14.72, two private endpoints 14.60, Log Analytics 8.97, registry, DNS, storage, e-mail and AI 7.07, and Defender for SQL after its free trial 15.00. That totals 80.07 against a US$100 target, and US$5.81 was actually billed from 1 to 13 November. All figures are planning estimates, not quotes."><img src="/static/case-study/thumb-13.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">13</span></button></li>
+          <li><button type="button" data-slide="14" data-kicker="Risks and next steps" data-title="De-risk first, then pilot" data-src="/static/case-study/slide-14.webp" data-alt="De-risk first, then pilot. Risks to manage: residency not yet validated, legacy integration effort, playbook coverage and partner readiness. Next steps: validate the residency approach with KVKK counsel and Microsoft, pick the pilot product, build the playbook library from historical fallout, plan wholesale partner onboarding to MCP access, and confirm the sponsors."><img src="/static/case-study/thumb-14.webp" alt="" width="480" height="270" loading="lazy"><span class="thumb-no">14</span></button></li>
+        </ol>
+
+        <div class="tools">
+          <a class="tool" id="deck-open" href="/static/case-study/slide-01.webp" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg>Open slide full size</a>
+          <a class="tool" href="/static/case-study/Agentic_Order_to_Activation_Architecture.pptx" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>PowerPoint</a>
+          <a class="tool" href="/static/case-study/Agentic_Order_to_Activation_Architecture.pdf" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>PDF</a>
+          <span class="tool-note"><kbd>←</kbd> <kbd>→</kbd> change slide · <kbd>F</kbd> full screen</span>
+        </div>
+      </div>
+
+      <nav class="scene-nav" aria-label="Chapter navigation">
+        <a class="btn btn-ghost" href="#/today"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-l"/></svg>Back: today</a>
+        <a class="btn btn-primary" id="deck-next-chapter" href="#/solution">Next: the solution in action <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+      <p class="fineprint">This is a proposed design, not a deployed one. Targets and business-case figures are assignment ambitions to be proven in a pilot.</p>
+    </section>
+
+    <!-- 3 · Solution -->
+    <section class="scene scene-solution" id="scene-solution" data-scene="solution" aria-labelledby="h-solution" hidden>
+      <header class="scene-head">
+        <p class="chapter-tag"><span class="chapter-num" aria-hidden="true">3</span>The solution in action</p>
+        <h2 id="h-solution" tabindex="-1">One order. One accountable flow.</h2>
+        <p class="scene-lede">Follow a single order through the guarded agents: intake, validation, decomposition and provisioning, with bounded recovery, human approval, customer updates, TM Forum-inspired APIs and the Azure Local residency architecture.</p>
+      </header>
+
+      <div class="cinema" data-film="solution">
+        <video id="film-solution" controls playsinline preload="none" poster="/static/solution-tower-v6-poster.jpg" aria-label="Narrated film: how the agentic solution activates an order">
+          <source src="/static/solution-tower-v6.mp4" type="video/mp4">
+          <track kind="captions" src="/static/solution-tower-v6.vtt" srclang="en" label="English">
+          Your browser cannot play this film. <a href="/static/solution-tower-v6.mp4">Download the MP4</a>.
+        </video>
+        <div class="up-next" hidden>
+          <p class="up-next-kicker">Up next · Chapter 4</p>
+          <p class="up-next-title">Try the live app</p>
+          <div class="up-next-actions">
+            <a class="btn btn-primary" href="#/app">Continue <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+            <button class="btn btn-ghost" type="button" data-replay><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-replay"/></svg>Replay</button>
+          </div>
+        </div>
+      </div>
+      <p class="video-fail" hidden>This browser could not play the film. <a href="/static/solution-tower-v6.mp4">Download the MP4</a> instead.</p>
+
+      <div class="tools">
+        <button class="tool" type="button" data-cc aria-pressed="false"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cc"/></svg>Captions</button>
+        <a class="tool" href="/static/solution-tower-v6.mp4" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download film</a>
+        <span class="tool-note">2 min 56 s · British-English narration</span>
+      </div>
+
+      <h3 class="rail-title">Jump to a moment</h3>
+      <ol class="chapters" aria-label="Moments in the film">
+        <li><button type="button" class="chip" data-t="0"><span class="chip-time">0:00</span><span class="chip-name">One supervisor, five agents</span></button></li>
+        <li><button type="button" class="chip" data-t="13.775"><span class="chip-time">0:14</span><span class="chip-name">Intake</span></button></li>
+        <li><button type="button" class="chip" data-t="26.468"><span class="chip-time">0:26</span><span class="chip-name">Validation</span></button></li>
+        <li><button type="button" class="chip" data-t="41.242"><span class="chip-time">0:41</span><span class="chip-name">Decomposition</span></button></li>
+        <li><button type="button" class="chip" data-t="55.263"><span class="chip-time">0:55</span><span class="chip-name">Provisioning</span></button></li>
+        <li><button type="button" class="chip" data-t="69.243"><span class="chip-time">1:09</span><span class="chip-name">Recovery</span></button></li>
+        <li><button type="button" class="chip" data-t="83.290"><span class="chip-time">1:23</span><span class="chip-name">Human approval</span></button></li>
+        <li><button type="button" class="chip" data-t="94.871"><span class="chip-time">1:35</span><span class="chip-name">Customer update</span></button></li>
+        <li><button type="button" class="chip" data-t="110.955"><span class="chip-time">1:51</span><span class="chip-name">Standards and MCP</span></button></li>
+        <li><button type="button" class="chip" data-t="127.973"><span class="chip-time">2:08</span><span class="chip-name">Data residency</span></button></li>
+        <li><button type="button" class="chip" data-t="143.156"><span class="chip-time">2:23</span><span class="chip-name">Controlled cloud connectivity</span></button></li>
+        <li><button type="button" class="chip" data-t="159.235"><span class="chip-time">2:39</span><span class="chip-name">Customer value</span></button></li>
+      </ol>
+
+      <nav class="scene-nav" aria-label="Chapter navigation">
+        <a class="btn btn-ghost" href="#/architecture"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-l"/></svg>Back: architecture</a>
+        <a class="btn btn-primary" href="#/app">Next: try the live app <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+
+      <details class="transcript">
+        <summary>Read the narration</summary>
+        <div class="transcript-body" data-vtt="/static/solution-tower-v6.vtt"><p class="transcript-wait">Loading the narration…</p></div>
+      </details>
+      <p class="fineprint">The film illustrates a customer workflow, not live carrier provisioning. Türkiye residency requires supported Azure Local infrastructure, local services and approved egress controls. Business benefits describe objectives; TM Forum-inspired contracts require customer-specific acceptance.</p>
+    </section>
+
+    <!-- 4 · Live app -->
+    <section class="scene scene-app" id="scene-app" data-scene="app" aria-labelledby="h-app" hidden>
+      <header class="scene-head">
+        <p class="chapter-tag"><span class="chapter-num" aria-hidden="true">4</span>The live app</p>
+        <h2 id="h-app" tabindex="-1">Now try it, live</h2>
+        <p class="scene-lede">This is the running TürkBizTel app on Azure. Place an order, track it, or sign in to see the customer, partner and service-team views.</p>
+      </header>
+
+      <div class="app-layout">
+        <div class="device">
+          <div class="device-bar">
+            <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="device-address"><span class="visually-hidden">Showing </span><span id="app-address">/</span></span>
+            <a class="device-open" id="app-open" href="/" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg><span>Open in a new tab</span></a>
+          </div>
+          <div class="device-tabs" role="group" aria-label="Pages to show in the frame">
+            <button type="button" class="seg" data-frame="/" aria-pressed="true">Sign in</button>
+            <button type="button" class="seg" data-frame="/login#staff" aria-pressed="false">Service team sign-in</button>
+            <button type="button" class="seg" data-frame="/order" aria-pressed="false">Place an order</button>
+            <button type="button" class="seg" data-frame="/track" aria-pressed="false">Track an order</button>
+          </div>
+          <iframe id="app-frame" title="TürkBizTel live app" data-src="/" referrerpolicy="same-origin"></iframe>
+        </div>
+
+        <aside class="roles" aria-label="Who sees what">
+          <h3>Three views, one app</h3>
+          <article class="role" data-role="customer">
+            <span class="role-icon" aria-hidden="true"><svg class="icon"><use href="#i-package"/></svg></span>
+            <div><strong>Customers</strong><p>Place and track orders, fix anything we are missing and update contact details.</p><p class="role-how">Choose <em>New customer</em> to create an account, or place an order without one.</p></div>
+          </article>
+          <article class="role" data-role="partner">
+            <span class="role-icon" aria-hidden="true"><svg class="icon"><use href="#i-truck"/></svg></span>
+            <div><strong>Partners</strong><p>See expected delivery dates and payments, update delivery details and raise concerns.</p><p class="role-how">Partner accounts are invited by the service team.</p></div>
+          </article>
+          <article class="role" data-role="staff">
+            <span class="role-icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
+            <div><strong>Service team</strong><p>The control tower, order workspace, exception desk and a live tab for each of the five agents.</p><p class="role-how"><a href="/login#staff" target="_blank" rel="noopener">Sign in with your access token</a>. Partner and service-team sign-in details are shared with the submission, never on this page.</p></div>
+          </article>
+          <p class="role-warn">This is a live environment: orders you place are saved and confirmation e-mails are really sent, so use a test address.</p>
+        </aside>
+      </div>
+
+      <section class="finale" aria-labelledby="h-finale">
+        <span class="finale-icon" aria-hidden="true"><svg class="icon"><use href="#i-bolt"/></svg></span>
+        <div>
+          <h3 id="h-finale">That is the whole journey</h3>
+          <p>From a 35-day wait to agent-run orders: the problem, the architecture, the solution and the running app.</p>
+        </div>
+        <div class="finale-actions">
+          <a class="btn btn-primary" href="#/intro"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-replay"/></svg>Replay from the start</a>
+          <a class="btn btn-ghost" href="/static/case-study/Agentic_Order_to_Activation_Architecture.pdf" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download the deck</a>
+        </div>
+      </section>
+
+      <nav class="scene-nav" aria-label="Chapter navigation">
+        <a class="btn btn-ghost" href="#/solution"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-l"/></svg>Back: solution</a>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>AMA Assignment 30 · Haider Raza · Microsoft UK. The operator in the story is fictional, the architecture is a proposal and the demo app connects to no real network.</p>
+    <p class="keys" aria-hidden="true"><kbd>←</kbd> <kbd>→</kbd> move on · <kbd>1</kbd>–<kbd>4</kbd> chapters</p>
+  </footer>
+</body>
+</html>

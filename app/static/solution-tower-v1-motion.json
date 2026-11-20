@@ -1,0 +1,268 @@
+[
+  {
+    "scene": "opening",
+    "changedPixels": 18182,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 18300
+  },
+  {
+    "scene": "intake",
+    "changedPixels": 12279,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 13672
+  },
+  {
+    "scene": "validation",
+    "changedPixels": 27849,
+    "activeAgent": 0,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 29963
+  },
+  {
+    "scene": "decomposition",
+    "changedPixels": 47265,
+    "activeAgent": 1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 51517
+  },
+  {
+    "scene": "provisioning",
+    "changedPixels": 14761,
+    "activeAgent": 2,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 15972
+  },
+  {
+    "scene": "recovery",
+    "changedPixels": 12051,
+    "activeAgent": 3,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 12957
+  },
+  {
+    "scene": "human",
+    "changedPixels": 16016,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 17851
+  },
+  {
+    "scene": "communication",
+    "changedPixels": 27325,
+    "activeAgent": 4,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 29209
+  },
+  {
+    "scene": "partners",
+    "changedPixels": 24931,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 27159
+  },
+  {
+    "scene": "standards",
+    "changedPixels": 16474,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 18120
+  },
+  {
+    "scene": "residency",
+    "changedPixels": 13517,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 14551
+  },
+  {
+    "scene": "hybrid",
+    "changedPixels": 43691,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 47693
+  },
+  {
+    "scene": "strict",
+    "changedPixels": 13267,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 14431
+  },
+  {
+    "scene": "impact",
+    "changedPixels": 18416,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatarSignatures": [
+      "owl ears, checklist and magnifying glass",
+      "hard hat, blueprint and orbiting blocks",
+      "tall cyclops, wrench and connector arms",
+      "round rescue ring and retry toolbox",
+      "headset, paper plane and bilingual bubbles"
+    ],
+    "encodedChangedPixels": 19383
+  }
+]

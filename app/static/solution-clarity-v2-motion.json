@@ -1,0 +1,2931 @@
+[
+  {
+    "scene": "opening",
+    "agent": -1,
+    "owner": "CUSTOMER + GUARDED SUPERVISOR",
+    "activeAgent": -1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "START",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 555.08984375
+      },
+      {
+        "label": "OWNER",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 651.4853515625
+      },
+      {
+        "label": "CONTROL",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 478.3212890625
+      },
+      {
+        "label": "READ THIS FILM",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 695.296875
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 0,
+    "visibleHumans": [
+      "customer"
+    ],
+    "perspectiveCamera": true,
+    "geometryTriangles": 11898,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.599991892264677,
+      4.3,
+      8.774707174007347
+    ],
+    "changedPixels": 61003,
+    "beatChecks": [
+      {
+        "scene": "opening",
+        "agent": -1,
+        "owner": "CUSTOMER + GUARDED SUPERVISOR",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "START",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 555.08984375
+          },
+          {
+            "label": "OWNER",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 651.4853515625
+          },
+          {
+            "label": "CONTROL",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 478.3212890625
+          },
+          {
+            "label": "READ THIS FILM",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 695.296875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "customer"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 11898,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389507,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "opening",
+        "agent": -1,
+        "owner": "CUSTOMER + GUARDED SUPERVISOR",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "START",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 555.08984375
+          },
+          {
+            "label": "OWNER",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 651.4853515625
+          },
+          {
+            "label": "CONTROL",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 478.3212890625
+          },
+          {
+            "label": "READ THIS FILM",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 695.296875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "customer"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 11898,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.569177574726504,
+          4.3,
+          8.663953662134851
+        ]
+      }
+    ],
+    "encodedChangedPixels": 52295
+  },
+  {
+    "scene": "intake",
+    "agent": -1,
+    "owner": "GUARDED ORDER INTAKE",
+    "activeAgent": -1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 660.181640625
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 703.6884765625
+      },
+      {
+        "label": "EXCEPTION",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 683.693359375
+      },
+      {
+        "label": "HUMAN",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 586.6884765625
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 579.76953125
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 0,
+    "visibleHumans": [
+      "customer"
+    ],
+    "perspectiveCamera": true,
+    "geometryTriangles": 11898,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.5825433164527745,
+      4.3,
+      8.863088386390793
+    ],
+    "changedPixels": 47527,
+    "beatChecks": [
+      {
+        "scene": "intake",
+        "agent": -1,
+        "owner": "GUARDED ORDER INTAKE",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 660.181640625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 703.6884765625
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 683.693359375
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 586.6884765625
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 579.76953125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "customer"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 11898,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389507,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "intake",
+        "agent": -1,
+        "owner": "GUARDED ORDER INTAKE",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 660.181640625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 703.6884765625
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 683.693359375
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 586.6884765625
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 579.76953125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "customer"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 11898,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.5997726469298055,
+          4.3,
+          8.762537859721956
+        ]
+      }
+    ],
+    "encodedChangedPixels": 40870
+  },
+  {
+    "scene": "validation",
+    "agent": 0,
+    "owner": "1 / ORDER VALIDATION AGENT",
+    "activeAgent": 0,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 599.142578125
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 496.716796875
+      },
+      {
+        "label": "EXCEPTION",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 623.13671875
+      },
+      {
+        "label": "HUMAN",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 673.892578125
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 638.193359375
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 1,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 6302,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.587361846819871,
+      4.3,
+      8.849846628072267
+    ],
+    "changedPixels": 44426,
+    "beatChecks": [
+      {
+        "scene": "validation",
+        "agent": 0,
+        "owner": "1 / ORDER VALIDATION AGENT",
+        "activeAgent": 0,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 599.142578125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 496.716796875
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 623.13671875
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 673.892578125
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 638.193359375
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6302,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389507,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "validation",
+        "agent": 0,
+        "owner": "1 / ORDER VALIDATION AGENT",
+        "activeAgent": 0,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 599.142578125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 496.716796875
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 623.13671875
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 673.892578125
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 638.193359375
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6302,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.598387420172372,
+          4.3,
+          8.745745728458681
+        ]
+      }
+    ],
+    "encodedChangedPixels": 35254
+  },
+  {
+    "scene": "decomposition",
+    "agent": 1,
+    "owner": "2 / ORDER DECOMPOSITION AGENT",
+    "activeAgent": 1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 657.9853515625
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 637.6220703125
+      },
+      {
+        "label": "EXCEPTION",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 646.140625
+      },
+      {
+        "label": "HUMAN / PRODUCTION GATE",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 682.3857421875
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 596.8828125
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 1,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 5170,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.590792496142068,
+      4.3,
+      8.838657616255748
+    ],
+    "changedPixels": 53109,
+    "beatChecks": [
+      {
+        "scene": "decomposition",
+        "agent": 1,
+        "owner": "2 / ORDER DECOMPOSITION AGENT",
+        "activeAgent": 1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 657.9853515625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 637.6220703125
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 646.140625
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 682.3857421875
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 596.8828125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 5170,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389508,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "decomposition",
+        "agent": 1,
+        "owner": "2 / ORDER DECOMPOSITION AGENT",
+        "activeAgent": 1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 657.9853515625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 637.6220703125
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 646.140625
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 682.3857421875
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 596.8828125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 5170,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.596284527428497,
+          4.3,
+          8.732090895224376
+        ]
+      }
+    ],
+    "encodedChangedPixels": 42847
+  },
+  {
+    "scene": "provisioning",
+    "agent": 2,
+    "owner": "3 / PROVISIONING AGENT",
+    "activeAgent": 2,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 608.4736328125
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 623.466796875
+      },
+      {
+        "label": "EXCEPTION",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 663.7744140625
+      },
+      {
+        "label": "HUMAN",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 633.7626953125
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 553.2744140625
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 1,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 5818,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.584171854771279,
+      4.3,
+      8.858865988124633
+    ],
+    "changedPixels": 42324,
+    "beatChecks": [
+      {
+        "scene": "provisioning",
+        "agent": 2,
+        "owner": "3 / PROVISIONING AGENT",
+        "activeAgent": 2,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 608.4736328125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 623.466796875
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 663.7744140625
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 633.7626953125
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 553.2744140625
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 5818,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389508,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "provisioning",
+        "agent": 2,
+        "owner": "3 / PROVISIONING AGENT",
+        "activeAgent": 2,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 608.4736328125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 623.466796875
+          },
+          {
+            "label": "EXCEPTION",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 663.7744140625
+          },
+          {
+            "label": "HUMAN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 633.7626953125
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 553.2744140625
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6022,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.5994647519718255,
+          4.3,
+          8.757109515782078
+        ]
+      }
+    ],
+    "encodedChangedPixels": 33093
+  },
+  {
+    "scene": "recovery",
+    "agent": 3,
+    "owner": "4 / FALLOUT RESOLUTION AGENT",
+    "activeAgent": 3,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 689.5712890625
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 579.66796875
+      },
+      {
+        "label": "EXCEPTION / PRODUCTION GATE",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 593.5185546875
+      },
+      {
+        "label": "HUMAN / PRODUCTION GATE",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 616.0146484375
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 699.486328125
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 1,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 6506,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.590472955285598,
+      4.3,
+      8.839783716311747
+    ],
+    "changedPixels": 43906,
+    "beatChecks": [
+      {
+        "scene": "recovery",
+        "agent": 3,
+        "owner": "4 / FALLOUT RESOLUTION AGENT",
+        "activeAgent": 3,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 689.5712890625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 579.66796875
+          },
+          {
+            "label": "EXCEPTION / PRODUCTION GATE",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 593.5185546875
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 616.0146484375
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 699.486328125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6506,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389508,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "recovery",
+        "agent": 3,
+        "owner": "4 / FALLOUT RESOLUTION AGENT",
+        "activeAgent": 3,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 689.5712890625
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 579.66796875
+          },
+          {
+            "label": "EXCEPTION / PRODUCTION GATE",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 593.5185546875
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 616.0146484375
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 699.486328125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6506,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.596533625832087,
+          4.3,
+          8.733442849246268
+        ]
+      }
+    ],
+    "encodedChangedPixels": 34611
+  },
+  {
+    "scene": "human",
+    "agent": -1,
+    "owner": "HUMAN SERVICE MANAGER",
+    "activeAgent": -1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "REVIEW",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 604.576171875
+      },
+      {
+        "label": "DECISION",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 653.2880859375
+      },
+      {
+        "label": "LIMIT",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 587.2978515625
+      },
+      {
+        "label": "RETURN",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 642.6748046875
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 0,
+    "visibleHumans": [
+      "manager"
+    ],
+    "perspectiveCamera": true,
+    "geometryTriangles": 10592,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.597758947103474,
+      4.3,
+      8.805255460358064
+    ],
+    "changedPixels": 59441,
+    "beatChecks": [
+      {
+        "scene": "human",
+        "agent": -1,
+        "owner": "HUMAN SERVICE MANAGER",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "REVIEW",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 604.576171875
+          },
+          {
+            "label": "DECISION",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 653.2880859375
+          },
+          {
+            "label": "LIMIT",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 587.2978515625
+          },
+          {
+            "label": "RETURN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 642.6748046875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "manager"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 10592,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389508,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "human",
+        "agent": -1,
+        "owner": "HUMAN SERVICE MANAGER",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "REVIEW",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 604.576171875
+          },
+          {
+            "label": "DECISION",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 653.2880859375
+          },
+          {
+            "label": "LIMIT",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 587.2978515625
+          },
+          {
+            "label": "RETURN",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 642.6748046875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "manager"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 10592,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.585245146167,
+          4.3,
+          8.694318506538657
+        ]
+      }
+    ],
+    "encodedChangedPixels": 40848
+  },
+  {
+    "scene": "communication",
+    "agent": 4,
+    "owner": "5 / CUSTOMER UPDATE AGENT",
+    "activeAgent": 4,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "DO",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 597.23828125
+      },
+      {
+        "label": "OUTPUT",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 612.345703125
+      },
+      {
+        "label": "EXCEPTION / PRODUCTION GATE",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 574.9580078125
+      },
+      {
+        "label": "HUMAN / PRODUCTION GATE",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 665.9833984375
+      },
+      {
+        "label": "IMPACT",
+        "x": 1124,
+        "y": 692,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 650.177734375
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 1,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 6994,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.581115792128355,
+      4.3,
+      8.866613379708388
+    ],
+    "changedPixels": 40988,
+    "beatChecks": [
+      {
+        "scene": "communication",
+        "agent": 4,
+        "owner": "5 / CUSTOMER UPDATE AGENT",
+        "activeAgent": 4,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 597.23828125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 612.345703125
+          },
+          {
+            "label": "EXCEPTION / PRODUCTION GATE",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 574.9580078125
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 665.9833984375
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 650.177734375
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6994,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389508,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "communication",
+        "agent": 4,
+        "owner": "5 / CUSTOMER UPDATE AGENT",
+        "activeAgent": 4,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "DO",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 597.23828125
+          },
+          {
+            "label": "OUTPUT",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 612.345703125
+          },
+          {
+            "label": "EXCEPTION / PRODUCTION GATE",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 574.9580078125
+          },
+          {
+            "label": "HUMAN / PRODUCTION GATE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 665.9833984375
+          },
+          {
+            "label": "IMPACT",
+            "x": 1124,
+            "y": 692,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 650.177734375
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 1,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 6994,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.599931061096652,
+          4.3,
+          8.76712365575315
+        ]
+      }
+    ],
+    "encodedChangedPixels": 32037
+  },
+  {
+    "scene": "impact",
+    "agent": -1,
+    "owner": "MEASURABLE BUSINESS CASE",
+    "activeAgent": -1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "LESS FALLOUT",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 704.4755859375
+      },
+      {
+        "label": "SHORTER DELIVERY",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 682.220703125
+      },
+      {
+        "label": "ASSIGNMENT TARGETS / NOT RESULTS",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 1,
+        "measuredWidth": 535.666015625
+      },
+      {
+        "label": "PILOT EVIDENCE",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 663.0888671875
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 2,
+    "visibleAgents": 0,
+    "visibleHumans": [
+      "manager"
+    ],
+    "perspectiveCamera": true,
+    "geometryTriangles": 13864,
+    "shadows": true,
+    "officialIcons": [],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.5899263093861995,
+      4.3,
+      8.70710429474496
+    ],
+    "changedPixels": 72286,
+    "beatChecks": [
+      {
+        "scene": "impact",
+        "agent": -1,
+        "owner": "MEASURABLE BUSINESS CASE",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "LESS FALLOUT",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 704.4755859375
+          },
+          {
+            "label": "SHORTER DELIVERY",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 682.220703125
+          },
+          {
+            "label": "ASSIGNMENT TARGETS / NOT RESULTS",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 535.666015625
+          },
+          {
+            "label": "PILOT EVIDENCE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 663.0888671875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 2,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "manager"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 13864,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389507,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "impact",
+        "agent": -1,
+        "owner": "MEASURABLE BUSINESS CASE",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "LESS FALLOUT",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 704.4755859375
+          },
+          {
+            "label": "SHORTER DELIVERY",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 682.220703125
+          },
+          {
+            "label": "ASSIGNMENT TARGETS / NOT RESULTS",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 1,
+            "measuredWidth": 535.666015625
+          },
+          {
+            "label": "PILOT EVIDENCE",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 663.0888671875
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 2,
+        "visibleAgents": 0,
+        "visibleHumans": [
+          "manager"
+        ],
+        "perspectiveCamera": true,
+        "geometryTriangles": 13864,
+        "shadows": true,
+        "officialIcons": [],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.512688921911665,
+          4.3,
+          8.614075939089984
+        ]
+      }
+    ],
+    "encodedChangedPixels": 56155
+  },
+  {
+    "scene": "residency",
+    "agent": -1,
+    "owner": "PROPOSED SOVEREIGN PRODUCTION DESIGN",
+    "activeAgent": -1,
+    "layout": {
+      "world": {
+        "x": 32,
+        "y": 194,
+        "width": 1040,
+        "height": 645
+      },
+      "responsibilities": {
+        "x": 1100,
+        "y": 194,
+        "width": 788,
+        "height": 645
+      },
+      "handoffs": {
+        "x": 32,
+        "y": 847,
+        "width": 1856,
+        "height": 78
+      },
+      "captions": {
+        "x": 32,
+        "y": 938,
+        "width": 1856,
+        "height": 96
+      }
+    },
+    "panelBounds": [
+      {
+        "label": "STANDARDS",
+        "x": 1124,
+        "y": 276,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 647.765625
+      },
+      {
+        "label": "TURKIYE / AZURE LOCAL",
+        "x": 1124,
+        "y": 380,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 646.34375
+      },
+      {
+        "label": "OUTSIDE / APPROVAL REQUIRED",
+        "x": 1124,
+        "y": 484,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 576.7353515625
+      },
+      {
+        "label": "STRICTER BOUNDARY",
+        "x": 1124,
+        "y": 588,
+        "width": 735,
+        "height": 97,
+        "fontSize": 26,
+        "lines": 2,
+        "measuredWidth": 634.61328125
+      }
+    ],
+    "captionFontSize": 28,
+    "captionLines": 1,
+    "visibleAgents": 0,
+    "visibleHumans": [],
+    "perspectiveCamera": true,
+    "geometryTriangles": 552,
+    "shadows": true,
+    "officialIcons": [
+      "Azure Local",
+      "Azure Arc",
+      "Azure Container Registry",
+      "Azure Monitor"
+    ],
+    "industryContextLogo": true,
+    "noEndorsementLabel": true,
+    "camera": [
+      4.596816769517623,
+      4.3,
+      8.735043893261006
+    ],
+    "changedPixels": 47347,
+    "beatChecks": [
+      {
+        "scene": "residency",
+        "agent": -1,
+        "owner": "PROPOSED SOVEREIGN PRODUCTION DESIGN",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "STANDARDS",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 647.765625
+          },
+          {
+            "label": "TURKIYE / AZURE LOCAL",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 646.34375
+          },
+          {
+            "label": "OUTSIDE / APPROVAL REQUIRED",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 576.7353515625
+          },
+          {
+            "label": "STRICTER BOUNDARY",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 634.61328125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 552,
+        "shadows": true,
+        "officialIcons": [
+          "Azure Local",
+          "Azure Arc",
+          "Azure Container Registry",
+          "Azure Monitor"
+        ],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.443353106389507,
+          4.3,
+          8.9943858390739
+        ]
+      },
+      {
+        "scene": "residency",
+        "agent": -1,
+        "owner": "PROPOSED SOVEREIGN PRODUCTION DESIGN",
+        "activeAgent": -1,
+        "layout": {
+          "world": {
+            "x": 32,
+            "y": 194,
+            "width": 1040,
+            "height": 645
+          },
+          "responsibilities": {
+            "x": 1100,
+            "y": 194,
+            "width": 788,
+            "height": 645
+          },
+          "handoffs": {
+            "x": 32,
+            "y": 847,
+            "width": 1856,
+            "height": 78
+          },
+          "captions": {
+            "x": 32,
+            "y": 938,
+            "width": 1856,
+            "height": 96
+          }
+        },
+        "panelBounds": [
+          {
+            "label": "STANDARDS",
+            "x": 1124,
+            "y": 276,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 647.765625
+          },
+          {
+            "label": "TURKIYE / AZURE LOCAL",
+            "x": 1124,
+            "y": 380,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 646.34375
+          },
+          {
+            "label": "OUTSIDE / APPROVAL REQUIRED",
+            "x": 1124,
+            "y": 484,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 576.7353515625
+          },
+          {
+            "label": "STRICTER BOUNDARY",
+            "x": 1124,
+            "y": 588,
+            "width": 735,
+            "height": 97,
+            "fontSize": 26,
+            "lines": 2,
+            "measuredWidth": 634.61328125
+          }
+        ],
+        "captionFontSize": 28,
+        "captionLines": 1,
+        "visibleAgents": 0,
+        "visibleHumans": [],
+        "perspectiveCamera": true,
+        "geometryTriangles": 552,
+        "shadows": true,
+        "officialIcons": [
+          "Azure Local",
+          "Azure Arc",
+          "Azure Container Registry",
+          "Azure Monitor"
+        ],
+        "industryContextLogo": true,
+        "noEndorsementLabel": true,
+        "camera": [
+          4.539750945570406,
+          4.3,
+          8.631377144613122
+        ]
+      }
+    ],
+    "encodedChangedPixels": 32139
+  }
+]

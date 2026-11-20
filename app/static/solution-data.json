@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 2,
+  "presentation": "character-and-event-animation",
+  "title": "The journey of an order",
+  "subtitle": "Customers, event-driven agents, industry standards and a sovereign hybrid design",
+  "sources": [
+    "README.md",
+    "app/domain.py",
+    "app/main.py",
+    "app/store.py",
+    "app/advisor.py",
+    "docs/PRODUCTION.md"
+  ],
+  "references": [
+    {
+      "name": "TM Forum TMF622 product ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/product-ordering-management-api-TMF622/v5.0"
+    },
+    {
+      "name": "TM Forum TMF641 service ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/service-ordering-management-api-TMF641/v4.1"
+    },
+    {
+      "name": "MCP JSON-RPC and Streamable HTTP",
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports"
+    },
+    {
+      "name": "Azure public geography inventory (checked 30 October 2026)",
+      "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/"
+    },
+    {
+      "name": "Azure Local overview",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/overview"
+    },
+    {
+      "name": "Azure Arc data and privacy",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/servers/security-data-privacy"
+    },
+    {
+      "name": "Azure Local disconnected operations and eligibility",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/disconnected-operations-overview"
+    }
+  ],
+  "branding": {
+    "name": "T\u00fcrk Telekom",
+    "asset": "solution-turk-telekom.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:T%C3%BCrk_Telekom_logo.svg",
+    "license": "Public-domain simple geometric logo as labelled by Wikimedia Commons; trademark rights remain.",
+    "disclaimer": "Market context only. No affiliation, endorsement, customer relationship or integration is claimed. AMA is fictional."
+  },
+  "agents": [
+    "Validation",
+    "Decomposition",
+    "Provisioning",
+    "Fallout recovery",
+    "Customer updates"
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "chapter": "A customer needs connectivity",
+      "title": "It starts with a customer.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "Customer selects a product",
+        "Customer prepares an order"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "An Istanbul customer needs connectivity. One click starts the journey.",
+          "start": 0.18,
+          "duration": 4.69142
+        },
+        {
+          "text": "Follow this synthetic demonstration. Turkish telecom branding provides context, not endorsement.",
+          "start": 4.99142,
+          "duration": 7.13983
+        }
+      ],
+      "duration": 12.43125
+    },
+    {
+      "id": "intake",
+      "chapter": "01 / Place and persist",
+      "title": "The order moves. The identity stays.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "POST productOrder / idempotency key",
+        "order.received -> persisted queue"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "queued",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Submit sends the product order. An idempotency key prevents duplicates.",
+          "start": 0.18,
+          "duration": 5.61704
+        },
+        {
+          "text": "Order and event persist together. The supervisor activates agents in sequence.",
+          "start": 5.91704,
+          "duration": 6.68192
+        }
+      ],
+      "duration": 12.89896
+    },
+    {
+      "id": "validation",
+      "chapter": "02 / Activate validation",
+      "title": "Check first. Propagate clean intent.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "order.received -> validation agent",
+        "order.validated -> decomposition queued"
+      ],
+      "agentStates": [
+        [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "queued",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "First, validation checks the site, product and capacity. Other agents wait.",
+          "start": 0.18,
+          "duration": 5.929
+        },
+        {
+          "text": "Incorrect details pause for correction. Validated intent moves onward.",
+          "start": 6.229,
+          "duration": 6.40671
+        }
+      ],
+      "duration": 12.93571
+    },
+    {
+      "id": "decomposition",
+      "chapter": "03 / Activate decomposition",
+      "title": "One product becomes linked work.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "order.validated -> decomposition agent",
+        "services.planned -> provisioning queued"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "queued",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Decomposition splits the product into access and Internet service orders.",
+          "start": 0.18,
+          "duration": 4.95808
+        },
+        {
+          "text": "Linked resource identifiers preserve traceability. The planned event queues provisioning.",
+          "start": 5.25808,
+          "duration": 6.49021
+        }
+      ],
+      "duration": 12.04829
+    },
+    {
+      "id": "provisioning",
+      "chapter": "04 / Activate provisioning",
+      "title": "Provision only within policy.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "services.planned -> provisioning agent",
+        "Partner timeout -> fallout.detected"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "held",
+          "queued",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Provisioning checks capacity, risk and change windows before reserving resources.",
+          "start": 0.18,
+          "duration": 5.74908
+        },
+        {
+          "text": "A simulated partner timeout stops work and wakes recovery.",
+          "start": 6.04908,
+          "duration": 4.82971
+        }
+      ],
+      "duration": 11.17879
+    },
+    {
+      "id": "recovery",
+      "chapter": "05 / Activate recovery only on fallout",
+      "title": "A bounded recovery. Then hand back.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "fallout.detected -> retry-once playbook",
+        "fallout.recovered -> provisioning resumes"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "held",
+          "active",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "active",
+          "done",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Recovery retries an approved alternate route once. No unlimited autonomy.",
+          "start": 0.18,
+          "duration": 6.60808
+        },
+        {
+          "text": "The recovered event resumes provisioning, without double reservation.",
+          "start": 6.90808,
+          "duration": 4.31496
+        }
+      ],
+      "duration": 11.52304
+    },
+    {
+      "id": "human",
+      "chapter": "Alternate path / Human judgment",
+      "title": "A policy hold is not a retry.",
+      "order": "B",
+      "mode": "implemented",
+      "events": [
+        "Order B / route conflict -> policy.hold",
+        "Manager approval -> guarded provisioning"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "held",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "A route conflict is different: hold for a human manager.",
+          "start": 0.18,
+          "duration": 4.21883
+        },
+        {
+          "text": "The partner token is denied approval. Automation cannot bypass policy.",
+          "start": 4.51883,
+          "duration": 4.49871
+        }
+      ],
+      "duration": 9.31754
+    },
+    {
+      "id": "communication",
+      "chapter": "06 / Activate customer updates",
+      "title": "An activated service closes the loop.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "services.activated -> customer update agent",
+        "TR / EN portal updates -> order completed"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "active"
+        ],
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Services activated wakes the final agent: customer updates.",
+          "start": 0.18,
+          "duration": 4.67946
+        },
+        {
+          "text": "Turkish and English portal confirmations close the loop. No live network changes.",
+          "start": 4.97946,
+          "duration": 5.60646
+        }
+      ],
+      "duration": 10.88592
+    },
+    {
+      "id": "partners",
+      "chapter": "07 / Partner-originated orders",
+      "title": "Another entry. The same supervisor.",
+      "order": "C",
+      "mode": "implemented",
+      "events": [
+        "MCP / tools/list -> capacity check",
+        "submit_partner_order -> order.received"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "queued",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Partners discover authenticated MCP tools to check capacity and submit orders.",
+          "start": 0.18,
+          "duration": 5.55192
+        },
+        {
+          "text": "Their orders enter the same guarded flow, never a privileged shortcut.",
+          "start": 5.85192,
+          "duration": 5.35371
+        }
+      ],
+      "duration": 11.50563
+    },
+    {
+      "id": "standards",
+      "chapter": "Standards at the handoffs",
+      "title": "Shared contracts, not certification claims.",
+      "order": "",
+      "mode": "implemented",
+      "events": [
+        "TMF622 product -> TMF641 service -> resources",
+        "MCP transport / full TMF conformance is a production gate"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "TMF622 inspires product ordering; TMF641, service ordering. MCP defines tool integration.",
+          "start": 0.18,
+          "duration": 9.43133
+        },
+        {
+          "text": "These are simplified subsets, not certified interfaces. Production needs conformance testing.",
+          "start": 9.73133,
+          "duration": 6.51167
+        }
+      ],
+      "duration": 16.543
+    },
+    {
+      "id": "residency",
+      "chapter": "Target architecture / Keep data in T\u00fcrkiye",
+      "title": "Bring compute to the data.",
+      "order": "",
+      "mode": "proposed",
+      "events": [
+        "No T\u00fcrkiye Azure public region listed in referenced inventory",
+        "Azure Local / customer workloads and inference remain in T\u00fcrkiye"
+      ],
+      "agentStates": [
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "No Turkish Azure public region is listed. Bring Azure Local into Turkey.",
+          "start": 0.18,
+          "duration": 5.43867
+        },
+        {
+          "text": "Proposed, not deployed: keep customer data, agents, inference, keys, logs and backups local.",
+          "start": 5.73867,
+          "duration": 6.767
+        }
+      ],
+      "duration": 12.80567
+    },
+    {
+      "id": "hybrid",
+      "chapter": "Target architecture / Controlled hybrid services",
+      "title": "Separate the data plane from cloud services.",
+      "order": "",
+      "mode": "proposed",
+      "events": [
+        "Approved cloud lane / artifacts in; reviewed metadata out",
+        "Block customer payloads, prompts, raw logs and off-country backups"
+      ],
+      "agentStates": [
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "External Azure supplies approved images, Arc management and opt-in aggregate monitoring.",
+          "start": 0.18,
+          "duration": 6.78008
+        },
+        {
+          "text": "Approve each metadata flow. Block customer payloads, prompts, raw logs and backups.",
+          "start": 7.08008,
+          "duration": 6.28492
+        }
+      ],
+      "duration": 13.665
+    },
+    {
+      "id": "strict",
+      "chapter": "Target architecture / Stricter sovereignty",
+      "title": "If metadata cannot leave, disconnect.",
+      "order": "",
+      "mode": "proposed",
+      "events": [
+        "Connected Arc sends system metadata / cannot simply opt out",
+        "Disconnected Azure Local / local control plane; no live cloud link"
+      ],
+      "agentStates": [
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Connected Arc sends system metadata. If even that cannot leave, evaluate disconnected operations.",
+          "start": 0.18,
+          "duration": 8.24083
+        },
+        {
+          "text": "Eligibility and supported hardware are required. No live external cloud link.",
+          "start": 8.54083,
+          "duration": 6.40179
+        }
+      ],
+      "duration": 15.24263
+    },
+    {
+      "id": "impact",
+      "chapter": "The objectives / Prove the outcome",
+      "title": "Less waiting. Clearer accountability.",
+      "order": "",
+      "mode": "implemented",
+      "events": [
+        "Earlier validation + durable handoffs + bounded recovery",
+        "Representative pilot / targets are not measured results"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Earlier checks, durable handoffs and bounded recovery target less waiting and fallout.",
+          "start": 0.18,
+          "duration": 6.49942
+        },
+        {
+          "text": "Under seven days and eight percent fallout: ambitions, not measured results. Prove them in a representative pilot.",
+          "start": 6.79942,
+          "duration": 7.37613
+        }
+      ],
+      "duration": 14.47554
+    }
+  ],
+  "narration": {
+    "kind": "author-voice-synthetic",
+    "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+    "disclosure": "Synthetic narration generated locally from the author's supplied voice sample."
+  }
+}

@@ -1,0 +1,2816 @@
+[
+  {
+    "scene": "opening",
+    "beat": 0,
+    "event": "Customer selects a product",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999999,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 18244,
+    "beatChecks": [
+      {
+        "scene": "opening",
+        "beat": 0,
+        "event": "Customer selects a product",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.044220329264571714,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "opening",
+        "beat": 1,
+        "event": "Customer prepares an order",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.0691244239631336,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 18465
+  },
+  {
+    "scene": "intake",
+    "beat": 0,
+    "event": "POST productOrder / idempotency key",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999999,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 188.29248046875,
+        "bodyWidth": 231.794921875,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 193.1015625,
+        "bodyWidth": 249.669921875,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 197.3671875,
+        "bodyWidth": 243.4716796875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "intake",
+        "beat": 0,
+        "event": "POST productOrder / idempotency key",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05482496217077635,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 188.29248046875,
+            "bodyWidth": 231.794921875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 193.1015625,
+            "bodyWidth": 249.669921875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 197.3671875,
+            "bodyWidth": 243.4716796875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "intake",
+        "beat": 1,
+        "event": "Invalid request -> submitter corrects before acceptance",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.053359799794030986,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 188.29248046875,
+            "bodyWidth": 231.794921875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 193.1015625,
+            "bodyWidth": 249.669921875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 180.84814453125,
+            "bodyWidth": 262.7646484375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5487
+  },
+  {
+    "scene": "validation",
+    "beat": 0,
+    "event": "order.received -> validation agent",
+    "agentStates": [
+      "active",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999997,
+    "activeAgent": 0,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 172.2861328125,
+        "bodyWidth": 224.318359375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 97.0224609375,
+        "bodyWidth": 222.642578125,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 193.921875,
+        "bodyWidth": 191.146484375,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "validation",
+        "beat": 0,
+        "event": "order.received -> validation agent",
+        "agentStates": [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.04685179372092254,
+        "activeAgent": 0,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 172.2861328125,
+            "bodyWidth": 224.318359375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 97.0224609375,
+            "bodyWidth": 222.642578125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 193.921875,
+            "bodyWidth": 191.146484375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "validation",
+        "beat": 1,
+        "event": "Site or capacity problem -> correction or manager review",
+        "agentStates": [
+          "held",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05086616603055742,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 172.2861328125,
+            "bodyWidth": 224.318359375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 97.0224609375,
+            "bodyWidth": 222.642578125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 197.84912109375,
+            "bodyWidth": 274.9462890625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5398
+  },
+  {
+    "scene": "decomposition",
+    "beat": 0,
+    "event": "order.validated -> decomposition agent",
+    "agentStates": [
+      "done",
+      "active",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7500000000000001,
+    "activeAgent": 1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 179.82275390625,
+        "bodyWidth": 207.58203125,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 173.4345703125,
+        "bodyWidth": 159.865234375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 197.3876953125,
+        "bodyWidth": 250.4970703125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "decomposition",
+        "beat": 0,
+        "event": "order.validated -> decomposition agent",
+        "agentStates": [
+          "done",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.053843820613926535,
+        "activeAgent": 1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 179.82275390625,
+            "bodyWidth": 207.58203125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 173.4345703125,
+            "bodyWidth": 159.865234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 197.3876953125,
+            "bodyWidth": 250.4970703125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "decomposition",
+        "beat": 1,
+        "event": "services.planned -> provisioning queued",
+        "agentStates": [
+          "done",
+          "done",
+          "queued",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.059725739404652554,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 179.82275390625,
+            "bodyWidth": 207.58203125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 173.4345703125,
+            "bodyWidth": 159.865234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 197.3876953125,
+            "bodyWidth": 250.4970703125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5531
+  },
+  {
+    "scene": "provisioning",
+    "beat": 0,
+    "event": "services.planned -> provisioning agent",
+    "agentStates": [
+      "done",
+      "done",
+      "active",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999993,
+    "activeAgent": 2,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 171.90673828125,
+        "bodyWidth": 227.6376953125,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 141.33984375,
+        "bodyWidth": 204.6494140625,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 247.17041015625,
+        "bodyWidth": 224.5869140625,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "provisioning",
+        "beat": 0,
+        "event": "services.planned -> provisioning agent",
+        "agentStates": [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.06402212604676091,
+        "activeAgent": 2,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 171.90673828125,
+            "bodyWidth": 227.6376953125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 141.33984375,
+            "bodyWidth": 204.6494140625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 247.17041015625,
+            "bodyWidth": 224.5869140625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "provisioning",
+        "beat": 1,
+        "event": "Partner timeout -> fallout.detected",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "queued",
+          "waiting"
+        ],
+        "progress": 0.056694699045639195,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 171.90673828125,
+            "bodyWidth": 227.6376953125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 141.33984375,
+            "bodyWidth": 204.6494140625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 192.9375,
+            "bodyWidth": 253.837890625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5694
+  },
+  {
+    "scene": "recovery",
+    "beat": 0,
+    "event": "fallout.detected -> retry-once playbook",
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "active",
+      "waiting"
+    ],
+    "progress": 0.75,
+    "activeAgent": 3,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 183.2783203125,
+        "bodyWidth": 216.00390625,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 126.21533203125,
+        "bodyWidth": 255.96484375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 123.36474609375,
+        "bodyWidth": 213.9521484375,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "recovery",
+        "beat": 0,
+        "event": "fallout.detected -> retry-once playbook",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "active",
+          "waiting"
+        ],
+        "progress": 0.05836723496897704,
+        "activeAgent": 3,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.2783203125,
+            "bodyWidth": 216.00390625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 126.21533203125,
+            "bodyWidth": 255.96484375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 123.36474609375,
+            "bodyWidth": 213.9521484375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "recovery",
+        "beat": 1,
+        "event": "Unknown fault -> proposed human triage / not a demo queue",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "held",
+          "waiting"
+        ],
+        "progress": 0.04918742375949329,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.2783203125,
+            "bodyWidth": 216.00390625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 126.21533203125,
+            "bodyWidth": 255.96484375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 277.23486328125,
+            "bodyWidth": 279.6943359375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5560
+  },
+  {
+    "scene": "human",
+    "beat": 0,
+    "event": "Order B / route conflict -> policy.hold",
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7500000000000001,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 14212,
+    "beatChecks": [
+      {
+        "scene": "human",
+        "beat": 0,
+        "event": "Order B / route conflict -> policy.hold",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.06652932058040091,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "human",
+        "beat": 1,
+        "event": "Manager approval -> guarded provisioning",
+        "agentStates": [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05641441275416957,
+        "activeAgent": 2,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 15616
+  },
+  {
+    "scene": "communication",
+    "beat": 0,
+    "event": "services.activated -> customer update agent",
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "active"
+    ],
+    "progress": 0.7500000000000002,
+    "activeAgent": 4,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 210.861328125,
+        "bodyWidth": 241.677734375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 198.32080078125,
+        "bodyWidth": 245.072265625,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 183.14501953125,
+        "bodyWidth": 237.2841796875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "communication",
+        "beat": 0,
+        "event": "services.activated -> customer update agent",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "active"
+        ],
+        "progress": 0.047925542876586305,
+        "activeAgent": 4,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 210.861328125,
+            "bodyWidth": 241.677734375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 198.32080078125,
+            "bodyWidth": 245.072265625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.14501953125,
+            "bodyWidth": 237.2841796875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "communication",
+        "beat": 1,
+        "event": "TR / EN portal updates -> order completed",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.0497718788884283,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 210.861328125,
+            "bodyWidth": 241.677734375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 198.32080078125,
+            "bodyWidth": 245.072265625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.14501953125,
+            "bodyWidth": 237.2841796875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5209
+  },
+  {
+    "scene": "standards",
+    "beat": 0,
+    "event": "TMF-inspired product and service contracts",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999997,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 182.9912109375,
+        "bodyWidth": 212.4482421875,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 182.9912109375,
+        "bodyWidth": 215.7783203125,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 217.06494140625,
+        "bodyWidth": 224.4580078125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "standards",
+        "beat": 0,
+        "event": "TMF-inspired product and service contracts",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.03992345343195261,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 182.9912109375,
+            "bodyWidth": 212.4482421875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 182.9912109375,
+            "bodyWidth": 215.7783203125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 217.06494140625,
+            "bodyWidth": 224.4580078125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "standards",
+        "beat": 1,
+        "event": "Authenticated MCP / no privileged bypass",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05431417491336725,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 182.9912109375,
+            "bodyWidth": 212.4482421875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 182.9912109375,
+            "bodyWidth": 215.7783203125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 217.06494140625,
+            "bodyWidth": 224.4580078125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5389
+  },
+  {
+    "scene": "residency",
+    "beat": 0,
+    "event": "Azure Local / operator datacenter in Turkey",
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "progress": 0.7499999999999987,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 138.35595703125,
+        "bodyWidth": 203.0380859375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 186.83642578125,
+        "bodyWidth": 249.0576171875,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 200.08447265625,
+        "bodyWidth": 221.6328125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [
+      "azure-local.svg"
+    ],
+    "humanException": false,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4924,
+    "beatChecks": [
+      {
+        "scene": "residency",
+        "beat": 0,
+        "event": "Azure Local / operator datacenter in Turkey",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.05880911541288822,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 138.35595703125,
+            "bodyWidth": 203.0380859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 186.83642578125,
+            "bodyWidth": 249.0576171875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 200.08447265625,
+            "bodyWidth": 221.6328125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "azure-local.svg"
+        ],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "residency",
+        "beat": 1,
+        "event": "Customer workload remains local / proposed",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.04585956882833331,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 138.35595703125,
+            "bodyWidth": 203.0380859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 186.83642578125,
+            "bodyWidth": 249.0576171875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 200.08447265625,
+            "bodyWidth": 221.6328125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "azure-local.svg"
+        ],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 5220
+  },
+  {
+    "scene": "hybrid",
+    "beat": 0,
+    "event": "Images in / approved metadata out / customer data blocked",
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "progress": 0.7499999999999977,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 108.22998046875,
+        "bodyWidth": 252.4951171875,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 160.34033203125,
+        "bodyWidth": 267.3837890625,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 271.14404296875,
+        "bodyWidth": 240.6357421875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [
+      "container-registry.svg",
+      "azure-arc.svg",
+      "azure-monitor.svg"
+    ],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 3073,
+    "beatChecks": [
+      {
+        "scene": "hybrid",
+        "beat": 0,
+        "event": "Images in / approved metadata out / customer data blocked",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.0474630223503366,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 108.22998046875,
+            "bodyWidth": 252.4951171875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 160.34033203125,
+            "bodyWidth": 267.3837890625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 271.14404296875,
+            "bodyWidth": 240.6357421875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "container-registry.svg",
+          "azure-arc.svg",
+          "azure-monitor.svg"
+        ],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "hybrid",
+        "beat": 1,
+        "event": "Stricter boundary -> assess eligible disconnected operations",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.03826472043795529,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 108.22998046875,
+            "bodyWidth": 252.4951171875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 160.34033203125,
+            "bodyWidth": 267.3837890625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 271.14404296875,
+            "bodyWidth": 240.6357421875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "container-registry.svg",
+          "azure-arc.svg",
+          "azure-monitor.svg"
+        ],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 3107
+  },
+  {
+    "scene": "impact",
+    "beat": 0,
+    "event": "Earlier validation + durable handoffs + bounded recovery",
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "done"
+    ],
+    "progress": 0.7499999999999999,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 140.16064453125,
+        "bodyWidth": 254.6220703125,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 195.5419921875,
+        "bodyWidth": 186.35546875,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 152.42431640625,
+        "bodyWidth": 258.5107421875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 8340,
+    "beatChecks": [
+      {
+        "scene": "impact",
+        "beat": 0,
+        "event": "Earlier validation + durable handoffs + bounded recovery",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.0411588691189135,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 140.16064453125,
+            "bodyWidth": 254.6220703125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.5419921875,
+            "bodyWidth": 186.35546875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 152.42431640625,
+            "bodyWidth": 258.5107421875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      },
+      {
+        "scene": "impact",
+        "beat": 1,
+        "event": "Representative pilot / targets are not measured results",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.05021096975793408,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 140.16064453125,
+            "bodyWidth": 254.6220703125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.5419921875,
+            "bodyWidth": 186.35546875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 152.42431640625,
+            "bodyWidth": 258.5107421875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true
+      }
+    ],
+    "encodedChangedPixels": 9781
+  }
+]

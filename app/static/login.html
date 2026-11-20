@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c4202f">
+  <meta name="robots" content="noindex">
+  <title>Sign in · TürkBizTel</title>
+  <link rel="icon" href="/static/turkbiztel-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/account.css?v=tb1">
+  <script src="/static/ui.js?v=tb1" defer></script>
+  <script src="/static/login.js?v=tb1" defer></script>
+</head>
+<body class="auth-page">
+  <a class="skip-link" href="#auth-card">Skip to sign in</a>
+  <div class="auth">
+    <aside class="auth-hero">
+      <a class="logo" href="/login"><img src="/static/turkbiztel-mark.svg" alt="" width="36" height="36">TürkBizTel</a>
+      <div>
+        <h1>One sign-in for every TürkBizTel order</h1>
+        <p class="lead">Customers, partners and the service team all start here. Sign in and you land on the page made for you.</p>
+        <ul class="benefits audiences">
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#package"/></svg></span>
+            <span><strong>Customers</strong><small>Track your orders and fix anything we are missing</small></span>
+          </li>
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#truck"/></svg></span>
+            <span><strong>Partners</strong><small>See expected delivery dates and payments, update delivery details and raise concerns</small></span>
+          </li>
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#shield-check"/></svg></span>
+            <span><strong>Service team</strong><small>Run the order desk, the agents and partner accounts</small></span>
+          </li>
+        </ul>
+      </div>
+      <p class="hero-links">
+        <a href="/order">Place an order without an account</a>
+        <a href="/track">Track an order with a code</a>
+      </p>
+    </aside>
+
+    <main class="auth-main">
+      <div class="auth-card" id="auth-card" tabindex="-1">
+        <div class="banner info" id="notice" role="status" hidden>
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#info"/></svg>
+          <div class="banner-body" id="notice-text"></div>
+        </div>
+
+        <noscript><p class="msg error">TürkBizTel needs JavaScript to sign you in. Please turn it on and reload this page.</p></noscript>
+
+        <div class="tabs" id="tabs" role="tablist" aria-label="Sign in or create a customer account">
+          <button type="button" role="tab" id="tab-signin" data-panel="signin" aria-controls="panel-signin" aria-selected="true">Sign in</button>
+          <button type="button" role="tab" id="tab-register" data-panel="register" aria-controls="panel-register" aria-selected="false" tabindex="-1">New customer</button>
+        </div>
+
+        <form id="panel-signin" role="tabpanel" aria-labelledby="tab-signin" novalidate>
+          <h2 id="h-signin" tabindex="-1">Welcome back</h2>
+          <p class="sub">Service team? <button class="btn link" type="button" data-go="staff">Sign in with your access token</button></p>
+          <p class="sub">Sign in with your email address. We take you to the right place.</p>
+          <p class="msg" id="signin-msg" role="alert" hidden></p>
+          <div class="field">
+            <label for="signin-email">Email address</label>
+            <input id="signin-email" name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="120" required>
+          </div>
+          <div data-slot="password"></div>
+          <button class="btn block" type="submit">Sign in</button>
+          <p class="alt">New customer? <button class="btn link" type="button" data-go="register">Create an account</button></p>
+          <p class="alt">Partner? Your TürkBizTel contact emails you an invitation link the first time. After that, sign in here.</p>
+          <p class="alt">Each browser tab signs in on its own, so you can use a different account in another tab.</p>
+        </form>
+
+        <form id="panel-register" role="tabpanel" aria-labelledby="tab-register" novalidate hidden>
+          <h2 id="h-register" tabindex="-1">Create your customer account</h2>
+          <p class="sub">It takes a minute. Then you can place orders and follow them any time.</p>
+          <p class="msg" id="register-msg" role="alert" hidden></p>
+          <div class="field">
+            <label for="reg-name">Your name</label>
+            <input id="reg-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="field">
+            <label for="reg-company">Company</label>
+            <input id="reg-company" name="company" type="text" autocomplete="organization" maxlength="80" required>
+            <p class="hint" id="reg-company-hint" hidden>This is a demo site: company names start with “Demo ”, for example “Demo Anatolia Retail”.</p>
+          </div>
+          <div class="field">
+            <label for="reg-email">Email address</label>
+            <input id="reg-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="120" required>
+          </div>
+          <div class="field">
+            <label for="reg-phone">Mobile number <span class="opt">(optional)</span></label>
+            <input id="reg-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+905550000000" aria-describedby="reg-phone-hint">
+            <p class="hint" id="reg-phone-hint">Only needed if you want text-message updates.</p>
+          </div>
+          <div class="field">
+            <label for="reg-language">Language for our messages</label>
+            <select id="reg-language" name="language">
+              <option value="en" selected>English</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </div>
+          <div data-slot="password"></div>
+          <label class="check-row">
+            <input type="checkbox" name="consent">
+            <span>I agree that TürkBizTel may use these details to process my orders and send me order updates.</span>
+          </label>
+          <button class="btn block" type="submit">Create account</button>
+          <p class="alt">Already have an account? <button class="btn link" type="button" data-go="signin">Sign in</button></p>
+        </form>
+
+        <form id="panel-forgot" aria-labelledby="h-forgot" novalidate hidden>
+          <h2 id="h-forgot" tabindex="-1">Reset your password</h2>
+          <p class="sub">Enter your email address and we will send you a 6-digit code.</p>
+          <p class="msg" id="forgot-msg" role="alert" hidden></p>
+          <div class="field">
+            <label for="forgot-email">Email address</label>
+            <input id="forgot-email" name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="120" required>
+          </div>
+          <button class="btn block" type="submit">Send me a code</button>
+          <p class="alt"><button class="btn link" type="button" data-go="signin">Back to sign in</button></p>
+        </form>
+
+        <form id="panel-reset" aria-labelledby="h-reset" novalidate hidden>
+          <h2 id="h-reset" tabindex="-1">Enter your code</h2>
+          <p class="sub" id="reset-sub"></p>
+          <p class="msg" id="reset-msg" role="alert" hidden></p>
+          <div class="banner info" id="reset-demo" hidden>
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#info"/></svg>
+            <div class="banner-body">This is a demo site, so no email is sent. Your code is <span class="demo-code mono" id="reset-demo-code"></span></div>
+          </div>
+          <div class="field">
+            <label for="reset-code">6-digit code</label>
+            <input id="reset-code" class="code-input" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456" required>
+          </div>
+          <div data-slot="password"></div>
+          <button class="btn block" type="submit">Change password</button>
+          <p class="alt">No code yet? <button class="btn link" type="button" id="reset-resend">Send a new code</button></p>
+          <p class="alt"><button class="btn link" type="button" data-go="signin">Back to sign in</button></p>
+        </form>
+
+        <form id="panel-invite" aria-labelledby="h-invite" novalidate hidden>
+          <h2 id="h-invite" tabindex="-1">Set up your partner account</h2>
+          <p class="sub" id="invite-sub">Checking your invitation…</p>
+          <p class="msg" id="invite-msg" role="alert" hidden></p>
+          <div id="invite-body" hidden>
+            <dl class="facts invite-facts">
+              <div><dt>Partner</dt><dd id="invite-partner"></dd></div>
+              <div><dt>Your email</dt><dd id="invite-email"></dd></div>
+            </dl>
+            <div data-slot="password"></div>
+            <button class="btn block" type="submit">Save password and open my portal</button>
+          </div>
+          <p class="alt"><button class="btn link" type="button" data-go="signin">Already set up? Sign in</button></p>
+        </form>
+
+        <form id="panel-staff" aria-labelledby="h-staff" novalidate hidden>
+          <h2 id="h-staff" tabindex="-1">Service team sign-in</h2>
+          <p class="sub">For the TürkBizTel service team. Customers and partners sign in with their email address and password.</p>
+          <p class="msg" id="staff-msg" role="alert" hidden></p>
+          <div data-slot="token"></div>
+          <button class="btn block" type="submit">Open the service console</button>
+          <p class="alt"><button class="btn link" type="button" data-go="signin">Back to sign in</button></p>
+        </form>
+      </div>
+
+      <p class="guest-links">
+        <a href="/order">Place an order without an account</a>
+        <a href="/track">Track an order with a code</a>
+      </p>
+    </main>
+  </div>
+  <div id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>

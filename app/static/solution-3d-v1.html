@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TürkBizTel | Mission: Activate - True 3D edition</title>
+  <meta name="description" content="Animated customer order journey, event-driven agent activation, telecom standards and a proposed Azure Local data-residency architecture for Türkiye.">
+  <link rel="stylesheet" href="/static/solution.css">
+  <script src="/static/film3d.js" defer></script>
+  <script src="/static/solution.js" defer></script>
+</head>
+<body>
+  <header><a href="/">TürkBizTel / CONTROL TOWER</a><span>SYNTHETIC DEMO / NO LIVE NETWORK CHANGES</span></header>
+  <main>
+    <p class="eyebrow">NEW EDITION / TRUE 3D</p>
+    <h1>Mission: Activate. In 3D.</h1>
+    <p class="intro">A textured 3D human customer in a business suit and a human service manager join the giant orchestration tower and five distinct agents. Perspective cameras, lit meshes, shadows and moving event packets bring the complete journey into 3D. The energetic synthetic author voice is retained without another tempo change.</p><p class="intro">A giant orchestration tower overlooks five distinct specialist characters: the inspector, architect, cable crew, rescue mechanic and messenger. Brisker author-voice narration, animated event handoffs and a quiet original soundscape carry the journey.</p><p class="intro">Watch customers place orders, follow events between five bounded agents, and explore industry standards and a proposed Azure Local residency design for Türkiye.</p>
+    <video id="film" controls playsinline preload="metadata" poster="/static/solution-3d-v1-poster.jpg" aria-label="Narrated end-to-end telecom solution film">
+      <source src="/static/solution-3d-v1.mp4" type="video/mp4">
+      <track kind="captions" src="/static/solution-3d-v1.vtt" srclang="en" label="English">
+      Your browser cannot play this video. Use the download link below.
+    </video>
+    <div class="downloads"><a href="/static/solution-3d-v1.mp4" download>Download MP4</a><a href="/static/solution-3d-v1.vtt" download>English captions</a><a href="/static/journey.html">Current-state story</a><span id="runtime"></span></div>
+    <p id="voice-disclosure"></p>
+    <p><a href="/static/solution.html">Previous solution edition</a> / <a href="/static/journey.html">Current-state film</a>. Earlier video files remain unchanged.</p><p>The tower personifies the deterministic, policy-guarded supervisor; it is not an unrestricted autonomous AI agent. Dispatch animation is illustrative, not a live runtime trace.</p><p><a href="/static/solution-tower-v1.html">Previous control-tower film</a>. All earlier editions are preserved.</p><p>Humans are rendered Microsoft Rocketbox avatars under the MIT license, not live-action actors. Official Azure Local, Azure Arc, Azure Container Registry and Azure Monitor SVGs are used unchanged, upright and labelled. Microsoft and operator trademarks remain with their owners; no endorsement is implied. <a href="/static/film3d-assets/ATTRIBUTION.md">Asset attribution and licenses</a>.</p><p id="load-status" role="status">Loading chapters and transcript...</p>
+    <nav id="chapters" aria-label="Video chapters"></nav>
+    <details><summary>Full narration transcript</summary><div id="transcript"></div></details>
+    <details><summary>Sources, branding and honest boundaries</summary>
+      <p>The character and event animations explain README.md, app/domain.py, app/main.py, app/store.py, app/advisor.py and docs/PRODUCTION.md. Order A follows timeout recovery; B is an alternate manager-review branch; C is a partner-originated request. Event names follow the code, while packet motion and pacing are illustrative, not runtime traces or a performance benchmark. The activation rail shows the current order, not global concurrency.</p>
+      <p>35 days / 30% are assignment baselines; under 7 days / under 8%, TRY 900 million revenue acceleration and TRY 150 million rework are assignment ambitions, not achieved results. Production benefits require a representative measured pilot. No NPS is invented.</p>
+      <p>Türk Telekom's geometric logo is sourced from <a href="https://commons.wikimedia.org/wiki/File:T%C3%BCrk_Telekom_logo.svg" target="_blank" rel="noreferrer">Wikimedia Commons (public-domain logo label)</a>. Trademark rights remain with their owners. It is included for industry context only; no endorsement, relationship or actual integration is claimed. TürkBizTel is a fictional operator.</p>
+      <p>The repository implements simplified TMF622/TMF641-inspired interfaces and an MCP wrapper, not certified full TM Forum contracts. TMF652/638/639 are production acceptance gates, not already implemented APIs.</p>
+      <p><strong>Proposed, not deployed:</strong> Azure Local in an operator's Turkish datacenter keeps the customer workload, storage, inference, keys, logs and backups local. Connected Azure Arc still sends platform metadata; external Azure Container Registry and opt-in Azure Monitor flows require individual approval. No customer payloads or prompts go to foreign Azure OpenAI, and no customer backup goes to foreign Azure storage. If platform metadata cannot leave either, evaluate eligible Azure Local disconnected operations with no live cloud-management link.</p>
+      <p>This film does not deploy Azure Local or certify legal compliance. The existing synthetic West Europe Azure demo remains unchanged. Optional demo Azure OpenAI advice has no execution authority. A private endpoint or encryption is not a data-residency guarantee.</p>
+      <div id="references" aria-label="Official technical references"></div>
+    </details>
+    <details id="animation-panel"><summary>Interactive animation (silent)</summary><button id="animation-play" type="button">Play animation</button><canvas id="story" width="1920" height="1080" data-story="/static/solution-3d-v1-data.json" aria-label="Animated customers, order propagation, timed agents and data residency"></canvas><label>Preview position <input id="scrub" type="range" min="0" max="1" step="0.05" value="0"></label></details>
+  </main>
+  <footer>AMA CASE STUDY 30 / IMPLEMENTED GUARDRAILS, NOT CLAIMED PRODUCTION RESULTS</footer>
+</body>
+</html>

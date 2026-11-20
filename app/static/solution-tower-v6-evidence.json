@@ -1,0 +1,54 @@
+{
+  "edition": "solution-tower-v6",
+  "duration": 176.286,
+  "preservedVideos": {
+    "current-scenario-turkbiztel.mp4": "1e25d8437f7d722b0a8379cc008ee355d9114a4d39f9f32b22d17d43192fb543",
+    "current-scenario.mp4": "8e6a38972fb7c094504cda5d1723e4db8af86e4a2ed99eec2ebb86c3a97d7066",
+    "solution-3d-v1-turkbiztel.mp4": "26a595ce23499fa317fbfaef34ba1dfd5df82afea070acbd0d37222477a71686",
+    "solution-3d-v1.mp4": "5addc9238903e090a1b318feb0aeff04d15beffa8ea5d850336bf56c80a5d667",
+    "solution-clarity-v1-turkbiztel.mp4": "71070841f77e03cc273cdfe4e3585ac6a16e041cbc793de5539a7c00c42acf8b",
+    "solution-clarity-v1.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-clarity-v2-turkbiztel.mp4": "71070841f77e03cc273cdfe4e3585ac6a16e041cbc793de5539a7c00c42acf8b",
+    "solution-clarity-v2.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-tower-v1-turkbiztel.mp4": "8f85b6b4c373efea6a2d3ac5f918144558ff5b9f14ec0ae1b6b607e2d5004a12",
+    "solution-tower-v1.mp4": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "solution-tower-v2-turkbiztel.mp4": "8c7a82eab36b9ce39e20b1defddd69ed4fe014e9bda1446d5766af2c5392f2b8",
+    "solution-tower-v2.mp4": "3556b1cd1689ff82149eb73ab17f28fbfcda11efd4796c60c6585b09dd2ecf30",
+    "solution-tower-v3-turkbiztel.mp4": "09585f44506c13e1018cba444ddc2af102e74930373d39303f6626636b370221",
+    "solution-tower-v3.mp4": "3dd87befa979aff70dcba3028f2f4e988a3f7bebf978aa54f8de8580e6363839",
+    "solution-tower-v4-turkbiztel.mp4": "caa373b2a4887c554835c1375680b6fffa7ee2cfa72af6d64f4304fa644a7772",
+    "solution-tower-v4.mp4": "ae3b137ed606fa7e279fe55baa6987fd6e3d901f435c9b24f57de5cf48f47193",
+    "solution-tower-v5-turkbiztel.mp4": "5f8238bff290e6f5b35aa73f885020259575fe4fbbad3f8234f17d45d16c1a30",
+    "solution-tower-v5.mp4": "f9ed5def829318f28f6cb9ac21ea61ce57d667410824aa3158e4a433b0ef48a8",
+    "solution-turkbiztel.mp4": "7c5ebad8028d30e28df36fedc4345627fad65b0c6c01d7dcdf21322fa37e14dc",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "existingVideosUnchanged": true,
+  "sourceVideo": {
+    "file": "solution-tower-v1.mp4",
+    "sha256": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "use": "Selected tower design and characters; no source audio reused"
+  },
+  "distinctPresetNarrator": true,
+  "referenceAudioUsed": false,
+  "scriptSHA256": "15faed5dd2fef8fc9709f4a6838455693232f9f5da87d2a3020940173abb3591",
+  "narration": {
+    "kind": "local-preset-neural",
+    "model": "Kokoro-82M v1.0",
+    "voice": "bm_george",
+    "voiceDescription": "Distinct British-English male preset; not the author's voice",
+    "language": "en-gb",
+    "speed": 1.08,
+    "modelSHA256": {
+      "kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+    },
+    "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "modelLicense": "Apache-2.0",
+    "runtimeLicense": "MIT",
+    "referenceAudioUsed": false,
+    "disclosure": "Locally generated neural narration: Distinct British-English male preset; not the author's voice (Kokoro-82M v1.0 / bm_george). Brisk, pitch-preserving 1.20x delivery treatment; no reference audio or script was uploaded."
+  },
+  "fullDecodeVerified": true,
+  "captionCount": 24
+}

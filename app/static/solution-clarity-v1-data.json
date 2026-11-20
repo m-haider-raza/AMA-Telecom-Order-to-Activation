@@ -1,0 +1,810 @@
+{
+  "schemaVersion": 2,
+  "presentation": "single-focal-3d-scene-with-responsibility-panel",
+  "title": "Clear ownership. Fewer failures. Faster delivery.",
+  "subtitle": "Customers, event-driven agents, industry standards and a sovereign hybrid design",
+  "sources": [
+    "README.md",
+    "app/domain.py",
+    "app/main.py",
+    "app/store.py",
+    "app/advisor.py",
+    "docs/PRODUCTION.md"
+  ],
+  "references": [
+    {
+      "name": "TM Forum TMF622 product ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/product-ordering-management-api-TMF622/v5.0"
+    },
+    {
+      "name": "TM Forum TMF641 service ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/service-ordering-management-api-TMF641/v4.1"
+    },
+    {
+      "name": "MCP JSON-RPC and Streamable HTTP",
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports"
+    },
+    {
+      "name": "Azure public geography inventory (checked 30 October 2026)",
+      "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/"
+    },
+    {
+      "name": "Azure Local overview",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/overview"
+    },
+    {
+      "name": "Azure Arc data and privacy",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/servers/security-data-privacy"
+    },
+    {
+      "name": "Azure Local disconnected operations and eligibility",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/disconnected-operations-overview"
+    },
+    {
+      "name": "Microsoft official Azure architecture icons",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/icons/"
+    },
+    {
+      "name": "Microsoft Rocketbox human avatars / MIT license",
+      "url": "https://github.com/microsoft/Microsoft-Rocketbox/blob/master/LICENSE.md"
+    }
+  ],
+  "branding": {
+    "name": "T\u00fcrk Telekom",
+    "asset": "solution-turk-telekom.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:T%C3%BCrk_Telekom_logo.svg",
+    "license": "Public-domain simple geometric logo as labelled by Wikimedia Commons; trademark rights remain.",
+    "disclaimer": "Market context only. No affiliation, endorsement, customer relationship or integration is claimed. AMA is fictional."
+  },
+  "agents": [
+    "Validation",
+    "Decomposition",
+    "Provisioning",
+    "Fallout recovery",
+    "Customer updates"
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "chapter": "One order, accountable owners",
+      "title": "One order. Clear ownership.",
+      "role": "CUSTOMER + GUARDED SUPERVISOR",
+      "actor": "customer",
+      "agent": -1,
+      "event": "One persisted order identity / no live network provisioning",
+      "panels": [
+        {
+          "label": "START",
+          "text": "An Istanbul business orders dedicated Internet."
+        },
+        {
+          "label": "OWNER",
+          "text": "The customer supplies intent; the supervisor sequences bounded agents."
+        },
+        {
+          "label": "CONTROL",
+          "text": "Every transition is persisted and audited."
+        },
+        {
+          "label": "READ THIS FILM",
+          "text": "Green paths are implemented. Amber production gates are not demo features."
+        }
+      ],
+      "beats": [
+        {
+          "text": "An Istanbul business needs connectivity. Follow one order, with clear owners, explicit exceptions, and human decisions.",
+          "start": 0.25,
+          "duration": 8.1755
+        },
+        {
+          "text": "This is a simulator. Amber production paths are proposals, not implemented features.",
+          "start": 8.5755,
+          "duration": 6.90142
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 12,
+      "duration": 15.97692,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "One persisted order identity / no live network provisioning",
+        "One persisted order identity / no live network provisioning"
+      ]
+    },
+    {
+      "id": "intake",
+      "chapter": "01 / Persist once",
+      "title": "Accept once. Never lose the handoff.",
+      "role": "GUARDED ORDER INTAKE",
+      "actor": "customer",
+      "agent": -1,
+      "event": "Product order + idempotency key -> order.received",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Accept approved catalogue, city and synthetic customer fields."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Persist order and event together, using one stable identifier."
+        },
+        {
+          "label": "EXCEPTION",
+          "text": "Reject invalid fields or a reused key with changed content."
+        },
+        {
+          "label": "HUMAN",
+          "text": "The submitter corrects the request and resubmits."
+        },
+        {
+          "label": "IMPACT",
+          "text": "Avoid duplicate orders and lost manual handoffs."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Intake persists the order and event together. A stable key prevents duplicate work.",
+          "start": 0.25,
+          "duration": 5.93687
+        },
+        {
+          "text": "Invalid requests return to the submitter, not downstream agents.",
+          "start": 6.33688,
+          "duration": 4.35458
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 12,
+      "duration": 12.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "Product order + idempotency key -> order.received",
+        "Product order + idempotency key -> order.received"
+      ]
+    },
+    {
+      "id": "validation",
+      "chapter": "02 / Validation owns feasibility",
+      "title": "Stop bad input before it becomes fallout.",
+      "role": "1 / ORDER VALIDATION AGENT",
+      "actor": "agent",
+      "agent": 0,
+      "event": "order.received -> feasibility check -> order.validated",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Check service-site reference and available capacity."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Validated intent, ready for decomposition."
+        },
+        {
+          "label": "EXCEPTION",
+          "text": "Wrong site: await confirmation. No capacity: stop for review."
+        },
+        {
+          "label": "HUMAN",
+          "text": "Submitter confirms the customer's site; manager resolves inventory or rejects."
+        },
+        {
+          "label": "IMPACT",
+          "text": "Catch mismatches early, before planning or allocation."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Validation checks the site and capacity before planning. Bad references stop for customer confirmation.",
+          "start": 0.25,
+          "duration": 6.28204
+        },
+        {
+          "text": "No capacity means manager review or rejection. Approval cannot invent inventory.",
+          "start": 6.68204,
+          "duration": 5.52942
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 17,
+      "duration": 17.0,
+      "agentStates": [
+        [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "order.received -> feasibility check -> order.validated",
+        "order.received -> feasibility check -> order.validated"
+      ]
+    },
+    {
+      "id": "decomposition",
+      "chapter": "03 / Decomposition owns the plan",
+      "title": "One intent becomes linked work orders.",
+      "role": "2 / ORDER DECOMPOSITION AGENT",
+      "actor": "agent",
+      "agent": 1,
+      "event": "order.validated -> linked service + resource orders -> services.planned",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Expand approved catalogue mappings into services and resources."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Linked work orders retain the product-order identifier."
+        },
+        {
+          "label": "EXCEPTION",
+          "text": "Unsupported product is rejected at intake; no invented plan."
+        },
+        {
+          "label": "HUMAN / PRODUCTION GATE",
+          "text": "A planner defines and approves new catalogue mappings.",
+          "proposed": true
+        },
+        {
+          "label": "IMPACT",
+          "text": "Reduce rekeying and mismatched service/resource references."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Decomposition converts approved products into linked service and resource orders, reducing rekeying errors.",
+          "start": 0.25,
+          "duration": 6.56892
+        },
+        {
+          "text": "Unsupported products are rejected at intake. Production planners must approve new catalogue mappings.",
+          "start": 6.96892,
+          "duration": 5.92283
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 17,
+      "duration": 17.0,
+      "agentStates": [
+        [
+          "waiting",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "order.validated -> linked service + resource orders -> services.planned",
+        "order.validated -> linked service + resource orders -> services.planned"
+      ]
+    },
+    {
+      "id": "provisioning",
+      "chapter": "04 / Provisioning owns safe activation",
+      "title": "Allocate once. Respect the authority boundary.",
+      "role": "3 / PROVISIONING AGENT",
+      "actor": "agent",
+      "agent": 2,
+      "event": "services.planned -> policy gates -> simulated activation",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Recheck capacity and policy, then allocate once and activate."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Completed services/resources and services.activated."
+        },
+        {
+          "label": "EXCEPTION",
+          "text": "Timeout -> recovery. Risk or closed window -> manager hold."
+        },
+        {
+          "label": "HUMAN",
+          "text": "Manager approves bounded risk/window decisions or rejects."
+        },
+        {
+          "label": "IMPACT",
+          "text": "Avoid duplicate allocation and unsafe changes."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Provisioning rechecks capacity and policy, then allocates once. A timeout activates recovery.",
+          "start": 0.25,
+          "duration": 6.04771
+        },
+        {
+          "text": "Route risk or a closed change window stops before allocation, for a manager decision.",
+          "start": 6.44771,
+          "duration": 5.89221
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 17,
+      "duration": 17.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "active",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "services.planned -> policy gates -> simulated activation",
+        "services.planned -> policy gates -> simulated activation"
+      ]
+    },
+    {
+      "id": "recovery",
+      "chapter": "05 / Recovery is exception-only",
+      "title": "Recover the known fault. Never loop blindly.",
+      "role": "4 / FALLOUT RESOLUTION AGENT",
+      "actor": "agent",
+      "agent": 3,
+      "event": "fallout.detected -> retry once -> fallout.recovered -> provisioning",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Handle the allowlisted partner timeout with one simulated retry."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Alternate simulated route; return to provisioning."
+        },
+        {
+          "label": "EXCEPTION / PRODUCTION GATE",
+          "text": "Other faults or exhausted retries -> manual triage.",
+          "proposed": true
+        },
+        {
+          "label": "HUMAN / PRODUCTION GATE",
+          "text": "Service manager authorizes remediation outside the playbook.",
+          "proposed": true
+        },
+        {
+          "label": "IMPACT",
+          "text": "Reduce recoverable waiting without unlimited retry storms."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Recovery handles one allowlisted partner timeout, retries once, and returns to provisioning.",
+          "start": 0.25,
+          "duration": 6.54021
+        },
+        {
+          "text": "Unknown faults or exhausted retries need a proposed human triage path, not broader autonomous authority.",
+          "start": 6.94021,
+          "duration": 7.095
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 17,
+      "duration": 17.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "active",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "active",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "fallout.detected -> retry once -> fallout.recovered -> provisioning",
+        "fallout.detected -> retry once -> fallout.recovered -> provisioning"
+      ]
+    },
+    {
+      "id": "human",
+      "chapter": "06 / Human decisions are explicit",
+      "title": "The manager decides. The agent cannot overrule.",
+      "role": "HUMAN SERVICE MANAGER",
+      "actor": "manager",
+      "agent": -1,
+      "event": "Held order -> audited approve/reject -> bounded resume or stop",
+      "panels": [
+        {
+          "label": "REVIEW",
+          "text": "Route conflict, closed window, capacity shortage or breached demo SLA."
+        },
+        {
+          "label": "DECISION",
+          "text": "Approve within permitted scope, or reject with an audit record."
+        },
+        {
+          "label": "LIMIT",
+          "text": "No fabricated capacity. A partner cannot approve."
+        },
+        {
+          "label": "RETURN",
+          "text": "Resume the saved stage; never restart the entire order."
+        }
+      ],
+      "beats": [
+        {
+          "text": "The service manager owns high-risk decisions. Approval is audited, bounded, and cannot fabricate capacity.",
+          "start": 0.25,
+          "duration": 7.41008
+        },
+        {
+          "text": "Approved work resumes its saved stage. Partners cannot approve.",
+          "start": 7.81008,
+          "duration": 4.87338
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 16,
+      "duration": 16.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "Held order -> audited approve/reject -> bounded resume or stop",
+        "Held order -> audited approve/reject -> bounded resume or stop"
+      ]
+    },
+    {
+      "id": "communication",
+      "chapter": "07 / Updates own customer visibility",
+      "title": "Communicate the actual state, not false success.",
+      "role": "5 / CUSTOMER UPDATE AGENT",
+      "actor": "agent",
+      "agent": 4,
+      "event": "services.activated -> persisted TR/EN portal update -> completed",
+      "panels": [
+        {
+          "label": "DO",
+          "text": "Persist Turkish and English updates after simulated activation."
+        },
+        {
+          "label": "OUTPUT",
+          "text": "Customer-visible portal status and completed order."
+        },
+        {
+          "label": "EXCEPTION / PRODUCTION GATE",
+          "text": "External delivery failure -> service-desk incident.",
+          "proposed": true
+        },
+        {
+          "label": "HUMAN / PRODUCTION GATE",
+          "text": "Service desk confirms the customer received the update.",
+          "proposed": true
+        },
+        {
+          "label": "IMPACT",
+          "text": "Clear status can reduce chasing and repeated handoffs."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Customer updates persist bilingual portal status after activation, reducing avoidable chasing.",
+          "start": 0.25,
+          "duration": 5.84371
+        },
+        {
+          "text": "External delivery failure needs a proposed service-desk path. This demo sends no SMS or email.",
+          "start": 6.24371,
+          "duration": 7.72796
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 17,
+      "duration": 17.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "active"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "active"
+        ]
+      ],
+      "events": [
+        "services.activated -> persisted TR/EN portal update -> completed",
+        "services.activated -> persisted TR/EN portal update -> completed"
+      ]
+    },
+    {
+      "id": "impact",
+      "chapter": "08 / Why fallout and delivery time can fall",
+      "title": "Mechanisms first. Outcomes must be measured.",
+      "role": "MEASURABLE BUSINESS CASE",
+      "actor": "manager",
+      "agent": -1,
+      "event": "Prevent errors + remove rekeying + shorten recoverable waits",
+      "panels": [
+        {
+          "label": "LESS FALLOUT",
+          "text": "Early validation + linked IDs + allocate-once guards prevent avoidable rework."
+        },
+        {
+          "label": "SHORTER DELIVERY",
+          "text": "Persisted handoffs + catalogue plans + bounded recovery reduce queue dwell."
+        },
+        {
+          "label": "ASSIGNMENT TARGETS / NOT RESULTS",
+          "text": "35 days -> under 7. Fallout 30% -> under 8%."
+        },
+        {
+          "label": "PILOT EVIDENCE",
+          "text": "Measure lead time, first-time-right completion, recovery and human-review waiting."
+        }
+      ],
+      "beats": [
+        {
+          "text": "Early checks prevent downstream errors. Linked identifiers remove rekeying. Persisted handoffs and bounded recovery reduce waiting.",
+          "start": 0.25,
+          "duration": 9.95671
+        },
+        {
+          "text": "Under seven days and eight percent fallout are targets, not results. Measure lead time, first-time-right completion, and human-review waiting.",
+          "start": 10.35671,
+          "duration": 8.15283
+        }
+      ],
+      "mode": "implemented",
+      "minimumDuration": 20,
+      "duration": 20.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "Prevent errors + remove rekeying + shorten recoverable waits",
+        "Prevent errors + remove rekeying + shorten recoverable waits"
+      ]
+    },
+    {
+      "id": "residency",
+      "chapter": "09 / Standards and residency boundaries",
+      "title": "Interoperate without exporting customer data.",
+      "role": "PROPOSED SOVEREIGN PRODUCTION DESIGN",
+      "actor": "datacenter",
+      "agent": -1,
+      "mode": "proposed",
+      "event": "TMF-inspired interfaces + local workload + individually approved cloud flows",
+      "panels": [
+        {
+          "label": "STANDARDS",
+          "text": "TMF622/TMF641-inspired subsets; MCP intake. Not full certification."
+        },
+        {
+          "label": "TURKIYE / AZURE LOCAL",
+          "text": "Customer data, workflow, inference, keys, raw logs and backups stay local."
+        },
+        {
+          "label": "OUTSIDE / APPROVAL REQUIRED",
+          "text": "Azure images, Arc metadata and safe monitoring aggregates only."
+        },
+        {
+          "label": "STRICTER BOUNDARY",
+          "text": "If metadata cannot leave: assess eligible disconnected operation."
+        }
+      ],
+      "beats": [
+        {
+          "text": "TMF-inspired interfaces and MCP preserve interoperability. The proposed Azure Local workload keeps customer data in Turkiye.",
+          "start": 0.25,
+          "duration": 9.19538
+        },
+        {
+          "text": "External metadata and services need approval. Stricter rules require eligible disconnected operation, not a live cloud link.",
+          "start": 9.59538,
+          "duration": 8.04042
+        }
+      ],
+      "minimumDuration": 20,
+      "duration": 20.0,
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "events": [
+        "TMF-inspired interfaces + local workload + individually approved cloud flows",
+        "TMF-inspired interfaces + local workload + individually approved cloud flows"
+      ]
+    }
+  ],
+  "narration": {
+    "kind": "author-voice-synthetic",
+    "model": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+    "disclosure": "Synthetic narration modeled locally on the author-provided voice sample. Not an original recording of this script. Reference audio was not uploaded. This clarity edition uses revised locally generated narration, pitch-preserving brisk pacing and explicit reading holds; the original sample remains private."
+  },
+  "edition": "solution-clarity-v1",
+  "visualTheme": "clear-ownership-3d",
+  "avatars": [
+    {
+      "role": "Validation",
+      "character": "Inspector",
+      "signature": "owl ears, checklist and magnifying glass"
+    },
+    {
+      "role": "Decomposition",
+      "character": "Architect",
+      "signature": "hard hat, blueprint and orbiting blocks"
+    },
+    {
+      "role": "Provisioning",
+      "character": "Cable crew",
+      "signature": "tall cyclops, wrench and connector arms"
+    },
+    {
+      "role": "Fallout recovery",
+      "character": "Rescue mechanic",
+      "signature": "round rescue ring and retry toolbox"
+    },
+    {
+      "role": "Customer updates",
+      "character": "Messenger",
+      "signature": "headset, paper plane and bilingual bubbles"
+    }
+  ],
+  "sourceVideo": {
+    "file": "solution-3d-v1.mp4",
+    "sha256": "5addc9238903e090a1b318feb0aeff04d15beffa8ea5d850336bf56c80a5d667",
+    "use": "Visual asset reference only; revised narration is generated locally."
+  },
+  "voiceTreatment": {
+    "tempo": 1.08,
+    "pitchPreserved": true,
+    "presenceEQ": "3000 Hz / +2 dB",
+    "compressionRatio": 2,
+    "soundscape": "Original restrained quiet bed"
+  },
+  "rendering": {
+    "engine": "Three.js 0.180.0",
+    "projection": "perspective",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fps": 24,
+    "shadows": true
+  },
+  "humans": [
+    {
+      "role": "customer",
+      "character": "Business_Male_01",
+      "wardrobe": "business suit",
+      "asset": "film3d-assets/customer/Business_Male_01.fbx"
+    },
+    {
+      "role": "service manager",
+      "character": "Business_Female_02",
+      "wardrobe": "business jacket",
+      "asset": "film3d-assets/manager/Business_Female_02.fbx"
+    }
+  ],
+  "humanAssetSource": {
+    "repository": "https://github.com/microsoft/Microsoft-Rocketbox",
+    "revision": "0943055db6ec570bcef9f2c8b41c9e5467c808f9",
+    "license": "MIT",
+    "disclosure": "Textured, rigged rendered humans; not filmed live-action people.",
+    "textures": "Original TGA textures re-encoded losslessly as PNG; maps and rig remain local."
+  },
+  "microsoftIcons": {
+    "source": "https://learn.microsoft.com/en-us/azure/architecture/icons/",
+    "archive": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+    "unchangedSvgSHA256": {
+      "azure-local.svg": "dfce1fa962f0dfd242235471214d46ae9af425d249f206537fa08bb1b1cce1cf",
+      "azure-arc.svg": "00f4a57d6e0391bec619a9298d114f783dbb7dd4165d44242202ca37d00d9bfa",
+      "container-registry.svg": "c134b0a442f203a7eeeb6f99a1f02ed34e51373d7fca59f96c9f125874c9d7d4",
+      "azure-monitor.svg": "1396f59a7d8fd7505a423842b987c9b343a092263d1ab5c7b0d94d58d8b17448"
+    },
+    "use": "Official product icons, upright and labelled with the actual product names."
+  },
+  "layoutContract": {
+    "oneAgentAtATime": true,
+    "responsibilityFontMinimum": 26,
+    "separateWorldAndTextPanels": true
+  }
+}

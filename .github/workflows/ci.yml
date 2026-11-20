@@ -15,5 +15,15 @@ jobs:
       - run: ruff check app tests
       - run: pytest -q
       - run: node --check app/static/app.js
+      - run: node --check app/static/analytics.js
+      - run: node --check app/static/live-demo.js
+      - run: node --check app/static/journey.js
+      - run: node --check app/static/solution.js
+      - run: node --check app/static/orchestration-theme.js
+      - run: node --check app/static/tower-crisp-theme.js
+      - run: node --check scripts/film3d/scene.js
+      - run: node --check app/static/film3d.js
+      - run: node --check scripts/film3d/clarity.js
+      - run: node --check app/static/film-clarity.js
       - name: Compile infrastructure
         run: az bicep build --file infra/main.bicep --stdout > /dev/null

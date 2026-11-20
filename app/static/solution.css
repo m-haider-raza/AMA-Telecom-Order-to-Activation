@@ -1,0 +1,23 @@
+:root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background: #0c1722; color: #ecf2f4; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, footer { padding: 24px 5%; border-bottom: 1px solid #2b4353; display: flex; justify-content: space-between; gap: 20px; font-size: 12px; letter-spacing: 1px; }
+a { color: #a7e4d1; text-underline-offset: 4px; }
+main { max-width: 1220px; margin: 48px auto; padding: 0 24px; }
+.eyebrow { color: #c9ab7a; letter-spacing: 3px; font-size: 12px; }
+h1 { font-size: clamp(32px, 5vw, 58px); margin: 12px 0; font-weight: 600; }
+.intro { color: #a3b8c5; font-size: 19px; max-width: 850px; line-height: 1.6; margin-bottom: 30px; }
+video, canvas { width: 100%; aspect-ratio: 16 / 9; background: #0c1722; border: 1px solid #2b4353; border-radius: 12px; }
+.downloads { display: flex; flex-wrap: wrap; gap: 24px; padding: 22px 0; font-size: 14px; }
+#runtime { color: #a3b8c5; margin-left: auto; }
+#chapters { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 28px; }
+button { text-align: left; padding: 15px; border: 1px solid #2b4353; border-radius: 8px; background: #142635; color: #ecf2f4; cursor: pointer; font: inherit; font-size: 14px; }
+button:hover, button:focus-visible { border-color: #a7e4d1; }
+button[aria-current="true"] { border-color: #a7e4d1; background: #20403e; }
+details { border-top: 1px solid #2b4353; padding: 20px 0; line-height: 1.7; color: #b7c8d2; }
+summary { color: #ecf2f4; cursor: pointer; font-weight: 600; }
+#transcript h2 { font-size: 19px; color: #a7e4d1; margin-top: 28px; }
+input { width: 100%; accent-color: #a7e4d1; }
+#animation-play { margin: 16px 0; }
+footer { color: #a3b8c5; border-top: 1px solid #2b4353; border-bottom: 0; }
+@media (max-width: 600px) { header { flex-direction: column; } main { margin-top: 28px; } }

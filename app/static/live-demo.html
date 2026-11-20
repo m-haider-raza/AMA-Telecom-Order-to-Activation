@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TürkBizTel | Live agent walkthrough</title>
+  <link rel="icon" href="/static/turkbiztel-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/live-demo.css">
+  <script src="/static/live-demo.js" defer></script>
+</head>
+<body>
+  <header><a href="/">TürkBizTel / CONTROL TOWER</a><a href="/docs">API contracts</a></header>
+  <main>
+    <p class="eyebrow">LIVE WORKFLOW / SYNTHETIC TELECOM OPERATIONS</p>
+    <h1>Watch the handoff. Inspect the exception.</h1>
+    <p class="intro">These are actual persisted API events, not a prerecorded animation.
+      The five specialists use deterministic rules and simulated network tools, not autonomous LLM execution.</p>
+    <p class="boundary" id="environment">Connecting to the workflow service...</p>
+    <p id="error" role="alert"></p>
+    <section class="setup" aria-label="Demo access and launch">
+      <details>
+        <summary>Demo access: load credentials locally</summary>
+        <p>Never enter an Azure password or Azure access token. Demo tokens stay in this tab's memory;
+          they are sent only to this application's authenticated endpoints.</p>
+        <label>Local deployment credentials <input id="credentials" type="file" accept=".json,application/json"></label>
+        <label>Service-manager demo token <input id="manager" type="password" autocomplete="off"></label>
+        <label>Wholesale-partner demo token <input id="partner" type="password" autocomplete="off"></label>
+        <button id="forget" type="button">Forget tokens</button>
+        <p id="access-status" role="status">No tokens loaded.</p>
+      </details>
+      <form id="launch">
+        <label>Route to demonstrate
+          <select id="scenario">
+            <option value="happy">Straight-through: validate, plan, provision, notify</option>
+            <option value="auto-recovery">Timeout: one recovery retry, then resume provisioning</option>
+            <option value="human-exception">Route conflict: stop for manager approval or rejection</option>
+            <option value="change-window">Closed window: wait for an audited simulated release</option>
+            <option value="address-correction">Invalid site: wait for customer-confirmed correction</option>
+          </select>
+        </label>
+        <label>Entry contract
+          <select id="channel"><option value="operator">TMF622-inspired operator API</option><option value="partner">Authenticated wholesale MCP tool</option></select>
+        </label>
+        <button id="start" type="submit">Create a synthetic order</button>
+      </form>
+      <p>Each launch saves a new fictional order and consumes at most one simulated capacity unit.
+        No real carrier resource, email or SMS is created. Holds are never released automatically here.</p>
+    </section>
+    <div class="order-heading">
+      <label>Observed order <select id="order"><option value="">Select an order</option></select></label>
+      <button id="export" type="button" disabled>Download observed evidence</button>
+    </div>
+    <section class="supervisor" aria-label="Guarded supervisor">
+      <div><p class="eyebrow">GUARDED ORCHESTRATION SUPERVISOR</p><h2 id="order-state">Choose a route to begin.</h2></div>
+      <p id="handoff">One persisted event at a time. No unlimited execution authority.</p>
+    </section>
+    <section id="agents" class="agents" aria-label="Five specialist responsibilities"></section>
+    <section id="exception" class="exception" hidden>
+      <p class="eyebrow">EXPLICIT EXCEPTION ROUTE</p><h2 id="exception-title"></h2>
+      <p id="exception-detail"></p><p id="exception-owner"></p>
+      <div class="actions">
+        <button id="approve" type="button" hidden>Manager: approve simulated work</button>
+        <button id="reject" type="button" hidden>Manager: reject order</button>
+        <button id="correct" type="button" hidden>Confirm the customer-provided demo site</button>
+        <button id="deny-partner" type="button" hidden>Verify partner approval is denied</button>
+      </div>
+      <p id="permission-result" role="status"></p>
+    </section>
+    <div class="evidence-grid">
+      <section><h2>Persisted agent/tool timeline</h2><ol id="timeline"><li>No order selected.</li></ol></section>
+      <section><h2>Durable handoff events</h2><ol id="events"></ol><h2>Linked work</h2><p id="linked">No order selected.</p>
+        <h2>Customer portal updates</h2><div id="messages"></div></section>
+    </div>
+    <section class="notes"><h2>What this demo proves, and what it does not</h2>
+      <p>It demonstrates linked orders, policy holds, one allowlisted timeout retry, allocate-once guards,
+        audited human decisions and persisted Turkish/English portal messages.
+        Unknown-fault triage and real carrier/channel integrations remain production work.</p>
+      <p>TMF622/TMF641-inspired subsets are not certified full TM Forum contracts. MCP grants no approval authority.
+        This app does not deploy Azure Local or establish Turkish data residency.
+        Production requires approved infrastructure and data/inference/backup controls inside Türkiye.</p>
+      <p>35 days to under 7 and 30% fallout to under 8% are assignment targets, not measured outcomes.
+        Demo elapsed seconds cannot validate those targets.</p>
+    </section>
+  </main>
+</body>
+</html>

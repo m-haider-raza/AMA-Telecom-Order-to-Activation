@@ -1,0 +1,15 @@
+{
+  "name": "ama-local-film3d",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild scene.js --bundle --format=iife --target=es2022 --legal-comments=linked --outfile=../../app/static/film3d.js",
+    "build:clarity": "esbuild clarity.js --bundle --format=iife --target=es2022 --legal-comments=linked --outfile=../../app/static/film-clarity.js"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.11"
+  }
+}

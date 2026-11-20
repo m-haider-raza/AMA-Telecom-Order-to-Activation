@@ -1,0 +1,151 @@
+{
+  "title": "Clear ownership. Fewer failures. Faster delivery.",
+  "scenes": [
+    {
+      "id": "opening", "chapter": "One order, accountable owners", "title": "One order. Clear ownership.", "role": "CUSTOMER + GUARDED SUPERVISOR", "actor": "customer", "agent": -1,
+      "event": "One persisted order identity / no live network provisioning",
+      "panels": [
+        {"label": "START", "text": "An Istanbul business orders dedicated Internet."},
+        {"label": "OWNER", "text": "The customer supplies intent; the supervisor sequences bounded agents."},
+        {"label": "CONTROL", "text": "Every transition is persisted and audited."},
+        {"label": "READ THIS FILM", "text": "Green paths are implemented. Amber production gates are not demo features."}
+      ],
+      "beats": [
+        {"text": "An Istanbul business needs connectivity. Follow one order, with clear owners, explicit exceptions, and human decisions."},
+        {"text": "This is a simulator. Amber production paths are proposals, not implemented features."}
+      ]
+    },
+    {
+      "id": "intake", "chapter": "01 / Persist once", "title": "Accept once. Never lose the handoff.", "role": "GUARDED ORDER INTAKE", "actor": "customer", "agent": -1,
+      "event": "Product order + idempotency key -> order.received",
+      "panels": [
+        {"label": "DO", "text": "Accept approved catalogue, city and synthetic customer fields."},
+        {"label": "OUTPUT", "text": "Persist order and event together, using one stable identifier."},
+        {"label": "EXCEPTION", "text": "Reject invalid fields or a reused key with changed content."},
+        {"label": "HUMAN", "text": "The submitter corrects the request and resubmits."},
+        {"label": "IMPACT", "text": "Avoid duplicate orders and lost manual handoffs."}
+      ],
+      "beats": [
+        {"text": "Intake persists the order and event together. A stable key prevents duplicate work."},
+        {"text": "Invalid requests return to the submitter, not downstream agents."}
+      ]
+    },
+    {
+      "id": "validation", "chapter": "02 / Validation owns feasibility", "title": "Stop bad input before it becomes fallout.", "role": "1 / ORDER VALIDATION AGENT", "actor": "agent", "agent": 0,
+      "event": "order.received -> feasibility check -> order.validated",
+      "panels": [
+        {"label": "DO", "text": "Check service-site reference and available capacity."},
+        {"label": "OUTPUT", "text": "Validated intent, ready for decomposition."},
+        {"label": "EXCEPTION", "text": "Wrong site: await confirmation. No capacity: stop for review."},
+        {"label": "HUMAN", "text": "Submitter confirms the customer's site; manager resolves inventory or rejects."},
+        {"label": "IMPACT", "text": "Catch mismatches early, before planning or allocation."}
+      ],
+      "beats": [
+        {"text": "Validation checks the site and capacity before planning. Bad references stop for customer confirmation."},
+        {"text": "No capacity means manager review or rejection. Approval cannot invent inventory."}
+      ]
+    },
+    {
+      "id": "decomposition", "chapter": "03 / Decomposition owns the plan", "title": "One intent becomes linked work orders.", "role": "2 / ORDER DECOMPOSITION AGENT", "actor": "agent", "agent": 1,
+      "event": "order.validated -> linked service + resource orders -> services.planned",
+      "panels": [
+        {"label": "DO", "text": "Expand approved catalogue mappings into services and resources."},
+        {"label": "OUTPUT", "text": "Linked work orders retain the product-order identifier."},
+        {"label": "EXCEPTION", "text": "Unsupported product is rejected at intake; no invented plan."},
+        {"label": "HUMAN / PRODUCTION GATE", "text": "A planner defines and approves new catalogue mappings.", "proposed": true},
+        {"label": "IMPACT", "text": "Reduce rekeying and mismatched service/resource references."}
+      ],
+      "beats": [
+        {"text": "Decomposition converts approved products into linked service and resource orders, reducing rekeying errors."},
+        {"text": "Unsupported products are rejected at intake. Production planners must approve new catalogue mappings."}
+      ]
+    },
+    {
+      "id": "provisioning", "chapter": "04 / Provisioning owns safe activation", "title": "Allocate once. Respect the authority boundary.", "role": "3 / PROVISIONING AGENT", "actor": "agent", "agent": 2,
+      "event": "services.planned -> policy gates -> simulated activation",
+      "panels": [
+        {"label": "DO", "text": "Recheck capacity and policy, then allocate once and activate."},
+        {"label": "OUTPUT", "text": "Completed services/resources and services.activated."},
+        {"label": "EXCEPTION", "text": "Timeout -> recovery. Risk or closed window -> manager hold."},
+        {"label": "HUMAN", "text": "Manager approves bounded risk/window decisions or rejects."},
+        {"label": "IMPACT", "text": "Avoid duplicate allocation and unsafe changes."}
+      ],
+      "beats": [
+        {"text": "Provisioning rechecks capacity and policy, then allocates once. A timeout activates recovery."},
+        {"text": "Route risk or a closed change window stops before allocation, for a manager decision."}
+      ]
+    },
+    {
+      "id": "recovery", "chapter": "05 / Recovery is exception-only", "title": "Recover the known fault. Never loop blindly.", "role": "4 / FALLOUT RESOLUTION AGENT", "actor": "agent", "agent": 3,
+      "event": "fallout.detected -> retry once -> fallout.recovered -> provisioning",
+      "panels": [
+        {"label": "DO", "text": "Handle the allowlisted partner timeout with one simulated retry."},
+        {"label": "OUTPUT", "text": "Alternate simulated route; return to provisioning."},
+        {"label": "EXCEPTION / PRODUCTION GATE", "text": "Other faults or exhausted retries -> manual triage.", "proposed": true},
+        {"label": "HUMAN / PRODUCTION GATE", "text": "Service manager authorizes remediation outside the playbook.", "proposed": true},
+        {"label": "IMPACT", "text": "Reduce recoverable waiting without unlimited retry storms."}
+      ],
+      "beats": [
+        {"text": "Recovery handles one allowlisted partner timeout, retries once, and returns to provisioning."},
+        {"text": "Unknown faults or exhausted retries need a proposed human triage path, not broader autonomous authority."}
+      ]
+    },
+    {
+      "id": "human", "chapter": "06 / Human decisions are explicit", "title": "The manager decides. The agent cannot overrule.", "role": "HUMAN SERVICE MANAGER", "actor": "manager", "agent": -1,
+      "event": "Held order -> audited approve/reject -> bounded resume or stop",
+      "panels": [
+        {"label": "REVIEW", "text": "Route conflict, closed window, capacity shortage or breached demo SLA."},
+        {"label": "DECISION", "text": "Approve within permitted scope, or reject with an audit record."},
+        {"label": "LIMIT", "text": "No fabricated capacity. A partner cannot approve."},
+        {"label": "RETURN", "text": "Resume the saved stage; never restart the entire order."}
+      ],
+      "beats": [
+        {"text": "The service manager owns high-risk decisions. Approval is audited, bounded, and cannot fabricate capacity."},
+        {"text": "Approved work resumes its saved stage. Partners cannot approve."}
+      ]
+    },
+    {
+      "id": "communication", "chapter": "07 / Updates own customer visibility", "title": "Communicate the actual state, not false success.", "role": "5 / CUSTOMER UPDATE AGENT", "actor": "agent", "agent": 4,
+      "event": "services.activated -> persisted TR/EN portal update -> completed",
+      "panels": [
+        {"label": "DO", "text": "Persist Turkish and English updates after simulated activation."},
+        {"label": "OUTPUT", "text": "Customer-visible portal status and completed order."},
+        {"label": "EXCEPTION / PRODUCTION GATE", "text": "External delivery failure -> service-desk incident.", "proposed": true},
+        {"label": "HUMAN / PRODUCTION GATE", "text": "Service desk confirms the customer received the update.", "proposed": true},
+        {"label": "IMPACT", "text": "Clear status can reduce chasing and repeated handoffs."}
+      ],
+      "beats": [
+        {"text": "Customer updates persist bilingual portal status after activation, reducing avoidable chasing."},
+        {"text": "External delivery failure needs a proposed service-desk path. This demo sends no SMS or email."}
+      ]
+    },
+    {
+      "id": "impact", "chapter": "08 / Why fallout and delivery time can fall", "title": "Mechanisms first. Outcomes must be measured.", "role": "MEASURABLE BUSINESS CASE", "actor": "manager", "agent": -1,
+      "event": "Prevent errors + remove rekeying + shorten recoverable waits",
+      "panels": [
+        {"label": "LESS FALLOUT", "text": "Early validation + linked IDs + allocate-once guards prevent avoidable rework."},
+        {"label": "SHORTER DELIVERY", "text": "Persisted handoffs + catalogue plans + bounded recovery reduce queue dwell."},
+        {"label": "ASSIGNMENT TARGETS / NOT RESULTS", "text": "35 days -> under 7. Fallout 30% -> under 8%."},
+        {"label": "PILOT EVIDENCE", "text": "Measure lead time, first-time-right completion, recovery and human-review waiting."}
+      ],
+      "beats": [
+        {"text": "Early checks prevent downstream errors. Linked identifiers remove rekeying. Persisted handoffs and bounded recovery reduce waiting."},
+        {"text": "Under seven days and eight percent fallout are targets, not results. Measure lead time, first-time-right completion, and human-review waiting."}
+      ]
+    },
+    {
+      "id": "residency", "chapter": "09 / Standards and residency boundaries", "title": "Interoperate without exporting customer data.", "role": "PROPOSED SOVEREIGN PRODUCTION DESIGN", "actor": "datacenter", "agent": -1, "mode": "proposed",
+      "event": "TMF-inspired interfaces + local workload + individually approved cloud flows",
+      "panels": [
+        {"label": "STANDARDS", "text": "TMF622/TMF641-inspired subsets; MCP intake. Not full certification."},
+        {"label": "TURKIYE / AZURE LOCAL", "text": "Customer data, workflow, inference, keys, raw logs and backups stay local."},
+        {"label": "OUTSIDE / APPROVAL REQUIRED", "text": "Azure images, Arc metadata and safe monitoring aggregates only."},
+        {"label": "STRICTER BOUNDARY", "text": "If metadata cannot leave: assess eligible disconnected operation."}
+      ],
+      "beats": [
+        {"text": "TMF-inspired interfaces and MCP preserve interoperability. The proposed Azure Local workload keeps customer data in Turkiye."},
+        {"text": "External metadata and services need approval. Stricter rules require eligible disconnected operation, not a live cloud link."}
+      ]
+    }
+  ]
+}

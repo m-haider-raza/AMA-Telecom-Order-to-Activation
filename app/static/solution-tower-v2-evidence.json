@@ -1,0 +1,39 @@
+{
+  "edition": "solution-tower-v2",
+  "duration": 153.51,
+  "preservedVideos": {
+    "current-scenario.mp4": "8d5c3aac69f464304265890a4acc5541b34a25200762f1dc297919736b7b81d5",
+    "solution-3d-v1.mp4": "5addc9238903e090a1b318feb0aeff04d15beffa8ea5d850336bf56c80a5d667",
+    "solution-clarity-v1.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-clarity-v2.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-tower-v1.mp4": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "existingVideosUnchanged": true,
+  "sourceVideo": {
+    "file": "solution-tower-v1.mp4",
+    "sha256": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "use": "Selected tower design and characters; no source audio reused"
+  },
+  "distinctPresetNarrator": true,
+  "referenceAudioUsed": false,
+  "scriptSHA256": "f6b32177b4d100bec27c08075e95bd5b47e0003f231307c6d48407d5e91eb638",
+  "narration": {
+    "kind": "local-preset-neural",
+    "model": "Kokoro-82M v1.0",
+    "voice": "af_heart",
+    "voiceDescription": "Distinct American-English female preset; not the author's voice",
+    "speed": 1.08,
+    "modelSHA256": {
+      "kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+    },
+    "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "modelLicense": "Apache-2.0",
+    "runtimeLicense": "MIT",
+    "referenceAudioUsed": false,
+    "disclosure": "A distinct locally generated American-English neural preset narrator (Kokoro / af_heart), not the author's cloned voice. Brisk, pitch-preserving 1.15x delivery treatment; no reference audio or script was uploaded."
+  },
+  "fullDecodeVerified": true,
+  "captionCount": 24
+}

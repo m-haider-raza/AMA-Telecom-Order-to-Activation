@@ -1,0 +1,22 @@
+{
+  "edition": "solution-clarity-v2",
+  "duration": 168.977,
+  "preservedVideos": {
+    "current-scenario.mp4": "8d5c3aac69f464304265890a4acc5541b34a25200762f1dc297919736b7b81d5",
+    "solution-3d-v1.mp4": "5addc9238903e090a1b318feb0aeff04d15beffa8ea5d850336bf56c80a5d667",
+    "solution-clarity-v1.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-tower-v1.mp4": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "existingVideosUnchanged": true,
+  "voiceTreatment": {
+    "tempo": 1.08,
+    "pitchPreserved": true,
+    "presenceEQ": "3000 Hz / +2 dB",
+    "compressionRatio": 2,
+    "soundscape": "Original restrained quiet bed"
+  },
+  "layoutVerified": true,
+  "singleFocalAgentVerified": true,
+  "scriptSHA256": "3e18989be4762711a64be53bb1e58d898564f988000e0148708334759368cf00"
+}

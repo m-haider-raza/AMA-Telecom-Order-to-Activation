@@ -1,0 +1,40 @@
+{
+  "edition": "solution-tower-v3",
+  "duration": 162.077,
+  "preservedVideos": {
+    "current-scenario.mp4": "8e6a38972fb7c094504cda5d1723e4db8af86e4a2ed99eec2ebb86c3a97d7066",
+    "solution-3d-v1.mp4": "5addc9238903e090a1b318feb0aeff04d15beffa8ea5d850336bf56c80a5d667",
+    "solution-clarity-v1.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-clarity-v2.mp4": "9338a276b100f7120a62f06b29587a03f9df84dc35ad29f9278a0eacfd5b6a2f",
+    "solution-tower-v1.mp4": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "solution-tower-v2.mp4": "3556b1cd1689ff82149eb73ab17f28fbfcda11efd4796c60c6585b09dd2ecf30",
+    "solution.mp4": "f560095a52887513db488c307d5dd5333acb841526210ec935d13ffc5b200fcd"
+  },
+  "existingVideosUnchanged": true,
+  "sourceVideo": {
+    "file": "solution-tower-v1.mp4",
+    "sha256": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "use": "Selected tower design and characters; no source audio reused"
+  },
+  "distinctPresetNarrator": true,
+  "referenceAudioUsed": false,
+  "scriptSHA256": "737c3a95db9543e2b384492a227dc562a3078862bc23c5c7287f13bee0ab0eef",
+  "narration": {
+    "kind": "local-preset-neural",
+    "model": "Kokoro-82M v1.0",
+    "voice": "af_heart",
+    "voiceDescription": "Distinct American-English female preset; not the author's voice",
+    "speed": 1.08,
+    "modelSHA256": {
+      "kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+    },
+    "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "modelLicense": "Apache-2.0",
+    "runtimeLicense": "MIT",
+    "referenceAudioUsed": false,
+    "disclosure": "A distinct locally generated American-English neural preset narrator (Kokoro / af_heart), not the author's cloned voice. Brisk, pitch-preserving 1.15x delivery treatment; no reference audio or script was uploaded."
+  },
+  "fullDecodeVerified": true,
+  "captionCount": 24
+}

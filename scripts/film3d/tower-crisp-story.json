@@ -1,0 +1,170 @@
+{
+  "title": "One order. One accountable flow.",
+  "subtitle": "Prevent rework. Recover safely. Keep people in control.",
+  "scenes": [
+    {
+      "id": "opening", "title": "One order. One accountable flow.",
+      "chapter": "The solution in one sentence",
+      "banner": "One order identity / explicit handoffs / bounded recovery / human authority",
+      "takeaway": "ONE SUPERVISOR. FIVE SPECIALISTS. A TRACEABLE PATH TO ACTIVATION.",
+      "beats": [
+        {"text": "A business orders connectivity. Instead of disconnected handoffs, one guarded supervisor coordinates five specialist agents."},
+        {"text": "The goal: less rework, faster activation, and a customer who knows what happens next."}
+      ]
+    },
+    {
+      "id": "intake", "title": "Accept once. Never lose the handoff.",
+      "chapter": "01 / Durable intake",
+      "takeaway": "STABLE IDENTITY + ATOMIC SAVE = NO DUPLICATE ACCEPTANCE.",
+      "cards": [
+        {"title": "CUSTOMER ORDER", "body": "Approved product.\nOne stable request key."},
+        {"title": "PERSIST TOGETHER", "body": "Save the order and event\nin one transaction."},
+        {"title": "READY TO PROCESS", "body": "Resume the saved order.\nDo not start a duplicate."}
+      ],
+      "exception": {"title": "INVALID REQUEST", "body": "Return to the submitter.\nCorrect before processing."},
+      "beats": [
+        {"text": "Intake saves the order and its event together. A stable request key prevents duplicate acceptance."},
+        {"text": "Invalid requests return for correction. Accepted work stays traceable, without another manual handoff."}
+      ]
+    },
+    {
+      "id": "validation", "title": "Catch errors before they become fallout.",
+      "chapter": "02 / Validation owns feasibility",
+      "takeaway": "PREVENT AVOIDABLE REWORK AT THE START, NOT AFTER ALLOCATION.",
+      "cards": [
+        {"title": "RECEIVED ORDER", "body": "Customer intent.\nOne persisted identity."},
+        {"title": "VALIDATE", "body": "Check the service site\nand available capacity."},
+        {"title": "VALIDATED INTENT", "body": "Only feasible work\nmoves to planning."}
+      ],
+      "exception": {"title": "STOP AND RESOLVE", "body": "Customer confirms the site.\nManager reviews inventory."},
+      "beats": [
+        {"text": "Validation checks the site and capacity before planning. Catching bad references early prevents downstream rework."},
+        {"text": "A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval."}
+      ]
+    },
+    {
+      "id": "decomposition", "title": "Plan once. Keep every task linked.",
+      "chapter": "03 / Decomposition owns the plan",
+      "takeaway": "CATALOGUE MAPPINGS REPLACE REKEYING AND MISMATCHED REFERENCES.",
+      "cards": [
+        {"title": "PRODUCT INTENT", "body": "Dedicated Internet.\nApproved catalogue."},
+        {"title": "LINKED SERVICES", "body": "Access circuit.\nInternet service."},
+        {"title": "LINKED RESOURCES", "body": "Access port and IP block.\nSame order identity."}
+      ],
+      "beats": [
+        {"text": "Decomposition turns an approved product into linked service and resource orders. No repeated rekeying."},
+        {"text": "Unsupported products stop at intake. New catalogue mappings need planner approval in production."}
+      ]
+    },
+    {
+      "id": "provisioning", "title": "Check policy. Then allocate once.",
+      "chapter": "04 / Provisioning owns safe execution",
+      "takeaway": "NO DUPLICATE ALLOCATION. NO POLICY BYPASS. NO FALSE SUCCESS.",
+      "cards": [
+        {"title": "APPROVED PLAN", "body": "Linked work orders.\nSaved execution stage."},
+        {"title": "POLICY GATES", "body": "Capacity, route risk\nand change window."},
+        {"title": "SIMULATED ACTIVATION", "body": "Allocate once.\nComplete linked work."}
+      ],
+      "exception": {"title": "PARTNER TIMEOUT", "body": "Hold execution.\nWake the recovery agent."},
+      "beats": [
+        {"text": "Provisioning rechecks capacity, risk and the change window, then allocates resources once."},
+        {"text": "A partner timeout activates recovery. A policy conflict takes a different path: human review."}
+      ]
+    },
+    {
+      "id": "recovery", "title": "Recover the known fault. Hand back.",
+      "chapter": "05 / Recovery is exception-only",
+      "takeaway": "ONE ALLOWLISTED RETRY. BACK TO PROVISIONING. NEVER AN ENDLESS LOOP.",
+      "cards": [
+        {"title": "KNOWN TIMEOUT", "body": "An allowlisted fault.\nNo broader authority."},
+        {"title": "RETRY ONCE", "body": "Use the simulated\nalternate-route playbook."},
+        {"title": "HAND BACK", "body": "Resume provisioning.\nDo not reserve twice."}
+      ],
+      "exception": {"title": "PROPOSED HUMAN TRIAGE", "body": "Unknown fault?\nManager owns remediation."},
+      "beats": [
+        {"text": "Recovery handles one allowlisted timeout, retries once, and hands control back to provisioning."},
+        {"text": "That shortens recoverable waiting. Unknown faults need a proposed human triage path, not unlimited autonomy."}
+      ]
+    },
+    {
+      "id": "human", "title": "People own the high-risk decision.",
+      "chapter": "Exception branch / Human authority",
+      "takeaway": "AUDITED APPROVAL OR REJECTION. PARTNERS CANNOT OVERRULE POLICY.",
+      "beats": [
+        {"text": "The service manager approves or rejects high-risk work. Every decision is audited."},
+        {"text": "Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage."}
+      ]
+    },
+    {
+      "id": "communication", "title": "Close the loop with truthful status.",
+      "chapter": "06 / Customer updates own visibility",
+      "takeaway": "ACTIVATE FIRST. CONFIRM SECOND. LESS CHASING FOR THE CUSTOMER.",
+      "cards": [
+        {"title": "SERVICES ACTIVATED", "body": "Provisioning completed.\nNot merely requested."},
+        {"title": "CUSTOMER UPDATE", "body": "Persist Turkish and\nEnglish portal messages."},
+        {"title": "ORDER COMPLETE", "body": "Visible status.\nA traceable completion."}
+      ],
+      "beats": [
+        {"text": "After activation, customer updates persist Turkish and English portal confirmations. Clear status reduces chasing."},
+        {"text": "This simulator sends no email or text messages. Production delivery failures need service-desk ownership."}
+      ]
+    },
+    {
+      "id": "standards", "title": "Shared contracts. The same guardrails.",
+      "chapter": "Interoperability without a privileged shortcut",
+      "takeaway": "TMF-INSPIRED SUBSETS + AUTHENTICATED MCP. NOT FULL CERTIFICATION.",
+      "cards": [
+        {"title": "TMF622-INSPIRED", "body": "Product-order intake.\nStable identifiers."},
+        {"title": "TMF641-INSPIRED", "body": "Linked service orders.\nExplicit handoffs."},
+        {"title": "MCP PARTNER TOOLS", "body": "Check and submit.\nNo approval authority."}
+      ],
+      "beats": [
+        {"text": "TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow."},
+        {"text": "These are simplified interfaces, not certified standards. Full conformance remains a production gate."}
+      ]
+    },
+    {
+      "id": "residency", "title": "Keep the customer workload in Turkey.",
+      "chapter": "Proposed architecture / Azure Local",
+      "takeaway": "BRING COMPUTE TO THE DATA. CUSTOMER PAYLOADS STAY LOCAL.",
+      "cards": [
+        {"title": "AZURE LOCAL", "body": "Operator datacenter\ninside Turkey.", "icon": "azure-local.svg"},
+        {"title": "LOCAL EXECUTION", "body": "Orders, agents, inference\nand customer data."},
+        {"title": "LOCAL PROTECTION", "body": "Keys, raw logs,\nbackups and recovery."}
+      ],
+      "beats": [
+        {"text": "For data residency, the proposed design runs the customer workload on Azure Local in Turkey."},
+        {"text": "Orders, agents, inference, keys, raw logs and backups stay local. This architecture is proposed, not deployed."}
+      ]
+    },
+    {
+      "id": "hybrid", "title": "Use cloud services without exporting orders.",
+      "chapter": "Proposed architecture / Controlled cloud boundary",
+      "parallelLanes": true,
+      "takeaway": "APPROVE EACH METADATA FLOW. STRICTER RULES MAY REQUIRE DISCONNECTION.",
+      "cards": [
+        {"title": "IMAGES IN", "body": "Approved software from\nAzure Container Registry.", "icon": "container-registry.svg"},
+        {"title": "METADATA OUT", "body": "Azure Arc metadata.\nAzure Monitor aggregates.", "icons": ["azure-arc.svg", "azure-monitor.svg"]},
+        {"title": "CUSTOMER DATA BLOCKED", "body": "No foreign payloads.\nNo raw logs or backups."}
+      ],
+      "beats": [
+        {"text": "External Azure services supply approved images, management and monitoring. Every metadata flow needs approval."},
+        {"text": "If even platform metadata cannot leave, assess eligible disconnected operations. A connected cloud link is not a residency guarantee."}
+      ]
+    },
+    {
+      "id": "impact", "title": "Less rework. Less waiting. Prove it.",
+      "chapter": "The business case / Targets, not results",
+      "takeaway": "MEASURE LEAD TIME, FIRST-TIME-RIGHT COMPLETION AND HUMAN-REVIEW WAITING.",
+      "cards": [
+        {"title": "LESS FALLOUT", "body": "Early validation.\nLinked IDs. Allocate once."},
+        {"title": "SHORTER DELIVERY", "body": "Durable handoffs.\nBounded recovery."},
+        {"title": "PILOT TARGETS", "body": "35 days -> under 7.\nFallout: 30% -> under 8%."}
+      ],
+      "beats": [
+        {"text": "Early checks prevent rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery cut avoidable waiting."},
+        {"text": "Under seven days and eight percent fallout are targets, not results. Prove the improvement in a representative pilot."}
+      ]
+    }
+  ]
+}

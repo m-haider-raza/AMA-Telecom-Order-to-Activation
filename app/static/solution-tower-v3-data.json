@@ -1,0 +1,812 @@
+{
+  "schemaVersion": 2,
+  "presentation": "crisp-control-tower",
+  "title": "One order. One accountable flow.",
+  "subtitle": "A connected customer journey. Clear ownership. Faster progress with control.",
+  "sources": [
+    "README.md",
+    "app/domain.py",
+    "app/main.py",
+    "app/store.py",
+    "app/advisor.py",
+    "docs/PRODUCTION.md"
+  ],
+  "references": [
+    {
+      "name": "TM Forum TMF622 product ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/product-ordering-management-api-TMF622/v5.0"
+    },
+    {
+      "name": "TM Forum TMF641 service ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/service-ordering-management-api-TMF641/v4.1"
+    },
+    {
+      "name": "MCP JSON-RPC and Streamable HTTP",
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports"
+    },
+    {
+      "name": "Azure public geography inventory (checked 30 October 2026)",
+      "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/"
+    },
+    {
+      "name": "Azure Local overview",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/overview"
+    },
+    {
+      "name": "Azure Arc data and privacy",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/servers/security-data-privacy"
+    },
+    {
+      "name": "Azure Local disconnected operations and eligibility",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/disconnected-operations-overview"
+    }
+  ],
+  "branding": {
+    "name": "T\u00fcrk Telekom",
+    "asset": "solution-turk-telekom.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:T%C3%BCrk_Telekom_logo.svg",
+    "license": "Public-domain simple geometric logo as labelled by Wikimedia Commons; trademark rights remain.",
+    "disclaimer": "Market context only. No affiliation, endorsement, customer relationship or integration is claimed. AMA is fictional."
+  },
+  "agents": [
+    "Validation",
+    "Decomposition",
+    "Provisioning",
+    "Fallout recovery",
+    "Customer updates"
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "chapter": "A connected customer journey",
+      "title": "One order. One accountable flow.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "Customer selects a product",
+        "Customer prepares an order"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "A business orders connectivity. Instead of disconnected handoffs, one guarded supervisor coordinates five specialist agents.",
+          "start": 0.22,
+          "duration": 6.78446
+        },
+        {
+          "text": "The goal: less rework, faster activation, and a customer who knows what happens next.",
+          "start": 7.18446,
+          "duration": 4.34008
+        }
+      ],
+      "duration": 12.20454,
+      "banner": "One order identity / explicit handoffs / bounded recovery / human authority",
+      "takeaway": "ONE SUPERVISOR. FIVE SPECIALISTS. A TRACEABLE PATH TO ACTIVATION.",
+      "minimumDuration": 8
+    },
+    {
+      "id": "intake",
+      "chapter": "Durable intake",
+      "title": "Accept once. Never lose the handoff.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "POST productOrder / idempotency key",
+        "Invalid request -> submitter corrects before acceptance"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Intake saves the order and its event together. A stable request key prevents duplicate acceptance.",
+          "start": 0.22,
+          "duration": 5.47396
+        },
+        {
+          "text": "Invalid requests return for correction. Accepted work stays traceable, without another manual handoff.",
+          "start": 5.87396,
+          "duration": 5.62221
+        }
+      ],
+      "duration": 12.17617,
+      "ownerLabel": "ORDER INTAKE / PERSISTED INTENT",
+      "takeaway": "STABLE IDENTITY + ATOMIC SAVE = NO DUPLICATE ACCEPTANCE.",
+      "cards": [
+        {
+          "title": "CUSTOMER ORDER",
+          "body": "Approved product.\nOne stable request key."
+        },
+        {
+          "title": "PERSIST TOGETHER",
+          "body": "Save the order and event\nin one transaction."
+        },
+        {
+          "title": "READY TO PROCESS",
+          "body": "Resume the saved order.\nDo not start a duplicate."
+        }
+      ],
+      "exception": {
+        "title": "INVALID REQUEST",
+        "body": "Return to the submitter.\nCorrect before processing."
+      },
+      "minimumDuration": 8
+    },
+    {
+      "id": "validation",
+      "chapter": "Validation owns feasibility",
+      "title": "Catch errors before they become fallout.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "order.received -> validation agent",
+        "Site or capacity problem -> correction or manager review"
+      ],
+      "agentStates": [
+        [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "held",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Validation checks the site and capacity before planning. Catching bad references early prevents downstream rework.",
+          "start": 0.22,
+          "duration": 6.40317
+        },
+        {
+          "text": "A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval.",
+          "start": 6.80317,
+          "duration": 5.89783
+        }
+      ],
+      "duration": 13.381,
+      "ownerLabel": "VALIDATION / FEASIBILITY AND CAPACITY",
+      "takeaway": "PREVENT AVOIDABLE REWORK AT THE START, NOT AFTER ALLOCATION.",
+      "cards": [
+        {
+          "title": "RECEIVED ORDER",
+          "body": "Customer intent.\nOne persisted identity."
+        },
+        {
+          "title": "VALIDATE",
+          "body": "Check the service site\nand available capacity."
+        },
+        {
+          "title": "VALIDATED INTENT",
+          "body": "Only feasible work\nmoves to planning."
+        }
+      ],
+      "exception": {
+        "title": "STOP AND RESOLVE",
+        "body": "Customer confirms the site.\nManager reviews inventory."
+      },
+      "minimumDuration": 8
+    },
+    {
+      "id": "decomposition",
+      "chapter": "Decomposition owns the plan",
+      "title": "Plan once. Keep every task linked.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "order.validated -> decomposition agent",
+        "services.planned -> provisioning queued"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "queued",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Decomposition turns an approved product into linked service and resource orders. No repeated rekeying.",
+          "start": 0.22,
+          "duration": 5.57167
+        },
+        {
+          "text": "Unsupported products stop at intake. Catalogue governance keeps new mappings under the accountable planner's control.",
+          "start": 5.97167,
+          "duration": 5.92029
+        }
+      ],
+      "duration": 12.57196,
+      "ownerLabel": "DECOMPOSITION / APPROVED CATALOGUE MAPPINGS",
+      "takeaway": "CATALOGUE MAPPINGS REPLACE REKEYING AND MISMATCHED REFERENCES.",
+      "cards": [
+        {
+          "title": "PRODUCT INTENT",
+          "body": "Dedicated Internet.\nApproved catalogue."
+        },
+        {
+          "title": "LINKED SERVICES",
+          "body": "Access circuit.\nInternet service."
+        },
+        {
+          "title": "LINKED RESOURCES",
+          "body": "Access port and IP block.\nSame order identity."
+        }
+      ],
+      "minimumDuration": 8
+    },
+    {
+      "id": "provisioning",
+      "chapter": "Provisioning owns safe execution",
+      "title": "Check policy. Then allocate once.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "services.planned -> provisioning agent",
+        "Partner timeout -> fallout.detected"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "held",
+          "queued",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Provisioning rechecks capacity, risk and the change window, then allocates resources once.",
+          "start": 0.22,
+          "duration": 4.68483
+        },
+        {
+          "text": "A partner timeout activates recovery. A policy conflict takes a different path: human review.",
+          "start": 5.08483,
+          "duration": 5.2915
+        }
+      ],
+      "duration": 11.05633,
+      "ownerLabel": "PROVISIONING / POLICY-GUARDED EXECUTION",
+      "takeaway": "NO DUPLICATE ALLOCATION. NO POLICY BYPASS. NO FALSE SUCCESS.",
+      "cards": [
+        {
+          "title": "APPROVED PLAN",
+          "body": "Linked work orders.\nSaved execution stage."
+        },
+        {
+          "title": "POLICY GATES",
+          "body": "Capacity, route risk\nand change window."
+        },
+        {
+          "title": "SERVICE ACTIVATION",
+          "body": "Allocate once.\nComplete linked work."
+        }
+      ],
+      "exception": {
+        "title": "PARTNER TIMEOUT",
+        "body": "Hold execution.\nWake the recovery agent."
+      },
+      "minimumDuration": 8
+    },
+    {
+      "id": "recovery",
+      "chapter": "Recovery is exception-only",
+      "title": "Recover the known fault. Hand back.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "Timeout -> one allowlisted recovery attempt",
+        "Unknown fault -> service-desk escalation requirement"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "held",
+          "active",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "held",
+          "held",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Recovery handles one allowlisted timeout, retries once, and hands control back to provisioning.",
+          "start": 0.22,
+          "duration": 5.13971
+        },
+        {
+          "text": "For faults outside that playbook, the delivery design requires service-desk integration and an accountable human owner.",
+          "start": 5.53971,
+          "duration": 5.93063
+        }
+      ],
+      "duration": 12.15033,
+      "ownerLabel": "RECOVERY / BOUNDED PLAYBOOK AUTHORITY",
+      "takeaway": "ONE ALLOWLISTED RETRY. BACK TO PROVISIONING. NEVER AN ENDLESS LOOP.",
+      "cards": [
+        {
+          "title": "KNOWN TIMEOUT",
+          "body": "An allowlisted fault.\nNo broader authority."
+        },
+        {
+          "title": "RETRY ONCE",
+          "body": "Use the approved\nalternate-route playbook."
+        },
+        {
+          "title": "HAND BACK",
+          "body": "Resume provisioning.\nDo not reserve twice."
+        }
+      ],
+      "exception": {
+        "title": "HUMAN ESCALATION",
+        "body": "Unknown fault?\nService-desk integration."
+      },
+      "minimumDuration": 8
+    },
+    {
+      "id": "human",
+      "chapter": "Human authority",
+      "title": "People own the high-risk decision.",
+      "order": "B",
+      "mode": "implemented",
+      "events": [
+        "Order B / route conflict -> policy.hold",
+        "Manager approval -> guarded provisioning"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "held",
+          "standby",
+          "waiting"
+        ],
+        [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "The service manager approves or rejects high-risk work. Every decision is audited.",
+          "start": 0.22,
+          "duration": 4.50938
+        },
+        {
+          "text": "Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage.",
+          "start": 4.90937,
+          "duration": 5.31779
+        }
+      ],
+      "duration": 10.90717,
+      "banner": "Closed window -> audited release / capacity requires inventory resolution",
+      "ownerLabel": "SERVICE MANAGER / AUDITED DECISION",
+      "takeaway": "AUDITED APPROVAL OR REJECTION. PARTNERS CANNOT OVERRULE POLICY.",
+      "minimumDuration": 8
+    },
+    {
+      "id": "communication",
+      "chapter": "Customer updates own visibility",
+      "title": "Close the loop with truthful status.",
+      "order": "A",
+      "mode": "implemented",
+      "events": [
+        "services.activated -> customer update agent",
+        "TR / EN portal updates -> order completed"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "active"
+        ],
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "After activation, customer updates persist Turkish and English portal confirmations. Clear status reduces chasing.",
+          "start": 0.22,
+          "duration": 6.25971
+        },
+        {
+          "text": "The portal provides the customer record. Email and text delivery require integrated channel services and service-desk ownership.",
+          "start": 6.65971,
+          "duration": 7.09096
+        }
+      ],
+      "duration": 14.43067,
+      "ownerLabel": "CUSTOMER UPDATES / BILINGUAL PORTAL",
+      "takeaway": "ACTIVATE FIRST. CONFIRM SECOND. LESS CHASING FOR THE CUSTOMER.",
+      "cards": [
+        {
+          "title": "SERVICES ACTIVATED",
+          "body": "Provisioning completed.\nNot merely requested."
+        },
+        {
+          "title": "CUSTOMER UPDATE",
+          "body": "Persist Turkish and\nEnglish portal messages."
+        },
+        {
+          "title": "ORDER COMPLETE",
+          "body": "Visible status.\nA traceable completion."
+        }
+      ],
+      "minimumDuration": 8
+    },
+    {
+      "id": "standards",
+      "chapter": "Standards-inspired interoperability",
+      "title": "Shared contracts. The same guardrails.",
+      "order": "",
+      "mode": "implemented",
+      "events": [
+        "TMF-inspired product and service contracts",
+        "Authenticated MCP / no privileged bypass"
+      ],
+      "agentStates": [
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow.",
+          "start": 0.22,
+          "duration": 7.51438
+        },
+        {
+          "text": "Customer integration defines the exact schemas and conformance acceptance. Partner access never bypasses policy or human authority.",
+          "start": 7.91437,
+          "duration": 7.94225
+        }
+      ],
+      "duration": 16.53663,
+      "ownerLabel": "TMF622 / TMF641-INSPIRED INTERFACES + MCP",
+      "takeaway": "LINKED CONTRACTS. AUTHENTICATED PARTNER TOOLS. ONE GUARDED FLOW.",
+      "cards": [
+        {
+          "title": "TMF622-INSPIRED",
+          "body": "Product-order intake.\nStable identifiers."
+        },
+        {
+          "title": "TMF641-INSPIRED",
+          "body": "Linked service orders.\nExplicit handoffs."
+        },
+        {
+          "title": "MCP PARTNER TOOLS",
+          "body": "Check and submit.\nNo approval authority."
+        }
+      ],
+      "minimumDuration": 8
+    },
+    {
+      "id": "residency",
+      "chapter": "Azure Local residency architecture",
+      "title": "Keep the customer workload in Turkey.",
+      "order": "",
+      "mode": "proposed",
+      "events": [
+        "Azure Local / approved operator site in Turkey",
+        "Local infrastructure + local services + controlled egress"
+      ],
+      "agentStates": [
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "The residency architecture places the customer workload on Azure Local at an approved Turkish operator site.",
+          "start": 0.22,
+          "duration": 5.62083
+        },
+        {
+          "text": "Delivery requires supported local infrastructure, local inference, keys, logs and backups, with controlled egress and regulatory approval.",
+          "start": 6.02083,
+          "duration": 7.88938
+        }
+      ],
+      "duration": 14.59021,
+      "ownerLabel": "AZURE LOCAL / CUSTOMER DATA-PLANE DESIGN",
+      "takeaway": "BRING COMPUTE TO THE DATA. KEEP THE CUSTOMER DATA PLANE LOCAL.",
+      "cards": [
+        {
+          "title": "AZURE LOCAL",
+          "body": "Approved operator site.\nSupported infrastructure.",
+          "icon": "azure-local.svg"
+        },
+        {
+          "title": "LOCAL EXECUTION",
+          "body": "Orders, agents, inference\nand customer data."
+        },
+        {
+          "title": "LOCAL PROTECTION",
+          "body": "Keys, raw logs,\nbackups and recovery."
+        }
+      ],
+      "minimumDuration": 12
+    },
+    {
+      "id": "hybrid",
+      "chapter": "Controlled cloud connectivity",
+      "title": "Connect cloud services with a clear boundary.",
+      "order": "",
+      "mode": "proposed",
+      "events": [
+        "Approved images in / approved metadata out",
+        "Stricter boundary -> eligible disconnected operations"
+      ],
+      "agentStates": [
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "External Azure services supply approved images, management and monitoring. Every metadata flow needs approval.",
+          "start": 0.22,
+          "duration": 6.32092
+        },
+        {
+          "text": "Where platform metadata must also stay local, evaluate eligible disconnected operations, with its local control plane and support requirements.",
+          "start": 6.72092,
+          "duration": 7.92288
+        }
+      ],
+      "duration": 15.32379,
+      "ownerLabel": "APPROVED CLOUD FLOWS / LOCAL CUSTOMER PAYLOADS",
+      "parallelLanes": true,
+      "takeaway": "APPROVE EACH METADATA FLOW. STRICTER RULES MAY REQUIRE DISCONNECTION.",
+      "cards": [
+        {
+          "title": "IMAGES IN",
+          "body": "Approved software from\nAzure Container Registry.",
+          "icon": "container-registry.svg"
+        },
+        {
+          "title": "METADATA OUT",
+          "body": "Azure Arc metadata.\nAzure Monitor aggregates.",
+          "icons": [
+            "azure-arc.svg",
+            "azure-monitor.svg"
+          ]
+        },
+        {
+          "title": "CUSTOMER DATA LOCAL",
+          "body": "Local workload boundary.\nNo raw log export."
+        }
+      ],
+      "minimumDuration": 12
+    },
+    {
+      "id": "impact",
+      "chapter": "Customer value",
+      "title": "Less rework. Less waiting. More confidence.",
+      "order": "",
+      "mode": "implemented",
+      "events": [
+        "Early checks + linked work + bounded recovery",
+        "Customer objectives / lead time, quality and visibility"
+      ],
+      "agentStates": [
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ]
+      ],
+      "beats": [
+        {
+          "text": "Early checks address avoidable rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery reduce unnecessary waiting.",
+          "start": 0.22,
+          "duration": 8.37646
+        },
+        {
+          "text": "The customer objective is simple: shorter delivery, fewer avoidable exceptions, and a clear, accountable path from order to activation.",
+          "start": 8.77646,
+          "duration": 7.29138
+        }
+      ],
+      "duration": 16.74783,
+      "ownerLabel": "BUSINESS OBJECTIVES / OPERATIONAL CONTROL",
+      "takeaway": "FOCUS ON LEAD TIME, FIRST-TIME-RIGHT COMPLETION AND CUSTOMER VISIBILITY.",
+      "cards": [
+        {
+          "title": "LESS FALLOUT",
+          "body": "Early validation.\nLinked IDs. Allocate once."
+        },
+        {
+          "title": "SHORTER DELIVERY",
+          "body": "Durable handoffs.\nBounded recovery."
+        },
+        {
+          "title": "CUSTOMER CONFIDENCE",
+          "body": "Clear responsibility.\nVisible, traceable status."
+        }
+      ],
+      "minimumDuration": 12
+    }
+  ],
+  "narration": {
+    "kind": "local-preset-neural",
+    "model": "Kokoro-82M v1.0",
+    "voice": "af_heart",
+    "voiceDescription": "Distinct American-English female preset; not the author's voice",
+    "speed": 1.08,
+    "modelSHA256": {
+      "kokoro-v1.0.onnx": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+      "voices-v1.0.bin": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d"
+    },
+    "source": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "modelLicense": "Apache-2.0",
+    "runtimeLicense": "MIT",
+    "referenceAudioUsed": false,
+    "disclosure": "A distinct locally generated American-English neural preset narrator (Kokoro / af_heart), not the author's cloned voice. Brisk, pitch-preserving 1.15x delivery treatment; no reference audio or script was uploaded."
+  },
+  "edition": "solution-tower-v3",
+  "visualTheme": "orchestration-control-tower",
+  "avatars": [
+    {
+      "role": "Validation",
+      "character": "Inspector",
+      "signature": "owl ears, checklist and magnifying glass"
+    },
+    {
+      "role": "Decomposition",
+      "character": "Architect",
+      "signature": "hard hat, blueprint and orbiting blocks"
+    },
+    {
+      "role": "Provisioning",
+      "character": "Cable crew",
+      "signature": "tall cyclops, wrench and connector arms"
+    },
+    {
+      "role": "Fallout recovery",
+      "character": "Rescue mechanic",
+      "signature": "round rescue ring and retry toolbox"
+    },
+    {
+      "role": "Customer updates",
+      "character": "Messenger",
+      "signature": "headset, paper plane and bilingual bubbles"
+    }
+  ],
+  "sourceVideo": {
+    "file": "solution-tower-v1.mp4",
+    "sha256": "c5d12c70a7afa91170199154063931da2cbbbd187ac64d11fc87420c798e75c2",
+    "use": "Selected tower design and characters; no source audio reused"
+  },
+  "voiceTreatment": {
+    "tempo": 1.08,
+    "deliveryTempo": 1.15,
+    "pitchPreserved": true,
+    "presenceEQ": "3000 Hz / +2 dB",
+    "compressionRatio": 2,
+    "soundscape": "Original quiet pulse, normalized behind the narrator"
+  },
+  "editionLabel": "CUSTOMER SOLUTION / ORDER TO ACTIVATION",
+  "voiceLabel": "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+  "footerLabel": "CUSTOMER SOLUTION WALKTHROUGH",
+  "localSupervisorLabel": "LOCAL WORKLOAD SUPERVISOR",
+  "architectureStatusLabel": "RESIDENCY ARCHITECTURE",
+  "loadStatusLabel": "Play the solution film or select a chapter. Follow agent responsibilities, controlled handoffs and human decision routes.",
+  "microsoftIcons": {
+    "unchangedSvgSHA256": {
+      "azure-local.svg": "dfce1fa962f0dfd242235471214d46ae9af425d249f206537fa08bb1b1cce1cf",
+      "azure-arc.svg": "00f4a57d6e0391bec619a9298d114f783dbb7dd4165d44242202ca37d00d9bfa",
+      "container-registry.svg": "c134b0a442f203a7eeeb6f99a1f02ed34e51373d7fca59f96c9f125874c9d7d4",
+      "azure-monitor.svg": "1396f59a7d8fd7505a423842b987c9b343a092263d1ab5c7b0d94d58d8b17448"
+    }
+  }
+}

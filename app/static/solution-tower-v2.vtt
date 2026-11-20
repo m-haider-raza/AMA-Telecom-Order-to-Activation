@@ -1,0 +1,73 @@
+WEBVTT
+
+00:00:00.220 --> 00:00:07.004
+A business orders connectivity. Instead of disconnected handoffs, one guarded supervisor coordinates five specialist agents.
+
+00:00:07.184 --> 00:00:11.524
+The goal: less rework, faster activation, and a customer who knows what happens next.
+
+00:00:12.424 --> 00:00:17.896
+Intake saves the order and its event together. A stable request key prevents duplicate acceptance.
+
+00:00:18.076 --> 00:00:23.698
+Invalid requests return for correction. Accepted work stays traceable, without another manual handoff.
+
+00:00:24.598 --> 00:00:31.002
+Validation checks the site and capacity before planning. Catching bad references early prevents downstream rework.
+
+00:00:31.182 --> 00:00:37.079
+A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval.
+
+00:00:37.979 --> 00:00:43.551
+Decomposition turns an approved product into linked service and resource orders. No repeated rekeying.
+
+00:00:43.731 --> 00:00:48.754
+Unsupported products stop at intake. New catalogue mappings need planner approval in production.
+
+00:00:49.654 --> 00:00:54.340
+Provisioning rechecks capacity, risk and the change window, then allocates resources once.
+
+00:00:54.520 --> 00:00:59.811
+A partner timeout activates recovery. A policy conflict takes a different path: human review.
+
+00:01:00.711 --> 00:01:05.851
+Recovery handles one allowlisted timeout, retries once, and hands control back to provisioning.
+
+00:01:06.031 --> 00:01:12.130
+That shortens recoverable waiting. Unknown faults need a proposed human triage path, not unlimited autonomy.
+
+00:01:13.030 --> 00:01:17.540
+The service manager approves or rejects high-risk work. Every decision is audited.
+
+00:01:17.720 --> 00:01:23.037
+Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage.
+
+00:01:23.937 --> 00:01:30.197
+After activation, customer updates persist Turkish and English portal confirmations. Clear status reduces chasing.
+
+00:01:30.377 --> 00:01:36.405
+This simulator sends no email or text messages. Production delivery failures need service-desk ownership.
+
+00:01:37.305 --> 00:01:44.819
+TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow.
+
+00:01:44.999 --> 00:01:50.522
+These are simplified interfaces, not certified standards. Full conformance remains a production gate.
+
+00:01:51.422 --> 00:01:56.524
+For data residency, the proposed design runs the customer workload on Azure Local in Turkey.
+
+00:01:56.704 --> 00:02:03.245
+Orders, agents, inference, keys, raw logs and backups stay local. This architecture is proposed, not deployed.
+
+00:02:04.145 --> 00:02:10.466
+External Azure services supply approved images, management and monitoring. Every metadata flow needs approval.
+
+00:02:10.646 --> 00:02:18.486
+If even platform metadata cannot leave, assess eligible disconnected operations. A connected cloud link is not a residency guarantee.
+
+00:02:19.386 --> 00:02:26.675
+Early checks prevent rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery cut avoidable waiting.
+
+00:02:26.855 --> 00:02:32.830
+Under seven days and eight percent fallout are targets, not results. Prove the improvement in a representative pilot.

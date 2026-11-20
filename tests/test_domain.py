@@ -4,7 +4,8 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from app.domain import (
-    approve_exception, correct_order, create_order, initial_state, metrics, partner_capacity, process_next, verify_audit,
+    approve_exception, correct_order, create_order, follow_up, initial_state, metrics, partner_capacity, process_next,
+    verify_audit,
 )
 
 
@@ -168,3 +169,75 @@ def test_invalid_domain_inputs(field, value):
     value_payload[field] = value
     with pytest.raises(ValueError):
         create_order(state, value_payload, "service-manager")
+
+
+CONTACT = {"contactName": "Demo Contact", "email": "ayse@example.com", "phone": "+905550000001",
+           "preferredChannel": "email", "updateFrequency": "every-step"}
+
+
+def with_contact(scenario="happy", key="contact-test-order", **overrides):
+    return {**payload(scenario, key), "contact": {**CONTACT, **overrides}}
+
+
+def test_contact_updates_follow_chosen_frequency():
+    state = initial_state()
+    every = create_order(state, with_contact(key="freq-every-step"), "service-manager")
+    daily = create_order(state, with_contact(key="freq-daily", updateFrequency="daily"), "service-manager")
+    quiet = create_order(state, with_contact(key="freq-quiet", updateFrequency="critical-only"), "service-manager")
+    for order in (every, daily, quiet):
+        run(state, order)
+    def statuses(order):
+        return [(item["kind"], item["status"]) for item in order["outbox"]]
+
+    assert statuses(every) == [("progress", "simulated-sent")] * 2 + [("critical", "simulated-sent")]
+    assert ("progress", "skipped-by-preference") in statuses(quiet)
+    assert statuses(quiet)[-1] == ("critical", "simulated-sent")
+    assert all(item["status"] == "simulated-sent" for item in daily["outbox"])
+    assert all(item["to"] == "a***@example.com" and not item["deliveredExternally"] for item in every["outbox"])
+
+
+def test_digest_waits_for_its_interval_until_a_critical_update():
+    state = initial_state()
+    order = create_order(state, with_contact(key="digest-wait", scenario="human-exception", updateFrequency="weekly"),
+                         "service-manager")
+    run(state, order)
+    assert order["state"] == "pendingApproval"
+    assert [item["status"] for item in order["outbox"]] == ["simulated-sent"] * len(order["outbox"])
+    parked = create_order(state, with_contact(key="digest-parked", updateFrequency="weekly"), "service-manager")
+    process_next(state, parked["id"])
+    assert parked["outbox"][0]["status"] == "scheduled-digest"
+    follow_up(state, at=(datetime.now(timezone.utc) + timedelta(days=8)).isoformat())
+    assert parked["outbox"][0]["status"] == "simulated-sent"
+
+
+def test_orders_without_contact_record_that_nothing_can_be_sent():
+    state = initial_state()
+    order = run(state, create_order(state, payload(key="no-contact-order"), "service-manager"))
+    assert order["contact"] is None and order["outbox"][-1]["status"] == "skipped-no-contact"
+
+
+def test_stuck_order_with_wrong_site_triggers_bounded_automatic_reminders():
+    state = initial_state()
+    order = create_order(state, with_contact("address-correction", "stuck-site-order", updateFrequency="critical-only"),
+                         "wholesale-partner")
+    run(state, order)
+    assert order["state"] == "awaitingCustomer"
+    assert "IST-001" in order["outbox"][-1]["en"]
+    start = datetime.fromisoformat(order["exception"]["createdAt"])
+    follow_up(state, interval_seconds=60, at=(start + timedelta(seconds=30)).isoformat())
+    assert len(order["outbox"]) == 1
+    for index in range(1, 6):
+        follow_up(state, interval_seconds=60, at=(start + timedelta(seconds=61 * index)).isoformat())
+    reminders = [item for item in order["outbox"] if "Reminder" in item["en"]]
+    assert len(reminders) == 3 and all(item["status"] == "simulated-sent" for item in reminders)
+    assert order["exception"]["escalated"] and order["timeline"][-1]["tool"] == "customer.reminders-exhausted"
+    correct_order(state, order["id"], "wholesale-partner", "IST-001")
+    run(state, order)
+    assert order["state"] == "completed" and verify_audit(state)
+
+
+@pytest.mark.parametrize("bad", [{"preferredChannel": "sms", "phone": None}, {"updateFrequency": "hourly"},
+                                 {"preferredChannel": "pigeon"}])
+def test_invalid_contact_is_rejected(bad):
+    with pytest.raises(ValueError):
+        create_order(initial_state(), with_contact(key="invalid-contact", **bad), "service-manager")

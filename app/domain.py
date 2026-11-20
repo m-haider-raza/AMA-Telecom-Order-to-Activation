@@ -1,7 +1,10 @@
 """Guarded, event-driven telecom simulation. No live network changes occur here."""
 
 import hashlib
+import hmac
 import json
+import os
+import unicodedata
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
@@ -26,6 +29,14 @@ SCENARIOS = {"happy", "auto-recovery", "human-exception", "change-window", "addr
 SITES = {"Istanbul": "IST-001", "Ankara": "ANK-001", "Izmir": "IZM-001"}
 TERMINAL = {"completed", "rejected", "failed"}
 WAITING = {"held", "pendingApproval"}
+
+
+def live_mode():
+    return os.getenv("AMA_MODE", "demo") == "live"
+
+
+def delivery_enabled():
+    return os.getenv("AMA_DELIVERY", "simulated") == "live"
 
 
 def now():
@@ -93,6 +104,8 @@ def initial_state():
         ],
     }
     for index, scenario in enumerate(("happy", "auto-recovery", "human-exception", "change-window")):
+        if live_mode():
+            break
         create_order(state, {
             "customer": ("Demo Marmara Logistics", "Demo Anatolia Retail", "Demo Aegean Manufacturing",
                          "Demo Bosphorus Cloud")[index],
@@ -102,17 +115,33 @@ def initial_state():
     return state
 
 
-def create_order(state, payload, actor):
+def address_matches_city(address, city):
+    """Cheap first-line check that a customer-entered address really is in the selected city."""
+    def fold(text):
+        text = unicodedata.normalize("NFKD", (text or "").casefold().replace("ı", "i"))
+        return "".join(char for char in text if not unicodedata.combining(char))
+    return fold(city) in fold(address)
+
+
+def create_order(state, payload, actor, max_orders=None):
     required = {"customer", "city", "product", "scenario", "language", "idempotencyKey"}
-    if set(payload) - {"siteReference"} != required:
+    if set(payload) - {"siteReference", "contact", "siteAddress"} != required:
         raise ValueError("Order fields do not match the documented demo contract")
-    if actor not in ("service-manager", "wholesale-partner"):
+    contact = payload.get("contact")
+    if contact is not None:
+        if (not isinstance(contact, dict) or contact.get("updateFrequency") not in UPDATE_FREQUENCIES
+                or contact.get("preferredChannel") not in ("email", "sms")
+                or not contact.get(contact["preferredChannel"] == "email" and "email" or "phone")):
+            raise ValueError("Contact details must include the preferred channel's address and a valid update frequency")
+    if actor not in ("service-manager", "wholesale-partner", "customer-portal"):
         raise ValueError("Untrusted order actor")
     if payload["city"] not in CITIES or payload["product"] not in {item["id"] for item in CATALOGUE}:
         raise ValueError("Unsupported city or catalogue product")
     if payload["scenario"] not in SCENARIOS or payload["language"] not in ("tr", "en"):
         raise ValueError("Unsupported scenario or language")
-    if not isinstance(payload["customer"], str) or not payload["customer"].startswith("Demo "):
+    if not isinstance(payload["customer"], str) or not payload["customer"].strip():
+        raise ValueError("A customer name is required")
+    if not live_mode() and not payload["customer"].startswith("Demo "):
         raise ValueError("Only synthetic company names beginning with 'Demo ' are allowed")
     key = payload["idempotencyKey"]
     if not isinstance(key, str) or not 8 <= len(key) <= 128:
@@ -124,8 +153,9 @@ def create_order(state, payload, actor):
         if previous["fingerprint"] != fingerprint:
             raise ValueError("Idempotency key was already used for a different order")
         return state["orders"][previous["orderId"]]
-    if len(state["orders"]) >= 200:
-        raise ValueError("Demo is limited to 200 orders; deploy a separate demo environment for more")
+    limit = max_orders if max_orders is not None else int(os.getenv("AMA_MAX_ORDERS", "200"))
+    if len(state["orders"]) >= limit:
+        raise ValueError(f"This environment is limited to {limit} orders; raise AMA_MAX_ORDERS or archive old orders")
     timestamp = now()
     order_id = "AMA-" + uuid4().hex[:10].upper()
     order = {
@@ -134,9 +164,11 @@ def create_order(state, payload, actor):
         "deadline": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat(),
         "timeline": [], "serviceOrders": [], "resourceOrders": [], "notifications": [],
         "approvals": [], "exception": None, "reserved": False, "recovered": False,
-        "aiMode": "deterministic-rules-simulator",
+        "aiMode": "deterministic-rules-simulator", "contact": contact, "outbox": [],
         "siteReference": payload.get("siteReference") or (
-            "DEMO-UNKNOWN" if payload["scenario"] == "address-correction" else SITES[payload["city"]]),
+            "DEMO-UNKNOWN" if payload["scenario"] == "address-correction"
+            or (actor == "customer-portal" and not address_matches_city(payload.get("siteAddress"), payload["city"]))
+            else SITES[payload["city"]]),
     }
     state["orders"][order_id] = order
     state["idempotency"][scoped_key] = {"fingerprint": fingerprint, "orderId": order_id}
@@ -145,12 +177,204 @@ def create_order(state, payload, actor):
     return order
 
 
-def notify(state, order, en, tr):
+UPDATE_FREQUENCIES = {"every-step", "daily", "weekly", "critical-only"}
+DIGEST_SECONDS = {"daily": 86400, "weekly": 604800}
+REMINDER_LIMIT = 3
+
+
+def mask_contact(contact):
+    if not contact:
+        return None
+    email, phone = contact.get("email"), contact.get("phone")
+    return {**contact,
+            "email": email and email[0] + "***@" + email.split("@", 1)[1],
+            "phone": phone and "*" * (len(phone) - 4) + phone[-4:]}
+
+
+def public_order(order):
+    return {**{key: value for key, value in order.items() if key != "ownerId"},
+            "contact": mask_contact(order.get("contact"))}
+
+
+def tracking_token(order_id):
+    """Stateless, unguessable per-order token; lets a customer track one order without an account."""
+    secret = os.getenv("AMA_TRACKING_SECRET") or os.getenv("DEMO_ADMIN_TOKEN", "")
+    return hmac.new(secret.encode(), order_id.encode(), hashlib.sha256).hexdigest()[:40]
+
+
+def customer_view(order):
+    """Customer-safe projection: no audit trail, agent internals, partner or other customers' data."""
+    exception = order.get("exception") or {}
+    return {
+        "id": order["id"], "customer": order["customer"], "city": order["city"], "product": order["product"],
+        "state": order["state"], "stage": order["stage"], "createdAt": order["createdAt"],
+        "updatedAt": order["updatedAt"], "deadline": order["deadline"], "language": order["language"],
+        "siteAddress": order.get("siteAddress"), "siteReference": order["siteReference"],
+        "contact": mask_contact(order.get("contact")),
+        "action": ({"type": exception.get("type"), "expectedSiteReference": exception.get("expectedSiteReference"),
+                    "remindersSent": exception.get("reminders", 0)} if exception else None),
+        "updates": [{"at": item["at"], "en": item["en"], "tr": item["tr"]} for item in order["notifications"]],
+    }
+
+
+def owner_view(order):
+    """The same safe projection, with the contact in full: the signed-in owner is entitled to see it."""
+    return {**customer_view(order), "contact": order.get("contact")}
+
+
+def update_site(state, order_id, city, site_address):
+    """Let the customer correct the city and installation address of an order that is waiting on them."""
+    order = state["orders"][order_id]
+    if order["state"] != "awaitingCustomer" or order["stage"] != "validation":
+        raise ValueError("This order is not waiting for an address correction")
+    site_address = (site_address or "").strip()
+    if city not in CITIES or not 5 <= len(site_address) <= 200:
+        raise ValueError("Enter the installation address and choose one of our service cities")
+    if not address_matches_city(site_address, city):
+        raise ValueError(f"That address does not mention {city}. Add the district and city, or choose the right city.")
+    order.update(city=city, siteAddress=site_address, siteReference=SITES[city], exception=None,
+                 state="inProgress", updatedAt=now())
+    progress(state, order, "Thank you, your address was updated and your order is moving again.",
+             "Teşekkürler, adresiniz güncellendi ve siparişiniz devam ediyor.")
+    audit(state, order_id, "customer-portal", "customer.address-updated",
+          f"Customer corrected the installation address (service city {city})")
+    enqueue(state, order, "customer.address-confirmed")
+    return order
+
+
+def update_contact(state, order_id, contact):
+    order = state["orders"][order_id]
+    if order["state"] in TERMINAL:
+        raise ValueError("This order is closed; contact preferences can no longer be changed")
+    if (contact.get("updateFrequency") not in UPDATE_FREQUENCIES
+            or contact.get("preferredChannel") not in ("email", "sms")
+            or not contact.get("email" if contact["preferredChannel"] == "email" else "phone")):
+        raise ValueError("Contact details must include the preferred channel's address and a valid update frequency")
+    order["contact"] = contact
+    order["updatedAt"] = now()
+    audit(state, order_id, "customer-portal", "customer.contact-updated",
+          f"Customer set channel={contact['preferredChannel']} frequency={contact['updateFrequency']}")
+    return order
+
+
+def _recipient(contact):
+    if not contact:
+        return None
+    channel = contact["preferredChannel"]
+    return mask_contact(contact)["email" if channel == "email" else "phone"]
+
+
+def dispatch(state, order, en, tr, kind):
+    """Queue a simulated customer message honouring contact details and update frequency.
+
+    kind "critical" (action needed, delays, outcomes) always goes out immediately;
+    kind "progress" follows the customer's chosen cadence. Nothing leaves the simulator.
+    """
+    contact = order.get("contact")
+    timestamp = now()
+    item = {"id": str(uuid4()), "orderId": order["id"], "at": timestamp, "en": en, "tr": tr, "kind": kind,
+            "channel": f"Simulated {contact['preferredChannel']}" if contact else "None",
+            "to": _recipient(contact), "deliveredExternally": False}
+    if contact is None:
+        item["status"] = "skipped-no-contact"
+    elif kind == "progress" and contact["updateFrequency"] == "critical-only":
+        item["status"] = "skipped-by-preference"
+    elif kind == "progress" and contact["updateFrequency"] in DIGEST_SECONDS:
+        item["status"] = "scheduled-digest"
+        item["sendAfter"] = (datetime.fromisoformat(timestamp)
+                             + timedelta(seconds=DIGEST_SECONDS[contact["updateFrequency"]])).isoformat()
+    else:
+        item["status"] = sent_status()
+        item["sentAt"] = timestamp
+        if contact and kind == "critical":
+            release_digest(order, timestamp)
+    if contact and delivery_enabled():
+        item["channel"] = contact["preferredChannel"].upper()
+        item["attempts"] = 0
+        if item["status"] == "pending-delivery":
+            item.pop("sentAt", None)
+    order.setdefault("outbox", []).append(item)
+    state.setdefault("outbox", []).append(item)
+    return item
+
+
+def sent_status():
+    return "pending-delivery" if delivery_enabled() else "simulated-sent"
+
+
+def release_digest(order, timestamp):
+    for queued in order.get("outbox", []):
+        if queued["status"] == "scheduled-digest":
+            queued["status"] = sent_status()
+            if queued["status"] == "simulated-sent":
+                queued["sentAt"] = timestamp
+
+
+def flush_digests(state, at=None):
+    at = at or now()
+    for order in state["orders"].values():
+        due = [item for item in order.get("outbox", [])
+               if item["status"] == "scheduled-digest" and item["sendAfter"] <= at]
+        if due:
+            release_digest(order, at)
+
+
+def follow_up(state, interval_seconds=None, at=None):
+    """Automatically chase customers whose order is stuck (incorrect details) or under review."""
+    if interval_seconds is None:
+        interval_seconds = float(os.getenv("DEMO_REMINDER_SECONDS", "300"))
+    current = datetime.fromisoformat(at) if at else datetime.now(timezone.utc)
+    flush_digests(state, current.isoformat())
+    for order in state["orders"].values():
+        if order["state"] not in WAITING | {"awaitingCustomer"} or not order.get("exception"):
+            continue
+        exception = order["exception"]
+        since = datetime.fromisoformat(exception.get("lastContactAt") or exception.get("createdAt")
+                                       or order["updatedAt"])
+        if (current - since).total_seconds() < interval_seconds:
+            continue
+        sent = exception.get("reminders", 0)
+        if sent >= REMINDER_LIMIT:
+            if not exception.get("escalated"):
+                exception["escalated"] = True
+                step(state, order, "Customer Update Agent", "customer.reminders-exhausted",
+                     f"{REMINDER_LIMIT} automatic reminders sent without resolution; manager follow-up needed",
+                     "human-required")
+            continue
+        if order["state"] == "awaitingCustomer" and order.get("siteAddress"):
+            en = (f"Reminder {sent + 1}/{REMINDER_LIMIT}: your order is on hold because the installation "
+                  f"address does not appear to be in {order['city']}. Please confirm the address and city.")
+            tr = (f"Hatırlatma {sent + 1}/{REMINDER_LIMIT}: Kurulum adresi {order['city']} şehrinde "
+                  "görünmediği için siparişiniz bekliyor. Lütfen adresi ve şehri doğrulayın.")
+        elif order["state"] == "awaitingCustomer":
+            expected = exception["expectedSiteReference"]
+            en = (f"Reminder {sent + 1}/{REMINDER_LIMIT}: your order is on hold because the site reference "
+                  f"does not match the selected city. Please confirm {expected}.")
+            tr = (f"Hatırlatma {sent + 1}/{REMINDER_LIMIT}: Hizmet noktası referansı seçilen şehirle "
+                  f"eşleşmediği için siparişiniz bekliyor. Lütfen {expected} değerini doğrulayın.")
+        else:
+            en = (f"Reminder {sent + 1}/{REMINDER_LIMIT}: your order is still waiting for service-manager "
+                  "review. We will update you as soon as it is decided.")
+            tr = (f"Hatırlatma {sent + 1}/{REMINDER_LIMIT}: Siparişiniz hâlâ hizmet yöneticisinin "
+                  "incelemesini bekliyor. Karar verildiğinde sizi bilgilendireceğiz.")
+        dispatch(state, order, en, tr, "critical")
+        exception["reminders"] = sent + 1
+        exception["lastContactAt"] = current.isoformat()
+        audit(state, order["id"], "Customer Update Agent", "customer.reminder",
+              f"Automatic stuck-order reminder {sent + 1}/{REMINDER_LIMIT} queued")
+
+
+def notify(state, order, en, tr, kind="critical"):
     item = {"id": str(uuid4()), "orderId": order["id"], "at": now(), "en": en, "tr": tr,
             "channel": "Simulated enterprise portal", "deliveredExternally": False}
     order["notifications"].append(item)
     state["notifications"].append(item)
+    dispatch(state, order, en, tr, kind)
     return item
+
+
+def progress(state, order, en, tr):
+    dispatch(state, order, en, tr, "progress")
 
 
 def pause(state, order, kind, detail):
@@ -158,8 +382,10 @@ def pause(state, order, kind, detail):
     order["exception"] = {"type": kind, "detail": detail, "createdAt": now(),
                           "resumeStage": order["stage"]}
     step(state, order, "Provisioning Orchestration Agent", "policy.hold", detail, "human-required")
-    notify(state, order, "Your demo order needs service-manager review.",
-           "Demo siparişiniz hizmet yöneticisinin incelemesini bekliyor.")
+    notify(state, order, "Your order needs service-manager review." if live_mode()
+           else "Your demo order needs service-manager review.",
+           "Siparişiniz hizmet yöneticisinin incelemesini bekliyor." if live_mode()
+           else "Demo siparişiniz hizmet yöneticisinin incelemesini bekliyor.")
 
 
 def process_next(state, order_id):
@@ -189,8 +415,17 @@ def process_next(state, order_id):
                                   "expectedSiteReference": SITES[order["city"]]}
             step(state, order, "Order Validation Agent", "address.customer-correction",
                  "Invalid synthetic site reference; customer confirmation required", "customer-required")
-            notify(state, order, "Please confirm your synthetic service-site reference.",
-                   "Lütfen sentetik hizmet noktası referansınızı doğrulayın.")
+            if order.get("siteAddress"):
+                notify(state, order, "Your order is on hold: the installation address does not appear to be in "
+                       f"{order['city']}. Please confirm the address and city.",
+                       "Siparişiniz bekliyor: kurulum adresi "
+                       f"{order['city']} şehrinde görünmüyor. Lütfen adresi ve şehri doğrulayın.")
+            else:
+                notify(state, order, "Your order is on hold: the site reference does not match the selected city. "
+                       f"Please confirm {SITES[order['city']]}.",
+                       "Siparişiniz bekliyor: hizmet noktası referansı seçilen şehirle eşleşmiyor. "
+                       f"Lütfen {SITES[order['city']]} değerini doğrulayın.")
+            order["exception"]["createdAt"] = now()
             return order
         if capacity["availableUnits"] < 1:
             pause(state, order, "capacity", "No available demo capacity; manager must reject or resolve inventory")
@@ -198,6 +433,7 @@ def process_next(state, order_id):
         step(state, order, "Order Validation Agent", "feasibility.check",
              f"Public city reference, synthetic address zone and {product['bandwidthMbps']} Mbps capacity validated")
         order["stage"] = "decomposition"
+        progress(state, order, "Your order details were validated.", "Sipariş bilgileriniz doğrulandı.")
         enqueue(state, order, "order.validated")
     elif stage == "decomposition":
         order["serviceOrders"] = [
@@ -237,6 +473,8 @@ def process_next(state, order_id):
             step(state, order, "Provisioning Orchestration Agent", "partner.capacity+network.activate",
                  "Guarded in-process simulator allocated one capacity unit; service/resource orders activated")
             order["stage"] = "customer_update"
+            progress(state, order, "Your service has been provisioned and is being activated.",
+                     "Hizmetiniz hazırlandı ve etkinleştiriliyor.")
             enqueue(state, order, "services.activated")
     elif stage == "fallout":
         order["recovered"] = True
@@ -246,8 +484,12 @@ def process_next(state, order_id):
         order["stage"] = "provisioning"
         enqueue(state, order, "fallout.recovered")
     elif stage == "customer_update":
-        notify(state, order, "Your synthetic service is active. No live telecom service was provisioned.",
-               "Sentetik hizmetiniz etkinleştirildi. Gerçek bir telekom hizmeti sağlanmadı.")
+        if live_mode():
+            notify(state, order, "Your order has been processed. We will confirm your service activation date.",
+                   "Siparişiniz işlendi. Hizmet etkinleştirme tarihini ayrıca bildireceğiz.")
+        else:
+            notify(state, order, "Your synthetic service is active. No live telecom service was provisioned.",
+                   "Sentetik hizmetiniz etkinleştirildi. Gerçek bir telekom hizmeti sağlanmadı.")
         step(state, order, "Customer Update Agent", "customer.notify.tr-en",
              "Turkish and English updates written to simulated customer portal")
         order["state"] = "completed"
@@ -271,6 +513,8 @@ def correct_order(state, order_id, actor, site_reference):
         raise ValueError("The synthetic site reference does not match the service city")
     order["siteReference"] = site_reference
     order["exception"] = None
+    progress(state, order, "Thank you, the site reference was confirmed and your order is moving again.",
+             "Teşekkürler, hizmet noktası doğrulandı ve siparişiniz devam ediyor.")
     order["state"] = "inProgress"
     order["updatedAt"] = now()
     audit(state, order_id, actor, "customer.address-corrected", f"Confirmed synthetic site {site_reference}")
@@ -304,8 +548,10 @@ def approve_exception(state, order_id, actor, decision):
                  "Manager rejection released the synthetic allocation; no live network rollback occurred")
         order["state"] = "rejected"
         order["stage"] = "done"
-        notify(state, order, "Your synthetic order was rejected by the service manager.",
-               "Sentetik siparişiniz hizmet yöneticisi tarafından reddedildi.")
+        notify(state, order, "Your order was rejected by the service manager." if live_mode()
+               else "Your synthetic order was rejected by the service manager.",
+               "Siparişiniz hizmet yöneticisi tarafından reddedildi." if live_mode()
+               else "Sentetik siparişiniz hizmet yöneticisi tarafından reddedildi.")
     else:
         if exception_type == "change-window":
             order["windowApproved"] = True

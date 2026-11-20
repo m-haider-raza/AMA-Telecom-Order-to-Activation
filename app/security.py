@@ -5,26 +5,38 @@ from collections import defaultdict, deque
 
 from fastapi import HTTPException, Request
 
+from app import auth
+
 _requests = defaultdict(deque)
 
 
 def authorize(request: Request, *, partner_allowed=False):
+    """Staff and partner-token access: a bearer token, or a signed-in staff session (a tab's token or the cookie).
+
+    Customer and partner portal sessions never qualify; each has its own APIs.
+    """
     supplied = request.headers.get("authorization", "")
-    if not supplied.startswith("Bearer "):
-        raise HTTPException(401, "A demo access token is required", headers={"WWW-Authenticate": "Bearer"})
-    token = supplied[7:]
-    admin = os.getenv("DEMO_ADMIN_TOKEN", "")
-    partner = os.getenv("DEMO_PARTNER_TOKEN", "")
-    if admin and hmac.compare_digest(token, admin):
+    if supplied.startswith("Bearer "):
+        token = supplied[7:]
+        admin = os.getenv("DEMO_ADMIN_TOKEN", "")
+        partner = os.getenv("DEMO_PARTNER_TOKEN", "")
+        if admin and hmac.compare_digest(token, admin):
+            return "service-manager"
+        if partner_allowed and partner and hmac.compare_digest(token, partner):
+            return "wholesale-partner"
+        raise HTTPException(403, "This token is not authorized for this operation")
+    session = auth.request_session(request)
+    if session and session["r"] == "admin":
+        auth.require_csrf(request)
         return "service-manager"
-    if partner_allowed and partner and hmac.compare_digest(token, partner):
-        return "wholesale-partner"
-    raise HTTPException(403, "This token is not authorized for this operation")
+    if session:
+        raise HTTPException(403, "Customer and partner accounts cannot use the staff console or its APIs")
+    raise HTTPException(401, "Sign in as staff or supply an access token", headers={"WWW-Authenticate": "Bearer"})
 
 
 def limit(request: Request):
     now = time.monotonic()
-    key = request.client.host if request.client else "unknown"
+    key = auth.client_ip(request)
     queue = _requests[key]
     while queue and queue[0] < now - 60:
         queue.popleft()

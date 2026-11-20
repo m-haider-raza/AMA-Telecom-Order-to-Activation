@@ -1,0 +1,916 @@
+{
+  "syntheticOnly": true,
+  "capture": "Isolated local instance; scenario waits edited out",
+  "orders": {
+    "happy": {
+      "id": "AMA-3148E0EEB4",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "happy",
+      "language": "tr",
+      "idempotencyKey": "9949f177787f8545d7eb2972",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:20.673856+00:00",
+      "updatedAt": "2026-10-30T22:51:21.336629+00:00",
+      "deadline": "2026-11-06T22:51:20.673904+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:20.819728+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:20.993137+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:21.164486+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:21.336629+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-3148E0EEB4-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-3148E0EEB4",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-3148E0EEB4-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-3148E0EEB4",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-3148E0EEB4-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-3148E0EEB4"
+        },
+        {
+          "id": "AMA-3148E0EEB4-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-3148E0EEB4"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "27e4a634-a664-4cd0-a653-5cbb6d936e3f",
+          "orderId": "AMA-3148E0EEB4",
+          "at": "2026-10-30T22:51:21.336624+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": null,
+      "reserved": true,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator",
+      "completedAt": "2026-10-30T22:51:21.336673+00:00",
+      "elapsedSeconds": 0.662817
+    },
+    "auto-recovery": {
+      "id": "AMA-27386D587D",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "auto-recovery",
+      "language": "tr",
+      "idempotencyKey": "2e26367621ec47dcc45ba7c8",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:21.515306+00:00",
+      "updatedAt": "2026-10-30T22:51:22.516989+00:00",
+      "deadline": "2026-11-06T22:51:21.515368+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:21.660905+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:21.822176+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:21.992997+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.reserve",
+          "detail": "Simulated partner timeout; no resources were committed",
+          "result": "timeout",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:22.172056+00:00",
+          "agent": "Fallout Resolution Agent",
+          "tool": "playbook.partner-timeout.retry-once",
+          "detail": "Allowlisted simulated retry selected alternate wholesale route; authority did not expand",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:22.352622+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:22.516989+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-27386D587D-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-27386D587D",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-27386D587D-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-27386D587D",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-27386D587D-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-27386D587D"
+        },
+        {
+          "id": "AMA-27386D587D-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-27386D587D"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "fe7713eb-288a-403d-938c-931915c247e6",
+          "orderId": "AMA-27386D587D",
+          "at": "2026-10-30T22:51:22.516983+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": null,
+      "reserved": true,
+      "recovered": true,
+      "aiMode": "deterministic-rules-simulator",
+      "recoveryAttempts": 1,
+      "completedAt": "2026-10-30T22:51:22.517034+00:00",
+      "elapsedSeconds": 1.001728
+    },
+    "human-exception-before": {
+      "id": "AMA-24755150CE",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "human-exception",
+      "language": "tr",
+      "idempotencyKey": "a5d7ce7af9593cceccd4a358",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "pendingApproval",
+      "stage": "provisioning",
+      "createdAt": "2026-10-30T22:51:22.831201+00:00",
+      "updatedAt": "2026-10-30T22:51:23.254053+00:00",
+      "deadline": "2026-11-06T22:51:22.831311+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:22.902549+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.079517+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.254053+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "policy.hold",
+          "detail": "Simulated overlapping route / high-risk customer change exceeds autonomous playbook authority",
+          "result": "human-required",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-24755150CE-S1",
+          "name": "Access circuit",
+          "state": "acknowledged",
+          "productOrderId": "AMA-24755150CE",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-24755150CE-S2",
+          "name": "Internet service",
+          "state": "acknowledged",
+          "productOrderId": "AMA-24755150CE",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-24755150CE-R1",
+          "name": "Fibre access port",
+          "state": "planned",
+          "productOrderId": "AMA-24755150CE"
+        },
+        {
+          "id": "AMA-24755150CE-R2",
+          "name": "IPv4 /29 block",
+          "state": "planned",
+          "productOrderId": "AMA-24755150CE"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "cfa75cf0-267a-4542-b78a-84fbed387ac1",
+          "orderId": "AMA-24755150CE",
+          "at": "2026-10-30T22:51:23.254199+00:00",
+          "en": "Your demo order needs service-manager review.",
+          "tr": "Demo sipari\u015finiz hizmet y\u00f6neticisinin incelemesini bekliyor.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": {
+        "type": "route-conflict",
+        "detail": "Simulated overlapping route / high-risk customer change exceeds autonomous playbook authority",
+        "createdAt": "2026-10-30T22:51:23.254046+00:00",
+        "resumeStage": "provisioning"
+      },
+      "reserved": false,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator"
+    },
+    "human-exception-after": {
+      "id": "AMA-24755150CE",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "human-exception",
+      "language": "tr",
+      "idempotencyKey": "a5d7ce7af9593cceccd4a358",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:22.831201+00:00",
+      "updatedAt": "2026-10-30T22:51:23.768816+00:00",
+      "deadline": "2026-11-06T22:51:22.831311+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:22.902549+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.079517+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.254053+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "policy.hold",
+          "detail": "Simulated overlapping route / high-risk customer change exceeds autonomous playbook authority",
+          "result": "human-required",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.587367+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:23.768816+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-24755150CE-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-24755150CE",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-24755150CE-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-24755150CE",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-24755150CE-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-24755150CE"
+        },
+        {
+          "id": "AMA-24755150CE-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-24755150CE"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "cfa75cf0-267a-4542-b78a-84fbed387ac1",
+          "orderId": "AMA-24755150CE",
+          "at": "2026-10-30T22:51:23.254199+00:00",
+          "en": "Your demo order needs service-manager review.",
+          "tr": "Demo sipari\u015finiz hizmet y\u00f6neticisinin incelemesini bekliyor.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        },
+        {
+          "id": "276b1ade-5c10-4799-88f9-7d6ca46f51d7",
+          "orderId": "AMA-24755150CE",
+          "at": "2026-10-30T22:51:23.768806+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [
+        {
+          "at": "2026-10-30T22:51:23.449660+00:00",
+          "actor": "service-manager",
+          "decision": "approve",
+          "exception": "route-conflict",
+          "simulated": true
+        }
+      ],
+      "exception": null,
+      "reserved": true,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator",
+      "riskApproved": true,
+      "completedAt": "2026-10-30T22:51:23.768908+00:00",
+      "elapsedSeconds": 0.937707
+    },
+    "change-window-before": {
+      "id": "AMA-3DCCF8C0DF",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "change-window",
+      "language": "tr",
+      "idempotencyKey": "d12ca3d45e2fa462c3225dc9",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "held",
+      "stage": "provisioning",
+      "createdAt": "2026-10-30T22:51:23.874532+00:00",
+      "updatedAt": "2026-10-30T22:51:24.581324+00:00",
+      "deadline": "2026-11-06T22:51:23.874563+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:24.242412+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.412659+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.581324+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "policy.hold",
+          "detail": "Outside the simulated change window. Manager can open a labelled demo window; no real override.",
+          "result": "human-required",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-3DCCF8C0DF-S1",
+          "name": "Access circuit",
+          "state": "acknowledged",
+          "productOrderId": "AMA-3DCCF8C0DF",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-3DCCF8C0DF-S2",
+          "name": "Internet service",
+          "state": "acknowledged",
+          "productOrderId": "AMA-3DCCF8C0DF",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-3DCCF8C0DF-R1",
+          "name": "Fibre access port",
+          "state": "planned",
+          "productOrderId": "AMA-3DCCF8C0DF"
+        },
+        {
+          "id": "AMA-3DCCF8C0DF-R2",
+          "name": "IPv4 /29 block",
+          "state": "planned",
+          "productOrderId": "AMA-3DCCF8C0DF"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "b4a32ee3-5ec8-40f0-9a52-a3c909bd8d41",
+          "orderId": "AMA-3DCCF8C0DF",
+          "at": "2026-10-30T22:51:24.581527+00:00",
+          "en": "Your demo order needs service-manager review.",
+          "tr": "Demo sipari\u015finiz hizmet y\u00f6neticisinin incelemesini bekliyor.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": {
+        "type": "change-window",
+        "detail": "Outside the simulated change window. Manager can open a labelled demo window; no real override.",
+        "createdAt": "2026-10-30T22:51:24.581312+00:00",
+        "resumeStage": "provisioning"
+      },
+      "reserved": false,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator"
+    },
+    "change-window-after": {
+      "id": "AMA-3DCCF8C0DF",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "change-window",
+      "language": "tr",
+      "idempotencyKey": "d12ca3d45e2fa462c3225dc9",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:23.874532+00:00",
+      "updatedAt": "2026-10-30T22:51:24.958497+00:00",
+      "deadline": "2026-11-06T22:51:23.874563+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:24.242412+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.412659+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.581324+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "policy.hold",
+          "detail": "Outside the simulated change window. Manager can open a labelled demo window; no real override.",
+          "result": "human-required",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.787739+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:24.958497+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-3DCCF8C0DF-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-3DCCF8C0DF",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-3DCCF8C0DF-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-3DCCF8C0DF",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-3DCCF8C0DF-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-3DCCF8C0DF"
+        },
+        {
+          "id": "AMA-3DCCF8C0DF-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-3DCCF8C0DF"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "b4a32ee3-5ec8-40f0-9a52-a3c909bd8d41",
+          "orderId": "AMA-3DCCF8C0DF",
+          "at": "2026-10-30T22:51:24.581527+00:00",
+          "en": "Your demo order needs service-manager review.",
+          "tr": "Demo sipari\u015finiz hizmet y\u00f6neticisinin incelemesini bekliyor.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        },
+        {
+          "id": "ac34fdb6-5960-4e09-b822-fa450aa76614",
+          "orderId": "AMA-3DCCF8C0DF",
+          "at": "2026-10-30T22:51:24.958491+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [
+        {
+          "at": "2026-10-30T22:51:24.696403+00:00",
+          "actor": "service-manager",
+          "decision": "approve",
+          "exception": "change-window",
+          "simulated": true
+        }
+      ],
+      "exception": null,
+      "reserved": true,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator",
+      "windowApproved": true,
+      "completedAt": "2026-10-30T22:51:24.958547+00:00",
+      "elapsedSeconds": 1.084015
+    },
+    "address-before": {
+      "id": "AMA-08C8568474",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "address-correction",
+      "language": "tr",
+      "idempotencyKey": "224261e2a37cfe48cbc41509",
+      "siteReference": "DEMO-UNKNOWN",
+      "actor": "service-manager",
+      "state": "awaitingCustomer",
+      "stage": "validation",
+      "createdAt": "2026-10-30T22:51:25.117461+00:00",
+      "updatedAt": "2026-10-30T22:51:25.155234+00:00",
+      "deadline": "2026-11-06T22:51:25.117503+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:25.155234+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "address.customer-correction",
+          "detail": "Invalid synthetic site reference; customer confirmation required",
+          "result": "customer-required",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [],
+      "resourceOrders": [],
+      "notifications": [
+        {
+          "id": "1344fd37-4d52-4e53-b230-4e67e5c4a16f",
+          "orderId": "AMA-08C8568474",
+          "at": "2026-10-30T22:51:25.155433+00:00",
+          "en": "Please confirm your synthetic service-site reference.",
+          "tr": "L\u00fctfen sentetik hizmet noktas\u0131 referans\u0131n\u0131z\u0131 do\u011frulay\u0131n.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": {
+        "type": "address-correction",
+        "detail": "Synthetic site reference does not match the selected service city.",
+        "expectedSiteReference": "IST-001"
+      },
+      "reserved": false,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator"
+    },
+    "address-after": {
+      "id": "AMA-08C8568474",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "address-correction",
+      "language": "tr",
+      "idempotencyKey": "224261e2a37cfe48cbc41509",
+      "siteReference": "IST-001",
+      "actor": "service-manager",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:25.117461+00:00",
+      "updatedAt": "2026-10-30T22:51:25.841033+00:00",
+      "deadline": "2026-11-06T22:51:25.117503+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:25.155234+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "address.customer-correction",
+          "detail": "Invalid synthetic site reference; customer confirmation required",
+          "result": "customer-required",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:25.330656+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:25.508254+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:25.675486+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:25.841033+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-08C8568474-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-08C8568474",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-08C8568474-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-08C8568474",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-08C8568474-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-08C8568474"
+        },
+        {
+          "id": "AMA-08C8568474-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-08C8568474"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "1344fd37-4d52-4e53-b230-4e67e5c4a16f",
+          "orderId": "AMA-08C8568474",
+          "at": "2026-10-30T22:51:25.155433+00:00",
+          "en": "Please confirm your synthetic service-site reference.",
+          "tr": "L\u00fctfen sentetik hizmet noktas\u0131 referans\u0131n\u0131z\u0131 do\u011frulay\u0131n.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        },
+        {
+          "id": "91d4ed52-f3eb-49be-a8f1-540ac39decbf",
+          "orderId": "AMA-08C8568474",
+          "at": "2026-10-30T22:51:25.841028+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": null,
+      "reserved": true,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator",
+      "completedAt": "2026-10-30T22:51:25.841084+00:00",
+      "elapsedSeconds": 0.723623
+    },
+    "partner": {
+      "id": "AMA-C35BBEAE60",
+      "customer": "Demo Marmara Logistics",
+      "city": "Istanbul",
+      "product": "connectivity",
+      "scenario": "happy",
+      "language": "tr",
+      "idempotencyKey": "07b90aef8f57ae0cdcae45f0",
+      "siteReference": "IST-001",
+      "actor": "wholesale-partner",
+      "state": "completed",
+      "stage": "done",
+      "createdAt": "2026-10-30T22:51:25.919099+00:00",
+      "updatedAt": "2026-10-30T22:51:26.529262+00:00",
+      "deadline": "2026-11-06T22:51:25.919147+00:00",
+      "timeline": [
+        {
+          "at": "2026-10-30T22:51:26.011761+00:00",
+          "agent": "Order Validation Agent",
+          "tool": "feasibility.check",
+          "detail": "Public city reference, synthetic address zone and 500 Mbps capacity validated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:26.179580+00:00",
+          "agent": "Order Decomposition Agent",
+          "tool": "TMF622.to.TMF641",
+          "detail": "Decomposed into 2 service and 2 resource orders",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:26.349951+00:00",
+          "agent": "Provisioning Orchestration Agent",
+          "tool": "partner.capacity+network.activate",
+          "detail": "Guarded in-process simulator allocated one capacity unit; service/resource orders activated",
+          "result": "success",
+          "simulated": true
+        },
+        {
+          "at": "2026-10-30T22:51:26.529262+00:00",
+          "agent": "Customer Update Agent",
+          "tool": "customer.notify.tr-en",
+          "detail": "Turkish and English updates written to simulated customer portal",
+          "result": "success",
+          "simulated": true
+        }
+      ],
+      "serviceOrders": [
+        {
+          "id": "AMA-C35BBEAE60-S1",
+          "name": "Access circuit",
+          "state": "completed",
+          "productOrderId": "AMA-C35BBEAE60",
+          "specification": "TMF641-inspired subset"
+        },
+        {
+          "id": "AMA-C35BBEAE60-S2",
+          "name": "Internet service",
+          "state": "completed",
+          "productOrderId": "AMA-C35BBEAE60",
+          "specification": "TMF641-inspired subset"
+        }
+      ],
+      "resourceOrders": [
+        {
+          "id": "AMA-C35BBEAE60-R1",
+          "name": "Fibre access port",
+          "state": "completed",
+          "productOrderId": "AMA-C35BBEAE60"
+        },
+        {
+          "id": "AMA-C35BBEAE60-R2",
+          "name": "IPv4 /29 block",
+          "state": "completed",
+          "productOrderId": "AMA-C35BBEAE60"
+        }
+      ],
+      "notifications": [
+        {
+          "id": "e0255dcf-536b-42f4-a578-2c7f83900597",
+          "orderId": "AMA-C35BBEAE60",
+          "at": "2026-10-30T22:51:26.529246+00:00",
+          "en": "Your synthetic service is active. No live telecom service was provisioned.",
+          "tr": "Sentetik hizmetiniz etkinle\u015ftirildi. Ger\u00e7ek bir telekom hizmeti sa\u011flanmad\u0131.",
+          "channel": "Simulated enterprise portal",
+          "deliveredExternally": false
+        }
+      ],
+      "approvals": [],
+      "exception": null,
+      "reserved": true,
+      "recovered": false,
+      "aiMode": "deterministic-rules-simulator",
+      "completedAt": "2026-10-30T22:51:26.529400+00:00",
+      "elapsedSeconds": 0.610301
+    }
+  },
+  "partnerApprovalStatus": 403,
+  "auditChainValid": true
+}

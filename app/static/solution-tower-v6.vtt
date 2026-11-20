@@ -1,0 +1,73 @@
+WEBVTT
+
+00:00:00.220 --> 00:00:08.264
+A business orders connectivity. Instead of disconnected handoffs, one guarded Orchestration AI Agent coordinates five specialist agents.
+
+00:00:08.444 --> 00:00:13.095
+The goal: less rework, faster activation, and a customer who knows what happens next.
+
+00:00:13.995 --> 00:00:19.786
+Intake saves the order and its event together. A stable request key prevents duplicate acceptance.
+
+00:00:19.966 --> 00:00:25.788
+Invalid requests return for correction. Accepted work stays traceable, without another manual handoff.
+
+00:00:26.688 --> 00:00:34.165
+The Validation AI Agent checks the site and capacity before planning. Catching bad references early prevents downstream rework.
+
+00:00:34.345 --> 00:00:40.562
+A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval.
+
+00:00:41.462 --> 00:00:48.157
+The Decomposition AI Agent turns an approved product into linked service and resource orders. No repeated rekeying.
+
+00:00:48.337 --> 00:00:54.583
+Unsupported products stop at intake. Catalogue governance keeps new mappings under the accountable planner's control.
+
+00:00:55.483 --> 00:01:01.520
+The Provisioning AI Agent rechecks capacity, risk and the change window, then allocates resources once.
+
+00:01:01.700 --> 00:01:08.563
+A partner timeout activates the Fallout Recovery AI Agent. A policy conflict takes a different path: human review.
+
+00:01:09.463 --> 00:01:16.307
+The Fallout Recovery Agent handles one allowlisted timeout, retries once, and hands control back to the Provisioning Agent.
+
+00:01:16.487 --> 00:01:22.610
+For faults outside that playbook, the delivery design requires service-desk integration and an accountable human owner.
+
+00:01:23.510 --> 00:01:28.410
+The service manager approves or rejects high-risk work. Every decision is audited.
+
+00:01:28.590 --> 00:01:34.191
+Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage.
+
+00:01:35.091 --> 00:01:42.761
+After activation, the Customer Updates AI Agent persists Turkish and English portal confirmations. Clear status reduces chasing.
+
+00:01:42.941 --> 00:01:50.275
+The portal provides the customer record. Email and text delivery require integrated channel services and service-desk ownership.
+
+00:01:51.175 --> 00:01:59.050
+TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow.
+
+00:01:59.230 --> 00:02:07.293
+Customer integration defines the exact schemas and conformance acceptance. Partner access never bypasses policy or human authority.
+
+00:02:08.193 --> 00:02:14.373
+The residency architecture places the customer workload on Azure Local at an approved Turkish operator site.
+
+00:02:14.553 --> 00:02:22.476
+Delivery requires supported local infrastructure, local inference, keys, logs and backups, with controlled egress and regulatory approval.
+
+00:02:23.376 --> 00:02:30.008
+External Azure services supply approved images, management and monitoring. Every metadata flow needs approval.
+
+00:02:30.188 --> 00:02:38.555
+Where platform metadata must also stay local, evaluate eligible disconnected operations, with its local control plane and support requirements.
+
+00:02:39.455 --> 00:02:47.912
+Early checks address avoidable rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery reduce unnecessary waiting.
+
+00:02:48.092 --> 00:02:55.606
+The customer objective is simple: shorter delivery, fewer avoidable exceptions, and a clear, accountable path from order to activation.

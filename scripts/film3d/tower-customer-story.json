@@ -1,0 +1,183 @@
+{
+  "title": "One order. One accountable flow.",
+  "subtitle": "A connected customer journey. Clear ownership. Faster progress with control.",
+  "customerEdition": true,
+  "presentationLabels": {
+    "editionLabel": "CUSTOMER SOLUTION / ORDER TO ACTIVATION",
+    "footerLabel": "CUSTOMER SOLUTION WALKTHROUGH",
+    "localSupervisorLabel": "LOCAL WORKLOAD SUPERVISOR",
+    "architectureStatusLabel": "RESIDENCY ARCHITECTURE",
+    "loadStatusLabel": "Play the solution film or select a chapter. Follow agent responsibilities, controlled handoffs and human decision routes."
+  },
+  "scenes": [
+    {
+      "id": "opening", "title": "One order. One accountable flow.",
+      "chapter": "A connected customer journey",
+      "banner": "One order identity / explicit handoffs / bounded recovery / human authority",
+      "takeaway": "ONE SUPERVISOR. FIVE SPECIALISTS. A TRACEABLE PATH TO ACTIVATION.",
+      "beats": [
+        {"text": "A business orders connectivity. Instead of disconnected handoffs, one guarded supervisor coordinates five specialist agents."},
+        {"text": "The goal: less rework, faster activation, and a customer who knows what happens next."}
+      ]
+    },
+    {
+      "id": "intake", "title": "Accept once. Never lose the handoff.",
+      "chapter": "Durable intake", "ownerLabel": "ORDER INTAKE / PERSISTED INTENT",
+      "takeaway": "STABLE IDENTITY + ATOMIC SAVE = NO DUPLICATE ACCEPTANCE.",
+      "cards": [
+        {"title": "CUSTOMER ORDER", "body": "Approved product.\nOne stable request key."},
+        {"title": "PERSIST TOGETHER", "body": "Save the order and event\nin one transaction."},
+        {"title": "READY TO PROCESS", "body": "Resume the saved order.\nDo not start a duplicate."}
+      ],
+      "exception": {"title": "INVALID REQUEST", "body": "Return to the submitter.\nCorrect before processing."},
+      "beats": [
+        {"text": "Intake saves the order and its event together. A stable request key prevents duplicate acceptance."},
+        {"text": "Invalid requests return for correction. Accepted work stays traceable, without another manual handoff."}
+      ]
+    },
+    {
+      "id": "validation", "title": "Catch errors before they become fallout.",
+      "chapter": "Validation owns feasibility", "ownerLabel": "VALIDATION / FEASIBILITY AND CAPACITY",
+      "takeaway": "PREVENT AVOIDABLE REWORK AT THE START, NOT AFTER ALLOCATION.",
+      "cards": [
+        {"title": "RECEIVED ORDER", "body": "Customer intent.\nOne persisted identity."},
+        {"title": "VALIDATE", "body": "Check the service site\nand available capacity."},
+        {"title": "VALIDATED INTENT", "body": "Only feasible work\nmoves to planning."}
+      ],
+      "exception": {"title": "STOP AND RESOLVE", "body": "Customer confirms the site.\nManager reviews inventory."},
+      "beats": [
+        {"text": "Validation checks the site and capacity before planning. Catching bad references early prevents downstream rework."},
+        {"text": "A wrong site needs customer confirmation. Missing capacity needs manager review, not an invented approval."}
+      ]
+    },
+    {
+      "id": "decomposition", "title": "Plan once. Keep every task linked.",
+      "chapter": "Decomposition owns the plan", "ownerLabel": "DECOMPOSITION / APPROVED CATALOGUE MAPPINGS",
+      "takeaway": "CATALOGUE MAPPINGS REPLACE REKEYING AND MISMATCHED REFERENCES.",
+      "cards": [
+        {"title": "PRODUCT INTENT", "body": "Dedicated Internet.\nApproved catalogue."},
+        {"title": "LINKED SERVICES", "body": "Access circuit.\nInternet service."},
+        {"title": "LINKED RESOURCES", "body": "Access port and IP block.\nSame order identity."}
+      ],
+      "beats": [
+        {"text": "Decomposition turns an approved product into linked service and resource orders. No repeated rekeying."},
+        {"text": "Unsupported products stop at intake. Catalogue governance keeps new mappings under the accountable planner's control."}
+      ]
+    },
+    {
+      "id": "provisioning", "title": "Check policy. Then allocate once.",
+      "chapter": "Provisioning owns safe execution", "ownerLabel": "PROVISIONING / POLICY-GUARDED EXECUTION",
+      "takeaway": "NO DUPLICATE ALLOCATION. NO POLICY BYPASS. NO FALSE SUCCESS.",
+      "cards": [
+        {"title": "APPROVED PLAN", "body": "Linked work orders.\nSaved execution stage."},
+        {"title": "POLICY GATES", "body": "Capacity, route risk\nand change window."},
+        {"title": "SERVICE ACTIVATION", "body": "Allocate once.\nComplete linked work."}
+      ],
+      "exception": {"title": "PARTNER TIMEOUT", "body": "Hold execution.\nWake the recovery agent."},
+      "beats": [
+        {"text": "Provisioning rechecks capacity, risk and the change window, then allocates resources once."},
+        {"text": "A partner timeout activates recovery. A policy conflict takes a different path: human review."}
+      ]
+    },
+    {
+      "id": "recovery", "title": "Recover the known fault. Hand back.",
+      "chapter": "Recovery is exception-only", "ownerLabel": "RECOVERY / BOUNDED PLAYBOOK AUTHORITY",
+      "events": ["Timeout -> one allowlisted recovery attempt", "Unknown fault -> service-desk escalation requirement"],
+      "takeaway": "ONE ALLOWLISTED RETRY. BACK TO PROVISIONING. NEVER AN ENDLESS LOOP.",
+      "cards": [
+        {"title": "KNOWN TIMEOUT", "body": "An allowlisted fault.\nNo broader authority."},
+        {"title": "RETRY ONCE", "body": "Use the approved\nalternate-route playbook."},
+        {"title": "HAND BACK", "body": "Resume provisioning.\nDo not reserve twice."}
+      ],
+      "exception": {"title": "HUMAN ESCALATION", "body": "Unknown fault?\nService-desk integration."},
+      "beats": [
+        {"text": "Recovery handles one allowlisted timeout, retries once, and hands control back to provisioning."},
+        {"text": "For faults outside that playbook, the delivery design requires service-desk integration and an accountable human owner."}
+      ]
+    },
+    {
+      "id": "human", "title": "People own the high-risk decision.",
+      "banner": "Closed window -> audited release / capacity requires inventory resolution",
+      "chapter": "Human authority", "ownerLabel": "SERVICE MANAGER / AUDITED DECISION",
+      "takeaway": "AUDITED APPROVAL OR REJECTION. PARTNERS CANNOT OVERRULE POLICY.",
+      "beats": [
+        {"text": "The service manager approves or rejects high-risk work. Every decision is audited."},
+        {"text": "Approval cannot create capacity. Partners cannot approve. Permitted work resumes its saved stage."}
+      ]
+    },
+    {
+      "id": "communication", "title": "Close the loop with truthful status.",
+      "chapter": "Customer updates own visibility", "ownerLabel": "CUSTOMER UPDATES / BILINGUAL PORTAL",
+      "takeaway": "ACTIVATE FIRST. CONFIRM SECOND. LESS CHASING FOR THE CUSTOMER.",
+      "cards": [
+        {"title": "SERVICES ACTIVATED", "body": "Provisioning completed.\nNot merely requested."},
+        {"title": "CUSTOMER UPDATE", "body": "Persist Turkish and\nEnglish portal messages."},
+        {"title": "ORDER COMPLETE", "body": "Visible status.\nA traceable completion."}
+      ],
+      "beats": [
+        {"text": "After activation, customer updates persist Turkish and English portal confirmations. Clear status reduces chasing."},
+        {"text": "The portal provides the customer record. Email and text delivery require integrated channel services and service-desk ownership."}
+      ]
+    },
+    {
+      "id": "standards", "title": "Shared contracts. The same guardrails.",
+      "chapter": "Standards-inspired interoperability", "ownerLabel": "TMF622 / TMF641-INSPIRED INTERFACES + MCP",
+      "takeaway": "LINKED CONTRACTS. AUTHENTICATED PARTNER TOOLS. ONE GUARDED FLOW.",
+      "cards": [
+        {"title": "TMF622-INSPIRED", "body": "Product-order intake.\nStable identifiers."},
+        {"title": "TMF641-INSPIRED", "body": "Linked service orders.\nExplicit handoffs."},
+        {"title": "MCP PARTNER TOOLS", "body": "Check and submit.\nNo approval authority."}
+      ],
+      "beats": [
+        {"text": "TM Forum inspired product and service contracts preserve linked handoffs. Authenticated partner tools enter the same guarded flow."},
+        {"text": "Customer integration defines the exact schemas and conformance acceptance. Partner access never bypasses policy or human authority."}
+      ]
+    },
+    {
+      "id": "residency", "title": "Keep the customer workload in Turkey.",
+      "chapter": "Azure Local residency architecture", "ownerLabel": "AZURE LOCAL / CUSTOMER DATA-PLANE DESIGN",
+      "events": ["Azure Local / approved operator site in Turkey", "Local infrastructure + local services + controlled egress"],
+      "takeaway": "BRING COMPUTE TO THE DATA. KEEP THE CUSTOMER DATA PLANE LOCAL.",
+      "cards": [
+        {"title": "AZURE LOCAL", "body": "Approved operator site.\nSupported infrastructure.", "icon": "azure-local.svg"},
+        {"title": "LOCAL EXECUTION", "body": "Orders, agents, inference\nand customer data."},
+        {"title": "LOCAL PROTECTION", "body": "Keys, raw logs,\nbackups and recovery."}
+      ],
+      "beats": [
+        {"text": "The residency architecture places the customer workload on Azure Local at an approved Turkish operator site."},
+        {"text": "Delivery requires supported local infrastructure, local inference, keys, logs and backups, with controlled egress and regulatory approval."}
+      ]
+    },
+    {
+      "id": "hybrid", "title": "Connect cloud services with a clear boundary.",
+      "chapter": "Controlled cloud connectivity", "ownerLabel": "APPROVED CLOUD FLOWS / LOCAL CUSTOMER PAYLOADS",
+      "parallelLanes": true,
+      "events": ["Approved images in / approved metadata out", "Stricter boundary -> eligible disconnected operations"],
+      "takeaway": "APPROVE EACH METADATA FLOW. STRICTER RULES MAY REQUIRE DISCONNECTION.",
+      "cards": [
+        {"title": "IMAGES IN", "body": "Approved software from\nAzure Container Registry.", "icon": "container-registry.svg"},
+        {"title": "METADATA OUT", "body": "Azure Arc metadata.\nAzure Monitor aggregates.", "icons": ["azure-arc.svg", "azure-monitor.svg"]},
+        {"title": "CUSTOMER DATA LOCAL", "body": "Local workload boundary.\nNo raw log export."}
+      ],
+      "beats": [
+        {"text": "External Azure services supply approved images, management and monitoring. Every metadata flow needs approval."},
+        {"text": "Where platform metadata must also stay local, evaluate eligible disconnected operations, with its local control plane and support requirements."}
+      ]
+    },
+    {
+      "id": "impact", "title": "Less rework. Less waiting. More confidence.",
+      "chapter": "Customer value", "ownerLabel": "BUSINESS OBJECTIVES / OPERATIONAL CONTROL",
+      "events": ["Early checks + linked work + bounded recovery", "Customer objectives / lead time, quality and visibility"],
+      "takeaway": "FOCUS ON LEAD TIME, FIRST-TIME-RIGHT COMPLETION AND CUSTOMER VISIBILITY.",
+      "cards": [
+        {"title": "LESS FALLOUT", "body": "Early validation.\nLinked IDs. Allocate once."},
+        {"title": "SHORTER DELIVERY", "body": "Durable handoffs.\nBounded recovery."},
+        {"title": "CUSTOMER CONFIDENCE", "body": "Clear responsibility.\nVisible, traceable status."}
+      ],
+      "beats": [
+        {"text": "Early checks address avoidable rework. Linked identifiers remove rekeying. Durable handoffs and bounded recovery reduce unnecessary waiting."},
+        {"text": "The customer objective is simple: shorter delivery, fewer avoidable exceptions, and a clear, accountable path from order to activation."}
+      ]
+    }
+  ]
+}

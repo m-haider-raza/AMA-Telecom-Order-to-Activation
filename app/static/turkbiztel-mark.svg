@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TürkBizTel">
+  <rect width="64" height="64" rx="15" fill="#c4202f"/>
+  <path fill="#fff" d="M38.25 19.714A16 16 0 1 0 38.25 44.286A13 13 0 1 1 38.25 19.714Z"/>
+  <path fill="#fff" d="M52.5 32 48.02 33.47 48.01 38.18 45.23 34.38 40.74 35.82 43.5 32 40.74 28.18 45.23 29.62 48.01 25.82 48.02 30.53Z"/>
+</svg>

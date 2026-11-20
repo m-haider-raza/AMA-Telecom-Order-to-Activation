@@ -15,8 +15,9 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 | Solution film (2:56) | [solution-tower-v6.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
 | Architecture deck (14 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
 | Azure architecture as deployed | [docs/azure-architecture.md](docs/azure-architecture.md) |
+| What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |
-| Every shareable asset in one release | [turkbiztel-case-study-2026-11-20](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-20) (this repository is private, so you need access) |
+| Every shareable asset in one release | [turkbiztel-case-study-2026-11-20](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-20) |
 
 The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band.
 
@@ -24,6 +25,7 @@ The live site runs on Azure Container Apps in Sweden Central. Its service-team c
 
 - **Azure architecture, as deployed.** [A new page](docs/azure-architecture.md) documents the 25-resource estate in Sweden Central: what each service is, how it was created, how traffic and identity flow, what is hardened and what is still open, and what it costs.
 - **Solution film v6 (2:56).** Customers place orders, the supervisor wakes each agent in turn, TM Forum and MCP standards connect them, and the Azure Local design keeps customer data in Türkiye. Each AI agent is named in full once, then by its short name.
+- **The deployed source is on `main`.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are all in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
 - **TürkBizTel branding** across the films, the deck and the app.
 - **This README** is now a landing page. The Azure detail lives in `docs/`.
 
@@ -100,6 +102,7 @@ The advisor is optional. It gives schema-validated advice and Turkish and Englis
 - **Identity.** One user-assigned managed identity. No storage keys, registry admin user, SQL passwords or OpenAI keys.
 - **Customer updates.** Azure Communication Services Email.
 - **Operations.** Log Analytics, a US$100 monthly budget with alerts, and Microsoft Defender plans. About US$80 a month at list price, always on.
+- **Open hardening items.** On 20 November the SQL server still had public network access enabled, with client-IP firewall rules added through the Azure portal, and SQL auditing was off. The app itself uses the private endpoint. Both items are in the [hardening checklist](docs/azure-architecture.md#hardening-checklist-for-any-use-beyond-a-demo).
 
 [docs/azure-architecture.md](docs/azure-architecture.md) has the full resource inventory, the timeline of how each service was created, the runtime flow, the security checklist, the cost table and read-only commands to check the estate yourself.
 
@@ -143,7 +146,8 @@ Encryption, private endpoints and EU hosting do not by themselves establish loca
 
 - **The agents are bounded.** In this demonstrator the five specialist agents are deterministic implementations built on rules, allowlists and playbooks. The Azure OpenAI advisor is the only model-backed part, and it cannot execute or approve.
 - **The numbers are not results.** The Analytics view of the deployed build times synthetic orders against the 7-day and 8% targets. Those are simulator orchestration times from a scenario mix with a built-in 30% incident rate, so they show that the pipeline and the measurement work. They exclude partner field work and customer delays, and they are not evidence of production lead time, fallout or NPS. A representative pilot would provide that.
-- **The Git snapshot is older than the deployment.** `app/`, `infra/` and `scripts/` on `main` are an earlier baseline: West Europe, public network access, Blob-backed state, and no virtual network, private endpoint, SQL or accounts. The deployed build adds those, plus the customer, partner and analytics views and the TürkBizTel branding. Its source is not published here yet, so `scripts/Deploy.ps1` on `main` creates the baseline rather than the estate in [docs/azure-architecture.md](docs/azure-architecture.md).
+- **`main` holds the deployed source, but the template does not describe every deployed resource.** `app/`, `infra/` and `scripts/` are the code the demonstrator runs. The running SQL layer, the Communication Services e-mail resources and the two network security groups were created by direct CLI commands or by governance policy, so `scripts/Deploy.ps1` builds a close relative of the estate in [docs/azure-architecture.md](docs/azure-architecture.md), not a copy of it. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+- **Live mode and delivery are set on the app, not by the template.** A template deployment runs in demo mode: `AMA_MODE` is unset, so the synthetic views are public and writes need a token, and customer updates stay in the portal. The deployed demonstrator also sets `AMA_MODE=live` and `AMA_DELIVERY=live` directly on the Container App, together with `AMA_SESSION_SECRET` and the ACS settings. With `AMA_DELIVERY=live` the app sends e-mail through Azure Communication Services (`ACS_CONNECTION_STRING`, `ACS_EMAIL_SENDER`) or an SMTP relay (`SMTP_HOST`, `SMTP_FROM`), and can post text messages to an HTTPS webhook (`AMA_SMS_WEBHOOK_URL`). The deployed build uses ACS e-mail only.
 
 ## Run it locally
 
@@ -155,7 +159,7 @@ python -m venv .venv
 powershell -File .\scripts\Start-Local.ps1
 ```
 
-Open **http://localhost:8000**. The script generates independent manager and partner tokens into the git-ignored `demo-credentials.local.json`. Click **Demo access** and paste the appropriate token. Do not enter an Azure password or a GitHub credential. Tokens stay in browser-tab memory, not browser storage, and the local server binds only to loopback.
+Open **http://localhost:8000**. The script generates independent manager and partner tokens into the git-ignored `demo-credentials.local.json`. Click **Demo access** and paste the appropriate token, or use **Staff sign in** with the manager token to stay signed in for eight hours. Do not enter an Azure password or a GitHub credential. Demo-access tokens stay in browser-tab memory, not browser storage, and the local server binds only to loopback.
 
 If your organization's PowerShell policy requires signed scripts, follow that policy and do not disable it. You can also launch from any shell. Install the package, set distinct random `DEMO_ADMIN_TOKEN` and `DEMO_PARTNER_TOKEN` environment variables of at least 24 characters, and run:
 
@@ -181,7 +185,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
 | Endpoint | Purpose and authorization |
 |---|---|
 | `GET /health` | Supervisor health |
-| `GET /api/state` | The synthetic workspace. Public in the `main` snapshot, staff-only in the live deployment |
+| `GET /api/state` | The synthetic workspace. Public in demo mode (`AMA_MODE` unset), staff-only when `AMA_MODE=live`, as deployed |
 | `POST /api/orders` | A manager or partner creates an idempotent synthetic order |
 | `POST /api/orders/{id}/decision` | Manager-only exception approve or reject |
 | `POST /api/orders/{id}/address` | A manager or the submitting partner confirms a fictional site |
@@ -196,27 +200,36 @@ The REST request is an intentionally simplified application DTO, **not the full 
 
 MCP supports `initialize`, `notifications/initialized`, `ping`, `tools/list` and `tools/call`. The tools are `check_partner_capacity` and `submit_partner_order`. Responses are JSON rather than SSE streams, and server-side sessions are not required. No provisioning or approval tool is exposed to the partner.
 
-## Deploy the baseline to Azure
+## Deploy to Azure
 
-`scripts/Deploy.ps1` on `main` creates the baseline described under [Status](#status), in one brand-new resource group. The estate in [docs/azure-architecture.md](docs/azure-architecture.md) goes further. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+`scripts/Deploy.ps1` deploys `infra/main.bicep` into one brand-new resource group. With the options below it builds the core of the estate in [docs/azure-architecture.md](docs/azure-architecture.md): the private network, the SQL layer and the AI advisor. It does not create the Communication Services e-mail resources. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
 
-1. Run `az login`, then `az account list --all -o table`. Select an **Enabled** subscription. The script allows West Europe only.
-2. Make sure the subscription has `Microsoft.App`, `Microsoft.Storage`, `Microsoft.ContainerRegistry`, `Microsoft.ManagedIdentity` and `Microsoft.OperationalInsights` registered, plus `Microsoft.CognitiveServices` if you use AI. Register providers only with the subscription owner's approval.
-3. For AI, first confirm model availability and **regional Standard** quota in West Europe. Do not switch to Global Standard to get around a regional constraint. The defaults are `gpt-4o-mini`, version `2024-07-18`. Models retire, so verify and override with a supported version.
+1. Run `az login`, then `az account list --all -o table`. Select an **Enabled** subscription. `-EnableSql` needs a **user** sign-in, because that account becomes the SQL Microsoft Entra administrator.
+2. Make sure the subscription has `Microsoft.App`, `Microsoft.Storage`, `Microsoft.ContainerRegistry`, `Microsoft.ManagedIdentity` and `Microsoft.OperationalInsights` registered, plus `Microsoft.Network` (private network), `Microsoft.Sql` (`-EnableSql`), `Microsoft.CognitiveServices` (AI) and `Microsoft.Consumption` (budget) if you use those options. Register providers only with the subscription owner's approval.
+3. For AI, first confirm model availability and **regional Standard** quota in the target region. Do not switch to Global Standard to get around a regional constraint. The script defaults to `gpt-4o-mini`, version `2024-07-18`. Models retire, so verify and override with a supported version. The deployed estate runs `gpt-4.1-mini`, version `2025-04-14`.
 4. Deploy with Azure CLI and Bicep. No local Docker is needed.
 
 ```powershell
 powershell -File .\scripts\Deploy.ps1 `
   -SubscriptionId "<enabled-subscription-id>" `
   -ResourceGroup "rg-ama30-demo-<unique-suffix>" `
-  -Location "westeurope"
+  -Location "swedencentral" `
+  -EnableSql -EnableOpenAI
 ```
 
-Add `-EnableOpenAI` once model availability and quota are confirmed. `-BudgetEmail "<your-address>"` optionally creates budget alerts at 80% actual and 100% forecast. Budgets use the subscription's billing currency, so adjust the Bicep amount for a US$100 target if it is not USD. Alerts are not hard caps.
+The resource group name must start with `rg-ama`. `-Location` is `westeurope` (the default), `swedencentral` or `northeurope`. Every option is optional:
 
-The script refuses an existing resource group, always passes the explicit subscription, builds the image remotely in the registry with a unique tag, keeps deployment parameters secure and writes the generated credentials to the git-ignored `demo-credentials.local.json` without printing them. It does **not** delete partially created resources after a failure. Inspect the tagged resource group, fix the cause and redeploy, or delete that exact group before a fresh run.
+| Option | What it adds |
+|---|---|
+| `-EnablePrivateStorage` | A virtual network with a Container Apps subnet and a private-endpoint subnet. The Container Apps environment joins it, and the storage account gets a private endpoint and private DNS and is closed to the public network |
+| `-EnableSql` | Everything in `-EnablePrivateStorage`, plus an Azure SQL server that accepts Microsoft Entra sign-in only, the database `ama30-db`, a private endpoint with private DNS, and a one-off Container Apps job that creates the schema and the app's database user. The job deletes itself when it succeeds and is left in place for inspection when it fails |
+| `-EnableOpenAI` | An Azure OpenAI account with key authentication off and a `telecom-advisor` deployment. Choose the model with `-OpenAiModel` and `-OpenAiModelVersion` |
+| `-BudgetEmail "<address>"` | A budget with alerts at 80% actual and 100% forecast. Budgets use the subscription's billing currency, so adjust the Bicep amount for a US$100 target if it is not USD. Alerts are not hard caps |
+| `-CredentialsPath "<file>"` | Where to write the generated credentials. The default is `demo-credentials.local.json` in the repository root, which is git-ignored |
 
-The baseline deploys a Container Apps consumption environment with one 0.25 vCPU / 0.5 GiB replica, a Basic registry, locally redundant Blob storage, a user-assigned managed identity with narrowly scoped roles, capped Log Analytics, and optionally Azure OpenAI and a budget. Storage keys and registry admin access are off, and the app uses its managed identity. Only the app ingress is anonymously readable, and only for synthetic demo data. Writes need a demo bearer token.
+The script refuses an existing resource group or credentials file, always passes the explicit subscription, builds the image remotely in the registry with a unique tag, keeps deployment parameters secure and writes the generated credentials without printing them. It does **not** delete partially created resources after a failure. Inspect the tagged resource group, fix the cause and redeploy, or delete that exact group before a fresh run.
+
+The core it deploys is a Container Apps consumption environment with one 0.25 vCPU / 0.5 GiB replica, a Basic registry, locally redundant Blob storage, a user-assigned managed identity with narrowly scoped roles and capped Log Analytics, plus the options above. Storage keys and registry admin access are off, and the app uses its managed identity. The app starts in demo mode: its web ingress is anonymously readable with synthetic demo data only, and writes need a demo bearer token.
 
 The dedicated always-on replica runs the persisted supervisor while the browser is closed. Scaling to zero would strand queued work without a queue-based wake trigger, so scale-to-zero is deliberately not promised. Cost depends on running hours, builds, model prices and logs, and the US$100 a month target is not a quote. Check current [Container Apps](https://azure.microsoft.com/pricing/details/container-apps/), [Container Registry](https://azure.microsoft.com/pricing/details/container-registry/), [Blob storage](https://azure.microsoft.com/pricing/details/storage/blobs/) and [Azure OpenAI](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/) pricing.
 
@@ -224,15 +237,15 @@ The dedicated always-on replica runs the persisted supervisor while the browser 
 
 ```powershell
 python -m pytest -q
-python -m ruff check app tests scripts
+python -m ruff check app tests
 node --check .\app\static\app.js
 az bicep build --file .\infra\main.bicep --stdout
 python .\scripts\Smoke.py --credentials .\demo-credentials.local.json
 ```
 
-CI (`.github/workflows/ci.yml`) runs the Python checks, the JavaScript syntax check and the Bicep compile. The smoke command creates one synthetic MCP order and verifies all five agents, bounded recovery, bilingual output and a denied partner approval.
+CI (`.github/workflows/ci.yml`) runs `ruff check app tests`, `pytest -q`, `node --check` on every front-end script and on the two scripts in `scripts/film3d/`, and the Bicep compile. The smoke command needs the app running, for example from `Start-Local.ps1`, and reads its address and tokens from the credentials file. It creates one synthetic MCP order and verifies all five agents, bounded recovery, bilingual output and a denied partner approval.
 
-To remove a baseline deployment, confirm the exact dedicated resource group:
+To remove a deployment, confirm the exact dedicated resource group:
 
 ```powershell
 powershell -File .\scripts\Remove-Demo.ps1 `
@@ -247,20 +260,31 @@ The script checks the AMA demo tags and refuses unrelated groups. Run it only wh
 
 | Path | Contents |
 |---|---|
-| `app/` | The FastAPI application: domain rules, supervisor, state store, security, advisor and the static UI |
-| `infra/main.bicep` | The baseline Azure infrastructure |
-| `scripts/` | `Deploy.ps1`, `Remove-Demo.ps1`, `Start-Local.ps1` and `Smoke.py` |
-| `tests/` | API, domain and Blob-store tests |
-| `docs/` | [Azure architecture](docs/azure-architecture.md), [PRODUCTION.md](docs/PRODUCTION.md) and the diagram in `docs/images/` |
+| `app/` | The FastAPI application. `main.py` is the app and `domain.py` the guarded simulation with the supervisor and agents. `auth.py`, `accounts*.py`, `identity.py` and `delivery.py` cover sign-in, customer accounts and e-mail. `partners*.py` is the wholesale partner portal. `advisor.py` is the optional Azure OpenAI advice. `analytics.py` and `benchmark.py` measure order-to-delivery. `store.py` (JSON or Blob), `sqlstore.py`, `sqlwrite.py`, `sqlschema.py`, `sqlbootstrap.py` and `projection.py` keep state in Blob storage or Azure SQL |
+| `app/static/` | The pages (landing, console, customer portal, partner portal, live demo, journey, solution players, case study), their scripts and styles, and the films, posters, captions and deck slides. Plain-named films such as `solution-tower-v6.mp4` are the source editions. The matching `*-turkbiztel.*` files are the TürkBizTel editions that `branded_static.py` serves under the plain names |
+| `app/static/film3d-assets/` | Assets for the 3D film, with their licences and an `ATTRIBUTION.md` |
+| `infra/main.bicep` | The Azure infrastructure |
+| `scripts/` | `Deploy.ps1`, `Remove-Demo.ps1`, `Start-Local.ps1`, `Smoke.py` and `Verify_Demo.py` for the app. The film pipeline: the `Render_*.py` renderers, `Synthesize_*.py` narration, `Rebrand_Media.py`, `requirements-narrator.txt` and `film3d/`, whose scenes need Node.js |
+| `tests/` | Twenty test modules covering the API, domain rules, accounts, partners, analytics, the Blob and SQL stores, the case-study site and the films |
+| `docs/` | The [application guide](docs/APPLICATION-GUIDE.md), the [Azure architecture](docs/azure-architecture.md), [PRODUCTION.md](docs/PRODUCTION.md) and the diagrams in `docs/images/` |
+| `Dockerfile`, `pyproject.toml` | The container image and the Python project metadata |
 | `.github/workflows/ci.yml` | The quality workflow |
-| Root media and presentation files | Earlier exports, superseded by the release assets and the live site |
+| `0-current-scenario.mp4`, `0-solution-tower-v2.mp4` | Film files at the root: the current-state film and an early solution-film edition. Newer editions are in `app/static/` and in the release |
 
 ## Security notes
 
 - Keep secrets out of Git. `demo-credentials.local.json`, `deployment.local.json`, `.env` and local state are git-ignored.
 - Share service-team access tokens out of band. Never commit them or paste them into slides, films or documents.
+- Treat anything that has appeared in a document, a chat or Git history as exposed, even after the file is deleted, and rotate it. The deployed demonstrator's admin token and demo sign-ins were rotated on 20 November 2026.
 - Do not enter an Azure or GitHub password into the application.
 
 ## Reference data and licensing
 
 City names and approximate coordinates reference Wikidata: [Istanbul (Q406)](https://www.wikidata.org/wiki/Q406), [Ankara (Q3640)](https://www.wikidata.org/wiki/Q3640) and [Izmir (Q35997)](https://www.wikidata.org/wiki/Q35997). Wikidata structured data is [CC0](https://www.wikidata.org/wiki/Wikidata:Licensing). Only these non-personal facts are included, and no real customer dataset is downloaded. The companies, sites, inventory, prices and telecom incidents are project-authored fixtures, not operator or subscriber records. The assignment PDF is not redistributed. The Azure diagram uses Microsoft Azure Architecture Icons (V25) under Microsoft's icon terms.
+
+## Trademarks, logos and third-party assets
+
+- **Operator marks.** The Turkcell, Türk Telekom and Vodafone Türkiye marks appear only to introduce the real Turkish telecom market, and Türk Telekom's public-domain geometric logo is used as industry context. The players link to each company's official website and to the source of its logo. The fictional case's challenges are not attributed to any of them. This project has no affiliation with, endorsement from, customer relationship with or live integration to those companies.
+- **Microsoft.** The Azure diagram and the 3D film use Microsoft's Azure icons unchanged, under Microsoft's icon terms. Microsoft's trademark rights remain, and no Microsoft endorsement or partnership is claimed. The 3D people are Microsoft Rocketbox avatars (MIT licence).
+- **Libraries.** The 3D film bundles three.js and fflate, both MIT. Their licence notices are in `app/static/film3d-assets/`, next to an `ATTRIBUTION.md`.
+- **Narration.** All narration is synthetic. The current-state film and solution film v6 use the Kokoro `bm_george` preset voice (the Kokoro-82M weights are Apache-2.0, and the kokoro-onnx runtime is MIT). Some earlier editions use a locally cloned voice of the author, and their players say so. The voice sample itself is not in this repository.
