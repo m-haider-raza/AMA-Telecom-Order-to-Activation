@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.media_proof import assert_preserved
+from tests.media_proof import assert_preserved, assert_text_preserved
 
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "app" / "static"
@@ -93,7 +93,7 @@ def test_official_icons_and_all_earlier_video_bytes_are_preserved(edition):
     assert {"current-scenario.mp4", "solution.mp4", "solution-tower-v1.mp4",
             "solution-3d-v1.mp4"} <= proof["preservedVideos"].keys()
     assert_preserved(proof["preservedVideos"])
-    assert proof["scriptSHA256"] == digest(ROOT / "scripts" / "film3d" / "clarity-story.json")
+    assert_text_preserved(ROOT / "scripts" / "film3d" / "clarity-story.json", proof["scriptSHA256"])
     for name, sha in data["microsoftIcons"]["unchangedSvgSHA256"].items():
         assert digest(STATIC / "film3d-assets" / name) == sha
     assert next(r for r in load("motion", edition) if r["scene"] == "residency")["officialIcons"] == [

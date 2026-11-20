@@ -1,4 +1,5 @@
 import hashlib
+import importlib.util
 import json
 import re
 import shutil
@@ -7,6 +8,8 @@ import sys
 from pathlib import Path
 
 import pytest
+
+from tests.media_proof import assert_text_preserved
 
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "app" / "static"
@@ -66,14 +69,16 @@ def test_new_customer_film_preserves_every_previous_video_and_official_icon(edit
     assert digest(STATIC / f"{edition}.mp4") != digest(STATIC / "solution-tower-v2.mp4")
     script = {"solution-tower-v5": "tower-ai-agent-story.json",
               "solution-tower-v6": "tower-first-mention-story.json"}.get(edition, "tower-customer-story.json")
-    assert proof["scriptSHA256"] == digest(ROOT / "scripts" / "film3d" / script)
+    assert_text_preserved(ROOT / "scripts" / "film3d" / script, proof["scriptSHA256"])
     for name, sha in data["microsoftIcons"]["unchangedSvgSHA256"].items():
         assert digest(STATIC / "film3d-assets" / name) == sha
     assert proof["referenceAudioUsed"] is False
 
 
 @pytest.mark.parametrize("edition", EDITIONS)
-def test_customer_mp4_and_overwrite_guard(edition):
+def test_customer_renderer_refuses_an_existing_edition_before_assets_change(edition):
+    if not importlib.util.find_spec("playwright"):
+        pytest.skip("Optional renderer guard requires Playwright")
     before = {suffix: digest(STATIC / f"{edition}{suffix}") for suffix in [".mp4", "-data.json", ".html"]}
     result = subprocess.run([
         sys.executable, str(ROOT / "scripts" / "Render_Crisp.py"), "--edition", edition,
@@ -82,6 +87,10 @@ def test_customer_mp4_and_overwrite_guard(edition):
     ], capture_output=True, text=True)
     assert result.returncode != 0 and "Existing video is protected" in result.stderr
     assert before == {suffix: digest(STATIC / f"{edition}{suffix}") for suffix in before}
+
+
+@pytest.mark.parametrize("edition", EDITIONS)
+def test_customer_mp4_is_full_hd_with_audio_captions_and_every_chapter(edition):
     if not shutil.which("ffprobe"):
         pytest.skip("Encoded metadata check requires optional FFmpeg")
     media = json.loads(subprocess.run([

@@ -18,6 +18,15 @@ def digest(path):
         return hashlib.file_digest(source, "sha256").hexdigest()
 
 
+def assert_text_preserved(path, recorded):
+    """Story scripts were hashed with Windows line endings; accept the same text under any checkout."""
+    raw = path.read_bytes()
+    unix = raw.replace(b"\r\n", b"\n")
+    windows = unix.replace(b"\n", b"\r\n")
+    accepted = {hashlib.sha256(variant).hexdigest() for variant in (raw, unix, windows)}
+    assert recorded in accepted, f"{path.name} no longer matches its recorded content"
+
+
 def assert_preserved(preserved):
     current = json.loads((STATIC / CURRENT_PIN).read_text(encoding="utf-8"))["preservedVideos"]
     for name, recorded in preserved.items():

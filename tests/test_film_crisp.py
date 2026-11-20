@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.media_proof import assert_preserved
+from tests.media_proof import assert_preserved, assert_text_preserved
 
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "app" / "static"
@@ -100,7 +100,7 @@ def test_previous_videos_and_official_icons_are_preserved():
     assert_preserved(proof["preservedVideos"])
     for name, sha in data["microsoftIcons"]["unchangedSvgSHA256"].items():
         assert digest(STATIC / "film3d-assets" / name) == sha
-    assert proof["scriptSHA256"] == digest(ROOT / "scripts" / "film3d" / "tower-crisp-story.json")
+    assert_text_preserved(ROOT / "scripts" / "film3d" / "tower-crisp-story.json", proof["scriptSHA256"])
     html = (STATIC / f"{EDITION}.html").read_text(encoding="utf-8")
     assert "tower-crisp-theme.js" in html and f'{EDITION}.mp4' in html
     assert 'href="/static/solution-tower-v1.html"' in html
