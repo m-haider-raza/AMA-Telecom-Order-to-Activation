@@ -21,6 +21,7 @@ from app.domain import (SITES, correct_order, delivery_enabled, live_mode, owner
                         update_site)
 from app.schemas import Contact, PortalOrder, check_customer, transact
 from app.security import limit
+from app.sso import public_staff, record_staff_event
 
 log = logging.getLogger("ama.accounts")
 router = APIRouter()
@@ -152,18 +153,8 @@ def deliver_code(background, purpose, customer, code):
     return {"delivery": "simulated", "simulatedCode": code}
 
 
-def grant(request, response, token):
-    """Hand a new session to the caller. A TürkBizTel page keeps its session in its own tab, so the token goes back in
-    the reply and any older shared cookie is dropped; every other client still receives the cookie."""
-    if auth.per_tab(request):
-        auth.clear_session_cookie(response, request)
-        return {"session": token}
-    auth.set_session_cookie(response, request, token)
-    return {}
-
-
 def start_session(request, response, account, role="customer"):
-    return grant(request, response, auth.issue_session(role, account["id"], account["sessionVersion"]))
+    return auth.grant(request, response, auth.issue_session(role, account["id"], account["sessionVersion"]))
 
 
 def signed_in(request):
@@ -196,11 +187,15 @@ def with_order(request, customer, order_id, action):
 
 @router.get("/api/auth/me")
 def whoami(request: Request):
-    base = {"authenticated": False, "mode": "live" if live_mode() else "demo", "delivery": delivery_enabled()}
+    base = {"authenticated": False, "mode": "live" if live_mode() else "demo", "delivery": delivery_enabled(),
+            "staffAuth": auth.staff_auth_mode()}
     who = identity.resolve(request)
     if who is None:
         return base
     if who["role"] == "admin":
+        staff = who.get("staff")
+        if staff:
+            return {**base, "authenticated": True, "role": "admin", "name": staff["name"], "staff": public_staff(staff)}
         return {**base, "authenticated": True, "role": "admin", "name": "Service manager"}
     if who["role"] == "partner":
         return {**base, "authenticated": True, "role": "partner",
@@ -314,6 +309,8 @@ def accept_invite(payload: InviteAccept, request: Request, response: Response):
 
 @router.post("/api/auth/staff")
 def staff_login(payload: StaffLogin, request: Request, response: Response):
+    if auth.sso_enabled():
+        raise HTTPException(403, "The service team signs in with Microsoft. Use Sign in with Microsoft.")
     auth.require_csrf(request)
     address = auth.client_ip(request)
     pair = f"staff|{address}"
@@ -325,13 +322,19 @@ def staff_login(payload: StaffLogin, request: Request, response: Response):
         auth.LOGIN_IP.add(address)
         raise HTTPException(401, "That access token is not valid.")
     auth.LOGIN_PAIR.clear(pair)
-    handover = grant(request, response, auth.issue_session("admin", "staff", auth.admin_version()))
+    handover = auth.grant(request, response, auth.issue_session("admin", "staff", auth.admin_version()))
     return {"role": "admin", **handover}
 
 
 @router.post("/api/auth/logout")
 def logout(request: Request, response: Response):
     auth.require_csrf(request)
+    person = auth.staff_person(auth.request_session(request)) if auth.sso_enabled() else None
+    if person:
+        try:
+            record_staff_event(request.app, person, "staff.signed-out", "Signed out")
+        except HTTPException:
+            log.warning("The sign-out could not be written to the audit trail")
     auth.clear_session_cookie(response, request)
     return {"ok": True}
 

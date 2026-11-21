@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c4202f">
+  <meta name="robots" content="noindex">
+  <title>Approve your order · TürkBizTel</title>
+  <link rel="icon" href="/static/turkbiztel-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/account.css?v=tb3">
+  <script src="/static/ui.js?v=tb1" defer></script>
+  <script src="/static/approve.js?v=tb1" defer></script>
+</head>
+<body class="auth-page">
+  <a class="skip-link" href="#auth-card" data-t="skip">Skip to the approval</a>
+  <div class="auth">
+    <aside class="auth-hero">
+      <a class="logo" href="/login"><img src="/static/turkbiztel-mark.svg" alt="" width="36" height="36">TürkBizTel</a>
+      <div>
+        <h1 data-t="heroTitle">Approve your TürkBizTel order</h1>
+        <p class="lead" data-t="heroLead">Our service team placed an order for your company. It only starts once you say yes.</p>
+        <ul class="benefits audiences">
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#shield-check"/></svg></span>
+            <span><strong data-t="b1t">You stay in control</strong><small data-t="b1s">Nothing is set up for your company until you approve.</small></span>
+          </li>
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#mail"/></svg></span>
+            <span><strong data-t="b2t">Straight from your e-mail</strong><small data-t="b2s">Open the link we sent you. There is no password to remember.</small></span>
+          </li>
+          <li>
+            <span class="tick"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/turkbiztel-icons.svg#list"/></svg></span>
+            <span><strong data-t="b3t">Your answer is on record</strong><small data-t="b3s">It is saved with the order, so you and the service team can always see it.</small></span>
+          </li>
+        </ul>
+      </div>
+      <p class="hero-links"><span data-t="heroAccount">Prefer to answer from your account?</span> <a href="/login" data-t="signIn">Sign in</a></p>
+    </aside>
+
+    <main class="auth-main">
+      <div class="auth-card approval-card" id="auth-card" tabindex="-1">
+        <div class="lang-switch" role="group" aria-label="Language · Dil">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
+          <button type="button" data-lang="tr" lang="tr" aria-pressed="false">Türkçe</button>
+        </div>
+
+        <noscript><p class="msg error">TürkBizTel needs JavaScript to show this approval. Please turn it on and reload this page. · Bu onay için JavaScript gerekir. Lütfen etkinleştirip sayfayı yenileyin.</p></noscript>
+
+        <div id="stage">
+          <p class="sso-wait" role="status"><span class="spinner" aria-hidden="true"></span><span data-t="checking">Checking your link…</span></p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>

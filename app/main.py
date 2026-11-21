@@ -2,6 +2,7 @@ import asyncio
 import csv
 import hmac
 import io
+import json
 import logging
 import os
 import time
@@ -13,20 +14,22 @@ from urllib.parse import urlsplit
 
 import httpx
 from azure.core.exceptions import AzureError
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import ValidationError
 
-from app import advisor, analytics, benchmark, partners
+from app import advisor, analytics, auth, benchmark, partners, sso
 from app.branded_static import BrandedStaticFiles
 from app.accounts_api import router as accounts_router
+from app.approvals_api import router as approvals_router
 from app.partners_api import router as partners_router
+from app.sso import router as sso_router
 from app.delivery import configuration_problems, deliver_outbox
 from app.domain import (approve_exception, audit, correct_order, create_order, customer_view, delivery_enabled,
                         follow_up, live_mode, metrics, partner_capacity, process_next, public_order,
-                        tracking_token, update_contact)
+                        tracking_token, update_contact, verify_audit)
 from app.schemas import (BenchmarkRequest, Contact, Decision, OrderInput, PortalOrder,  # noqa: F401
-                         SiteConfirmation, check_customer, transact)
+                         SiteConfirmation, check_customer, configure_staff_log, transact)
 from app.security import authorize, limit
 from app.store import open_store
 
@@ -35,7 +38,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 logging.getLogger("azure").setLevel(logging.WARNING)
 log = logging.getLogger("ama.supervisor")
 STATIC = Path(__file__).parent / "static"
-PAGES = ("/", "/order", "/track", "/login", "/account", "/console", "/partner", "/case-study", "/assignment")
+PAGES = ("/", "/order", "/track", "/login", "/account", "/approve", "/console", "/partner", "/case-study",
+         "/assignment")
 
 
 async def supervisor(app):
@@ -64,6 +68,14 @@ async def lifespan(app):
         raise RuntimeError("Set distinct DEMO_ADMIN_TOKEN and DEMO_PARTNER_TOKEN values of at least 24 characters")
     if os.environ["DEMO_ADMIN_TOKEN"] == os.environ["DEMO_PARTNER_TOKEN"]:
         raise RuntimeError("Manager and partner tokens must differ")
+    if os.getenv("AMA_STAFF_AUTH", "token").strip().lower() not in ("token", "sso"):
+        # An unrecognised value must never quietly fall back to the shared access token.
+        raise RuntimeError("AMA_STAFF_AUTH must be either 'token' or 'sso'")
+    if auth.sso_enabled():
+        problems = sso.configuration_problems()
+        if problems:
+            raise RuntimeError("AMA_STAFF_AUTH=sso is not fully configured: " + "; ".join(problems))
+    configure_staff_log()
     if delivery_enabled():
         problems = configuration_problems()
         if problems:
@@ -97,7 +109,9 @@ async def lifespan(app):
 
 app = FastAPI(title="TürkBizTel Activation", version="1.0.0", lifespan=lifespan)
 app.include_router(accounts_router)
+app.include_router(approvals_router)
 app.include_router(partners_router)
+app.include_router(sso_router)
 
 
 @app.middleware("http")
@@ -132,8 +146,8 @@ def health(request: Request):
 
 @app.get("/api/state")
 def state(request: Request):
-    if live_mode():
-        authorize(request)
+    if live_mode() or auth.sso_enabled():
+        authorize(request, need="read")
     snapshot = request.app.state.store.read()
     for private in ("customers", "partners", "partnerUsers", "concerns", "benchmark"):
         snapshot.pop(private, None)
@@ -203,8 +217,12 @@ def create_for_channel(snapshot, payload, actor):
 @app.post("/api/orders", status_code=201)
 @app.post("/tmf-api/productOrderingManagement/v4/productOrder", status_code=201)
 def submit(payload: OrderInput, request: Request):
-    actor = authorize(request, partner_allowed=True)
+    actor = authorize(request, partner_allowed=True, need="operate")
     limit(request)
+    if auth.sso_enabled() and actor == "service-manager":
+        # An order placed by a person on the service team belongs to an enterprise and waits for its approval.
+        raise HTTPException(409, "Service staff place an order for an enterprise from the console "
+                                 "(POST /api/enterprises/{id}/orders), so its contact can approve it first")
     return public_order(transact(request.app, lambda snapshot: create_for_channel(
         snapshot, payload.model_dump(), actor)))
 
@@ -217,7 +235,7 @@ def find_order(snapshot, order_id):
 
 @app.get("/tmf-api/productOrderingManagement/v4/productOrder")
 def product_orders(request: Request):
-    actor = authorize(request, partner_allowed=True)
+    actor = authorize(request, partner_allowed=True, need="read")
     snapshot = request.app.state.store.read()
     orders = list(snapshot["orders"].values())
     if actor == "wholesale-partner":
@@ -227,7 +245,7 @@ def product_orders(request: Request):
 
 @app.get("/tmf-api/productOrderingManagement/v4/productOrder/{order_id}")
 def product_order(order_id: str, request: Request):
-    actor = authorize(request, partner_allowed=True)
+    actor = authorize(request, partner_allowed=True, need="read")
     snapshot = request.app.state.store.read()
     order = find_order(snapshot, order_id)
     if actor == "wholesale-partner" and not partners.channel_owns(snapshot, order):
@@ -237,21 +255,21 @@ def product_order(order_id: str, request: Request):
 
 @app.get("/tmf-api/serviceOrdering/v4/serviceOrder")
 def service_orders(request: Request):
-    authorize(request)
+    authorize(request, need="read")
     return [service for order in request.app.state.store.read()["orders"].values()
             for service in order.get("serviceOrders", [])]
 
 
 @app.get("/tmf-api/resourceOrderManagement/v4/resourceOrder")
 def resource_orders(request: Request):
-    authorize(request)
+    authorize(request, need="read")
     return [resource for order in request.app.state.store.read()["orders"].values()
             for resource in order.get("resourceOrders", [])]
 
 
 @app.post("/api/orders/{order_id}/decision")
 def decide(order_id: str, payload: Decision, request: Request):
-    actor = authorize(request)
+    actor = authorize(request, need="manage")
     limit(request)
     find_order(request.app.state.store.read(), order_id)
     return public_order(transact(request.app, lambda snapshot: approve_exception(
@@ -261,7 +279,7 @@ def decide(order_id: str, payload: Decision, request: Request):
 
 @app.post("/api/orders/{order_id}/advice")
 def advice(order_id: str, request: Request):
-    actor = authorize(request)
+    actor = authorize(request, need="operate")
     limit(request)
     order = find_order(request.app.state.store.read(), order_id)
     if not advisor.configured():
@@ -291,7 +309,7 @@ def advice(order_id: str, request: Request):
 
 @app.post("/api/orders/{order_id}/address")
 def confirm_site(order_id: str, payload: SiteConfirmation, request: Request):
-    actor = authorize(request, partner_allowed=True)
+    actor = authorize(request, partner_allowed=True, need="operate")
     limit(request)
     current = request.app.state.store.read()
     order = find_order(current, order_id)
@@ -304,30 +322,56 @@ def confirm_site(order_id: str, payload: SiteConfirmation, request: Request):
 
 @app.get("/api/audit.csv")
 def audit_csv(request: Request):
-    authorize(request)
+    authorize(request, need="read")
     entries = request.app.state.store.read()["audit"]
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(["timestamp", "order", "actor", "action", "detail"])
+    writer.writerow(["timestamp", "order", "actor", "action", "detail", "done_by", "upn", "role", "changes"])
     for item in entries:
+        by = item.get("by") or {}
+        changes = json.dumps(item["changes"], ensure_ascii=False, sort_keys=True) if item.get("changes") else ""
         values = [str(item.get(key, "")) for key in ("at", "orderId", "actor", "action", "detail")]
+        values += [str(by.get("name", "")), str(by.get("upn", "")), str(by.get("role", "")), changes]
         writer.writerow(["'" + value if value.startswith(("=", "+", "-", "@")) else value for value in values])
     return Response(output.getvalue(), media_type="text/csv",
                     headers={"Content-Disposition": 'attachment; filename="ama-demo-audit.csv"'})
 
 
+@app.get("/api/audit")
+def audit_trail(request: Request, person: str = Query("", max_length=120), order: str = Query("", max_length=64),
+                action: str = Query("", max_length=64), size: int = Query(100, ge=1, le=500, alias="limit")):
+    """Who did what: the newest audit entries first, the people who have acted, and whether the hash chain that
+    protects the trail is still intact. `person` matches a staff member's sign-in name or directory object ID."""
+    authorize(request, need="read")
+    snapshot = request.app.state.store.read()
+    people = {}
+    for item in snapshot["audit"]:
+        by = item.get("by")
+        if by:
+            count = people.get(by["oid"], {}).get("actions", 0) + 1
+            people[by["oid"]] = {**by, "actions": count, "lastAt": item["at"]}
+    wanted = person.strip().lower()
+    chosen = [item for item in snapshot["audit"]
+              if (not wanted or wanted in (item.get("by", {}).get("oid", ""), item.get("by", {}).get("upn", "").lower()))
+              and (not order or item["orderId"] == order) and item["action"].startswith(action)]
+    shown = ("sequence", "at", "orderId", "actor", "action", "detail", "by", "changes", "hash")
+    return {"verified": verify_audit(snapshot), "total": len(chosen),
+            "people": sorted(people.values(), key=lambda row: row["lastAt"], reverse=True),
+            "entries": [{key: item[key] for key in shown if key in item} for item in reversed(chosen[-size:])]}
+
+
 @app.get("/api/analytics")
 def analytics_report(request: Request, scope: Literal["auto", "all", "live", "benchmark"] = "auto"):
-    if live_mode():
-        authorize(request)
+    if live_mode() or auth.sso_enabled():
+        authorize(request, need="read")
     return analytics.compute(request.app.state.store.read(), scope)
 
 
 @app.get("/api/analytics/source")
 def analytics_source(request: Request):
     """Where the data is stored, and whether the SQL tables hold what the order book says they should."""
-    if live_mode():
-        authorize(request)
+    if live_mode() or auth.sso_enabled():
+        authorize(request, need="read")
     store = request.app.state.store
     if not hasattr(store, "inspect"):
         return {"kind": "azure-blob" if os.getenv("AZURE_STORAGE_ACCOUNT_URL") else "local-file",
@@ -342,7 +386,7 @@ def analytics_source(request: Request):
 
 @app.post("/api/analytics/benchmark", status_code=202)
 def analytics_benchmark(payload: BenchmarkRequest, request: Request):
-    actor = authorize(request)
+    actor = authorize(request, need="operate")
     limit(request)
     return transact(request.app, lambda snapshot: benchmark.start(snapshot, payload.size, actor=actor))
 
@@ -362,7 +406,7 @@ MCP_TOOLS = [{
 
 @app.post("/mcp")
 async def mcp(request: Request):
-    actor = authorize(request, partner_allowed=True)
+    actor = authorize(request, partner_allowed=True, need="operate")
     limit(request)
     origin = request.headers.get("origin")
     expected_origin = os.getenv("DEMO_PUBLIC_ORIGIN") or str(request.base_url)
@@ -413,7 +457,6 @@ async def mcp(request: Request):
                 value = public_order(transact(request.app, submit_partner))
             else:
                 raise ValueError("Unknown partner tool")
-            import json
             result = {"content": [{"type": "text", "text": json.dumps(value, ensure_ascii=False)}],
                       "isError": False}
         except (ValueError, HTTPException) as exc:
@@ -467,6 +510,13 @@ def case_study_page():
 @app.get("/account", include_in_schema=False)
 def account_page():
     return page("account.html")
+
+
+@app.get("/approve", include_in_schema=False)
+def approve_page():
+    """The page an enterprise's contact opens from the approval e-mail. It needs no sign-in: the signed token in
+    the address fragment, which never reaches a server, is the credential."""
+    return page("approve.html")
 
 
 @app.get("/order", include_in_schema=False)

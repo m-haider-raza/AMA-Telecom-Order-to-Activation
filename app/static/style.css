@@ -112,3 +112,31 @@ textarea{display:block;width:100%;min-height:92px;margin-top:7px;border:1px soli
 @media(max-width:700px){.an-agent-row{grid-template-columns:minmax(0,1fr) auto}.an-bar-cell{grid-column:1/-1;grid-row:2}.an-run-controls{width:100%;justify-content:space-between}}
 @media(max-width:560px){.an-tick i{display:none}.an-scale{height:24px}.an-seg{width:100%}.an-seg button{flex:1 1 40%}.an-verdict{padding:13px 15px}}
 @media(prefers-reduced-motion:reduce){.an-progress span{transition:none}}
+/* Audit trail: who did what, and what it changed */
+.audit-lede{margin:-6px 0 14px;max-width:760px;font-size:13px;line-height:1.5}
+.audit-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;padding:14px 17px;margin-bottom:14px;overflow:visible}
+.audit-tools label{margin:0;font-size:12px;font-weight:650}
+.audit-tools select,.audit-tools input{font-weight:400}
+#audit-table td{vertical-align:top;white-space:normal;max-width:380px;overflow-wrap:anywhere}
+#audit-table td.audit-time{white-space:nowrap;color:var(--muted)}
+#audit-table td.audit-actor{color:var(--muted)}
+#audit-table td.audit-changes{min-width:220px}
+.audit-change{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;margin:0 0 5px;font-size:11px}
+.audit-field{font-weight:650}
+.audit-from{color:#8f1b29;text-decoration:line-through}
+.audit-to{color:var(--green);font-weight:650}
+.audit-arrow{color:var(--muted)}
+.button:disabled[title]{cursor:not-allowed}
+@media(max-width:1150px){.who.named{display:block;max-width:190px;overflow:hidden;text-overflow:ellipsis}}
+@media(max-width:700px){.who.named{display:none}}
+/* Enterprise approval: an order placed for an enterprise waits for its contact before any agent starts */
+.state.awaitingEnterpriseApproval{background:#fcf1df;color:#99661d}
+.approval-box{margin:17px 0;padding:15px 17px;border:1px solid var(--line);border-left-width:5px;border-radius:8px;background:#fff;font-size:12px}
+.approval-box strong{display:block;font-size:13px}
+.approval-box p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
+.approval-box.pending{background:#fdf6e6;border-color:#ebd9b4;border-left-color:#e0a63c}
+.approval-box.expired{background:#fdf6e6;border-color:#ebd9b4;border-left-color:#c4202f}
+.approval-box.approved{background:#e8f4ec;border-color:#b9dcc5;border-left-color:#23683f}
+.approval-box.declined,.approval-box.withdrawn{background:#fbf1ef;border-color:#efd6d3;border-left-color:#9e2230}
+.approval-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.approval-actions .button{margin:0}
+#order-enterprise-hint{margin:-6px 0 6px;color:#8f1b29}

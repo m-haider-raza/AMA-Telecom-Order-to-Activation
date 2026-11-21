@@ -26,6 +26,7 @@ from fastapi import HTTPException, Request
 COOKIE = "myturkei_session"
 # Keep the wire cookie and signing namespace stable so a visual rebrand does not revoke sessions.
 SESSION_SECONDS = 8 * 3600
+STAFF_SESSION_HOURS = 4
 CODE_SECONDS = 15 * 60
 CODE_ATTEMPTS = 5
 RESEND_SECONDS = 60
@@ -49,7 +50,12 @@ def _unb64(text):
 
 
 def _key():
-    base = os.getenv("AMA_SESSION_SECRET") or os.getenv("AMA_TRACKING_SECRET") or os.getenv("DEMO_ADMIN_TOKEN", "")
+    base = os.getenv("AMA_SESSION_SECRET") or os.getenv("AMA_TRACKING_SECRET")
+    if not base:
+        if sso_enabled():
+            # The shared access token is not a safe signing key once it is meant to be out of use.
+            raise RuntimeError("Set AMA_SESSION_SECRET: staff sessions cannot be signed with an access token")
+        base = os.getenv("DEMO_ADMIN_TOKEN", "")
     return hmac.new(base.encode(), b"myturkei.session.v1", hashlib.sha256).digest()
 
 
@@ -88,14 +94,76 @@ def verify_password(password, stored):
         return False
 
 
+def staff_auth_mode():
+    """How the service team signs in. "token" (the default) is the shared access token; "sso" requires each person
+    to sign in with Microsoft Entra ID, so every action can be tied to the person who took it."""
+    return "sso" if os.getenv("AMA_STAFF_AUTH", "token").strip().lower() == "sso" else "token"
+
+
+def sso_enabled():
+    return staff_auth_mode() == "sso"
+
+
+def staff_session_seconds():
+    try:
+        hours = float(os.getenv("AMA_STAFF_SESSION_HOURS", STAFF_SESSION_HOURS))
+    except ValueError:
+        hours = STAFF_SESSION_HOURS
+    return int(min(max(hours, 0.25), 12) * 3600)
+
+
 def admin_version():
     return hashlib.sha256(os.getenv("DEMO_ADMIN_TOKEN", "").encode()).hexdigest()[:12]
 
 
-def issue_session(role, subject, version, seconds=SESSION_SECONDS):
+def staff_version():
+    """Ties staff sessions to the sign-in method that issued them, so changing the method ends them all."""
+    if sso_enabled():
+        scope = f"sso|{os.getenv('AMA_SSO_TENANT_ID', '')}|{os.getenv('AMA_SSO_CLIENT_ID', '')}"
+        return hashlib.sha256(scope.encode()).hexdigest()[:12]
+    return admin_version()
+
+
+def issue_session(role, subject, version, seconds=SESSION_SECONDS, person=None):
+    """`person` is the signed-in staff member (oid, upn, name, role) of a single sign-on session."""
     body = {"r": role, "s": subject, "v": version, "e": int(time.time()) + seconds}
+    if person:
+        body["p"] = {"o": person["oid"], "u": person["upn"], "n": person["name"], "r": person["role"]}
     payload = _b64(json.dumps(body, separators=(",", ":")).encode())
     return f"{payload}.{_sign(payload)}"
+
+
+def staff_person(session):
+    """The staff member behind a single sign-on session, or None for any other kind of session."""
+    person = session.get("p") if isinstance(session, dict) else None
+    if not isinstance(person, dict) or not person.get("o"):
+        return None
+    return {"oid": str(person["o"]), "upn": str(person.get("u", "")), "name": str(person.get("n", "")),
+            "role": str(person.get("r", ""))}
+
+
+def sign_blob(purpose, body):
+    """A short-lived signed value (an SSO flow or hand-off) that is bound to one purpose, so it cannot be replayed
+    as a session or as any other kind of blob."""
+    payload = _b64(json.dumps(body, separators=(",", ":")).encode())
+    signature = hmac.new(_key(), f"{purpose}|{payload}".encode(), hashlib.sha256).digest()
+    return f"{payload}.{_b64(signature)}"
+
+
+def read_blob(purpose, token):
+    if not token or token.count(".") != 1:
+        return None
+    payload, signature = token.split(".")
+    expected = _b64(hmac.new(_key(), f"{purpose}|{payload}".encode(), hashlib.sha256).digest())
+    if not hmac.compare_digest(signature.encode(), expected.encode()):
+        return None
+    try:
+        data = json.loads(_unb64(payload))
+    except (ValueError, TypeError):
+        return None
+    if not isinstance(data, dict) or data.get("e", 0) < time.time():
+        return None
+    return data
 
 
 def read_session(token):
@@ -123,8 +191,11 @@ def request_session(request: Request):
     so another tab's sign-in can never leak in), otherwise the cookie. Customer and partner sessions still need
     their version checked against the stored account."""
     data = read_session(request.headers.get("x-session") if per_tab(request) else request.cookies.get(COOKIE))
-    if data and data["r"] == "admin" and not hmac.compare_digest(str(data.get("v")), admin_version()):
-        return None
+    if data and data["r"] == "admin":
+        if not hmac.compare_digest(str(data.get("v")), staff_version()):
+            return None
+        if sso_enabled() and staff_person(data) is None:
+            return None
     return data
 
 
@@ -141,6 +212,16 @@ def set_session_cookie(response, request, token):
 
 def clear_session_cookie(response, request):
     response.delete_cookie(COOKIE, path="/", httponly=True, samesite="lax", secure=secure_request(request))
+
+
+def grant(request, response, token):
+    """Hand a new session to the caller. A TürkBizTel page keeps its session in its own tab, so the token goes back in
+    the reply and any older shared cookie is dropped; every other client still receives the cookie."""
+    if per_tab(request):
+        clear_session_cookie(response, request)
+        return {"session": token}
+    set_session_cookie(response, request, token)
+    return {}
 
 
 def require_csrf(request: Request):
@@ -192,7 +273,8 @@ LOGIN_PAIR = Window(5, 900)
 LOGIN_IP = Window(30, 900)
 LOGIN_ACCOUNT = Window(40, 900)
 MAIL_IP = Window(10, 3600)
-THROTTLES = (LOGIN_PAIR, LOGIN_IP, LOGIN_ACCOUNT, MAIL_IP)
+APPROVAL_IP = Window(30, 900)
+THROTTLES = (LOGIN_PAIR, LOGIN_IP, LOGIN_ACCOUNT, MAIL_IP, APPROVAL_IP)
 
 
 def reset_throttles():

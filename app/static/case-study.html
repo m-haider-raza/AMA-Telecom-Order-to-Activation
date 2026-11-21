@@ -57,6 +57,7 @@
           <li><a href="/static/current-scenario.mp4">The current state (film)</a></li>
           <li><a href="/static/case-study/Agentic_Order_to_Activation_Architecture.pdf">The architecture (PDF)</a></li>
           <li><a href="/static/solution-tower-v6.mp4">The solution in action (film)</a></li>
+          <li><a href="/static/app-walkthrough.mp4">The app highlights (2 min 21 s)</a></li>
           <li><a href="/">The live app</a></li>
         </ul>
       </section>
@@ -114,12 +115,12 @@
       </div>
       <p class="fineprint">The 35 days and 30% are the assignment baselines. The targets and the revenue figure are ambitions to prove in a pilot, not measured results.</p>
 
-      <h2 class="stops-title">Four stops, about ten minutes</h2>
+      <h2 class="stops-title">Four stops, at your pace</h2>
       <ol class="stops">
         <li><a class="stop-card" href="#/today" data-stop="today"><span class="stop-card-num" aria-hidden="true">1</span><span class="stop-card-body"><strong>Today</strong><span>Why 35 days and 30% fallout hurt customers, partners and revenue.</span></span><span class="stop-card-meta">Film · 1 min 51 s</span></a></li>
         <li><a class="stop-card" href="#/architecture" data-stop="architecture"><span class="stop-card-num" aria-hidden="true">2</span><span class="stop-card-body"><strong>Architecture</strong><span>Five agents, one supervisor, guardrails and in-country hosting.</span></span><span class="stop-card-meta">Deck · 14 slides</span></a></li>
         <li><a class="stop-card" href="#/solution" data-stop="solution"><span class="stop-card-num" aria-hidden="true">3</span><span class="stop-card-body"><strong>Solution</strong><span>One order travels through the guarded agents, with recovery and human approval.</span></span><span class="stop-card-meta">Film · 2 min 55 s</span></a></li>
-        <li><a class="stop-card" href="#/app" data-stop="app"><span class="stop-card-num" aria-hidden="true">4</span><span class="stop-card-body"><strong>Live app</strong><span>The running app for customers, partners and the service team.</span></span><span class="stop-card-meta">Interactive</span></a></li>
+        <li><a class="stop-card" href="#/app" data-stop="app"><span class="stop-card-num" aria-hidden="true">4</span><span class="stop-card-body"><strong>Live app</strong><span>See how the roles work, then try the running app.</span></span><span class="stop-card-meta">Tour · 2 min 21 s + interactive</span></a></li>
       </ol>
     </section>
 
@@ -304,10 +305,47 @@
     <section class="scene scene-app" id="scene-app" data-scene="app" aria-labelledby="h-app" hidden>
       <header class="scene-head">
         <p class="chapter-tag"><span class="chapter-num" aria-hidden="true">4</span>The live app</p>
-        <h2 id="h-app" tabindex="-1">Now try it, live</h2>
-        <p class="scene-lede">This is the running TürkBizTel app on Azure. Place an order, track it, or sign in to see the customer, partner and service-team views.</p>
+        <h2 id="h-app" tabindex="-1">From the solution to the working app</h2>
+        <p class="scene-lede">See the design become a customer, partner and service-team workflow in this short tour, including the five agents, Analytics and governance. Then try the running TürkBizTel app below.</p>
       </header>
 
+      <div class="cinema" data-film="app">
+        <video id="film-app" controls playsinline preload="none" poster="/static/app-walkthrough-poster.jpg" aria-label="Narrated app highlights: customer, partner, service team, agents, Analytics and governance">
+          <source src="/static/app-walkthrough.mp4" type="video/mp4">
+          <track kind="captions" src="/static/app-walkthrough.vtt" srclang="en" label="English">
+          Your browser cannot play this film. <a href="/static/app-walkthrough.mp4">Download the MP4</a>.
+        </video>
+        <div class="up-next" hidden>
+          <p class="up-next-kicker">Your turn</p>
+          <p class="up-next-title">Try the workflows in the live app below</p>
+          <div class="up-next-actions">
+            <a class="btn btn-primary" href="/login" target="_blank" rel="noopener">Open the live app <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <button class="btn btn-ghost" type="button" data-replay><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-replay"/></svg>Replay</button>
+          </div>
+        </div>
+      </div>
+      <p class="video-fail" hidden>This browser could not play the tour. <a href="/static/app-walkthrough.mp4">Download the MP4</a> instead.</p>
+
+      <div class="tools">
+        <a class="tool" href="/static/app-walkthrough.mp4" download><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download tour</a>
+        <span class="tool-note">2 min 21 s · British-English narration · Captions included</span>
+      </div>
+      <h3 class="rail-title">Jump to a role or area</h3>
+      <ol class="chapters" aria-label="Areas in the app tour">
+        <li><button type="button" class="chip" data-t="0"><span class="chip-time">0:00</span><span class="chip-name">Customer</span></button></li>
+        <li><button type="button" class="chip" data-t="33.500"><span class="chip-time">0:34</span><span class="chip-name">Partner</span></button></li>
+        <li><button type="button" class="chip" data-t="67.292"><span class="chip-time">1:07</span><span class="chip-name">Service team</span></button></li>
+        <li><button type="button" class="chip" data-t="100.417"><span class="chip-time">1:40</span><span class="chip-name">Five agents</span></button></li>
+        <li><button type="button" class="chip" data-t="116.458"><span class="chip-time">1:56</span><span class="chip-name">Analytics</span></button></li>
+        <li><button type="button" class="chip" data-t="131.500"><span class="chip-time">2:12</span><span class="chip-name">Trust and governance</span></button></li>
+      </ol>
+      <details class="transcript">
+        <summary>Read the app-tour narration</summary>
+        <div class="transcript-body" data-vtt="/static/app-walkthrough.vtt"><p class="transcript-wait">Loading the narration…</p></div>
+      </details>
+      <p class="fineprint">The recording uses isolated synthetic accounts, with credentials hidden. Provisioning and payments are simulated; it does not create orders in the live environment.</p>
+
+      <h3 class="rail-title">Try the workflows yourself</h3>
       <div class="app-layout">
         <div class="device">
           <div class="device-bar">
@@ -336,7 +374,7 @@
           </article>
           <article class="role" data-role="staff">
             <span class="role-icon" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
-            <div><strong>Service team</strong><p>The control tower, order workspace, exception desk and a live tab for each of the five agents.</p><p class="role-how"><a href="/login#staff" target="_blank" rel="noopener">Sign in with your access token</a>. Partner and service-team sign-in details are shared with the submission, never on this page.</p></div>
+            <div><strong>Service team</strong><p>The control tower, order workspace, exception desk and a live tab for each of the five agents.</p><p class="role-how"><a id="staff-entry" href="/login#staff" target="_blank" rel="noopener">Sign in with your access token</a><span id="staff-entry-note">. Partner and service-team sign-in details are shared with the submission, never on this page.</span></p></div>
           </article>
           <p class="role-warn">This is a live environment: orders you place are saved and confirmation e-mails are really sent, so use a test address.</p>
         </aside>

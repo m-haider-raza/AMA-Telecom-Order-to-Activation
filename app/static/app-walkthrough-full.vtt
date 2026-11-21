@@ -1,0 +1,143 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:11.391
+One sign-in, three roles. Customers register, verify email, or reset a forgotten password. This tour uses synthetic accounts, with all
+credentials hidden.
+
+2
+00:00:12.000 --> 00:00:22.175
+Customer sign-in opens only their own orders. My orders separates active, completed, and action-needed requests, with status and next
+steps.
+
+3
+00:00:22.792 --> 00:00:31.862
+New order selects Internet, SD-WAN, or Cloud Connect, city, address, contact, language, notification channel, and frequency.
+
+4
+00:00:32.500 --> 00:00:40.765
+Open an order for the five-step tracker, installation details, and update history. Progress appears automatically.
+
+5
+00:00:41.375 --> 00:00:49.225
+When information is missing, confirm or correct the installation site and contact preferences to release the hold.
+
+6
+00:00:49.833 --> 00:00:57.658
+Profile updates name, company, mobile, language, and password. Changing a password revokes earlier sessions.
+
+7
+00:00:58.292 --> 00:01:06.238
+Guests can place orders and track with a private code. Customers can link an existing order using its tracking proof.
+
+8
+00:01:06.875 --> 00:01:14.394
+Partners first accept a staff invitation and choose a password, then use the same email-and-password sign-in.
+
+9
+00:01:15.000 --> 00:01:24.043
+Deliveries shows only their organisation's orders, expected dates, on-track or delayed status, progress, and actions needed.
+
+10
+00:01:24.667 --> 00:01:32.858
+Update the address, preferred date, access notes, and purchase-order reference. Confirming the site can restart a held order.
+
+11
+00:01:33.458 --> 00:01:43.018
+Payments tracks outstanding, overdue, and paid balances, invoice amounts, VAT, terms, due dates, and payment references. No money
+moves.
+
+12
+00:01:43.625 --> 00:01:51.056
+Raise delivery, billing, technical, or other concerns, link an order, and follow replies until resolved.
+
+13
+00:01:51.667 --> 00:01:57.884
+Account changes name, mobile, language, and password; billing terms remain read-only.
+
+14
+00:01:58.500 --> 00:02:08.206
+Service staff use the access-token form here. Separate single-sign-on deployments use Microsoft work accounts and role-based
+permissions.
+
+15
+00:02:08.833 --> 00:02:17.469
+The control tower summarises orders, activations, exceptions, and recoveries across Istanbul, Ankara, and Izmir.
+
+16
+00:02:18.083 --> 00:02:25.453
+Order workspace brings every enterprise journey together. Select an order to inspect its full execution.
+
+17
+00:02:26.083 --> 00:02:37.037
+Detail links events, tool calls, service and resource orders, capacity reservations, and customer updates. Advisory AI never executes
+changes.
+
+18
+00:02:37.667 --> 00:02:46.487
+Exception desk holds route conflicts and closed change windows for human approval or rejection. Staff can also correct sites.
+
+19
+00:02:47.125 --> 00:02:55.870
+Create operator or partner orders, select scenarios, and check simulated capacity through authenticated MCP.
+
+20
+00:02:56.500 --> 00:03:06.525
+Add partners and invite people; manage terms, billing, API-channel mapping, invitations, suspension, and recorded or reversed payments.
+
+21
+00:03:07.125 --> 00:03:13.247
+The concerns inbox lets staff reply, change status, and resolve partner questions.
+
+22
+00:03:13.875 --> 00:03:19.044
+Validate checks address, feasibility, and inventory before work starts.
+
+23
+00:03:19.667 --> 00:03:24.957
+Decompose turns the product request into linked service and resource work.
+
+24
+00:03:25.583 --> 00:03:32.579
+Provision reserves capacity once and orchestrates simulated network, cloud, and wholesale tasks.
+
+25
+00:03:33.208 --> 00:03:42.370
+Recover diagnoses allowlisted faults and retries once; unknown faults or policy conflicts remain under human control.
+
+26
+00:03:43.000 --> 00:03:51.575
+Communicate sends English or Turkish updates, respects notification preferences, and handles reminders and escalation.
+
+27
+00:03:52.208 --> 00:04:03.344
+Each agent tab shows queued orders, action counts, holds, latest tools, and activity outcomes. The supervisor coordinates durable,
+event-driven handoffs.
+
+28
+00:04:03.958 --> 00:04:12.726
+Analytics compares average, median, slowest-ten-percent delivery time, and fallout against seven-day and eight-percent targets.
+
+29
+00:04:13.333 --> 00:04:24.106
+Agent timing separates queue wait from processing, excluding human waits. Outcome and scenario charts expose bottlenecks and
+automatic recoveries.
+
+30
+00:04:24.708 --> 00:04:35.430
+Choose live orders, benchmarks, or both. Run fifty or one hundred isolated synthetic orders; fewer than thirty decided orders remain
+indicative.
+
+31
+00:04:36.042 --> 00:04:46.280
+Data source shows storage and reporting synchronisation. Simulator timings and benchmark assumptions are not proof of real carrier
+performance.
+
+32
+00:04:46.917 --> 00:05:02.882
+Trust and governance explains safety boundaries and provenance. Filter and export the audit. Authenticated APIs expose TM
+Forum-inspired interfaces; walkthrough links explain architecture. Sessions stay separate per tab.
+
+33
+00:05:03.500 --> 00:05:12.034
+Three tailored experiences, one traceable workflow. All service provisioning and invoice payments shown here are simulated.

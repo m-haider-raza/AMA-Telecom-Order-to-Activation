@@ -29,6 +29,10 @@ SCENARIOS = {"happy", "auto-recovery", "human-exception", "change-window", "addr
 SITES = {"Istanbul": "IST-001", "Ankara": "ANK-001", "Izmir": "IZM-001"}
 TERMINAL = {"completed", "rejected", "failed"}
 WAITING = {"held", "pendingApproval"}
+# An order the service team placed for an enterprise waits here, untouched by any agent, until the enterprise's
+# contact approves it (see app.approvals). It is deliberately not in WAITING: a manager cannot decide it.
+AWAITING_ENTERPRISE = "awaitingEnterpriseApproval"
+APPROVAL_DAYS = 7
 
 
 def live_mode():
@@ -43,10 +47,18 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def audit(state, order_id, actor, action, detail):
+def audit(state, order_id, actor, action, detail, changes=None):
+    """Append a hash-chained entry. `actor` stays the plain role string. When a signed-in staff member acted, `by`
+    names the person and `changes` lists what the action altered; both are part of the hashed entry, so neither can
+    be edited afterwards without breaking the chain."""
     previous = state["audit"][-1]["hash"] if state["audit"] else "0" * 64
     item = {"sequence": len(state["audit"]) + 1, "at": now(), "orderId": order_id,
-            "actor": actor, "action": action, "detail": detail, "previousHash": previous}
+            "actor": str(actor), "action": action, "detail": detail, "previousHash": previous}
+    staff = getattr(actor, "staff", None)
+    if staff:
+        item["by"] = dict(staff)
+        if changes:
+            item["changes"] = changes
     item["hash"] = hashlib.sha256(json.dumps(item, sort_keys=True).encode()).hexdigest()
     state["audit"].append(item)
     return item
@@ -123,7 +135,8 @@ def address_matches_city(address, city):
     return fold(city) in fold(address)
 
 
-def create_order(state, payload, actor, max_orders=None):
+def create_order(state, payload, actor, max_orders=None, start=True):
+    """Accept an order. With start=False nothing is queued, so no agent picks it up until the caller starts it."""
     required = {"customer", "city", "product", "scenario", "language", "idempotencyKey"}
     if set(payload) - {"siteReference", "contact", "siteAddress"} != required:
         raise ValueError("Order fields do not match the documented demo contract")
@@ -159,7 +172,7 @@ def create_order(state, payload, actor, max_orders=None):
     timestamp = now()
     order_id = "AMA-" + uuid4().hex[:10].upper()
     order = {
-        "id": order_id, **payload, "actor": actor, "state": "acknowledged", "stage": "validation",
+        "id": order_id, **payload, "actor": str(actor), "state": "acknowledged", "stage": "validation",
         "createdAt": timestamp, "updatedAt": timestamp,
         "deadline": (datetime.now(timezone.utc) + timedelta(days=7)).isoformat(),
         "timeline": [], "serviceOrders": [], "resourceOrders": [], "notifications": [],
@@ -173,7 +186,8 @@ def create_order(state, payload, actor, max_orders=None):
     state["orders"][order_id] = order
     state["idempotency"][scoped_key] = {"fingerprint": fingerprint, "orderId": order_id}
     audit(state, order_id, actor, "order.accepted", "Synthetic order accepted through guarded API")
-    enqueue(state, order, "order.received")
+    if start:
+        enqueue(state, order, "order.received")
     return order
 
 
@@ -182,12 +196,16 @@ DIGEST_SECONDS = {"daily": 86400, "weekly": 604800}
 REMINDER_LIMIT = 3
 
 
+def mask_email(email):
+    return email and email[0] + "***@" + email.split("@", 1)[1]
+
+
 def mask_contact(contact):
     if not contact:
         return None
     email, phone = contact.get("email"), contact.get("phone")
     return {**contact,
-            "email": email and email[0] + "***@" + email.split("@", 1)[1],
+            "email": mask_email(email),
             "phone": phone and "*" * (len(phone) - 4) + phone[-4:]}
 
 
@@ -202,6 +220,21 @@ def tracking_token(order_id):
     return hmac.new(secret.encode(), order_id.encode(), hashlib.sha256).hexdigest()[:40]
 
 
+def approval_expired(record):
+    """A request nobody answered in time stays pending, so the service team can renew it; it just cannot be decided."""
+    return record["status"] == "pending" and datetime.fromisoformat(record["expiresAt"]) <= datetime.now(timezone.utc)
+
+
+def approval_view(order):
+    """What the enterprise may see of the approval it is asked for: who asked, when, and until when. Never a link."""
+    record = order.get("enterpriseApproval")
+    if not record:
+        return None
+    return {"status": record["status"], "requestedAt": record["requestedAt"], "expiresAt": record["expiresAt"],
+            "requestedBy": (record.get("requestedBy") or {}).get("name"), "decidedAt": record.get("decidedAt"),
+            "expired": approval_expired(record)}
+
+
 def customer_view(order):
     """Customer-safe projection: no audit trail, agent internals, partner or other customers' data."""
     exception = order.get("exception") or {}
@@ -210,7 +243,7 @@ def customer_view(order):
         "state": order["state"], "stage": order["stage"], "createdAt": order["createdAt"],
         "updatedAt": order["updatedAt"], "deadline": order["deadline"], "language": order["language"],
         "siteAddress": order.get("siteAddress"), "siteReference": order["siteReference"],
-        "contact": mask_contact(order.get("contact")),
+        "contact": mask_contact(order.get("contact")), "approval": approval_view(order),
         "action": ({"type": exception.get("type"), "expectedSiteReference": exception.get("expectedSiteReference"),
                     "remindersSent": exception.get("reminders", 0)} if exception else None),
         "updates": [{"at": item["at"], "en": item["en"], "tr": item["tr"]} for item in order["notifications"]],
@@ -364,11 +397,17 @@ def follow_up(state, interval_seconds=None, at=None):
               f"Automatic stuck-order reminder {sent + 1}/{REMINDER_LIMIT} queued")
 
 
-def notify(state, order, en, tr, kind="critical"):
+def note(state, order, en, tr):
+    """A message in the enterprise portal only: nothing is queued for e-mail or SMS."""
     item = {"id": str(uuid4()), "orderId": order["id"], "at": now(), "en": en, "tr": tr,
             "channel": "Simulated enterprise portal", "deliveredExternally": False}
     order["notifications"].append(item)
     state["notifications"].append(item)
+    return item
+
+
+def notify(state, order, en, tr, kind="critical"):
+    item = note(state, order, en, tr)
     dispatch(state, order, en, tr, kind)
     return item
 
@@ -390,7 +429,7 @@ def pause(state, order, kind, detail):
 
 def process_next(state, order_id):
     order = state["orders"][order_id]
-    if order["state"] in TERMINAL | WAITING | {"awaitingCustomer"}:
+    if order["state"] in TERMINAL | WAITING | {"awaitingCustomer", AWAITING_ENTERPRISE}:
         return order
     pending = next((event for event in state["events"]
                     if event["orderId"] == order_id and event["status"] == "queued"), None)
@@ -495,8 +534,10 @@ def process_next(state, order_id):
         order["state"] = "completed"
         order["stage"] = "done"
         order["completedAt"] = now()
+        # The clock runs from the enterprise's approval when there was one: its wait is not the platform's time.
         order["elapsedSeconds"] = (
-            datetime.fromisoformat(order["completedAt"]) - datetime.fromisoformat(order["createdAt"])
+            datetime.fromisoformat(order["completedAt"])
+            - datetime.fromisoformat(order.get("approvedAt") or order["createdAt"])
         ).total_seconds()
     else:
         raise ValueError(f"Unknown supervisor stage: {stage}")
@@ -511,13 +552,16 @@ def correct_order(state, order_id, actor, site_reference):
         raise ValueError("Order is not awaiting customer site confirmation")
     if site_reference != SITES[order["city"]]:
         raise ValueError("The synthetic site reference does not match the service city")
+    previous_site, previous_state = order["siteReference"], order["state"]
     order["siteReference"] = site_reference
     order["exception"] = None
     progress(state, order, "Thank you, the site reference was confirmed and your order is moving again.",
              "Teşekkürler, hizmet noktası doğrulandı ve siparişiniz devam ediyor.")
     order["state"] = "inProgress"
     order["updatedAt"] = now()
-    audit(state, order_id, actor, "customer.address-corrected", f"Confirmed synthetic site {site_reference}")
+    audit(state, order_id, actor, "customer.address-corrected", f"Confirmed synthetic site {site_reference}",
+          changes=[{"field": "siteReference", "from": previous_site, "to": site_reference},
+                   {"field": "state", "from": previous_state, "to": "inProgress"}])
     enqueue(state, order, "customer.address-confirmed")
     return order
 
@@ -533,9 +577,13 @@ def approve_exception(state, order_id, actor, decision):
     exception_type = order["exception"]["type"]
     if decision == "approve" and exception_type == "capacity":
         raise ValueError("Capacity cannot be invented by approval. Reject this order or resolve inventory first.")
-    order["approvals"].append({"at": now(), "actor": actor, "decision": decision,
+    order["approvals"].append({"at": now(), "actor": str(actor), "decision": decision,
                                "exception": exception_type, "simulated": True})
-    audit(state, order_id, actor, f"exception.{decision}", f"Explicit decision for {exception_type}")
+    audit(state, order_id, actor, f"exception.{decision}", f"Explicit decision for {exception_type}",
+          changes=[{"field": f"exception ({exception_type})", "from": "awaiting decision",
+                    "to": "approved" if decision == "approve" else "rejected"},
+                   {"field": "state", "from": order["state"],
+                    "to": "rejected" if decision == "reject" else "inProgress"}])
     if decision == "reject":
         if order["reserved"]:
             capacity = next(item for item in state["inventory"]

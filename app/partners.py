@@ -87,7 +87,7 @@ def get_partner(state, partner_id):
     return partner
 
 
-def add_contact(state, partner, data, invite):
+def add_contact(state, partner, data, invite, actor="service-manager"):
     users = state.setdefault("partnerUsers", {})
     if accounts.find_account(state, data["email"])[1]:
         raise ValueError("That email address already has a TürkBizTel account")
@@ -98,12 +98,12 @@ def add_contact(state, partner, data, invite):
             "language": data.get("language", "en"), "passwordHash": None, "invite": invite, "reset": None,
             "verified": False, "sessionVersion": 1, "createdAt": now()}
     users[user["id"]] = user
-    audit(state, user["id"], "service-manager", "partner.contact-invited",
+    audit(state, user["id"], actor, "partner.contact-invited",
           f"{user['name']} was invited to the {partner['name']} partner portal")
     return user
 
 
-def create_partner(state, data, invite):
+def create_partner(state, data, invite, actor="service-manager"):
     partners = state.setdefault("partners", {})
     if len(partners) >= int(os.getenv("AMA_MAX_PARTNERS", "50")):
         raise ValueError("New partners are closed in this environment")
@@ -114,12 +114,13 @@ def create_partner(state, data, invite):
                "currency": "TRY", "billingEmail": data.get("billingEmail"), "status": "active", "apiClient": False,
                "payments": {}, "createdAt": now()}
     partners[partner["id"]] = partner
-    audit(state, partner["id"], "service-manager", "partner.created",
+    audit(state, partner["id"], actor, "partner.created",
           f"Partner organisation {name} created with {data['paymentTermsDays']}-day payment terms")
     if data.get("apiClient"):
         set_api_client(state, partner, True)
     user = add_contact(state, partner, {"name": data["contactName"], "email": data["email"],
-                                        "phone": data.get("phone"), "language": data.get("language", "en")}, invite)
+                                        "phone": data.get("phone"), "language": data.get("language", "en")},
+                       invite, actor)
     return partner, user
 
 
@@ -131,8 +132,9 @@ def set_api_client(state, partner, enabled):
     partner["apiClient"] = bool(enabled)
 
 
-def update_partner(state, partner_id, changes):
+def update_partner(state, partner_id, changes, actor="service-manager"):
     partner = get_partner(state, partner_id)
+    before = {key: partner.get(key) for key in changes}
     if "name" in changes:
         name = changes["name"].strip()
         if any(item["id"] != partner_id and item["name"].casefold() == name.casefold()
@@ -149,12 +151,14 @@ def update_partner(state, partner_id, changes):
         if changes["status"] == "disabled":
             for user in contacts_of(state, partner_id):
                 user["sessionVersion"] += 1
-    audit(state, partner_id, "service-manager", "partner.updated",
-          "Partner settings changed: " + ", ".join(sorted(changes)))
+    audit(state, partner_id, actor, "partner.updated",
+          "Partner settings changed: " + ", ".join(sorted(changes)),
+          changes=[{"field": key, "from": before[key], "to": partner.get(key)}
+                   for key in sorted(changes) if before[key] != partner.get(key)])
     return partner
 
 
-def reinvite(state, partner_id, user_id, invite):
+def reinvite(state, partner_id, user_id, invite, actor="service-manager"):
     partner = get_partner(state, partner_id)
     user = state.get("partnerUsers", {}).get(user_id)
     if user is None or user["partnerId"] != partner_id:
@@ -162,7 +166,7 @@ def reinvite(state, partner_id, user_id, invite):
     if user.get("passwordHash"):
         raise ValueError("This contact already has a password. They can use “Forgot password” on the sign-in page.")
     user["invite"] = invite
-    audit(state, user_id, "service-manager", "partner.invite-resent",
+    audit(state, user_id, actor, "partner.invite-resent",
           f"A new invitation was issued to {user['name']} at {partner['name']}")
     return user
 
@@ -326,7 +330,7 @@ def payment_summary(invoices):
             if first else None}
 
 
-def record_payment(state, partner_id, order_id, reference):
+def record_payment(state, partner_id, order_id, reference, actor="service-manager"):
     partner = get_partner(state, partner_id)
     order = state["orders"].get(order_id)
     invoice = invoice_for(partner, order) if order and owns(partner, order) else None
@@ -335,20 +339,24 @@ def record_payment(state, partner_id, order_id, reference):
     if invoice["status"] not in ("issued", "overdue"):
         raise ValueError("Only an issued, unpaid invoice can be marked as paid")
     partner.setdefault("payments", {})[order_id] = {"paidAt": now(), "reference": reference or None,
-                                                    "recordedBy": "service-manager"}
-    audit(state, order_id, "service-manager", "partner.payment-recorded",
-          f"Payment recorded for {invoice['number']} ({partner['name']})")
+                                                    "recordedBy": str(actor)}
+    audit(state, order_id, actor, "partner.payment-recorded",
+          f"Payment recorded for {invoice['number']} ({partner['name']})",
+          changes=[{"field": f"invoice {invoice['number']}", "from": invoice["status"], "to": "paid"}])
     return invoice_for(partner, order)
 
 
-def undo_payment(state, partner_id, order_id):
+def undo_payment(state, partner_id, order_id, actor="service-manager"):
     partner = get_partner(state, partner_id)
     if order_id not in partner.get("payments", {}):
         raise NotFound("No payment is recorded for that invoice")
     del partner["payments"][order_id]
-    audit(state, order_id, "service-manager", "partner.payment-reversed",
-          f"A recorded payment for INV-{order_id.split('-', 1)[1]} was reversed ({partner['name']})")
-    return invoice_for(partner, state["orders"][order_id])
+    restored = invoice_for(partner, state["orders"][order_id])
+    audit(state, order_id, actor, "partner.payment-reversed",
+          f"A recorded payment for INV-{order_id.split('-', 1)[1]} was reversed ({partner['name']})",
+          changes=[{"field": f"invoice INV-{order_id.split('-', 1)[1]}", "from": "paid",
+                    "to": restored["status"] if restored else "unpaid"}])
+    return restored
 
 
 def update_delivery(state, partner, user, order_id, data):
@@ -399,7 +407,7 @@ def update_delivery(state, partner, user, order_id, data):
     return order
 
 
-def create_for_partner(state, partner, payload, create):
+def create_for_partner(state, partner, payload, create, actor="service-manager"):
     """Staff place an order on a partner's behalf; the partner then sees it like any other of its deliveries."""
     if partner["status"] != "active":
         raise ValueError("This partner account is switched off, so it cannot receive new orders")
@@ -410,7 +418,7 @@ def create_for_partner(state, partner, payload, create):
             raise ValueError("Idempotency key was already used for a different order")
         return order
     order["partnerId"] = partner["id"]
-    audit(state, order["id"], "service-manager", "partner.order-placed",
+    audit(state, order["id"], actor, "partner.order-placed",
           f"Order placed by TürkBizTel staff on behalf of {partner['name']}")
     return order
 
@@ -460,7 +468,7 @@ def get_concern(state, concern_id, partner=None):
     return concern
 
 
-def add_message(state, concern_id, author, text, partner=None):
+def add_message(state, concern_id, author, text, partner=None, actor="service-manager"):
     """Append a reply. author is the signed-in partner contact, or None for the TürkBizTel service team."""
     concern = get_concern(state, concern_id, partner)
     if len(concern["messages"]) >= MAX_MESSAGES:
@@ -470,24 +478,29 @@ def add_message(state, concern_id, author, text, partner=None):
                                 "name": author["name"] if author else "TürkBizTel service team",
                                 "text": text.strip()})
     concern["updatedAt"] = timestamp
+    previous = concern["status"]
     if author and concern["status"] == "resolved":
         concern["status"] = "open"
     elif not author and concern["status"] == "open":
         concern["status"] = "inProgress"
-    audit(state, concern["orderId"] or concern_id, "wholesale-partner" if author else "service-manager",
-          "partner.concern-reply", f"Reply added to concern {concern_id}")
+    audit(state, concern["orderId"] or concern_id, "wholesale-partner" if author else actor,
+          "partner.concern-reply", f"Reply added to concern {concern_id}",
+          changes=[{"field": f"concern {concern_id} status", "from": previous, "to": concern["status"]}]
+          if concern["status"] != previous else None)
     return concern
 
 
-def set_concern_status(state, concern_id, status, partner=None):
+def set_concern_status(state, concern_id, status, partner=None, actor="service-manager"):
     concern = get_concern(state, concern_id, partner)
     if partner is not None and status not in ("open", "resolved"):
         raise ValueError("Partners can close a concern or reopen it")
     if status == concern["status"]:
         return concern
+    previous = concern["status"]
     concern.update(status=status, updatedAt=now())
-    audit(state, concern["orderId"] or concern_id, "wholesale-partner" if partner else "service-manager",
-          "partner.concern-status", f"Concern {concern_id} marked {status}")
+    audit(state, concern["orderId"] or concern_id, "wholesale-partner" if partner else actor,
+          "partner.concern-status", f"Concern {concern_id} marked {status}",
+          changes=[{"field": f"concern {concern_id} status", "from": previous, "to": status}])
     return concern
 
 

@@ -6,8 +6,10 @@
 (() => {
   const FAST_MS = 2000, SLOW_MS = 6000, SOURCE_MS = 30000, DAY = 86400;
   const AXIS_LOW = 10, AXIS_HIGH = 100 * DAY;
-  const LOCKED = "Sign in as staff, or load the manager token from Demo access, to see the analytics.";
-  const WRONG_TOKEN = "This token can't open the analytics. Use the manager token, or sign in as staff.";
+  const lockedText = () => session.staffAuth === "sso" ? "Sign in with Microsoft to see the analytics."
+    : "Sign in as staff, or load the manager token from Demo access, to see the analytics.";
+  const refusedText = () => session.staff ? `Your role (${session.staff.roleLabel}) cannot open the analytics.`
+    : "This token can't open the analytics. Use the manager token, or sign in as staff.";
   const SCENARIOS = {
     happy: "Straight-through activation", "auto-recovery": "Partner timeout, fixed by an agent",
     "human-exception": "Route conflict, manager approval", "change-window": "Closed change window, policy hold",
@@ -118,7 +120,8 @@
   function paintRun() {
     const bench = report && report.scopes.benchmark, running = Boolean(bench && bench.status === "running");
     const busy = starting || running, size = bench ? bench.run.size : 0, button = $("#an-run-button");
-    button.disabled = busy; $("#an-size").disabled = busy;
+    const reason = can("operate") ? "" : `Your role (${session.staff.roleLabel}) cannot run benchmarks.`;
+    button.disabled = busy || Boolean(reason); button.title = reason; $("#an-size").disabled = busy || Boolean(reason);
     button.textContent = busy ? "Running…" : bench ? "Run again" : "Run benchmark";
     const bar = $("#an-progress");
     bar.classList.toggle("hidden", !running);
@@ -282,8 +285,8 @@
     paintRun(); paintVerdict(); paintScope(); paintKpis(); paintCycle(); paintFallout(); paintAgents(); paintScenarios(); paintNotes();
   }
   function problem(error) {
-    if (error.status === 401) lock(LOCKED);
-    else if (error.status === 403) lock(WRONG_TOKEN);
+    if (error.status === 401) lock(lockedText());
+    else if (error.status === 403) lock(refusedText());
     else if (!report) lock(`The analytics could not be loaded: ${error.message}`);
     else {
       const note = $("#an-stale");

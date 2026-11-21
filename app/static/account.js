@@ -7,7 +7,9 @@
 
 const STEPS = ["Received", "Site check", "Planning", "Activation", "Confirmed"];
 const STAGE_INDEX = { validation: 1, decomposition: 2, provisioning: 3, fallout: 3, customer_update: 4, done: 5 };
-const STEP_TONE = { awaitingCustomer: "blocked", held: "paused", pendingApproval: "paused", failed: "failed" };
+const STEP_TONE = {
+  awaitingCustomer: "blocked", awaitingEnterpriseApproval: "paused", held: "paused", pendingApproval: "paused", failed: "failed",
+};
 const STEP_WORDS = {
   done: "Completed: ", current: "Current step: ", blocked: "Needs your action: ",
   paused: "Waiting: ", failed: "Delayed: ", todo: "Not started: ",
@@ -20,9 +22,15 @@ const STATE_INFO = {
   pendingApproval: { label: "Under review", tone: "warn", icon: "shield-check" },
   held: { label: "On hold", tone: "warn", icon: "clock" },
   awaitingCustomer: { label: "Action needed", tone: "action", icon: "alert" },
+  awaitingEnterpriseApproval: { label: "Needs your approval", tone: "action", icon: "shield-check" },
   completed: { label: "Completed", tone: "ok", icon: "circle-check" },
   rejected: { label: "Not accepted", tone: "bad", icon: "x" },
   failed: { label: "Delayed", tone: "bad", icon: "alert" },
+};
+/* An order the company's own contact turned down, or the service team took back, is closed without being a failure. */
+const ENDED_INFO = {
+  declined: { label: "Declined", tone: "", icon: "x" },
+  withdrawn: { label: "Withdrawn", tone: "", icon: "x" },
 };
 const STAGE_TEXT = {
   validation: "We're checking your installation address and service availability.",
@@ -57,12 +65,29 @@ const POLL_MS = 8000;
 
 const state = {
   account: null, orders: [], mode: "demo", filter: "", accountSig: "", ordersSig: "", dirty: false, moreOpen: false,
+  declining: "",
 };
 
-const needsAction = (order) => order.state === "awaitingCustomer";
+/* An enterprise order is placed by the service team and waits for this company's contact; until then nothing starts. */
+const awaitingApproval = (order) => order.state === "awaitingEnterpriseApproval";
+const approvalExpired = (order) => awaitingApproval(order) && Boolean(order.approval && order.approval.expired);
+const needsApproval = (order) => awaitingApproval(order) && !approvalExpired(order);
+const approvalEnd = (order) => {
+  const status = order.state === "rejected" && order.approval ? order.approval.status : "";
+  return status === "declined" || status === "withdrawn" ? status : "";
+};
+
+const needsAction = (order) => order.state === "awaitingCustomer" || needsApproval(order);
+const isActive = (order) => ACTIVE.has(order.state) || approvalExpired(order);
 const isAddressFix = (order) => Boolean(order.action && order.action.type === "address-correction");
 const productOf = (order) => PRODUCTS[order.product] || { name: order.product, detail: "", blurb: "", icon: "package" };
-const stateInfo = (order) => STATE_INFO[order.state] || { label: order.state, tone: "", icon: "package" };
+
+function stateInfo(order) {
+  const ended = approvalEnd(order);
+  if (ended) return ENDED_INFO[ended];
+  if (approvalExpired(order)) return { label: "Request expired", tone: "warn", icon: "clock" };
+  return STATE_INFO[order.state] || { label: order.state, tone: "", icon: "package" };
+}
 const plural = (count, one) => `${count} ${one}${count === 1 ? "" : "s"}`;
 const labelOf = (options, value) => (options.find(([key]) => key === value) || [value, value || "Not set"])[1];
 
@@ -73,7 +98,7 @@ function productTitle(order) {
 
 const FILTERS = {
   active: {
-    label: "Active", tone: "info", icon: "refresh", test: (order) => ACTIVE.has(order.state),
+    label: "Active", tone: "info", icon: "refresh", test: isActive,
     empty: ["Nothing in progress", "Orders that are being set up will appear here."],
   },
   action: {
@@ -92,6 +117,7 @@ const FILTERS = {
 function progressOf(order) {
   if (order.state === "completed") return { index: STEPS.length, tone: "" };
   if (order.state === "rejected") return { index: 1, tone: "" };
+  if (awaitingApproval(order)) return { index: 0, tone: "paused" };
   return {
     index: Math.min(STAGE_INDEX[order.stage] ?? 1, STEPS.length - 1),
     tone: STEP_TONE[order.state] || "current",
@@ -105,12 +131,21 @@ function stepKind(progress, position) {
 
 function progressLabel(order) {
   if (order.state === "completed") return `All ${STEPS.length} steps complete`;
+  const ended = approvalEnd(order);
+  if (ended) return ended === "declined" ? "Order declined" : "Request withdrawn";
   if (order.state === "rejected") return "Order not accepted";
+  if (awaitingApproval(order)) return approvalExpired(order) ? "Approval request expired" : "Waiting for your approval";
   const { index } = progressOf(order);
   return `Step ${index + 1} of ${STEPS.length} · ${STEPS[index]}`;
 }
 
 function statusText(order) {
+  const ended = approvalEnd(order);
+  if (ended) {
+    return ended === "declined"
+      ? "You declined this order. Nothing was provisioned."
+      : "Our service team withdrew this request. Nothing was provisioned.";
+  }
   switch (order.state) {
     case "completed": return "Your order is complete.";
     case "rejected": return "We couldn't accept this order. Our team will contact you.";
@@ -118,6 +153,10 @@ function statusText(order) {
     case "held": return "Your order is on hold for a scheduled maintenance window. No action needed.";
     case "pendingApproval": return "A service manager is reviewing your order. No action needed from you.";
     case "acknowledged": return "We've received your order and will start shortly.";
+    case "awaitingEnterpriseApproval":
+      return approvalExpired(order)
+        ? "This approval request expired. Ask the TürkBizTel service team to send a new one."
+        : "Our service team placed this order for your company. It starts as soon as you approve it.";
     case "awaitingCustomer":
       return isAddressFix(order)
         ? "We need you to check your installation address before we can continue."
@@ -223,6 +262,7 @@ const accountSignature = (account) => JSON.stringify(account);
 const ordersSignature = (orders) => JSON.stringify(orders.map((order) => [
   order.id, order.state, order.stage, order.updatedAt, (order.updates || []).length,
   order.action && order.action.remindersSent, order.siteAddress, order.city, order.contact,
+  order.approval && [order.approval.status, order.approval.expired, order.approval.expiresAt],
 ]));
 
 /* ---- form pieces ---- */
@@ -424,7 +464,9 @@ function orderCard(order) {
       segments(order),
       h("p", { class: "progress-text" }, h("span", { text: progressLabel(order) }), updated(order.updatedAt))),
     h("p", { class: "status-line", text: statusText(order) }),
-    urgent ? h("p", { class: "card-cta", "aria-hidden": "true" }, "Fix now", icon("arrow-right")) : null);
+    urgent
+      ? h("p", { class: "card-cta", "aria-hidden": "true" }, needsApproval(order) ? "Review now" : "Fix now", icon("arrow-right"))
+      : null);
 }
 
 function tiles() {
@@ -481,11 +523,20 @@ function attentionBanner() {
   const waiting = state.orders.filter(needsAction);
   if (!waiting.length) return null;
   const several = waiting.length > 1;
+  const approvals = waiting.filter(needsApproval).length;
+  const onlyApprovals = approvals === waiting.length;
+  const text = !approvals
+    ? "Something we need from you is missing or looks wrong. It only takes a minute to put right."
+    : onlyApprovals
+      ? `Our service team placed ${several ? "these orders" : "this order"} for your company. `
+        + `Nothing starts until you approve ${several ? "them" : "it"}.`
+      : "Some orders are waiting for your approval and others need a detail put right. "
+        + "Nothing waiting for approval starts until you approve it.";
   return h("div", { class: "banner action", role: "status" },
-    icon("alert"),
+    icon(onlyApprovals ? "shield-check" : "alert"),
     h("div", { class: "banner-body" },
-      h("strong", { text: several ? `${waiting.length} orders need your attention` : "1 order needs your attention" }),
-      h("p", { text: "Something we need from you is missing or looks wrong. It only takes a minute to put right." })),
+      h("strong", { text: `${plural(waiting.length, "order")} ${several ? "need" : "needs"} your ${onlyApprovals ? "approval" : "attention"}` }),
+      h("p", { text })),
     several
       ? h("button", {
         type: "button", class: "btn small", "data-key": "show-attention", text: "Show them",
@@ -494,7 +545,7 @@ function attentionBanner() {
           paintList({ announce: true });
         },
       })
-      : h("a", { class: "btn small", href: orderHash(waiting[0].id), text: "Fix now" }));
+      : h("a", { class: "btn small", href: orderHash(waiting[0].id), text: needsApproval(waiting[0]) ? "Review" : "Fix now" }));
 }
 
 function linkBox() {
@@ -615,7 +666,108 @@ function addressFix(order) {
         confirm)));
 }
 
+/* ---- an order the service team placed for this company: its contact decides whether it starts ---- */
+
+let answering = false;
+
+async function decideApproval(order, decision, message) {
+  if (answering) return;
+  answering = true;
+  say(message, "");
+  try {
+    await api(orderPath(order.id, "/approval"), { method: "POST", body: { decision } });
+  } catch (error) {
+    answering = false;
+    if (!(error instanceof ApiError && error.status === 409)) {
+      say(message, failText(error), "error");
+      return;
+    }
+    // Someone answered, withdrew or renewed the request meanwhile: show how it stands now.
+    toast(error.message, "error");
+    await refresh();
+    return;
+  }
+  answering = false;
+  state.declining = "";
+  toast(decision === "approve"
+    ? "Thank you. Your order is approved and our agents are starting on it now."
+    : "You declined this order. Nothing was provisioned.");
+  await refresh();
+}
+
+function approvalFacts(order) {
+  const { requestedBy, requestedAt, expiresAt } = order.approval || {};
+  return facts([
+    ["Service", productTitle(order)],
+    ["City", order.city],
+    ["Placed by", requestedBy ? `${requestedBy}, TürkBizTel service team` : "TürkBizTel service team"],
+    ["Requested", fmtStamp(requestedAt)],
+    ["Please answer by", fmtStamp(expiresAt)],
+  ]);
+}
+
+function approvalPanel(order) {
+  if (approvalExpired(order)) {
+    return h("section", { class: "panel", "aria-labelledby": "action-title" },
+      h("h2", { id: "action-title", text: "This approval request has expired" }),
+      h("p", { class: "sub", text: `Please ask the TürkBizTel service team to send a new request and mention order ${order.id}.` }));
+  }
+  const { requestedBy } = order.approval || {};
+  const message = msgBox();
+  const area = h("div", { class: "decision" });
+
+  const approve = h("button", {
+    type: "button", class: "btn", "data-key": "approve-order",
+    onclick: (event) => busy(event.currentTarget, () => decideApproval(order, "approve", message)),
+  }, icon("circle-check"), "Approve this order");
+  const decline = h("button", {
+    type: "button", class: "btn secondary", "data-key": "decline-order", onclick: () => ask(true),
+  }, icon("x"), "Decline this order");
+  const choices = h("div", { class: "decision-row" }, approve, decline);
+
+  const confirmBox = h("div", {
+    class: "decision-confirm", role: "group", tabindex: "-1", "aria-labelledby": "decline-question", "data-key": "decline-box",
+    onkeydown: (event) => {
+      if (event.key === "Escape") ask(false);
+    },
+  },
+  h("p", { id: "decline-question", text: "Decline this order? Nothing will be set up and the order will be closed." }),
+  h("div", { class: "decision-row" },
+    h("button", {
+      type: "button", class: "btn", "data-key": "confirm-decline",
+      onclick: (event) => busy(event.currentTarget, () => decideApproval(order, "decline", message)),
+    }, "Yes, decline it"),
+    h("button", { type: "button", class: "btn ghost", "data-key": "cancel-decline", onclick: () => ask(false) }, "Go back")));
+
+  function ask(on) {
+    if (answering) return;
+    state.declining = on ? order.id : "";
+    say(message, "");
+    area.replaceChildren(on ? confirmBox : choices);
+    (on ? confirmBox : decline).focus({ preventScroll: true });
+  }
+
+  // A repaint (a poll, say) must not close a question the customer is in the middle of answering.
+  area.append(state.declining === order.id ? confirmBox : choices);
+
+  return h("section", { class: "panel action", "aria-labelledby": "action-title" },
+    h("h2", { id: "action-title", text: "Please approve this order" }),
+    h("p", {
+      class: "sub",
+      text: `${requestedBy ? `${requestedBy} from the TürkBizTel service team` : "The TürkBizTel service team"} `
+        + `placed this order for ${order.customer}. Nothing is set up until you approve it.`,
+    }),
+    approvalFacts(order),
+    area,
+    message,
+    h("p", {
+      class: "hint mt",
+      text: `Not expecting this order? Choose Decline, or contact the TürkBizTel service team and mention order ${order.id}.`,
+    }));
+}
+
 function actionPanel(order) {
+  if (awaitingApproval(order)) return approvalPanel(order);
   if (!needsAction(order)) return null;
   if (isAddressFix(order)) return addressFix(order);
   return h("section", { class: "panel action", "aria-labelledby": "action-title" },
@@ -1086,6 +1238,7 @@ function wire() {
   });
   window.addEventListener("hashchange", () => {
     state.dirty = false;
+    state.declining = "";
     render({ navigated: true });
   });
   document.addEventListener("visibilitychange", () => {

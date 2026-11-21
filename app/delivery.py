@@ -155,6 +155,43 @@ def send_concern_email(email, name, subject, text, concern_id, language="en"):
     send_plain_email(email, *concern_message(name, subject, text, link, language))
 
 
+def approval_link(token):
+    """The absolute link that opens the enterprise approval page, or "" when the public origin is not configured.
+    The token rides in the fragment, which a browser never sends to a server, so it stays out of access logs."""
+    origin = _origin()
+    return f"{origin}/approve#token={token}" if origin else ""
+
+
+def approval_message(name, company, order_id, requester, product, city, expires, link, language):
+    """Subject and bilingual body asking an enterprise's contact to approve an order the service team placed.
+    The subject carries no free text, so a company name can never reach a mail header."""
+    who_en = f"{requester} from the TürkBizTel service team" if requester else "The TürkBizTel service team"
+    who_tr = f"TürkBizTel hizmet ekibinden {requester}" if requester else "TürkBizTel hizmet ekibi"
+    english = (f"Hello {name},\n\n{who_en} placed an order on behalf of "
+               f"{company}. It needs your approval before anything is provisioned.\n\n"
+               f"  Order: {order_id}\n  Service: {product}\n  City: {city}\n\n"
+               "Nothing is provisioned, scheduled or delivered until you approve. "
+               + ("Open the link below to review the order and approve or decline it. The link works once and "
+                  f"expires on {expires}. " if link else
+                  f"Sign in to your TürkBizTel account to review it; the request expires on {expires}. ")
+               + "If you did not expect this order, decline it or ignore this e-mail.")
+    turkish = (f"Merhaba {name},\n\n{who_tr}, {company} adına bir sipariş "
+               "oluşturdu. Herhangi bir hizmet devreye alınmadan önce onayınız gerekiyor.\n\n"
+               f"  Sipariş: {order_id}\n  Hizmet: {product}\n  Şehir: {city}\n\n"
+               "Siz onaylamadan hiçbir hizmet devreye alınmaz, planlanmaz veya teslim edilmez. "
+               + ("Siparişi incelemek, onaylamak veya reddetmek için aşağıdaki bağlantıyı açın. Bağlantı tek "
+                  f"kullanımlıktır ve {expires} tarihine kadar geçerlidir. " if link else
+                  "İncelemek için TürkBizTel hesabınızda oturum açın; talep "
+                  f"{expires} tarihinde sona erer. ")
+               + "Bu siparişi beklemiyorsanız reddedin veya bu e-postayı yok sayın.")
+    return f"Approval needed for your TürkBizTel order {order_id}", bilingual(language, english, turkish, link)
+
+
+def send_approval_email(email, name, company, order_id, requester, product, city, expires, link, language="en"):
+    send_plain_email(email, *approval_message(name, company, order_id, requester, product, city, expires, link,
+                                              language))
+
+
 def send_sms(contact, order, item):
     url = os.getenv("AMA_SMS_WEBHOOK_URL", "")
     if not url.startswith("https://"):

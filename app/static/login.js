@@ -6,6 +6,19 @@ const TITLES = {
   reset: "Enter your code", invite: "Set up your partner account", staff: "Service team sign-in",
 };
 const INVITE_HASH = /^#invite=([\w-]{20,200})$/;
+// Where Microsoft sends the browser back to: "#sso" after a good sign-in, "#sso-error=<code>" after a refused one.
+const SSO_HASH = /^#sso(?:-error=([a-z-]{1,20}))?$/;
+const SSO_PROBLEMS = {
+  expired: "That sign-in took too long, or it was started in a different browser. Please sign in again.",
+  denied: "The Microsoft sign-in was cancelled. Sign in again when you are ready.",
+  consent: "Your organisation has not allowed this app yet. Ask your Microsoft Entra administrator to approve it, then sign in again.",
+  "not-assigned": "Your account has not been given access to the TürkBizTel service console. Ask a service manager to assign you a role.",
+  "no-role": "You signed in, but your account has no TürkBizTel service role. Ask a service manager to assign you one, then sign in again.",
+  tenant: "That account belongs to a different organisation. Sign in with your TürkBizTel work account.",
+  unavailable: "Microsoft sign-in is not available right now. Please try again in a few minutes.",
+  failed: "We couldn't complete the Microsoft sign-in. Please try again, and contact the service desk if it keeps failing.",
+  throttled: "There have been too many sign-in attempts. Wait a few minutes and try again.",
+};
 const forms = Object.fromEntries(PANELS.map((name) => [name, $(`#panel-${name}`)]));
 const tabs = $$('[role="tab"]');
 let resetEmail = "";
@@ -32,9 +45,38 @@ const fromHash = () => {
   if (invite) inviteToken = invite[1];
   const name = location.hash.slice(1);
   if (invite || (name === "invite" && inviteToken)) return "invite";
+  if (SSO_HASH.test(location.hash)) return "staff";
   if (name === "reset") return "forgot";
   return PANELS.includes(name) && name !== "invite" ? name : "signin";
 };
+
+/* The service team signs in with Microsoft or with an access token, and the server says which. The link
+   keeps its space but stays invisible until then, so the wrong wording never flashes. */
+function applyStaffMode(sso) {
+  $("#staff-token").hidden = sso;
+  $("#staff-sso").hidden = !sso;
+  if (sso) $("#staff-link").textContent = "Sign in with Microsoft";
+  $("#staff-row").removeAttribute("data-pending");
+}
+
+/* Microsoft has sent the browser back. The server holds the verified person in a short-lived cookie that works
+   once, and this call turns it into the session for this tab. */
+async function finishSso() {
+  const start = $("#sso-start");
+  const wait = $("#sso-wait");
+  start.hidden = true;
+  wait.hidden = false;
+  try {
+    const result = await api("/api/auth/sso/handoff", { method: "POST" });
+    // Replace this page in history so the back button does not return to a finished sign-in.
+    return navigate(HOME[result.role] || HOME.admin, { replace: true });
+  } catch (error) {
+    wait.hidden = true;
+    start.hidden = false;
+    say($("#staff-msg"), error instanceof ApiError ? error.message : SSO_PROBLEMS.failed, "error");
+    return undefined;
+  }
+}
 
 /* Asks the server whether the invitation in the link is still good, and shows who it is for. */
 async function checkInvite() {
@@ -240,12 +282,20 @@ async function boot() {
     sessionStorage.removeItem(NOTICE_KEY);
     showNotice(bounced);
   }
+  // Read before show() tidies the address: the hash says Microsoft has just sent the browser back.
+  const back = SSO_HASH.exec(location.hash);
   show(fromHash(), { focus: false });
+  if (back) {
+    applyStaffMode(true);
+    if (back[1]) say($("#staff-msg"), SSO_PROBLEMS[back[1]] || SSO_PROBLEMS.failed, "error");
+    else await finishSso();
+  }
   try {
     const me = await api("/api/auth/me");
+    applyStaffMode(me.staffAuth === "sso");
     // A visitor who was just sent here because a session ended must not be sent straight back, and
     // someone opening an invitation link must get to set up their account, whoever is signed in.
-    if (me.authenticated && !bounced && !INVITE_HASH.test(location.hash)) {
+    if (me.authenticated && !bounced && !back && !INVITE_HASH.test(location.hash)) {
       location.replace(HOME[me.role] || "/account");
       return;
     }
@@ -255,6 +305,7 @@ async function boot() {
     }
   } catch {
     // The forms still work without this check; the server explains any rule they break.
+    applyStaffMode(Boolean(back));
   }
 }
 

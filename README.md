@@ -13,16 +13,20 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 | Live case-study site, with the working demonstrator embedded | [case-study](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study) |
 | Current-state film (1:51) | [current-scenario.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/current-scenario.mp4) |
 | Solution film (2:56) | [solution-tower-v6.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
+| App highlights (2:21), then try it live | [Live app chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app) or [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough.mp4) |
 | Architecture deck (14 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
 | Azure architecture as deployed | [docs/azure-architecture.md](docs/azure-architecture.md) |
 | What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |
 | Every shareable asset in one release | [turkbiztel-case-study-2026-11-20](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-20) |
 
-The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band.
+The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band. A second, standalone build of the same app signs the service team in with **Microsoft Entra ID single sign-on** instead, so every change is recorded against the person who made it. In that build a service engineer places an order for an enterprise chosen from a list, and that enterprise's contact approves it by e-mail before any agent starts. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md).
 
 ## What's new in this update
 
+- **Orders placed for an enterprise, approved by the enterprise.** In the single sign-on build, **New order** now lists every enterprise in the database instead of one demo company. A service engineer picks one and places the order on its behalf. The enterprise's point of contact is e-mailed a personal link, and no agent starts until they approve, from the e-mail or from their own account. They can decline, and the service team can send the e-mail again or withdraw the request. Every step is recorded against the person who took it. [How it works](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise).
+- **Data copied across, once.** `scripts/Copy-AppData.ps1` copies what the access-token app holds into the single sign-on app: the enterprise accounts, the partners and their contacts, every order that has settled with its messages and history, the partner concerns and the audit trail. Enterprises and partner contacts keep their passwords. The two apps stay separate: it is a one-time snapshot, nothing is synchronised afterwards, and the access-token app is only read. [How it works](docs/STAFF-SSO.md#copying-the-data-from-the-token-mode-app).
+- **Service-team single sign-on.** A new deployment mode replaces the shared access token with Microsoft Entra ID. Each person signs in with their own work account, an Entra app role (service manager, operator or auditor) decides what they can do, and the audit trail records who changed what on every order. It is a separate stack, so the existing app is unchanged, and customers still register and sign in with their own e-mail and password. [How it works and how to deploy it](docs/STAFF-SSO.md).
 - **Azure architecture, as deployed.** [A new page](docs/azure-architecture.md) documents the 25-resource estate in Sweden Central: what each service is, how it was created, how traffic and identity flow, what is hardened and what is still open, and what it costs.
 - **Solution film v6 (2:56).** Customers place orders, the supervisor wakes each agent in turn, TM Forum and MCP standards connect them, and the Azure Local design keeps customer data in Türkiye. Each AI agent is named in full once, then by its short name.
 - **The deployed source is on `main`.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are all in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
@@ -129,9 +133,10 @@ Encryption, private endpoints and EU hosting do not by themselves establish loca
 | Customer updates in Turkish and English | Persisted bilingual portal messages. The deployed build also sends e-mail through Azure Communication Services. SMS is not connected |
 | Per-order event-driven supervision | Durable queued and processed events, atomic commits and idempotency keys |
 | Partner integration through MCP | `/mcp`: initialization, discovery, capacity and order tools |
-| Human service-manager queue | Exception desk. Decisions need a server-enforced manager token |
+| Human service-manager queue | Exception desk. Decisions need a server-enforced manager role: the shared manager token, or a Microsoft Entra service-manager sign-in in the [single sign-on build](docs/STAFF-SSO.md) |
+| Customer consent before work starts | In the single sign-on build an order a service engineer places for an enterprise waits for that enterprise's contact to approve it. No agent starts until then, staff cannot answer for the enterprise, and the answer is on the audit trail. See [Placing an order for an enterprise](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise) |
 | SLA enforcement | Seven-day demo deadline. Overdue work stops for an audited explicit review |
-| Auditability | Hash-linked records, verification and an authorized CSV export. Not WORM storage and not a regulatory certification |
+| Auditability | Hash-linked records, verification and an authorized CSV export. With single sign-on every staff change names the person, their role and the fields they altered. Not WORM storage and not a regulatory certification |
 | Data and inference localization | Synthetic-only demo in Sweden Central, with an Azure Local design for Türkiye. See [Data residency](#data-residency) |
 | Realistic industry data | Public CC0 Turkish city facts plus explicitly fictional customers, prices and capacity |
 
@@ -146,8 +151,8 @@ Encryption, private endpoints and EU hosting do not by themselves establish loca
 
 - **The agents are bounded.** In this demonstrator the five specialist agents are deterministic implementations built on rules, allowlists and playbooks. The Azure OpenAI advisor is the only model-backed part, and it cannot execute or approve.
 - **The numbers are not results.** The Analytics view of the deployed build times synthetic orders against the 7-day and 8% targets. Those are simulator orchestration times from a scenario mix with a built-in 30% incident rate, so they show that the pipeline and the measurement work. They exclude partner field work and customer delays, and they are not evidence of production lead time, fallout or NPS. A representative pilot would provide that.
-- **`main` holds the deployed source, but the template does not describe every deployed resource.** `app/`, `infra/` and `scripts/` are the code the demonstrator runs. The running SQL layer, the Communication Services e-mail resources and the two network security groups were created by direct CLI commands or by governance policy, so `scripts/Deploy.ps1` builds a close relative of the estate in [docs/azure-architecture.md](docs/azure-architecture.md), not a copy of it. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
-- **Live mode and delivery are set on the app, not by the template.** A template deployment runs in demo mode: `AMA_MODE` is unset, so the synthetic views are public and writes need a token, and customer updates stay in the portal. The deployed demonstrator also sets `AMA_MODE=live` and `AMA_DELIVERY=live` directly on the Container App, together with `AMA_SESSION_SECRET` and the ACS settings. With `AMA_DELIVERY=live` the app sends e-mail through Azure Communication Services (`ACS_CONNECTION_STRING`, `ACS_EMAIL_SENDER`) or an SMTP relay (`SMTP_HOST`, `SMTP_FROM`), and can post text messages to an HTTPS webhook (`AMA_SMS_WEBHOOK_URL`). The deployed build uses ACS e-mail only.
+- **`main` holds the deployed source, but the template does not describe every deployed resource.** `app/`, `infra/` and `scripts/` are the code the demonstrator runs. The running SQL layer, the Communication Services e-mail resources and the two network security groups of the original deployment were created by direct CLI commands or by governance policy, so `scripts/Deploy.ps1` builds a close relative of the estate in [docs/azure-architecture.md](docs/azure-architecture.md), not a copy of it. (`-Live` now creates the e-mail resources from the template too, which is how the single sign-on stack gets them.) See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+- **Live mode and delivery are set on the app, not by the template, unless you deploy with `-Live`.** A template deployment runs in demo mode: `AMA_MODE` is unset, so the synthetic views are public and writes need a token, and customer updates stay in the portal. The original deployed demonstrator also sets `AMA_MODE=live` and `AMA_DELIVERY=live` directly on the Container App, together with `AMA_SESSION_SECRET` and the ACS settings. `-Live` sets those, the session secret and the e-mail resources from the template. With `AMA_DELIVERY=live` the app sends e-mail through Azure Communication Services (`ACS_CONNECTION_STRING`, `ACS_EMAIL_SENDER`) or an SMTP relay (`SMTP_HOST`, `SMTP_FROM`), and can post text messages to an HTTPS webhook (`AMA_SMS_WEBHOOK_URL`). The deployed build uses ACS e-mail only.
 
 ## Run it locally
 
@@ -180,17 +185,24 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
 7. Open **Trust & governance** to inspect provenance and the hash-linked audit. Export the CSV with a manager token.
 8. If Azure OpenAI is configured, request live advice from an order drawer.
 
+On a single sign-on deployment, **New order** in steps 2 to 5 asks you to pick an enterprise. Its contact approves the order, from the e-mail or from their own account, before any agent starts. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise).
 ## APIs and MCP
 
 | Endpoint | Purpose and authorization |
 |---|---|
 | `GET /health` | Supervisor health |
 | `GET /api/state` | The synthetic workspace. Public in demo mode (`AMA_MODE` unset), staff-only when `AMA_MODE=live`, as deployed |
-| `POST /api/orders` | A manager or partner creates an idempotent synthetic order |
+| `POST /api/orders` | A manager or partner creates an idempotent synthetic order. With single sign-on, a service operator or manager |
+| `GET /api/enterprises`, `POST /api/enterprises/{id}/orders` | Single sign-on build: a service operator or manager lists every enterprise and places an order for one. The order waits for that enterprise's contact, who is e-mailed. A staff session on `POST /api/orders` answers 409 and is pointed here |
+| `POST /api/orders/{id}/approval/resend`, `POST /api/orders/{id}/approval/withdraw` | A service operator or manager sends the approval e-mail again (a new link; one a minute, five in all) or withdraws the request |
+| `POST /api/approvals/check`, `POST /api/approvals/decide` | Public, with the signed token from the e-mail and an `X-Requested-With` header. Show the request, then approve or decline it. Throttled per address, and never answers 401 |
+| `POST /api/me/orders/{id}/approval` | A signed-in customer approves or declines an order waiting for them |
 | `POST /api/orders/{id}/decision` | Manager-only exception approve or reject |
 | `POST /api/orders/{id}/address` | A manager or the submitting partner confirms a fictional site |
-| `POST /api/orders/{id}/advice` | Manager-only live advice from Azure OpenAI, at most 30 attempts per UTC day |
-| `GET /api/audit.csv` | Manager-only audit export |
+| `POST /api/orders/{id}/advice` | Manager-only live advice from Azure OpenAI, at most 30 attempts per UTC day. With single sign-on, a service operator or manager |
+| `GET /api/audit` | Single sign-on only. The audit trail as JSON, with who made each change. Any service role |
+| `GET /api/audit.csv` | Manager-only audit export. With single sign-on, any service role, and the columns include who made the change and what they changed |
+| `GET /auth/sso/login`, `GET /auth/sso/callback`, `POST /api/auth/sso/handoff` | Single sign-on only. The Microsoft Entra sign-in for the service team, ending in a per-tab session |
 | `/tmf-api/productOrderingManagement/v4/productOrder` | TMF622-inspired GET and POST subset |
 | `/tmf-api/serviceOrdering/v4/serviceOrder` | TMF641-inspired service-order GET subset |
 | `/tmf-api/resourceOrderManagement/v4/resourceOrder` | TMF652-inspired resource-order GET subset |
@@ -202,11 +214,11 @@ MCP supports `initialize`, `notifications/initialized`, `ping`, `tools/list` and
 
 ## Deploy to Azure
 
-`scripts/Deploy.ps1` deploys `infra/main.bicep` into one brand-new resource group. With the options below it builds the core of the estate in [docs/azure-architecture.md](docs/azure-architecture.md): the private network, the SQL layer and the AI advisor. It does not create the Communication Services e-mail resources. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+`scripts/Deploy.ps1` deploys `infra/main.bicep` into one brand-new resource group. With the options below it builds the core of the estate in [docs/azure-architecture.md](docs/azure-architecture.md): the private network, the SQL layer and the AI advisor. It creates the Communication Services e-mail resources only with `-Live`. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
 
-1. Run `az login`, then `az account list --all -o table`. Select an **Enabled** subscription. `-EnableSql` needs a **user** sign-in, because that account becomes the SQL Microsoft Entra administrator.
-2. Make sure the subscription has `Microsoft.App`, `Microsoft.Storage`, `Microsoft.ContainerRegistry`, `Microsoft.ManagedIdentity` and `Microsoft.OperationalInsights` registered, plus `Microsoft.Network` (private network), `Microsoft.Sql` (`-EnableSql`), `Microsoft.CognitiveServices` (AI) and `Microsoft.Consumption` (budget) if you use those options. Register providers only with the subscription owner's approval.
-3. For AI, first confirm model availability and **regional Standard** quota in the target region. Do not switch to Global Standard to get around a regional constraint. The script defaults to `gpt-4o-mini`, version `2024-07-18`. Models retire, so verify and override with a supported version. The deployed estate runs `gpt-4.1-mini`, version `2025-04-14`.
+1. Run `az login`, then `az account list --all -o table`. Select an **Enabled** subscription. `-EnableSql` needs a **user** sign-in, because that account becomes the SQL Microsoft Entra administrator. `-StaffAuth sso` also needs a user sign-in that is allowed to register applications in the tenant.
+2. Make sure the subscription has `Microsoft.App`, `Microsoft.Storage`, `Microsoft.ContainerRegistry`, `Microsoft.ManagedIdentity` and `Microsoft.OperationalInsights` registered, plus `Microsoft.Network` (private network), `Microsoft.Sql` (`-EnableSql`), `Microsoft.CognitiveServices` (AI), `Microsoft.Communication` (`-Live`) and `Microsoft.Consumption` (budget) if you use those options. Register providers only with the subscription owner's approval.
+3. For AI, first confirm model availability and **regional Standard** quota in the target region. Do not switch to Global Standard to get around a regional constraint. The script defaults to `gpt-4.1-mini`, version `2025-04-14`, which is what the deployed estate runs. Models retire (`gpt-4o-mini` 2024-07-18 already has), so verify and override with a supported version.
 4. Deploy with Azure CLI and Bicep. No local Docker is needed.
 
 ```powershell
@@ -225,13 +237,42 @@ The resource group name must start with `rg-ama`. `-Location` is `westeurope` (t
 | `-EnableSql` | Everything in `-EnablePrivateStorage`, plus an Azure SQL server that accepts Microsoft Entra sign-in only, the database `ama30-db`, a private endpoint with private DNS, and a one-off Container Apps job that creates the schema and the app's database user. The job deletes itself when it succeeds and is left in place for inspection when it fails |
 | `-EnableOpenAI` | An Azure OpenAI account with key authentication off and a `telecom-advisor` deployment. Choose the model with `-OpenAiModel` and `-OpenAiModelVersion` |
 | `-BudgetEmail "<address>"` | A budget with alerts at 80% actual and 100% forecast. Budgets use the subscription's billing currency, so adjust the Bicep amount for a US$100 target if it is not USD. Alerts are not hard caps |
-| `-CredentialsPath "<file>"` | Where to write the generated credentials. The default is `demo-credentials.local.json` in the repository root, which is git-ignored |
+| `-Live` | The production-style site: `AMA_MODE=live` and `AMA_DELIVERY=live`, a generated session secret, and an Azure Communication Services e-mail service with an Azure-managed domain, so customers register with their own account and receive their verification code |
+| `-StaffAuth sso` | Service-team sign-in with Microsoft Entra ID instead of the shared access token. Needs `-Live`. Registers the Entra application. See [Single sign-on for the service team](#single-sign-on-for-the-service-team) |
+| `-StaffManagers`, `-StaffOperators`, `-StaffAuditors` | User principal names to assign each service role. With none named, the signed-in user becomes the manager |
+| `-StaffSessionHours <1-12>` | How long a service-team session lasts. The default is 4 |
+| `-ReceiptPath "<file>"` | Where to write the deployment receipt. The default is `deployment.local.json`, or `deployment.sso.local.json` with `-StaffAuth sso`, so the original app's receipt is never replaced |
+| `-CredentialsPath "<file>"` | Where to write the generated credentials. The default is `demo-credentials.local.json`, or `demo-credentials.sso.local.json` with `-StaffAuth sso`, in the repository root, which is git-ignored |
 
 The script refuses an existing resource group or credentials file, always passes the explicit subscription, builds the image remotely in the registry with a unique tag, keeps deployment parameters secure and writes the generated credentials without printing them. It does **not** delete partially created resources after a failure. Inspect the tagged resource group, fix the cause and redeploy, or delete that exact group before a fresh run.
 
 The core it deploys is a Container Apps consumption environment with one 0.25 vCPU / 0.5 GiB replica, a Basic registry, locally redundant Blob storage, a user-assigned managed identity with narrowly scoped roles and capped Log Analytics, plus the options above. Storage keys and registry admin access are off, and the app uses its managed identity. The app starts in demo mode: its web ingress is anonymously readable with synthetic demo data only, and writes need a demo bearer token.
 
 The dedicated always-on replica runs the persisted supervisor while the browser is closed. Scaling to zero would strand queued work without a queue-based wake trigger, so scale-to-zero is deliberately not promised. Cost depends on running hours, builds, model prices and logs, and the US$100 a month target is not a quote. Check current [Container Apps](https://azure.microsoft.com/pricing/details/container-apps/), [Container Registry](https://azure.microsoft.com/pricing/details/container-registry/), [Blob storage](https://azure.microsoft.com/pricing/details/storage/blobs/) and [Azure OpenAI](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/) pricing.
+
+### Single sign-on for the service team
+
+The original app lets the service team in with one shared access token, so the audit trail cannot say which person changed an order. `-StaffAuth sso` deploys a **separate, standalone stack** where the service team signs in with Microsoft Entra ID instead, and the original app is left untouched:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Deploy.ps1 `
+  -SubscriptionId "<enabled-subscription-id>" `
+  -ResourceGroup "rg-ama30-sso" `
+  -Location "swedencentral" `
+  -EnablePrivateStorage -EnableOpenAI -Live `
+  -StaffAuth sso -StaffManagers "person@contoso.com"
+```
+
+Where your organization allows it, `-ExecutionPolicy Bypass` runs the unsigned script. Otherwise follow its signing policy and do not disable it.
+
+- **Registration.** `scripts/Register-StaffSso.ps1` creates a single-tenant Entra application with three app roles (`ServiceManager`, `ServiceOperator`, `ServiceAuditor`), an enterprise application (requiring assignment by default), and a federated credential for the app's managed identity. There is no client secret to store or rotate. It is safe to run again.
+- **Approval.** Microsoft makes an administrator approve an app that requires assignment, once, or the sign-in stops at *Need admin approval*. Where no administrator is available, add `-StaffUserConsent` so each person approves for themselves. The app still refuses anyone without a role. See [Approving the app](docs/STAFF-SSO.md#approving-the-app).
+- **Sign-in.** The OpenID Connect authorization-code flow with PKCE. The app checks the tenant, issuer, audience, expiry and role, and refuses a person who holds no role. The shared access token no longer opens any staff call.
+- **Who did what.** Each change records the person's name, user principal name and role, and, for field edits, the old and new value. The console's audit trail filters by person, `GET /api/audit` returns the same data, and a second copy goes to the container log.
+- **People.** Assign users or groups a role under **Enterprise applications > Users and groups** in the Microsoft Entra admin center. A removed person keeps access until their session expires.
+- **Cost.** No Azure SQL, so roughly US$15 to 35 a month.
+
+[docs/STAFF-SSO.md](docs/STAFF-SSO.md) has the roles, the sign-in flow, the settings, troubleshooting, the audit queries and the limits.
 
 ### Verify and clean up
 
@@ -254,29 +295,30 @@ powershell -File .\scripts\Remove-Demo.ps1 `
   -ConfirmResourceGroup "rg-ama30-demo-<suffix>"
 ```
 
-The script checks the AMA demo tags and refuses unrelated groups. Run it only when you mean to delete that whole group and its data.
+The script checks the AMA demo tags and refuses unrelated groups. Run it only when you mean to delete that whole group and its data. The Entra application that `-StaffAuth sso` registers lives in the tenant, not the resource group, so deleting the group does not remove it. Add `-RemoveStaffSso` to delete it too, or run `scripts/Register-StaffSso.ps1 -Remove`.
 
 ## Repository map
 
 | Path | Contents |
 |---|---|
-| `app/` | The FastAPI application. `main.py` is the app and `domain.py` the guarded simulation with the supervisor and agents. `auth.py`, `accounts*.py`, `identity.py` and `delivery.py` cover sign-in, customer accounts and e-mail. `partners*.py` is the wholesale partner portal. `advisor.py` is the optional Azure OpenAI advice. `analytics.py` and `benchmark.py` measure order-to-delivery. `store.py` (JSON or Blob), `sqlstore.py`, `sqlwrite.py`, `sqlschema.py`, `sqlbootstrap.py` and `projection.py` keep state in Blob storage or Azure SQL |
+| `app/` | The FastAPI application. `main.py` is the app and `domain.py` the guarded simulation with the supervisor and agents. `auth.py`, `sso.py`, `security.py`, `accounts*.py`, `identity.py` and `delivery.py` cover sign-in (customer passwords, service-team tokens or Microsoft Entra single sign-on), role checks, customer accounts and e-mail. `approvals*.py` is the enterprise picker and the approval an enterprise gives before its order starts. `partners*.py` is the wholesale partner portal. `advisor.py` is the optional Azure OpenAI advice. `analytics.py` and `benchmark.py` measure order-to-delivery. `store.py` (JSON or Blob), `sqlstore.py`, `sqlwrite.py`, `sqlschema.py`, `sqlbootstrap.py` and `projection.py` keep state in Blob storage or Azure SQL |
 | `app/static/` | The pages (landing, console, customer portal, partner portal, live demo, journey, solution players, case study), their scripts and styles, and the films, posters, captions and deck slides. Plain-named films such as `solution-tower-v6.mp4` are the source editions. The matching `*-turkbiztel.*` files are the TürkBizTel editions that `branded_static.py` serves under the plain names |
 | `app/static/film3d-assets/` | Assets for the 3D film, with their licences and an `ATTRIBUTION.md` |
 | `infra/main.bicep` | The Azure infrastructure |
-| `scripts/` | `Deploy.ps1`, `Remove-Demo.ps1`, `Start-Local.ps1`, `Smoke.py` and `Verify_Demo.py` for the app. The film pipeline: the `Render_*.py` renderers, `Synthesize_*.py` narration, `Rebrand_Media.py`, `requirements-narrator.txt` and `film3d/`, whose scenes need Node.js |
-| `tests/` | Twenty test modules covering the API, domain rules, accounts, partners, analytics, the Blob and SQL stores, the case-study site and the films |
-| `docs/` | The [application guide](docs/APPLICATION-GUIDE.md), the [Azure architecture](docs/azure-architecture.md), [PRODUCTION.md](docs/PRODUCTION.md) and the diagrams in `docs/images/` |
+| `scripts/` | `Deploy.ps1`, `Register-StaffSso.ps1` (the Entra registration for single sign-on), `Remove-Demo.ps1`, `Start-Local.ps1`, `Smoke.py` and `Verify_Demo.py` for the app. The film pipeline: the `Render_*.py` renderers, `Synthesize_*.py` narration, `Rebrand_Media.py`, `requirements-narrator.txt` and `film3d/`, whose scenes need Node.js |
+| `tests/` | Twenty-two test modules covering the API, domain rules, accounts, partners, single sign-on and roles, enterprise approvals, analytics, the Blob and SQL stores, the case-study site and the films |
+| `docs/` | The [application guide](docs/APPLICATION-GUIDE.md), the [service-team single sign-on guide](docs/STAFF-SSO.md), the [Azure architecture](docs/azure-architecture.md), [PRODUCTION.md](docs/PRODUCTION.md) and the diagrams in `docs/images/` |
 | `Dockerfile`, `pyproject.toml` | The container image and the Python project metadata |
 | `.github/workflows/ci.yml` | The quality workflow |
 | `0-current-scenario.mp4`, `0-solution-tower-v2.mp4` | Film files at the root: the current-state film and an early solution-film edition. Newer editions are in `app/static/` and in the release |
 
 ## Security notes
 
-- Keep secrets out of Git. `demo-credentials.local.json`, `deployment.local.json`, `.env` and local state are git-ignored.
-- Share service-team access tokens out of band. Never commit them or paste them into slides, films or documents.
+- Keep secrets out of Git. `demo-credentials*.local.json`, `deployment*.local.json`, `.env` and local state are git-ignored.
+- Share service-team access tokens out of band. Never commit them or paste them into slides, films or documents. In the single sign-on build there is no shared staff token: people sign in with their own Microsoft Entra account, the app holds no client secret, and the deployment receipt and credentials file contain no staff secret.
 - Treat anything that has appeared in a document, a chat or Git history as exposed, even after the file is deleted, and rotate it. The deployed demonstrator's admin token and demo sign-ins were rotated on 20 November 2026.
 - Do not enter an Azure or GitHub password into the application.
+- The approval link e-mailed to an enterprise is a bearer credential for that one order. It is signed with the session secret, keeps its token after the `#` so servers and logs never see it, and only a `POST` can answer with it. Sending the e-mail again, or replacing the session secret, retires the old links. A service person can never answer for the enterprise.
 
 ## Reference data and licensing
 

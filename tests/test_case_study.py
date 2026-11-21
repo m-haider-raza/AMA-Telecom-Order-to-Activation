@@ -169,7 +169,7 @@ def test_script_and_markup_agree():
         assert f".{name}" in STYLES, name
 
 
-@pytest.mark.parametrize("name", ["current-scenario.mp4", "solution-tower-v6.mp4"])
+@pytest.mark.parametrize("name", ["current-scenario.mp4", "solution-tower-v6.mp4", "app-walkthrough.mp4"])
 def test_films_can_be_seeked(site, name):
     reply = site.get(f"/static/{name}", headers={"Range": "bytes=100-199"})
     assert reply.status_code == 206
@@ -177,7 +177,7 @@ def test_films_can_be_seeked(site, name):
     assert reply.headers["content-type"] == "video/mp4" and len(reply.content) == 100
 
 
-@pytest.mark.parametrize("name", ["current-scenario.vtt", "solution-tower-v6.vtt"])
+@pytest.mark.parametrize("name", ["current-scenario.vtt", "solution-tower-v6.vtt", "app-walkthrough.vtt"])
 def test_narration_is_served_as_webvtt(site, name):
     reply = site.get(f"/static/{name}")
     assert reply.status_code == 200 and reply.headers["content-type"].startswith("text/vtt")
@@ -209,6 +209,23 @@ def test_service_team_signin_is_a_direct_entry_in_the_live_app(site):
     assert login.status_code == 200 and 'id="panel-staff"' in login.text
     assert "Sign in with your access token" in login.text
     assert login.text.index('data-go="staff"') < login.text.index('id="signin-email"')
+
+
+def test_app_tour_bridges_the_solution_and_interactive_app():
+    page = inventory()
+    assert page.films["app"] == {
+        "poster": "/static/app-walkthrough-poster.jpg",
+        "source": "/static/app-walkthrough.mp4",
+        "track": "/static/app-walkthrough.vtt",
+    }
+    story = json.loads((STATIC / "app-walkthrough-data.json").read_text(encoding="utf-8"))
+    assert page.chapters["app"] == pytest.approx([chapter["start"] for chapter in story["chapters"]], abs=.001)
+    assert HTML.index('id="scene-solution"') < HTML.index('id="film-app"') < HTML.index('id="app-frame"')
+    assert 'data-vtt="/static/app-walkthrough.vtt"' in HTML
+    assert "Provisioning and payments are simulated" in HTML
+    assert not re.search(r'<video id="film-app"[^>]*\bautoplay\b', HTML)
+    for leak in LEAKS:
+        assert leak not in json.dumps(story)
 
 
 def slide_texts(deck):

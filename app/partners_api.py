@@ -252,35 +252,36 @@ def change_password(payload: PasswordChange, request: Request, response: Respons
 
 @router.get("/api/partners")
 def list_partners(request: Request):
-    authorize(request)
+    authorize(request, need="read")
     return partners.admin_overview(request.app.state.store.read())
 
 
 @router.post("/api/partners", status_code=201)
 def create_partner(payload: NewPartner, request: Request, background: BackgroundTasks):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
     data = payload.model_dump()
-    partner, user = run(request, lambda state: partners.create_partner(state, data, invite))
+    partner, user = run(request, lambda state: partners.create_partner(state, data, invite, actor))
     return {"partner": partners.partner_view(partner), "contact": partners.contact_view(user),
             "invite": deliver_invite(background, partner, user, token, invite)}
 
 
 @router.put("/api/partners/{partner_id}")
 def update_partner(partner_id: str, payload: PartnerChanges, request: Request):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
     changes = {key: value for key, value in payload.model_dump(exclude_unset=True).items()
                if value is not None or key == "billingEmail"}
     if not changes:
         raise HTTPException(422, "Nothing to change")
-    return partners.partner_view(run(request, lambda state: partners.update_partner(state, partner_id, changes)))
+    return partners.partner_view(run(request, lambda state: partners.update_partner(
+        state, partner_id, changes, actor)))
 
 
 @router.post("/api/partners/{partner_id}/users", status_code=201)
 def invite_contact(partner_id: str, payload: NewContact, request: Request, background: BackgroundTasks):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
     data = payload.model_dump()
@@ -289,26 +290,26 @@ def invite_contact(partner_id: str, payload: NewContact, request: Request, backg
         organisation = partners.get_partner(state, partner_id)
         if organisation["status"] != "active":
             raise ValueError("Switch the partner back on before inviting new contacts")
-        return organisation, partners.add_contact(state, organisation, data, invite)
+        return organisation, partners.add_contact(state, organisation, data, invite, actor)
     partner, user = run(request, action)
     return {"contact": partners.contact_view(user), "invite": deliver_invite(background, partner, user, token, invite)}
 
 
 @router.post("/api/partners/{partner_id}/users/{user_id}/invite")
 def resend_invite(partner_id: str, user_id: str, request: Request, background: BackgroundTasks):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
 
     def action(state):
-        return partners.get_partner(state, partner_id), partners.reinvite(state, partner_id, user_id, invite)
+        return partners.get_partner(state, partner_id), partners.reinvite(state, partner_id, user_id, invite, actor)
     partner, user = run(request, action)
     return {"contact": partners.contact_view(user), "invite": deliver_invite(background, partner, user, token, invite)}
 
 
 @router.get("/api/partners/{partner_id}/invoices")
 def partner_invoices(partner_id: str, request: Request):
-    authorize(request)
+    authorize(request, need="read")
     snapshot = request.app.state.store.read()
     with not_found():
         partner = partners.get_partner(snapshot, partner_id)
@@ -319,34 +320,35 @@ def partner_invoices(partner_id: str, request: Request):
 
 @router.post("/api/partners/{partner_id}/payments", status_code=201)
 def record_payment(partner_id: str, payload: Payment, request: Request):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
-    return run(request, lambda state: partners.record_payment(state, partner_id, payload.orderId, payload.reference))
+    return run(request, lambda state: partners.record_payment(
+        state, partner_id, payload.orderId, payload.reference, actor))
 
 
 @router.delete("/api/partners/{partner_id}/payments/{order_id}")
 def undo_payment(partner_id: str, order_id: str, request: Request):
-    authorize(request)
+    actor = authorize(request)
     limit(request)
-    return run(request, lambda state: partners.undo_payment(state, partner_id, order_id))
+    return run(request, lambda state: partners.undo_payment(state, partner_id, order_id, actor))
 
 
 @router.post("/api/partners/{partner_id}/orders", status_code=201)
 def place_order(partner_id: str, payload: OrderInput, request: Request):
-    authorize(request)
+    actor = authorize(request, need="operate")
     limit(request)
     data = payload.model_dump()
     return public_order(run(request, lambda state: partners.create_for_partner(
-        state, partners.get_partner(state, partner_id), data, create_order)))
+        state, partners.get_partner(state, partner_id), data, create_order, actor)))
 
 
 @router.post("/api/concerns/{concern_id}/messages", status_code=201)
 def staff_reply(concern_id: str, payload: Message, request: Request, background: BackgroundTasks):
-    authorize(request)
+    actor = authorize(request, need="operate")
     limit(request)
 
     def action(state):
-        concern = partners.add_message(state, concern_id, None, payload.text)
+        concern = partners.add_message(state, concern_id, None, payload.text, actor=actor)
         contact = state.get("partnerUsers", {}).get(concern["createdBy"])
         return partners.concern_view(concern), concern["subject"], contact
     view, subject, contact = run(request, action)
@@ -358,7 +360,7 @@ def staff_reply(concern_id: str, payload: Message, request: Request, background:
 
 @router.put("/api/concerns/{concern_id}/status")
 def staff_status(concern_id: str, payload: ConcernStatus, request: Request):
-    authorize(request)
+    actor = authorize(request, need="operate")
     limit(request)
     return run(request, lambda state: partners.concern_view(
-        partners.set_concern_status(state, concern_id, payload.status)))
+        partners.set_concern_status(state, concern_id, payload.status, actor=actor)))

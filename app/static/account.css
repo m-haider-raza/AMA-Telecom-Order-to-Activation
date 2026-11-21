@@ -230,11 +230,21 @@ textarea { min-height: 112px; resize: vertical; line-height: 1.45; }
 .auth-card { width: min(100%, 460px); padding: 32px; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
 .auth-card h2 { margin-bottom: 6px; font-size: 1.5rem; }
 .auth-card .sub { margin-bottom: 20px; color: var(--muted); }
+.auth-card .sub[data-pending] { visibility: hidden; }
 .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 24px; padding: 4px; border-radius: 12px; background: #f3e8e6; }
 .tabs [role="tab"] { min-height: 42px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-weight: 700; cursor: pointer; }
 .tabs [role="tab"]:hover { color: var(--ink); }
 .tabs [role="tab"][aria-selected="true"] { background: #fff; color: var(--red-dark); box-shadow: 0 1px 3px rgba(43, 18, 21, .18); }
 .alt { margin-top: 16px; color: var(--muted); font-size: .95rem; text-align: center; }
+.btn.microsoft {
+  gap: 12px; border: 1px solid #8c8c8c; background: #fff; color: #5e5e5e;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif; font-size: 1rem; font-weight: 600;
+}
+.btn.microsoft:hover { border-color: #5e5e5e; background: #f3f3f3; color: #2f2f2f; }
+.btn.microsoft .ms-logo { display: block; width: 21px; height: 21px; flex: none; }
+.sso-wait { display: flex; align-items: center; justify-content: center; min-height: 46px; margin: 0; font-weight: 700; }
+.sso-note { margin-top: 14px; }
+.sso-note strong { color: var(--ink); }
 .guest-links { display: none; gap: 6px; color: var(--muted); font-size: .95rem; text-align: center; }
 
 /* ---- account shell ---- */
@@ -491,6 +501,38 @@ details.more[open] > summary::after { margin-bottom: -3px; transform: rotate(-13
 .status-cell .cell-sub { margin-top: 4px; }
 .group-title { margin: 26px 0 12px; font-size: 1.1rem; }
 .group-title:first-child { margin-top: 0; }
+
+/* ---- enterprise approval: the public /approve page and the account's approval panel ---- */
+
+.lang-switch { display: flex; width: max-content; margin: 0 0 20px auto; padding: 3px; border-radius: 999px; background: #f3e8e6; }
+.lang-switch button {
+  min-height: 38px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted);
+  font-size: .9rem; font-weight: 700; cursor: pointer;
+}
+.lang-switch button:hover { color: var(--ink); }
+.lang-switch button[aria-pressed="true"] { background: #fff; color: var(--red-dark); box-shadow: 0 1px 3px rgba(43, 18, 21, .18); }
+
+.result-icon {
+  display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 16px; border-radius: 50%;
+  background: var(--neutral-bg); color: var(--neutral);
+}
+.result-icon .icon { width: 28px; height: 28px; }
+.result-icon.ok { background: var(--ok-bg); color: var(--ok); }
+.result-icon.warn { background: var(--warn-bg); color: var(--warn); }
+.result-icon.info { background: var(--info-bg); color: var(--info); }
+.result-icon.bad { background: var(--bad-bg); color: var(--bad); }
+.approval-card .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.approval-card .invite-facts { margin-bottom: 0; }
+.approval-card .invite-facts + .actions { margin-top: 20px; }
+
+.decision { display: grid; gap: 10px; }
+.decision-confirm { padding: 14px 16px; border: 1.5px solid #f1bdb8; border-radius: 12px; background: var(--red-tint); }
+.decision-confirm p { margin-bottom: 12px; font-weight: 600; }
+.decision-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.decision + .msg { margin: 12px 0 0; }
+.invite-facts + .decision, .facts + .decision { margin-top: 20px; }
+.panel.action > .decision-row, .panel.action > .decision { margin-top: 4px; }
+.sent-note { margin: 0 0 16px; color: var(--muted); }
 
 /* ---- small screens ---- */
 

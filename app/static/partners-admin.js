@@ -11,8 +11,10 @@
   const INVOICE_TONE = {scheduled: "mute", issued: "info", overdue: "bad", paid: "ok"};
   const INVOICE_RANK = {overdue: 0, issued: 1, scheduled: 2, paid: 3};
   const TERMS = [[0, "Due on receipt"], [14, "14 days"], [30, "30 days"], [45, "45 days"], [60, "60 days"]];
-  const LOCKED = "Sign in as staff, or load the manager token from Demo access, to manage partner accounts.";
-  const WRONG_TOKEN = "This token can't manage partner accounts. Use the manager token, or sign in as staff.";
+  const lockedText = () => session.staffAuth === "sso" ? "Sign in with Microsoft to manage partner accounts."
+    : "Sign in as staff, or load the manager token from Demo access, to manage partner accounts.";
+  const refusedText = () => session.staff ? `Your role (${session.staff.roleLabel}) cannot open partner accounts.`
+    : "This token can't manage partner accounts. Use the manager token, or sign in as staff.";
   const SHARED_TOKEN = "Shared partner token (no organisation)";
 
   let data = null, signature = "", managed = "", viewing = "", shown = "", inFlight = null;
@@ -67,11 +69,11 @@
     fillChoices();
   }
   async function load() {
-    if (session.role !== "admin" && !token) { lock(LOCKED); return; }
+    if (session.role !== "admin" && !token) { lock(lockedText()); return; }
     try { adopt(await api("/api/partners")); }
     catch (error) {
-      if (error.status === 401) lock(LOCKED);
-      else if (error.status === 403) lock(WRONG_TOKEN);
+      if (error.status === 401) lock(lockedText());
+      else if (error.status === 403) lock(refusedText());
       else if (!data) lock(`Partner accounts could not be loaded: ${error.message}`);
     }
   }
@@ -124,7 +126,7 @@
   }
 
   function openAdd() {
-    if (!requireToken()) return;
+    if (!requireToken("manage")) return;
     const name = $("#partner-form").elements.namedItem("name");
     if (session.mode === "live") {
       name.removeAttribute("pattern"); name.removeAttribute("title"); name.placeholder = "Anatolia Wholesale AS";
@@ -135,7 +137,7 @@
     $("#partner-error").textContent = ""; $("#partner-dialog").showModal();
   }
   async function createPartner(event) {
-    event.preventDefault(); if (!requireToken()) return;
+    event.preventDefault(); if (!requireToken("manage")) return;
     const form = event.currentTarget, fields = new FormData(form), field = key => String(fields.get(key) || "").trim();
     const body = {
       name: field("name"), contactName: field("contactName"), email: field("email"), phone: field("phone") || null,
@@ -199,14 +201,14 @@
       message, make("div", {class: "row-actions"}, save, toggle));
     say(message, note, true);
     form.addEventListener("submit", event => {
-      event.preventDefault(); if (!requireToken()) return;
+      event.preventDefault(); if (!requireToken("manage")) return;
       const fields = new FormData(form), field = key => String(fields.get(key) || "").trim();
       const body = {paymentTermsDays: Number(field("paymentTermsDays")), billingEmail: field("billingEmail") || null, apiClient: form.elements.namedItem("apiClient").checked};
       if (field("name") !== partner.name) body.name = field("name");
       saveSettings(partner, body, "Saved.", save, message);
     });
     toggle.addEventListener("click", () => {
-      if (!requireToken()) return;
+      if (!requireToken("manage")) return;
       const off = partner.status === "active";
       if (off && !confirm(`Switch off ${partner.name}? Everyone at this partner is signed out and cannot sign in until you switch it back on.`)) return;
       saveSettings(partner, {status: off ? "disabled" : "active"}, off ? "Partner switched off." : "Partner is active again.", toggle, message);
@@ -242,7 +244,7 @@
     if (person.pending) {
       const resend = make("button", {class: "button secondary compact", type: "button", text: "Send a new invitation"});
       resend.addEventListener("click", () => {
-        if (!requireToken()) return;
+        if (!requireToken("manage")) return;
         working(resend, async () => {
           try {
             const result = await send(`/api/partners/${enc(partner.id)}/users/${enc(person.id)}/invite`, "POST");
@@ -268,7 +270,7 @@
       message, make("div", {class: "row-actions"}, submit));
     say(message, "");
     form.addEventListener("submit", event => {
-      event.preventDefault(); if (!requireToken()) return;
+      event.preventDefault(); if (!requireToken("manage")) return;
       const fields = new FormData(form);
       working(submit, async () => {
         try {
@@ -323,7 +325,7 @@
       make("td", null, action));
   }
   function settle(partner, invoice, reference, status, button) {
-    if (!requireToken()) return;
+    if (!requireToken("manage")) return;
     const paid = invoice.status === "paid", base = `/api/partners/${enc(partner.id)}/payments`;
     if (paid && !confirm(`Reverse the recorded payment for ${invoice.number}?`)) return;
     return working(button, async () => {
@@ -373,8 +375,11 @@
   function openConcern(id) {
     viewing = id; shown = "";
     $("#concern-reply").reset(); $("#concern-error").textContent = "";
-    $("#concern-hint").textContent = session.delivery ? "The partner sees your reply in their portal and we email it to them."
+    const reader = !can("operate");
+    $("#concern-hint").textContent = reader ? `Your role (${session.staff.roleLabel}) can read concerns but not reply to them.`
+      : session.delivery ? "The partner sees your reply in their portal and we email it to them."
       : "The partner sees your reply in their portal. Email delivery is not switched on in this environment.";
+    [$("#concern-send"), $("#concern-status"), $("#concern-reply").elements.namedItem("text")].forEach(control => { control.disabled = reader; });
     paintConcern();
     $("#concern-dialog").showModal();
   }
@@ -426,6 +431,22 @@
     });
   }
 
+  /* A read-only role may look at a partner account but not change it. The server refuses the writes anyway; this
+     disables the controls and says why inside the dialog, because a toast would sit behind it. */
+  function guardManage() {
+    if (can("manage")) return;
+    const dialog = $("#manage-dialog");
+    dialog.querySelectorAll("input, select, textarea, button:not(.close-dialog)").forEach(control => { control.disabled = true; });
+    if (dialog.querySelector("#manage-readonly")) return;
+    $("#manage-facts").before(make("p", {id: "manage-readonly", class: "muted", role: "status",
+      text: `Your role (${session.staff.roleLabel}) can read this account but not change it. Ask a service manager.`}));
+  }
+  function guardAdd() {
+    const reason = can("manage") ? "" : `Your role (${session.staff.roleLabel}) cannot add partners.`;
+    $("#partner-add").disabled = Boolean(reason); $("#partner-add").title = reason;
+  }
+  new MutationObserver(guardManage).observe($("#manage-dialog"), {childList: true, subtree: true});
+
   $("#partner-add").addEventListener("click", openAdd);
   $("#partner-form").addEventListener("submit", createPartner);
   $("#invite-copy").addEventListener("click", copyInvite);
@@ -439,6 +460,6 @@
   setInterval(() => poll(), POLL_MS);
   const booted = setInterval(() => {
     if (document.body.classList.contains("booting")) return;
-    clearInterval(booted); poll(true);
+    clearInterval(booted); guardAdd(); poll(true);
   }, 200);
 })();

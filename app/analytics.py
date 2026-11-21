@@ -108,12 +108,19 @@ def order_facts(order, events):
     }
 
 
+def turned_away(order):
+    """Declined by the enterprise, or withdrawn by the service team, before any agent started on it. It never entered
+    the pipeline, so it says nothing about how the pipeline performs and must not count as fallout."""
+    return (order.get("enterpriseApproval") or {}).get("status") in ("declined", "withdrawn")
+
+
 def facts_for(source):
-    """(order, facts) for every order of a state-shaped dict."""
+    """(order, facts) for every order of a state-shaped dict that entered the pipeline."""
     events = defaultdict(list)
     for event in source["events"]:
         events[event["orderId"]].append(event)
-    return [(order, order_facts(order, events[order["id"]])) for order in source["orders"].values()]
+    return [(order, order_facts(order, events[order["id"]])) for order in source["orders"].values()
+            if not turned_away(order)]
 
 
 def spread(values):

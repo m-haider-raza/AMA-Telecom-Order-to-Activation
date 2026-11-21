@@ -14,7 +14,7 @@ def resolve(request, snapshot=None):
     if session is None:
         return None
     if session["r"] == "admin":
-        return {"role": "admin"}
+        return {"role": "admin", "staff": auth.staff_person(session)}
     snapshot = snapshot if snapshot is not None else request.app.state.store.read()
     if session["r"] == "customer":
         customer = snapshot.get("customers", {}).get(session["s"])

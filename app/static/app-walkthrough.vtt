@@ -1,0 +1,64 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:08.063
+Customers register, verify email, and sign in. Forgotten passwords can be reset. All accounts shown are synthetic.
+
+2
+00:00:08.667 --> 00:00:16.538
+My orders shows your requests, progress, and next action. Open an order for its delivery tracker and update history.
+
+3
+00:00:17.167 --> 00:00:24.673
+Choose Internet, SD-WAN, or Cloud Connect, then enter the site details and your preferred contact channel.
+
+4
+00:00:25.292 --> 00:00:32.874
+Correct missing site information to release a hold. Profile manages contact preferences and your password.
+
+5
+00:00:33.500 --> 00:00:40.165
+Partners accept a staff invitation, choose a password, and sign in to their own organisation.
+
+6
+00:00:40.792 --> 00:00:50.306
+Deliveries highlights expected dates, delays, and required actions. Update installation details and access notes to keep work moving.
+
+7
+00:00:50.917 --> 00:00:58.989
+Payments shows outstanding, overdue, and paid invoices, with due dates and references. No money actually moves.
+
+8
+00:00:59.625 --> 00:01:06.673
+Raise a delivery, billing, or technical concern, link an order, and follow the service team's replies.
+
+9
+00:01:07.292 --> 00:01:11.750
+Service staff sign in with the access token on this deployment.
+
+10
+00:01:12.375 --> 00:01:23.051
+The control tower summarises activations, exceptions, and recoveries. Order workspace opens each journey's execution history and tool
+activity.
+
+11
+00:01:23.667 --> 00:01:30.993
+Exception desk brings route conflicts and change-window holds to people for explicit approval or rejection.
+
+12
+00:01:31.625 --> 00:01:39.816
+Staff invite partners, create orders, manage billing terms, and resolve questions through the shared concerns inbox.
+
+13
+00:01:40.417 --> 00:01:55.817
+Validate checks feasibility. Decompose plans service and resource work. Provision orchestrates tasks. Recover retries known faults.
+Communicate sends updates. The supervisor coordinates handoffs; exceptions need people.
+
+14
+00:01:56.458 --> 00:02:10.879
+Analytics measures delivery time, fallout, and agent bottlenecks. Compare live orders with isolated benchmarks against seven-day and
+eight-percent targets. Synthetic timings are not real carrier performance.
+
+15
+00:02:11.500 --> 00:02:20.587
+Trust and governance explains safety boundaries and provenance, with an exportable audit trail. Service provisioning remains simulated.

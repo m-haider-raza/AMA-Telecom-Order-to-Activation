@@ -1,0 +1,20 @@
+{
+  "title": "TürkBizTel app highlights",
+  "duration": 141.208333,
+  "narration": {
+    "model": "Kokoro-82M v1.0",
+    "voice": "bm_george",
+    "language": "en-gb",
+    "speed": 1.0,
+    "deliveryTempo": 1.0
+  },
+  "disclosure": "Isolated local capture with synthetic accounts and hidden credentials. Provisioning and payments are simulated.",
+  "chapters": [
+    {"title": "Customer", "start": 0.0},
+    {"title": "Partner", "start": 33.500},
+    {"title": "Service team", "start": 67.292},
+    {"title": "Five agents", "start": 100.417},
+    {"title": "Analytics", "start": 116.458},
+    {"title": "Trust and governance", "start": 131.500}
+  ]
+}

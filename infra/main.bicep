@@ -20,10 +20,30 @@ param sqlAdminLogin string = ''
 param sqlAdminObjectId string = ''
 @allowed(['User', 'Group', 'Application'])
 param sqlAdminPrincipalType string = 'User'
-param openAiModel string = 'gpt-4o-mini'
-param openAiModelVersion string = '2024-07-18'
+param openAiModel string = 'gpt-4.1-mini'
+param openAiModelVersion string = '2025-04-14'
 param budgetEmail string = ''
 param budgetStartDate string = utcNow('yyyy-MM-01')
+@description('"live" is the production site: customers register and sign in with their own account and the console is for signed-in staff. "demo" is the synthetic-data demonstration.')
+@allowed(['demo', 'live'])
+param appMode string = 'demo'
+@description('How the service team signs in. "token" is the shared manager access token (the original app). "sso" is Microsoft Entra ID single sign-on: one account per person, role-based access and every change attributed to the person who made it. "sso" needs appMode live, ssoClientId and sessionSecret; scripts/Register-StaffSso.ps1 creates the app registration.')
+@allowed(['token', 'sso'])
+param staffAuth string = 'token'
+@description('Application (client) ID of the Microsoft Entra app registration the service team signs in through. Required when staffAuth is sso.')
+param ssoClientId string = ''
+@description('Hours a staff sign-in lasts before the person must sign in again (the app accepts 0.25 to 12).')
+@minValue(1)
+@maxValue(12)
+param staffSessionHours int = 4
+@secure()
+@description('Random value of at least 32 characters that signs customer and staff sessions. Required when staffAuth is sso.')
+param sessionSecret string = ''
+@description('Create Azure Communication Services e-mail (an Azure-managed sender domain, data location Europe) and use it for customer messages and one-time codes. A live site cannot hand out one-time codes without it.')
+param enableEmail bool = false
+@description('Most orders the live site stores.')
+@minValue(200)
+param maxOrders int = 5000
 
 var suffix = uniqueString(resourceGroup().id)
 var registryName = '${prefix}acr${suffix}'
@@ -280,6 +300,68 @@ resource aiRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (enabl
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd')
   }
 }
+resource emailService 'Microsoft.Communication/emailServices@2023-04-01' = if (enableEmail) {
+  name: '${prefix}-email-${suffix}'
+  location: 'global'
+  properties: { dataLocation: 'Europe' }
+}
+resource emailDomain 'Microsoft.Communication/emailServices/domains@2023-04-01' = if (enableEmail) {
+  parent: emailService
+  name: 'AzureManagedDomain'
+  location: 'global'
+  properties: {
+    domainManagement: 'AzureManaged'
+    userEngagementTracking: 'Disabled'
+  }
+}
+resource communication 'Microsoft.Communication/communicationServices@2023-04-01' = if (enableEmail) {
+  name: '${prefix}-comm-${suffix}'
+  location: 'global'
+  properties: {
+    dataLocation: 'Europe'
+    linkedDomains: [emailDomain.id]
+  }
+}
+
+var origin = 'https://${appName}.${environment.properties.defaultDomain}'
+var appSecrets = concat(
+  [{ name: 'manager-token', value: adminToken }, { name: 'partner-token', value: partnerToken }],
+  empty(sessionSecret) ? [] : [{ name: 'session-secret', value: sessionSecret }],
+  enableEmail ? [{ name: 'acs-cs', value: communication!.listKeys().primaryConnectionString }] : []
+)
+var appEnv = concat(
+  [
+    { name: 'DEMO_ADMIN_TOKEN', secretRef: 'manager-token' }
+    { name: 'DEMO_PARTNER_TOKEN', secretRef: 'partner-token' }
+    { name: 'AZURE_CLIENT_ID', value: identity.properties.clientId }
+    { name: 'AZURE_STORAGE_ACCOUNT_URL', value: storage.properties.primaryEndpoints.blob }
+    { name: 'AZURE_REGION', value: location }
+    { name: 'DEMO_PUBLIC_ORIGIN', value: origin }
+    { name: 'DEMO_TICK_SECONDS', value: '3' }
+    { name: 'AZURE_OPENAI_ENDPOINT', value: enableOpenAI ? openai!.properties.endpoint : '' }
+    { name: 'AZURE_OPENAI_DEPLOYMENT', value: enableOpenAI ? 'telecom-advisor' : '' }
+    { name: 'AMA_SQL_SERVER', value: enableSql ? sqlServer!.properties.fullyQualifiedDomainName : '' }
+    { name: 'AMA_SQL_DATABASE', value: enableSql ? sqlDatabaseName : '' }
+    { name: 'AMA_SQL_AUTO_SCHEMA', value: 'false' }
+  ],
+  appMode == 'live' ? [
+    { name: 'AMA_MODE', value: 'live' }
+    { name: 'AMA_PUBLIC_ORIGIN', value: origin }
+    { name: 'AMA_MAX_ORDERS', value: string(maxOrders) }
+  ] : [],
+  empty(sessionSecret) ? [] : [{ name: 'AMA_SESSION_SECRET', secretRef: 'session-secret' }],
+  enableEmail ? [
+    { name: 'ACS_CONNECTION_STRING', secretRef: 'acs-cs' }
+    { name: 'ACS_EMAIL_SENDER', value: 'DoNotReply@${emailDomain!.properties.mailFromSenderDomain}' }
+    { name: 'AMA_DELIVERY', value: 'live' }
+  ] : [],
+  staffAuth == 'sso' ? [
+    { name: 'AMA_STAFF_AUTH', value: 'sso' }
+    { name: 'AMA_SSO_TENANT_ID', value: tenant().tenantId }
+    { name: 'AMA_SSO_CLIENT_ID', value: ssoClientId }
+    { name: 'AMA_STAFF_SESSION_HOURS', value: string(staffSessionHours) }
+  ] : []
+)
 resource app 'Microsoft.App/containerApps@2024-03-01' = if (deployApp) {
   name: appName
   location: location
@@ -296,27 +378,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = if (deployApp) {
         allowInsecure: false
       }
       registries: [{ server: registry.properties.loginServer, identity: identity.id }]
-      secrets: [{ name: 'manager-token', value: adminToken }, { name: 'partner-token', value: partnerToken }]
+      secrets: appSecrets
     }
     template: {
       containers: [{
         name: 'activation'
         image: '${registry.properties.loginServer}/ama-activation:${imageTag}'
         resources: { cpu: json('0.25'), memory: '0.5Gi' }
-        env: [
-          { name: 'DEMO_ADMIN_TOKEN', secretRef: 'manager-token' }
-          { name: 'DEMO_PARTNER_TOKEN', secretRef: 'partner-token' }
-          { name: 'AZURE_CLIENT_ID', value: identity.properties.clientId }
-          { name: 'AZURE_STORAGE_ACCOUNT_URL', value: storage.properties.primaryEndpoints.blob }
-          { name: 'AZURE_REGION', value: location }
-          { name: 'DEMO_PUBLIC_ORIGIN', value: 'https://${appName}.${environment.properties.defaultDomain}' }
-          { name: 'DEMO_TICK_SECONDS', value: '3' }
-          { name: 'AZURE_OPENAI_ENDPOINT', value: enableOpenAI ? openai!.properties.endpoint : '' }
-          { name: 'AZURE_OPENAI_DEPLOYMENT', value: enableOpenAI ? 'telecom-advisor' : '' }
-          { name: 'AMA_SQL_SERVER', value: enableSql ? sqlServer!.properties.fullyQualifiedDomainName : '' }
-          { name: 'AMA_SQL_DATABASE', value: enableSql ? sqlDatabaseName : '' }
-          { name: 'AMA_SQL_AUTO_SCHEMA', value: 'false' }
-        ]
+        env: appEnv
         probes: [
           {
             type: 'Startup'
@@ -378,6 +447,9 @@ output environmentName string = environment.name
 output storageAccountName string = storage.name
 output managedIdentityName string = identity.name
 output managedIdentityClientId string = identity.properties.clientId
+output managedIdentityPrincipalId string = identity.properties.principalId
+output appOrigin string = origin
+output emailSender string = enableEmail ? 'DoNotReply@${emailDomain!.properties.mailFromSenderDomain}' : ''
 output sqlServerFqdn string = enableSql ? sqlServer!.properties.fullyQualifiedDomainName : ''
 output sqlDatabaseName string = enableSql ? sqlDatabaseName : ''
 output demoUrl string = deployApp ? 'https://${app!.properties.configuration.ingress.fqdn}' : ''

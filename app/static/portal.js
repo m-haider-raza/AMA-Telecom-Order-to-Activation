@@ -1,7 +1,7 @@
 "use strict";
 const $ = (selector) => document.querySelector(selector);
 const states = {acknowledged: "Received", inProgress: "In progress", pendingApproval: "Under review", held: "On hold",
-  awaitingCustomer: "Action needed from you", completed: "Processed", rejected: "Rejected", failed: "Failed"};
+  awaitingCustomer: "Action needed from you", awaitingEnterpriseApproval: "Waiting for your company's approval", completed: "Processed", rejected: "Rejected", failed: "Failed"};
 let current = null;
 
 async function api(path, options = {}) {

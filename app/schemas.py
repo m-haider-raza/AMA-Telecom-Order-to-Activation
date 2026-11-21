@@ -1,5 +1,8 @@
 """Request models and the transaction helper shared by the staff API and the customer-accounts router."""
 
+import json
+import logging
+import sys
 from typing import Literal
 
 from fastapi import HTTPException
@@ -80,8 +83,40 @@ class BenchmarkRequest(BaseModel):
     size: Literal[50, 100] = 100
 
 
+STAFF_LOG = logging.getLogger("ama.audit")
+LOGGED_FIELDS = ("sequence", "at", "orderId", "actor", "action", "detail", "by", "changes", "hash")
+
+
+def configure_staff_log():
+    """Send the staff audit lines to the container log as bare JSON, one per line, so they can be queried as such."""
+    if not STAFF_LOG.handlers:
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setFormatter(logging.Formatter("%(message)s"))
+        STAFF_LOG.addHandler(handler)
+    STAFF_LOG.setLevel(logging.INFO)
+    STAFF_LOG.propagate = False
+
+
+def log_staff_actions(entries):
+    """A second, independent copy of what each signed-in staff member did, written only after the change is saved."""
+    for entry in entries:
+        if entry.get("by"):
+            line = {"log": "staff-audit", **{key: entry[key] for key in LOGGED_FIELDS if key in entry}}
+            STAFF_LOG.info(json.dumps(line, ensure_ascii=False, separators=(",", ":")))
+
+
 def transact(app, action):
+    added = []
+
+    def run(state):
+        start = len(state["audit"])
+        result = action(state)
+        added[:] = state["audit"][start:]  # replaced on every retry, so only the committed attempt is logged
+        return result
+
     try:
-        return app.state.store.transact(action)
+        result = app.state.store.transact(run)
     except (ValueError, KeyError) as exc:
         raise HTTPException(409, str(exc)) from exc
+    log_staff_actions(added)
+    return result

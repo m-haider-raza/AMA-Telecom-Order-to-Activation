@@ -3,6 +3,9 @@ param(
     [Parameter(Mandatory=$true)][string]$SubscriptionId,
     [Parameter(Mandatory=$true)][ValidatePattern('^rg-ama[a-zA-Z0-9-]+$')][string]$ResourceGroup,
     [Parameter(Mandatory=$true)][string]$ConfirmResourceGroup,
+    # Also remove the Microsoft Entra application that single sign-on created for this stack. It lives in the
+    # directory, not in the resource group, so deleting the group alone leaves it behind.
+    [switch]$RemoveStaffSso,
     [string]$Az='az'
 )
 $ErrorActionPreference='Stop'
@@ -15,3 +18,6 @@ if ($parsed.tags.project -ne 'AMA30' -or $parsed.tags.environment -ne 'synthetic
 }
 & $Az group delete --subscription $SubscriptionId --name $ResourceGroup --yes
 if ($LASTEXITCODE -ne 0) { throw 'Deletion failed; inspect the exact RG in Azure Portal.' }
+if ($RemoveStaffSso) {
+    & (Join-Path $PSScriptRoot 'Register-StaffSso.ps1') -ResourceGroup $ResourceGroup -SubscriptionId $SubscriptionId -Az $Az -Remove
+}

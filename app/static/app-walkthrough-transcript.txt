@@ -1,0 +1,49 @@
+TürkBizTel | App highlights
+Isolated local capture with synthetic accounts. No production credentials or personal data. Locally generated narration.
+
+Existing films' British male George preset, generated locally at natural speed; no reference voice used.
+
+00:00:00.000  CUSTOMER - Customer sign-in
+Customers register, verify email, and sign in. Forgotten passwords can be reset. All accounts shown are synthetic.
+
+00:00:08.667  CUSTOMER - Track your orders
+My orders shows your requests, progress, and next action. Open an order for its delivery tracker and update history.
+
+00:00:17.167  CUSTOMER - Request a service
+Choose Internet, SD-WAN, or Cloud Connect, then enter the site details and your preferred contact channel.
+
+00:00:25.292  CUSTOMER - Keep information current
+Correct missing site information to release a hold. Profile manages contact preferences and your password.
+
+00:00:33.500  PARTNER - Partner sign-in
+Partners accept a staff invitation, choose a password, and sign in to their own organisation.
+
+00:00:40.792  PARTNER - Manage deliveries
+Deliveries highlights expected dates, delays, and required actions. Update installation details and access notes to keep work moving.
+
+00:00:50.917  PARTNER - Review payments
+Payments shows outstanding, overdue, and paid invoices, with due dates and references. No money actually moves.
+
+00:00:59.625  PARTNER - Raise a concern
+Raise a delivery, billing, or technical concern, link an order, and follow the service team's replies.
+
+00:01:07.292  SERVICE TEAM - Service-team sign-in
+Service staff sign in with the access token on this deployment.
+
+00:01:12.375  SERVICE TEAM - Run the order desk
+The control tower summarises activations, exceptions, and recoveries. Order workspace opens each journey's execution history and tool activity.
+
+00:01:23.667  SERVICE TEAM - Resolve exceptions
+Exception desk brings route conflicts and change-window holds to people for explicit approval or rejection.
+
+00:01:31.625  SERVICE TEAM - Manage wholesale partners
+Staff invite partners, create orders, manage billing terms, and resolve questions through the shared concerns inbox.
+
+00:01:40.417  AGENT TEAM - Five bounded agents
+Validate checks feasibility. Decompose plans service and resource work. Provision orchestrates tasks. Recover retries known faults. Communicate sends updates. The supervisor coordinates handoffs; exceptions need people.
+
+00:01:56.458  ANALYTICS - Measure delivery and fallout
+Analytics measures delivery time, fallout, and agent bottlenecks. Compare live orders with isolated benchmarks against seven-day and eight-percent targets. Synthetic timings are not real carrier performance.
+
+00:02:11.500  TRUST & GOVERNANCE - Traceable work. Human control.
+Trust and governance explains safety boundaries and provenance, with an exportable audit trail. Service provisioning remains simulated.

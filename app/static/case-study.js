@@ -404,6 +404,25 @@
     return { load: () => { if (!frame.getAttribute("src")) frame.src = frame.dataset.src; } };
   }
 
+  /* ---------- Service-team entry ---------- */
+
+  /* The service team signs in with a Microsoft work account on a single-sign-on deployment and with an access
+     token otherwise. The app says which, so the page describes the entry that is really there. */
+  function describeStaffEntry() {
+    const link = $("#staff-entry");
+    const note = $("#staff-entry-note");
+    if (!link || !note || !window.fetch) return;
+    fetch("/api/auth/me", { credentials: "same-origin", headers: { Accept: "application/json" } })
+      .then((reply) => (reply.ok ? reply.json() : null))
+      .then((me) => {
+        if (!me || me.staffAuth !== "sso") return;
+        link.textContent = "Sign in with your Microsoft work account";
+        note.textContent = ". Your role decides what you can do, and your name is recorded with every change you "
+          + "make to an order. Partner sign-in details are shared with the submission, never on this page.";
+      })
+      .catch(() => {});
+  }
+
   /* ---------- Count-up on the revenue figure ---------- */
 
   let countRun = 0;
@@ -438,6 +457,7 @@
   const films = $$(".cinema").map(setupFilm);
   const deck = setupDeck();
   const appFrame = setupAppFrame();
+  describeStaffEntry();
   let scene = "";
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
