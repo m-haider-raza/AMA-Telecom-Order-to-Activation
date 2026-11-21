@@ -13,7 +13,7 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 | Live case-study site, with the working demonstrator embedded | [case-study](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study) |
 | Current-state film (1:51) | [current-scenario.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/current-scenario.mp4) |
 | Solution film (2:56) | [solution-tower-v6.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
-| Architecture deck (14 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
+| Architecture deck (16 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
 | Azure architecture as deployed | [docs/azure-architecture.md](docs/azure-architecture.md) |
 | What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |

@@ -32,7 +32,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
 
 ## Assignment case-study page
 
-The public app, messages, films and fourteen-slide presentation use **TürkBizTel**.
+The public app, messages, films and sixteen-slide presentation use **TürkBizTel**.
 Every film has a separate `*-turkbiztel.mp4` edition and poster; existing public
 film URLs serve those editions through `app/branded_static.py`. Source MP4s remain
 byte-for-byte intact, and captions, chapters and soundtracks are unchanged.
@@ -48,7 +48,7 @@ existing sign-ins; they are compatibility identifiers, not public branding.
 |---|---|
 | Intro | The case study, the story in one sentence, the headline numbers and the four stops |
 | 1 Today | The latest current-state film, `current-scenario.mp4` (1 min 51 s), with chapters, captions and a transcript |
-| 2 Architecture | The 14-slide architecture deck, including the cost of implementation (slide 13), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
+| 2 Architecture | The 16-slide architecture deck, including two market-research slides on where public B2B telecom orders stall and drop out (slides 3 and 10) and the cost of implementation (slide 15), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
 | 3 Solution | The customer solution film, `solution-tower-v6.mp4` (2 min 56 s), using the current-state film's British-English male narrator, introducing each AI agent once and using shorter agent names afterward, with chapters, captions and a transcript |
 | 4 Live app | This app, running inside the page (sign in, service-team access-token sign-in, place an order, track an order), with a note on what customers, partners and the service team each see |
 
@@ -59,7 +59,7 @@ Move with **Start the journey**, the chapter rail or the *Next* and *Back* butto
 - **Service-team entry.** Select **Service team sign-in** above the embedded app, or open `/login#staff` directly. The token option also appears above the email fields on the normal sign-in form. The frame's **Open in a new tab** link preserves that panel; each tab still signs in separately.
 - **No credentials.** The page never shows a token or a password. Partner and service-team sign-in details are shared with the submission, not published on the page.
 - **Honest labels.** The 35 days and 30% fallout are the assignment's baselines. The under-7-days and under-8% goals and the TRY 900 million and TRY 150 million figures are targets to prove in a pilot, not results. Hosting in-country on Azure Local is proposed, not deployed. The cost slide is a planning estimate built on stated assumptions (Azure list prices for the demo, assumed team size and rates for the programme), not a quote. The operator is fictional and the TM Forum-style APIs are simplified, not certified.
-- **The deck on the web is an edition of the original.** The branded web edition has 14 slides, including the cost-of-implementation slide, plus a PDF. The author's working deck is kept outside this repository. It ended with a hand-off slide (the 15th) that held local file paths, demo sign-in details and the live admin token. Never publish or commit that slide; if a deck was ever shared with it, rotate `DEMO_ADMIN_TOKEN` and the demo accounts' passwords. The deployed demonstrator's admin token and demo sign-ins were last rotated on 20 November 2026. The shipped PowerPoint carries the author's name in its document properties and a Microsoft sensitivity-label part (`docMetadata/LabelInfo.xml`) from the tenant it was authored in, so confirm the deck may be shared before you distribute it. To change a slide, export it again as `slide-NN.webp` and `thumb-NN.webp` in `app/static/case-study/` and update its caption in `case-study.html`.
+- **The deck on the web is an edition of the original.** The branded web edition has 16 slides, including the two market-research slides and the cost-of-implementation slide, plus a PDF. The author's working deck is kept outside this repository. It ended with a hand-off slide (the 17th) that held local file paths, demo sign-in details and the live admin token. Never publish or commit that slide; if a deck was ever shared with it, rotate `DEMO_ADMIN_TOKEN` and the demo accounts' passwords. The deployed demonstrator's admin token and demo sign-ins were last rotated on 20 November 2026. The shipped PowerPoint carries the author's name in its document properties and a Microsoft sensitivity-label part (`docMetadata/LabelInfo.xml`) from the tenant it was authored in, so confirm the deck may be shared before you distribute it. To change a slide, export it again as `slide-NN.webp` and `thumb-NN.webp` in `app/static/case-study/` and update its caption in `case-study.html`.
 
 `tests/test_case_study.py` covers the routes, framing headers, content-security policy, absence of credentials and local paths, service-team entry, the files the page uses, film and caption endpoints, and chapter timings against the latest narration.
 

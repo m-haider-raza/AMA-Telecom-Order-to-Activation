@@ -143,7 +143,7 @@ def test_page_carries_no_credentials_or_local_paths():
 def test_every_file_the_page_uses_is_served(site):
     paths = static_paths()
     assert {"/static/case-study.css", "/static/case-study.js", "/static/current-scenario.mp4",
-            "/static/solution-tower-v6.mp4", "/static/case-study/slide-14.webp"} <= set(paths)
+            "/static/solution-tower-v6.mp4", "/static/case-study/slide-16.webp"} <= set(paths)
     for path in paths:
         reply = site.get(path, headers={"Range": "bytes=0-0"})
         assert reply.status_code in (200, 206), path
@@ -229,17 +229,27 @@ def slide_texts(deck):
 def test_published_deck_shows_the_cost_of_implementation_before_the_risks():
     with zipfile.ZipFile(PPTX) as deck:
         texts = slide_texts(deck)
-    assert len(texts) == 14
-    assert "cost of implementation" in texts[12].lower() and "payback" in texts[12].lower()
-    assert "risks" in texts[13].lower()
-    assert 'data-slide="13" data-kicker="Cost of implementation' in HTML
+    assert len(texts) == 16
+    assert "cost of implementation" in texts[14].lower() and "payback" in texts[14].lower()
+    assert "risks" in texts[15].lower()
+    assert 'data-slide="15" data-kicker="Cost of implementation' in HTML
+
+
+def test_published_deck_frames_the_design_with_the_market_research():
+    """Slide 3 shows where public B2B telecom orders stall and drop out; slide 10 answers it with the design."""
+    with zipfile.ZipFile(PPTX) as deck:
+        texts = slide_texts(deck)
+    assert "market research" in texts[2].lower() and "benchmarks" in texts[2].lower()
+    assert "market research" in texts[9].lower() and "what it means for the design" in texts[9].lower()
+    assert 'data-slide="3" data-kicker="Market research' in HTML
+    assert 'data-slide="10" data-kicker="Market research' in HTML
 
 
 def test_published_deck_is_the_clean_web_edition():
     with zipfile.ZipFile(PPTX) as deck:
         names = deck.namelist()
         slides = [name for name in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
-        assert len(slides) == 14 and "ppt/slides/slide15.xml" not in names
+        assert len(slides) == 16 and "ppt/slides/slide17.xml" not in names
         for name in names:
             if name.endswith((".xml", ".rels")):
                 text = deck.read(name).decode("utf-8", "replace")
@@ -247,5 +257,6 @@ def test_published_deck_is_the_clean_web_edition():
                     assert leak not in text, (name, leak)
     pdf = PDF.read_bytes()
     assert pdf.startswith(b"%PDF")
+    assert re.findall(rb"/Count (\d+)", pdf) == [str(len(slides)).encode()]
     for leak in LEAKS:
         assert leak.encode() not in pdf, leak
