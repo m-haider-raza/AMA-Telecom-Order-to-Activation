@@ -2,18 +2,24 @@
 
 A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator**, presented under the **TürkBizTel** brand. It follows dedicated Internet, managed SD-WAN and cloud-connect orders from a customer or a wholesale partner through to activation, with one supervisor per order and five specialist AI agents.
 
-*Status as of 21 November 2026.*
+*Status as of 22 November 2026.*
 
 > **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. The Azure OpenAI advisor is real, but it has no authority to execute anything.
 
 ## Start here
 
+Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
+The recorded demo and the interactive app are separate chapters. The links below point to the current published editions.
+
 | What | Where |
 |---|---|
+| Assignment: AMA Assignment 30 – Haider Raza | [Assignment PDF](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/blob/main/AMA_Assignment30_HaiderRaza.pdf) |
+| GitHub repository | [AMA Telecom Order-to-Activation](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation) |
 | Live case-study site, with the working demonstrator embedded | [case-study](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study) |
 | Current-state film (1:51) | [current-scenario.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/current-scenario.mp4) |
 | Solution film (2:56) | [solution-tower-v6.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
-| App highlights (2:21), then try it live | [Live app chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app) or [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough.mp4) |
+| App highlights (2:21), then try it live | [Live App Demo chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/demo), then [Live App](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app), or [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough.mp4) |
+| Live App with token option | [Service-team token sign-in](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/login#staff) or [interactive Live App chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app) |
 | Complete app tour (5:13), natural-paced George narration | [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough-full.mp4) or [transcript](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough-full-transcript.txt) |
 | Architecture deck (16 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
 | Market-research slides | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pdf) |
@@ -22,14 +28,14 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 | Azure architecture as deployed | [docs/azure-architecture.md](docs/azure-architecture.md) |
 | What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |
-| Every shareable asset in one release | [turkbiztel-case-study-2026-11-21](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-21) |
-| Current films, captions, transcripts, decks, research and guides in one download | [Artefact bundle](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-21.zip) |
+| Every shareable asset in one release | [turkbiztel-case-study-2026-11-22](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-22) |
+| Current films, captions, transcripts, decks, research and guides in one download | [Artefact bundle](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-22.zip) |
 
 The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band. A second, standalone build of the same app signs the service team in with **Microsoft Entra ID single sign-on** instead, so every change is recorded against the person who made it. In that build a service engineer places an order for an enterprise chosen from a list, and that enterprise's contact approves it by e-mail before any agent starts. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md).
 
 ## What's new in this update
 
-- **Narrated app highlights (2:21).** The Live app chapter now connects the solution film to the working customer, partner and service-team workflows, including the five agents, Analytics and governance. George speaks at natural speed; long pages scroll to the bottom, with captions below the app. The full 5:13 version is also available to download.
+- **Five-step case-study journey.** Today → Architecture → Solution → Live App Demo → Live App. The 2:21 demo chapter covers customer, partner and service-team workflows, the five agents, Analytics and governance; step 5 is the separate interactive app. George speaks at natural speed; long pages scroll to the bottom, with captions below the app. The full 5:13 version is also available to download.
 - **Orders placed for an enterprise, approved by the enterprise.** In the single sign-on build, **New order** now lists every enterprise in the database instead of one demo company. A service engineer picks one and places the order on its behalf. The enterprise's point of contact is e-mailed a personal link, and no agent starts until they approve, from the e-mail or from their own account. They can decline, and the service team can send the e-mail again or withdraw the request. Every step is recorded against the person who took it. [How it works](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise).
 - **Data copied across, once.** `scripts/Copy-AppData.ps1` copies what the access-token app holds into the single sign-on app: the enterprise accounts, the partners and their contacts, every order that has settled with its messages and history, the partner concerns and the audit trail. Enterprises and partner contacts keep their passwords. The two apps stay separate: it is a one-time snapshot, nothing is synchronised afterwards, and the access-token app is only read. [How it works](docs/STAFF-SSO.md#copying-the-data-from-the-token-mode-app).
 - **Service-team single sign-on.** A new deployment mode replaces the shared access token with Microsoft Entra ID. Each person signs in with their own work account, an Entra app role (service manager, operator or auditor) decides what they can do, and the audit trail records who changed what on every order. It is a separate stack, so the existing app is unchanged, and customers still register and sign in with their own e-mail and password. [How it works and how to deploy it](docs/STAFF-SSO.md).

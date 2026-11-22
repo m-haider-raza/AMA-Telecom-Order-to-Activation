@@ -23,7 +23,7 @@ PDF = DECK / "Agentic_Order_to_Activation_Architecture.pdf"
 HTML = (STATIC / "case-study.html").read_text(encoding="utf-8")
 SCRIPT = (STATIC / "case-study.js").read_text(encoding="utf-8")
 STYLES = (STATIC / "case-study.css").read_text(encoding="utf-8")
-SCENES = ["intro", "today", "architecture", "solution", "app"]
+SCENES = ["intro", "today", "architecture", "solution", "demo", "app"]
 # Nothing the page, the script or the published deck carries may contain these: they are the signs of the
 # private hand-off slide (local paths, loop-back links, demo sign-ins, the admin token) or of the owner and
 # sensitivity-label properties Office adds to exported files.
@@ -58,6 +58,7 @@ class Inventory(HTMLParser):
         self.scenes, self.rail, self.thumbs, self.acts = [], [], [], []
         self.films, self.chapters, self.frame_pages = {}, {}, []
         self.current_film = None
+        self.scene_links, self.frame_scene = {}, None
 
     def handle_starttag(self, tag, attrs):
         found = dict(attrs)
@@ -74,6 +75,10 @@ class Inventory(HTMLParser):
             self.scenes.append(found["data-scene"])
         if tag == "a" and "stop" in classes:
             self.rail.append(found["data-stop"])
+        if tag == "a" and self.scenes:
+            self.scene_links.setdefault(self.scenes[-1], []).append(found.get("href"))
+        if tag == "iframe" and found.get("id") == "app-frame":
+            self.frame_scene = self.scenes[-1]
         if tag == "button" and "data-src" in found:
             self.thumbs.append((int(found["data-slide"]), found["data-src"]))
         if tag == "button" and "act" in classes:
@@ -126,7 +131,7 @@ def test_page_and_the_app_it_shows_can_only_be_framed_by_this_origin(site):
 def test_page_needs_no_inline_code_and_no_third_party_resources():
     page = inventory()
     assert page.inline == []
-    assert page.scripts == ["/static/case-study.js?v=tb1"]
+    assert page.scripts == ["/static/case-study.js?v=journey5"]
     for source in (HTML, SCRIPT, STYLES):
         assert not re.search(r"https?://|@import|url\(", source)
     for unsafe in ("innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval(", "new Function",
@@ -213,19 +218,29 @@ def test_service_team_signin_is_a_direct_entry_in_the_live_app(site):
 
 def test_app_tour_bridges_the_solution_and_interactive_app():
     page = inventory()
-    assert page.films["app"] == {
+    assert page.films["demo"] == {
         "poster": "/static/app-walkthrough-poster.jpg",
         "source": "/static/app-walkthrough.mp4",
         "track": "/static/app-walkthrough.vtt",
     }
     story = json.loads((STATIC / "app-walkthrough-data.json").read_text(encoding="utf-8"))
-    assert page.chapters["app"] == pytest.approx([chapter["start"] for chapter in story["chapters"]], abs=.001)
+    assert page.chapters["demo"] == pytest.approx([chapter["start"] for chapter in story["chapters"]], abs=.001)
     assert HTML.index('id="scene-solution"') < HTML.index('id="film-app"') < HTML.index('id="app-frame"')
     assert 'data-vtt="/static/app-walkthrough.vtt"' in HTML
     assert "Provisioning and payments are simulated" in HTML
     assert not re.search(r'<video id="film-app"[^>]*\bautoplay\b', HTML)
     for leak in LEAKS:
         assert leak not in json.dumps(story)
+
+
+def test_app_demo_and_live_app_are_separate_connected_steps():
+    page = inventory()
+    assert page.frame_scene == "app" and "app" not in page.films
+    assert page.rail == ["today", "architecture", "solution", "demo", "app"]
+    assert "#/demo" in page.scene_links["solution"]
+    assert {"#/solution", "#/app"} <= set(page.scene_links["demo"])
+    assert "#/demo" in page.scene_links["app"]
+    assert HTML.index('id="scene-demo"') < HTML.index('id="film-app"') < HTML.index('id="scene-app"')
 
 
 def slide_texts(deck):

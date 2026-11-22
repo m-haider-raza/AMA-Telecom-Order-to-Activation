@@ -42,22 +42,23 @@ The latest solution is 2:56 with the current-state film's narrator.
 Legacy cookie, session-storage and signing identifiers stay stable to preserve
 existing sign-ins; they are compatibility identifiers, not public branding.
 
-**`/case-study`** (also `/assignment`) is the page to present the assignment from. It is public in demo and live mode, needs no sign-in, and takes a reviewer through four chapters at their own pace. Open it first: **http://localhost:8000/case-study**.
+**`/case-study`** (also `/assignment`) is the page to present the assignment from. It is public in demo and live mode, needs no sign-in, and takes a reviewer through five chapters at their own pace. Open it first: **http://localhost:8000/case-study**.
 
 | Chapter | What it shows |
 |---|---|
-| Intro | The case study, the story in one sentence, the headline numbers and the four stops |
+| Intro | The case study, the story in one sentence, the headline numbers and the five stops |
 | 1 Today | The latest current-state film, `current-scenario.mp4` (1 min 51 s), with chapters, captions and a transcript |
 | 2 Architecture | The 16-slide architecture deck, including two market-research slides on where public B2B telecom orders stall and drop out (slides 3 and 10) and the cost of implementation (slide 15), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
 | 3 Solution | The customer solution film, `solution-tower-v6.mp4` (2 min 56 s), using the current-state film's British-English male narrator, introducing each AI agent once and using shorter agent names afterward, with chapters, captions and a transcript |
-| 4 Live app | The 2:21 app-highlights film (`app-walkthrough.mp4`) bridges the solution story to the interactive app below. It covers customers, partners, the service team, five agents, Analytics and governance, with six chapter jumps and a transcript. George narrates without acceleration; long pages scroll to the bottom and captions stay below the app. The recording uses isolated synthetic accounts and simulated provisioning/payments. The app below is live: sign in, place or track an order, or enter the service-team console |
+| 4 Live App Demo | The 2:21 app-highlights film (`app-walkthrough.mp4`) bridges the solution story to the interactive app in step 5. It covers customers, partners, the service team, five agents, Analytics and governance, with six chapter jumps and a transcript. George narrates without acceleration; long pages scroll to the bottom and captions stay below the app. The recording uses isolated synthetic accounts and simulated provisioning/payments |
+| 5 Live App | Try the running app: sign in, place or track an order, or enter the service-team console. The embedded app loads only when this chapter is opened |
 
 The complete 5:13 tour is available at `/static/app-walkthrough-full.mp4`, with captions at
 `/static/app-walkthrough-full.vtt` and a chaptered transcript at `/static/app-walkthrough-full-transcript.txt`.
 The highlights transcript is `/static/app-walkthrough-transcript.txt`. Both recordings show the access-token
 deployment; the standalone SSO app uses Microsoft work-account sign-in instead.
 
-Move with **Start the journey**, the chapter rail or the *Next* and *Back* buttons, with ← → (slides inside the deck, chapters elsewhere), **1**–**4** to jump to a chapter and **F** for full screen on the deck. Every chapter and slide has a link you can share: `/case-study#/today`, `#/architecture/7`, `#/solution`, `#/app`.
+Move with **Start the journey**, the chapter rail or the *Next* and *Back* buttons, with ← → (slides inside the deck, chapters elsewhere), **1**–**5** to jump to a chapter and **F** for full screen on the deck. Every chapter and slide has a link you can share: `/case-study#/today`, `#/architecture/7`, `#/solution`, `#/demo`, `#/app`. Existing `#/app` links still open the interactive app.
 
 - **Self-contained.** Films, captions, slide images and downloads are all served by the app from `app/static/` and `app/static/case-study/`; there are no third-party scripts, fonts or images, and the page follows the same strict content-security policy as the rest of the site (no inline script or style). Films load only when their chapter is opened and never start by themselves.
 - **Framing.** The live-app chapter shows the app in a frame, so the site sends `X-Frame-Options: SAMEORIGIN` and `frame-ancestors 'self'` on every page: only this origin may frame it.

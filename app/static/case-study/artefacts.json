@@ -1,9 +1,18 @@
 {
-  "release": "turkbiztel-case-study-2026-11-21",
+  "release": "turkbiztel-case-study-2026-11-22",
   "github": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation",
-  "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-21",
+  "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-22",
   "caseStudy": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study",
-  "appHighlights": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app",
+  "appHighlights": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/demo",
+  "liveApp": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app",
+  "tokenSignIn": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/login#staff",
+  "journey": [
+    "Today",
+    "Architecture",
+    "Solution",
+    "Live App Demo",
+    "Live App"
+  ],
   "ssoApp": "https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io",
   "disclosure": "Synthetic demonstrator. No credentials, session data, or private hand-off slide included.",
   "files": [
@@ -94,13 +103,13 @@
     },
     {
       "file": "README.md",
-      "bytes": 42030,
-      "sha256": "c24f8108355b46a9ba59f39f31e6ea0909e4549efa940fe667cc2f7e8db3a366"
+      "bytes": 43079,
+      "sha256": "fa280795985373030ffacd730de57c4831338d6e621518e28dba8ed01b763747"
     },
     {
       "file": "guides/APPLICATION-GUIDE.md",
-      "bytes": 83738,
-      "sha256": "986ea63bbaeb149eaa8da4a45174dfbabbe9408f52728c5809f4d2753210d542"
+      "bytes": 83884,
+      "sha256": "da466d8675c7f9c13539effb66eb484f9533bad181007eb6c72d9c908c7c6207"
     },
     {
       "file": "guides/azure-architecture.md",

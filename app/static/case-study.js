@@ -1,13 +1,14 @@
 "use strict";
 
 /* TürkBizTel · AMA Case Study 30: the guided assignment page.
-   One page, five scenes (start, today, architecture, solution, live app) and a small hash router, so every scene
+   One page, six scenes (start, today, architecture, solution, live app demo, live app) and a small hash router, so every scene
    and every slide has a link that can be shared. Page content is built from DOM nodes and textContent only and
    nothing here writes inline styles, so the strict content-security policy holds. */
 (() => {
-  const SCENES = ["intro", "today", "architecture", "solution", "app"];
-  const NAMES = { today: "Today", architecture: "Architecture", solution: "The solution in action", app: "Live app" };
-  const CHAPTER_KEYS = { 1: "today", 2: "architecture", 3: "solution", 4: "app" };
+  const SCENES = ["intro", "today", "architecture", "solution", "demo", "app"];
+  const NAMES = { today: "Today", architecture: "Architecture", solution: "The solution in action",
+    demo: "Live App Demo", app: "Live App" };
+  const CHAPTER_KEYS = { 1: "today", 2: "architecture", 3: "solution", 4: "demo", 5: "app" };
   const SLIDES = 16;
   const PUBLIC_PAGES = ["/", "/order", "/track", "/login"];
   const BASE_TITLE = document.title;
@@ -513,7 +514,7 @@
     stage.focus();
   });
 
-  /* ← → move between slides (or chapters), 1–4 jump to a chapter, F toggles full screen on the deck. The keys
+  /* ← → move between slides (or chapters), 1–5 jump to a chapter, F toggles full screen on the deck. The keys
      are left alone while a video, a form control or the app frame has focus, and while a film is playing. */
   document.addEventListener("keydown", (event) => {
     if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey) return;
