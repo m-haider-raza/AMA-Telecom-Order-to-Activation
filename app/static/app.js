@@ -381,7 +381,7 @@ const ORDER_TEXT = {
   demo: ["SYNTHETIC SERVICE REQUEST", "Start an order journey", "Use invented demo data only. No live service will be provisioned.", "Submit synthetic order →"],
   enterprise: ["SERVICE REQUEST FOR AN ENTERPRISE", "Place an order for an enterprise", "Choose the enterprise this order is for. No live service will be provisioned.", "Send for enterprise approval →"]
 };
-function enterpriseOrder() { return session.staffAuth === "sso" && $("#submission-channel").value === "operator"; }
+function enterpriseOrder() { return (session.staffAuth === "sso" || session.enterpriseApprovals) && $("#submission-channel").value === "operator"; }
 function showOrderMode() {
   const enterprise = enterpriseOrder();
   [["#order-enterprise-field", false], ["#order-approval-note", false], ["#order-customer-field", true], ["#order-language-field", true], ["#order-contact-block", true]]

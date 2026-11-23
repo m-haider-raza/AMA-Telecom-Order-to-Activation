@@ -16,6 +16,8 @@ dependencies = [
   "httpx>=0.28,<1",
   "azure-communication-email>=1.0,<2",
   "mssql-python>=1.17,<2",
+  "PyJWT[crypto]>=2.10,<3",
+  "azure-monitor-opentelemetry>=1.8,<2",
 ]
 
 [project.optional-dependencies]

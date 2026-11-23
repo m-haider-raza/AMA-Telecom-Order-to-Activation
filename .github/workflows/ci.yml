@@ -12,7 +12,7 @@ jobs:
           python-version: '3.13'
           cache: pip
       - run: pip install -e ".[dev]"
-      - run: ruff check app tests
+      - run: ruff check app tests scripts/Deploy_Isolated.py scripts/Verify_Isolated.py
       - run: pytest -q
       - name: Check every front-end script
         run: |
@@ -22,4 +22,6 @@ jobs:
       - run: node --check scripts/film3d/scene.js
       - run: node --check scripts/film3d/clarity.js
       - name: Compile infrastructure
-        run: az bicep build --file infra/main.bicep --stdout > /dev/null
+        run: |
+          az bicep build --file infra/main.bicep --stdout > /dev/null
+          az bicep build --file infra/isolated.bicep --stdout > /dev/null
