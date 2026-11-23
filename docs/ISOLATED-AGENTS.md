@@ -147,7 +147,7 @@ use a different tenant/subscription or old stack.
 
 ```powershell
 python -m pytest tests\test_isolated.py tests\test_isolated_process.py -q
-python -m ruff check app\isolated tests\test_isolated*.py tests\isolated_process.py scripts\Deploy_Isolated.py
+python -m ruff check app\isolated tests\test_isolated*.py tests\isolated_process.py scripts\Deploy_Isolated.py scripts\Verify_Isolated.py
 python scripts\Verify_Isolated.py --receipt <new-receipt> --credentials <new-credentials> --output <new-nonsecret-verification-report>
 ```
 
@@ -168,6 +168,12 @@ alone are insufficient. Confirm the actual principal/client IDs equal the receip
 when one stops. Check again after more than 60 seconds; never refresh a fake legacy worker timestamp.
 Create new synthetic orders and inspect outcomes, audit attribution, idempotent replays and nonduplicated
 allocation/notifications. Restart only a runtime in this new group and confirm durable resume.
+The live verifier submits its own synthetic recovery order and restarts the new provisioning revision,
+then requires fresh receiving-API identity attestation, completed recovery and one allocation. It checks
+all seven image bindings, narrow actual RBAC, startup denial receipts, the boundary's Entra-attested
+principal and an unchanged idle snapshot after 65 seconds. Its nonsecret report is saved incrementally;
+a failed check leaves an explicit blocked receipt, not a success result. The restart proves recovery
+across an actual runtime restart, not a crash at a specific Blob commit instruction.
 
 Durable audit includes verified principal ID, agent/version, order/correlation IDs, operation,
 authorization and outcome for commits/denials/meaningful dispatch/identity events. Failed validation
@@ -199,12 +205,20 @@ own managed identity, with a named sponsor and separate registered agent identit
 blueprint credential able to impersonate all five. Keep the tools' verified acting principal bindings
 explicit; governance metadata must never be trusted as an authorization claim. Agent ID identity
 changes require reviewing the exact caller identity for both Azure RBAC and the tools allowlist.
+Blueprints cannot hold Azure RBAC. Where a registered Agent ID is the acting resource caller,
+assign narrow permissions directly to that agent identity, not its blueprint. Background S2S workers
+do not require mailbox/user accounts.
 
 The tenant must have Agent 365 enabled; setup needs Global Administrator or Agent ID Developer with
 an administrator completing needed OAuth grants. Read-only portfolio evidence reports an Enabled
 `MICROSOFT_365_E7_NO_TEAMS` SKU with one consumed unit; that is licensing evidence, **not tenant
 enablement, registration authority or delivered telemetry**. No licenses/tenant grants are purchased
 or changed here.
+Additional read-only checks found `Global Reader` as the current CLI user's direct directory role
+and no entries in the first-page Agent Identity Blueprint query. The beta blueprint API is readable,
+but that does not prove Agent 365 tenant enablement, permission to register agents, eligible/PIM roles,
+or working governance/export. No Agent ID Developer or Global Administrator direct assignment was
+observed, and registration was not attempted without separate authorization.
 
 For a separately authorized integration, use Microsoft OpenTelemetry Distro (not the deprecated Agent
 365 Observability SDK) with root `invoke_agent` spans, the matching registered agent/tenant attributes,
@@ -230,3 +244,44 @@ telemetry delivery, browser/UX acceptance, and optional Agent 365 registration/e
 A partial deployment or missing tenant permission is reported as blocked, never as an accepted app.
 User acceptance, representative operational pilot, Türkiye residency/production compliance, real
 carrier integration, and retiring either old stack remain future work.
+
+### Verified isolated deployment: 23 November 2026
+
+The separate synthetic acceptance copy is deployed and operational:
+[open the new application](https://amai-boundary-5h5zbw727ae4o.lemonstone-04b0ee3b.swedencentral.azurecontainerapps.io)
+or [its five-step case study](https://amai-boundary-5h5zbw727ae4o.lemonstone-04b0ee3b.swedencentral.azurecontainerapps.io/case-study).
+Its resource group is `rg-amai-isolated-20261123` in Sweden Central. All seven apps use
+`amai:isolated-reviewed-20261123`, built from application commit
+`f9af950c7898bf2e5f0f77fcb9c409ad1a0675d7`, with digest
+`sha256:701a7e406f372791f4f693a567e4c21f03320a4873b31a73c7598aa837e4557e`.
+Operational verifier/documentation updates do not change that deployed application image.
+
+The live verifier passed actual single-identity attachment, receiving-API identity/denial probes
+for all five workers plus supervisor, registry-only worker RBAC, and container-scoped boundary
+data permissions. Synthetic recovery order `AMA-9DD113308B` completed after a provisioning-runtime
+restart and fresh identity attestation, with one retry, one allocation, all five principal-attributed
+agent commits and idempotent intake replay. All six heartbeats remained healthy and the public state
+snapshot, allocations, notifications and tool audit stayed unchanged during the 65-second idle check.
+Application Insights delivered all five agents' operation, verified principal, version, authorization,
+outcome and correlation evidence for that order; container diagnostics also delivered startup denials.
+
+Customer browser checks passed registration, simulated-code verification, profile and password
+sign-in. Partner checks passed a manually shared synthetic invitation, password sign-in and
+Deliveries/Payments/Concerns/Account views, with no JavaScript errors. Only fresh synthetic customer
+and partner fixtures were added; these UI checks created no orders and sent no email. Independent
+coordinator checks covered staff sign-in, Analytics, Trust & governance, all five agent views, the
+five-step case study and unchanged configuration/revisions/sign-in modes of both original stacks.
+
+Nonsecret receipts remain in the private session artifacts: `isolated-deployment.json`,
+`isolated-verification.json`, `isolated-diagnostics.json`, `isolated-customer-partner-browser.json`
+and `agent365-prerequisites.json`. Newly generated portal credentials are separate private files;
+never commit, publish or paste their values. Local core verification passed 99 tests; the subsequent
+isolated/approval/account regression selection passed 85 tests (overlapping selections, not additive).
+Bicep compilation and JavaScript syntax checks passed.
+
+Implementation/deployment verification is **not user business acceptance or production approval**.
+Agent 365 remains **not registered/not active**, despite the assigned-E7 prerequisite evidence.
+Tenant enablement, authorized registration/sponsors and verified per-agent S2S telemetry remain
+separate future gates. Real carrier/email/SMS operations, Türkiye compliance, representative pilot,
+cost acceptance and any retirement of an original stack require further explicit authorization.
+The original stacks and original local main checkout were not modified; no GitHub push or PR was made.
