@@ -101,6 +101,32 @@ def test_shared_principal_configuration_rejected():
         EntraVerifier(TENANT, AUDIENCE, bindings)
 
 
+def test_boundary_attestation_has_no_worker_roles_or_impersonation(verifier):
+    oid, client_id = str(uuid4()), str(uuid4())
+    bearer = token("validation", oid=oid, azp=client_id, roles=[])
+    assert verifier.verify_boundary(bearer, oid, client_id) == Principal(oid, "trusted-policy-boundary", client_id)
+    with pytest.raises(jwt.InvalidTokenError):
+        verifier.verify(bearer)
+    with pytest.raises(jwt.InvalidTokenError):
+        verifier.verify_boundary(token("validation"), BINDINGS["validation"]["oid"], BINDINGS["validation"]["clientId"])
+
+
+def test_dispatch_policy_actions_are_boundary_attributed_not_agent_impersonation(boundary):
+    boundary.boundary_principal_id = str(uuid4())
+    order = boundary.store.transact(lambda state: create_order(state, payload("human-exception"), "service-manager"))
+    result = advance(boundary, order["id"])
+    assert result["state"] == "pendingApproval"
+    state = boundary.store.read()
+    guards = [row for row in state["audit"] if row["orderId"] == order["id"] and row["action"] == "policy.hold"]
+    assert guards and all(row["actor"] == "Trusted Policy Boundary" for row in guards)
+    policy = next(json.loads(row["detail"]) for row in state["audit"]
+                  if row["orderId"] == order["id"] and row["action"] == "isolated.policy")
+    assert policy["principalId"] == boundary.boundary_principal_id
+    assert policy["agent"] == "trusted-policy-boundary"
+    assert policy["initiatingPrincipalId"] == BINDINGS["supervisor"]["oid"]
+    assert policy["operation"] == "policy.hold" and policy["outcome"] == "pendingApproval"
+
+
 @pytest.mark.parametrize("agent", AGENTS)
 def test_every_cross_agent_operation_and_supervisor_denied(boundary, agent):
     order = boundary.store.transact(lambda state: create_order(state, payload(), "service-manager"))

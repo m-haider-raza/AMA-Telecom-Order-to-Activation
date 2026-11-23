@@ -11,4 +11,5 @@ def configure(service):
 
     configure_azure_monitor(resource=Resource.create({"service.name": "amai-" + service}),
                            logger_name="ama.isolated",
+                           sampling_ratio=0.1,
                            instrumentation_options={"azure_sdk": {"enabled": False}})

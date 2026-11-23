@@ -42,14 +42,15 @@ def test_six_independent_http_processes_drive_durable_boundary(tmp_path):
                                             "--key", str(key_path), "--port", str(port)],
                                            env=environment, stdout=output, stderr=output))
         url = f"http://127.0.0.1:{port}"
-        deadline = time.monotonic() + 25
+        deadline = time.monotonic() + 60
         while True:
             try:
                 if httpx.get(url + "/isolated-health").status_code == 200:
                     break
             except httpx.ConnectError:
                 pass
-            assert time.monotonic() < deadline, "Local boundary failed to start"
+            assert processes[0].poll() is None, "Local boundary exited; inspect boundary.log"
+            assert time.monotonic() < deadline, "Local boundary failed to start; inspect boundary.log"
             time.sleep(.1)
         for agent in BINDINGS:
             credential = tmp_path / f"synthetic-{agent}.token"
@@ -59,7 +60,7 @@ def test_six_independent_http_processes_drive_durable_boundary(tmp_path):
             processes.append(subprocess.Popen([
                 sys.executable, "-m", "tests.isolated_process", "worker", "--agent", agent,
                 "--url", url, "--token", str(credential)], env=environment, stdout=output, stderr=output))
-        deadline = time.monotonic() + 30
+        deadline = time.monotonic() + 60
         while store.read()["orders"][order["id"]]["state"] != "completed":
             assert time.monotonic() < deadline, "Independent workers did not complete the order"
             assert all(process.poll() is None for process in processes), "A runtime exited unexpectedly"

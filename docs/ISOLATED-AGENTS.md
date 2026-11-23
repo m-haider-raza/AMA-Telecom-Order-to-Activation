@@ -28,6 +28,10 @@ Only `app.isolated.api:app` is exposed; it imports endpoint contracts without ru
 Every worker runs `python -m app.isolated.runtime` with an explicit `ManagedIdentityCredential(client_id=...)`.
 No worker has portal tokens, storage credentials, SQL settings, approval credentials, or another identity.
 The boundary's `/internal/identity` independently verifies the acquired identity before a runtime starts work.
+The boundary also attests its own acquired Entra application token against its configured principal/client IDs,
+with no worker application roles. Policy holds/reminders are attributed to this trusted boundary identity,
+with the independently verified initiating caller recorded separately; supervisor dispatch does not impersonate
+a provisioning or customer-update worker.
 
 These deterministic workers compute bounded proposals. They **do not independently write state or
 provision a real network**. The boundary compares each proposal with freshly recomputed facts, checks
@@ -128,6 +132,11 @@ with the new resource group, completed stages and blocker; partially created res
 authorized inspection, never silently deleted. The portal credentials file is private and must never
 be committed/shared. It contains newly generated staff/partner/session secrets, not agent credentials.
 
+To resume only the app-deployment stage after a partial failure, use the same new receipt/credential
+paths and `--resume --image-tag <explicit-existing-new-registry-tag>`. Resume checks the new group's
+`isolated-agent-acceptance` tag and original authorized tenant/subscription; it does not recreate
+directory roles/identities, change credentials, or target an old stack.
+
 This is billable infrastructure: seven minimum-one replicas, registry, private endpoint, storage,
 logs and Application Insights. There is no hard cost cap; the old stacks/budgets are unchanged.
 Review the new group's costs/retention and obtain any further needed budget authorization.
@@ -164,6 +173,8 @@ Durable audit includes verified principal ID, agent/version, order/correlation I
 authorization and outcome for commits/denials/meaningful dispatch/identity events. Failed validation
 has no verified principal and is explicitly recorded as invalid credential. Tokens are never recorded.
 Successful idle polls use heartbeat counters and normal diagnostics, not an append per poll.
+Per-poll HTTP console logs are suppressed; automatic request traces are sampled at 10%, while
+explicit authorization/commit/identity/denial logs remain unsampled.
 `azure-monitor-opentelemetry` exports structured logs to this new Application Insights/Log Analytics
 workspace. Query both application traces and container console logs; hash-linked Blob audit is durable
 but is not WORM or a regulatory-compliance certification.

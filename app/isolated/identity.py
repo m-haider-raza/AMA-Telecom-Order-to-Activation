@@ -37,13 +37,23 @@ class EntraVerifier:
         return cls(os.environ["ISOLATED_TENANT_ID"], os.environ["ISOLATED_AUDIENCE"],
                    json.loads(os.environ["ISOLATED_PRINCIPALS"]))
 
-    def verify(self, token):
+    def claims(self, token):
         key = self.keys.get_signing_key_from_jwt(token).key
         claims = jwt.decode(token, key, algorithms=["RS256"], audience=self.audience,
                             issuer=self.issuer, leeway=0,
                             options={"require": ["exp", "iat", "nbf", "iss", "aud", "oid", "tid", "azp"]})
         if claims["tid"] != self.tenant or claims.get("ver") != "2.0" or claims.get("scp"):
             raise jwt.InvalidTokenError("Only tenant-bound application tokens are allowed")
+        return claims
+
+    def verify_boundary(self, token, oid, client_id):
+        claims = self.claims(token)
+        if claims["oid"] != oid or claims["azp"] != client_id or claims.get("roles"):
+            raise jwt.InvalidTokenError("Boundary identity binding failed or has unexpected worker roles")
+        return Principal(oid, "trusted-policy-boundary", client_id)
+
+    def verify(self, token):
+        claims = self.claims(token)
         for agent, entry in self.principals.items():
             if claims["oid"] == entry["oid"] and claims["azp"] == entry["clientId"]:
                 if claims.get("roles") != [f"Worker.{agent}"]:

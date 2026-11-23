@@ -43,12 +43,14 @@ def policy_hold(state, order):
         return
     if datetime.now(timezone.utc) > datetime.fromisoformat(order["deadline"]) and not order.get("slaWaiver"):
         order["slaBreached"] = True
-        pause(state, order, "sla-breach", "Seven-day SLA requires explicit manager review")
+        pause(state, order, "sla-breach", "Seven-day SLA requires explicit manager review", actor="Trusted Policy Boundary")
     elif order["stage"] == "provisioning":
         if order["scenario"] == "human-exception" and not order.get("riskApproved"):
-            pause(state, order, "route-conflict", "High-risk simulated change requires explicit manager review")
+            pause(state, order, "route-conflict", "High-risk simulated change requires explicit manager review",
+                  actor="Trusted Policy Boundary")
         elif order["scenario"] == "change-window" and not order.get("windowApproved"):
-            pause(state, order, "change-window", "Closed simulated window requires explicit manager review")
+            pause(state, order, "change-window", "Closed simulated window requires explicit manager review",
+                  actor="Trusted Policy Boundary")
 
 
 def sources(state):
@@ -63,8 +65,25 @@ def source_for(state, job):
 
 
 class Boundary:
-    def __init__(self, store, emit=None):
+    def __init__(self, store, emit=None, boundary_principal_id=None):
         self.store, self.emit = store, emit or (lambda record: None)
+        self.boundary_principal_id = boundary_principal_id
+
+    def policy_audit(self, state, source, offset, initiator, correlation=None):
+        records = []
+        for entry in list(source["audit"][offset:]):
+            if entry["actor"] != "Trusted Policy Boundary":
+                continue
+            detail = {"principalId": self.boundary_principal_id, "agent": "trusted-policy-boundary",
+                      "agentVersion": VERSION, "orderId": entry["orderId"],
+                      "correlationId": correlation or f"policy:{entry['orderId']}:{entry['sequence']}",
+                      "operation": entry["action"], "authorization": "allow",
+                      "outcome": source["orders"][entry["orderId"]]["state"],
+                      "initiatingPrincipalId": initiator.oid, "initiatingAgent": initiator.agent}
+            audit(state, entry["orderId"], "authenticated-tool-boundary", "isolated.policy",
+                  json.dumps(detail, sort_keys=True))
+            records.append(detail)
+        return records
 
     def record(self, principal, operation, decision, outcome, order_id=None, correlation=None):
         detail = {"principalId": principal.oid if principal else None,
@@ -82,10 +101,13 @@ class Boundary:
         def change(state):
             jobs = state.setdefault("isolatedJobs", {})
             created = 0
+            policies = []
             for scope, source in sources(state):
-                follow_up(source)
+                offset = len(source["audit"])
+                follow_up(source, actor="Trusted Policy Boundary")
                 for order in source["orders"].values():
                     policy_hold(source, order)
+                policies.extend(self.policy_audit(state, source, offset, principal))
                 for event in source["events"]:
                     order = source["orders"][event["orderId"]]
                     if event["status"] == "queued" and eligible(order) and event["id"] not in jobs:
@@ -101,8 +123,12 @@ class Boundary:
                 if scope == "benchmark" and all(order["state"] in TERMINAL for order in source["orders"].values()):
                     state["benchmark"]["run"]["status"] = "complete"
                     state["benchmark"]["run"]["completedAt"] = datetime.now(timezone.utc).isoformat()
-            return {"pending": sum(job["status"] == "pending" for job in jobs.values()), "created": created}
-        return self.store.transact(change)
+            return {"pending": sum(job["status"] == "pending" for job in jobs.values()),
+                    "created": created, "policies": policies}
+        result = self.store.transact(change)
+        for detail in result.pop("policies"):
+            self.emit(detail)
+        return result
 
     def work(self, principal):
         if principal.agent not in AGENTS:
@@ -130,7 +156,7 @@ class Boundary:
             if job["status"] == "completed":
                 if job["receipt"]["digest"] != digest:
                     raise Denied("Conflicting replay")
-                return job["receipt"]
+                return job["receipt"], []
             source = source_for(state, job)
             order = source["orders"][job["orderId"]]
             if not eligible(order) or order["stage"] != principal.agent:
@@ -149,7 +175,9 @@ class Boundary:
                 raise Denied("A validated plan is required")
             # Worker fields never mutate state. Recompute the transition at the trusted boundary,
             # which rechecks capacity, deadline, approval and change-window policies atomically.
-            process_next(source, order["id"])
+            offset = len(source["audit"])
+            process_next(source, order["id"], policy_actor="Trusted Policy Boundary")
+            policies = self.policy_audit(state, source, offset, principal, event_id)
             benchmark = state.get("benchmark")
             if job.get("scope") == "benchmark" and all(
                     item["state"] in TERMINAL for item in source["orders"].values()):
@@ -163,8 +191,10 @@ class Boundary:
                       "authorization": "allow", "outcome": order["state"]}
             audit(state, order["id"], "authenticated-tool-boundary", "isolated.commit",
                   json.dumps(detail, sort_keys=True))
-            return receipt
-        result = self.store.transact(change)
+            return receipt, policies
+        result, policies = self.store.transact(change)
+        for detail in policies:
+            self.emit(detail)
         self.emit({"principalId": principal.oid, "agent": principal.agent, "agentVersion": VERSION,
                    "orderId": result["orderId"], "correlationId": event_id, "operation": operation,
                    "authorization": "allow", "outcome": result["state"]})

@@ -179,10 +179,11 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
         name: 'boundary'
         image: '${registryName}.azurecr.io/amai:${imageTag}'
         command: ['uvicorn']
-        args: ['app.isolated.api:app', '--host', '0.0.0.0', '--port', '8000', '--workers', '1']
+        args: ['app.isolated.api:app', '--host', '0.0.0.0', '--port', '8000', '--workers', '1', '--no-access-log']
         resources: { cpu: json('0.5'), memory: '1Gi' }
         env: [
           { name: 'AZURE_CLIENT_ID', value: boundaryIdentity.properties.clientId }
+          { name: 'ISOLATED_BOUNDARY_PRINCIPAL_ID', value: boundaryIdentity.properties.principalId }
           { name: 'ISOLATED_TENANT_ID', value: tenant().tenantId }
           { name: 'ISOLATED_AUDIENCE', value: audience }
           { name: 'ISOLATED_PRINCIPALS', value: string(principals) }
@@ -209,7 +210,7 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
   dependsOn: [boundaryPull, boundaryData, endpointDns]
 }
 resource workers 'Microsoft.App/containerApps@2024-03-01' = [for (name, i) in names: if (deployApps) {
-  name: 'amai-${name}-${suffix}'
+  name: name == 'customer-update' ? 'amai-${name}-${take(suffix, 8)}' : 'amai-${name}-${suffix}'
   location: location
   identity: { type: 'UserAssigned', userAssignedIdentities: { '${identities[i].id}': {} } }
   properties: {

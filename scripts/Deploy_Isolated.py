@@ -27,6 +27,40 @@ def save(path, body):
     path.write_text(json.dumps(body, indent=2), encoding="utf-8")
 
 
+def resume(args):
+    receipt_path = Path(args.receipt)
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    if (not args.resource_group.startswith("rg-amai-") or receipt["resourceGroup"] != args.resource_group
+            or receipt["subscriptionId"] != args.subscription or not args.image_tag):
+        raise ValueError("Resume requires this new stack's receipt and an explicit existing image tag")
+    purpose = az("group", "show", "--name", args.resource_group, "--subscription", args.subscription,
+                 "--query", "tags.purpose", "-o", "tsv")
+    if purpose != "isolated-agent-acceptance":
+        raise ValueError("Only the tagged new acceptance stack can be resumed")
+    account = az("account", "show", "--subscription", args.subscription, "-o", "json", json_result=True)
+    if account["tenantId"] != receipt["tenantId"] or account["state"] != "Enabled":
+        raise ValueError("The original authorized tenant/subscription must match")
+    az("acr", "repository", "show", "--name", receipt["registryName"], "--subscription", args.subscription,
+       "--image", "amai:" + args.image_tag, "-o", "none")
+    credentials = json.loads(Path(args.credentials).read_text(encoding="utf-8"))
+    values = {"location": args.location, "deployApps": True, "audience": receipt["audience"],
+              "principals": {item["agent"]: {"oid": item["oid"], "clientId": item["clientId"]}
+                             for item in receipt["identities"]}, "imageTag": args.image_tag,
+              "adminToken": credentials["admin"], "partnerToken": credentials["partner"],
+              "sessionSecret": credentials["session"]}
+    with tempfile.TemporaryDirectory(prefix="amai-resume-") as directory:
+        parameters = Path(directory) / "parameters.json"
+        save(parameters, {"parameters": {key: {"value": value} for key, value in values.items()}})
+        final = az("deployment", "group", "create", "--name", "isolated-apps", "--template-file",
+                   str(ROOT / "infra" / "isolated.bicep"), "--parameters", f"@{parameters}",
+                   "--query", "properties.outputs", "-o", "json", "--resource-group", args.resource_group,
+                   "--subscription", args.subscription, json_result=True)
+    receipt.update(status="deployed-awaiting-runtime-verification", url=final["url"]["value"], imageTag=args.image_tag)
+    receipt.pop("blocker", None)
+    save(receipt_path, receipt)
+    print(f"New isolated copy: {receipt['url']}")
+
+
 def deploy(args):
     if not AZ:
         raise RuntimeError("Azure CLI is required")
@@ -85,6 +119,8 @@ def deploy(args):
             credentials = {name: secrets.token_urlsafe(36) for name in ("admin", "partner", "session")}
             save(credentials_path, credentials)
             tag = "isolated-" + datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+            receipt["imageTag"] = tag
+            save(receipt_path, receipt)
             az("acr", "build", "--registry", receipt["registryName"], "--subscription", args.subscription,
                "--image", f"amai:{tag}", str(ROOT), "--no-logs", "-o", "none")
             parameters = folder / "parameters.json"
@@ -111,4 +147,10 @@ if __name__ == "__main__":
     parser.add_argument("--location", default="swedencentral", choices=["swedencentral", "westeurope", "northeurope"])
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--credentials", required=True)
-    deploy(parser.parse_args())
+    parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--image-tag")
+    args = parser.parse_args()
+    if args.resume:
+        resume(args)
+    else:
+        deploy(args)

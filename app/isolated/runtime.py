@@ -19,6 +19,7 @@ log = logging.getLogger("ama.isolated.runtime")
 def run():
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("azure").setLevel(logging.WARNING)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     agent = os.environ["ISOLATED_AGENT"]
     if agent not in {*AGENTS, "supervisor"}:
         raise RuntimeError("An explicit bounded runtime is required")

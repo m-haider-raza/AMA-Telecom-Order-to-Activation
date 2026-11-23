@@ -51,12 +51,20 @@ async def lifespan(application):
     endpoint = os.getenv("ISOLATED_STORAGE_URL")
     if endpoint:
         application.state.store = BlobStore(endpoint, "boundary", os.environ["AZURE_CLIENT_ID"])
+        credential = application.state.store.credential
+        token = credential.get_token("api://" + os.environ["ISOLATED_AUDIENCE"] + "/.default").token
+        bound = application.state.verifier.verify_boundary(
+            token, os.environ["ISOLATED_BOUNDARY_PRINCIPAL_ID"], os.environ["AZURE_CLIENT_ID"])
+        boundary_oid = bound.oid
     else:
         if os.getenv("ISOLATED_LOCAL") != "1":
             raise RuntimeError("Explicit ISOLATED_LOCAL=1 is required for local-only state")
         application.state.store = LocalStore(os.getenv("ISOLATED_LOCAL_PATH", "data/isolated.sqlite"))
+        boundary_oid = None
     application.state.store.transact(lambda state: None)
-    application.state.boundary = Boundary(application.state.store, emit)
+    application.state.boundary = Boundary(application.state.store, emit, boundary_principal_id=boundary_oid)
+    if boundary_oid:
+        application.state.boundary.record(bound, "boundary.identity", "allow", "verified")
     application.state.runtime_seen = {}
     try:
         yield
