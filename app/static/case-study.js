@@ -423,6 +423,7 @@
           summary.textContent = "Isolated acceptance edition: Validation, Decomposition, Provisioning, Fallout Resolution and Customer Update run as separate workers with separate managed identities. A separate supervisor dispatches; authenticated tool APIs independently validate every result and own the private state. Agents cannot approve exceptions or access shared state. Provisioning and notifications remain simulated; Agent 365 governance is not enabled. The original concept deck and films below are preserved.";
           $("#scene-architecture .scene-head").append(summary);
           note.textContent = ". This is a new synthetic-only application. Staff orders wait for the enterprise's approval; neither original application is replaced.";
+          $(".role-warn").textContent = "Synthetic acceptance environment: orders are saved in the new isolated state only. Approval messages, email and SMS delivery are simulated; nothing is sent. Use invented test details.";
         }
         if (!me || me.staffAuth !== "sso") return;
         link.textContent = "Sign in with your Microsoft work account";
