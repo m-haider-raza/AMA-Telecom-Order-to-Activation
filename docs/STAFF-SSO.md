@@ -12,6 +12,37 @@ The mode is chosen when the app starts (`AMA_STAFF_AUTH`). The default is `token
 tests behave exactly as before. Single sign-on is deployed as a **separate, standalone stack** in its own resource
 group; it never replaces or modifies the token-based app.
 
+## Foundry with Microsoft sign-in and operator access tokens
+
+Use `sso+token` to offer Microsoft sign-in first and a staff access token on the same sign-in page for engineers
+waiting for their work account. The fallback is a **shared operator credential**, not the old manager token: it
+cannot make manager decisions or administer partners. Its audit entries are labeled **Staff access token (shared)**,
+not attributed to a person. Both routes retain the same enterprise approval requirement. Share the fallback only
+through the service desk and rotate it when access is no longer needed; rotation invalidates existing fallback
+sessions without signing out Microsoft users.
+
+Create a [Foundry prompt agent](https://learn.microsoft.com/azure/foundry/agents/quickstarts/prompt-agent) in an
+existing Foundry project with your approved model deployment. Do not attach tools or data connections. The agent
+provides an advisory diagnosis and bilingual messages from categorical order state only; it never receives customer
+details or executes a recommendation. The app continues to run the order workflow and enforce approvals.
+
+Deploy to a **new resource group** so the current apps and data remain untouched:
+
+```powershell
+.\scripts\Deploy.ps1 -SubscriptionId <subscription-id> -ResourceGroup rg-ama30-foundry -Location swedencentral `
+  -EnableSql -Live -StaffAuth 'sso+token' -StaffManagers 'person@contoso.com' `
+  -FoundryProjectEndpoint 'https://<account>.services.ai.azure.com/api/projects/<project>' `
+  -FoundryAgentName 'order-advisor'
+```
+
+Grant the app's managed identity (`managedIdentityPrincipalId` in `deployment.foundry.local.json`) permission to
+invoke the agent at the Foundry project scope, using **Foundry Agent Consumer**. The local, git-ignored
+`demo-credentials.foundry.local.json` contains the generated `staffAccessToken`; never commit or publish it.
+
+To bring existing records into the new stack, use the [data copy procedure](#copying-the-data-from-the-token-mode-app)
+with the intended source receipt and `-TargetReceipt deployment.foundry.local.json`. Run with `-DryRun` first.
+Use a dedicated destination rather than pointing two running apps at the same data store.
+
 ## Roles
 
 People get a role through a Microsoft Entra **app role** on the enterprise application. If someone holds more than one,
@@ -68,7 +99,7 @@ that your organization enforces.
 | Option | Meaning |
 |---|---|
 | `-Live` | The production-style site: customers register with their own account, and verification e-mail is sent through Azure Communication Services created in the same resource group. Single sign-on requires it. |
-| `-StaffAuth sso` | Service team sign in with Microsoft Entra ID. The default `token` keeps the shared token. |
+| `-StaffAuth sso` | Service team sign in with Microsoft Entra ID. `sso+token` adds the operator fallback; the default `token` keeps the legacy manager token. |
 | `-StaffManagers`, `-StaffOperators`, `-StaffAuditors` | User principal names to assign each role. With none named, the signed-in Azure CLI user becomes the manager. |
 | `-StaffUserConsent` | Each person approves the app for themselves at their first sign-in, instead of an administrator approving it once. For tenants where no administrator is available. See [Approving the app](#approving-the-app). |
 | `-StaffSessionHours` | How long a staff session lasts, 1 to 12 hours (default 4). |
@@ -302,7 +333,9 @@ sign-on mode when any is missing or malformed, so a half-configured site never s
 
 | Setting | Meaning |
 |---|---|
-| `AMA_STAFF_AUTH` | `sso` turns the mode on. Anything else is `token`. |
+| `AMA_STAFF_AUTH` | `token` (default), `sso` (Entra only), or `sso+token` (Entra plus the operator fallback). |
+| `AMA_STAFF_ACCESS_TOKEN` | Required for `sso+token`: a distinct random secret of at least 32 characters. |
+| `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_AGENT_NAME` | Configure the Foundry advisor. Set both; it takes precedence over the legacy Azure OpenAI advisor. |
 | `AMA_SSO_TENANT_ID`, `AMA_SSO_CLIENT_ID` | Directory and application IDs (GUIDs). |
 | `AMA_SESSION_SECRET` | At least 32 characters. Signs sessions. |
 | `AZURE_CLIENT_ID` | The managed identity that proves the application's identity to Microsoft. For local development only, `AMA_SSO_CLIENT_SECRET` can be used instead. |

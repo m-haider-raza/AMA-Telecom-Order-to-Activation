@@ -16,7 +16,6 @@ import httpx
 from azure.core.exceptions import AzureError
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
-from pydantic import ValidationError
 
 from app import advisor, analytics, auth, benchmark, partners, sso
 from app.branded_static import BrandedStaticFiles
@@ -68,13 +67,19 @@ async def lifespan(app):
         raise RuntimeError("Set distinct DEMO_ADMIN_TOKEN and DEMO_PARTNER_TOKEN values of at least 24 characters")
     if os.environ["DEMO_ADMIN_TOKEN"] == os.environ["DEMO_PARTNER_TOKEN"]:
         raise RuntimeError("Manager and partner tokens must differ")
-    if os.getenv("AMA_STAFF_AUTH", "token").strip().lower() not in ("token", "sso"):
-        # An unrecognised value must never quietly fall back to the shared access token.
-        raise RuntimeError("AMA_STAFF_AUTH must be either 'token' or 'sso'")
+    if auth.staff_auth_mode() not in auth.STAFF_AUTH_MODES:
+        raise RuntimeError("AMA_STAFF_AUTH must be 'token', 'sso', or 'sso+token'")
     if auth.sso_enabled():
         problems = sso.configuration_problems()
         if problems:
-            raise RuntimeError("AMA_STAFF_AUTH=sso is not fully configured: " + "; ".join(problems))
+            raise RuntimeError(f"AMA_STAFF_AUTH={auth.staff_auth_mode()} is not fully configured: " + "; ".join(problems))
+    if auth.fallback_enabled():
+        fallback = os.getenv("AMA_STAFF_ACCESS_TOKEN", "")
+        if len(fallback) < 32 or fallback != fallback.strip() or any(fallback == os.getenv(name) for name in (
+                "DEMO_ADMIN_TOKEN", "DEMO_PARTNER_TOKEN", "AMA_SESSION_SECRET", "AMA_TRACKING_SECRET")):
+            raise RuntimeError("Set a distinct random AMA_STAFF_ACCESS_TOKEN of at least 32 characters")
+    if problems := advisor.configuration_problems():
+        raise RuntimeError("; ".join(problems))
     configure_staff_log()
     if delivery_enabled():
         problems = configuration_problems()
@@ -157,7 +162,7 @@ def state(request: Request):
         "configuration": {
             "environment": "Live customer ordering" if live_mode() else "Synthetic-data demonstration",
             "region": os.getenv("AZURE_REGION", "local"),
-            "aiMode": "Regional Azure OpenAI advisor" if advisor.configured() else "Deterministic rules demo",
+            "aiMode": advisor.label(), "aiAdviceEnabled": advisor.configured(),
             "networkMode": "Simulated network / partner / CRM adapters",
             "customerDelivery": "E-mail and SMS" if delivery_enabled() else "Simulated (nothing is sent)",
             "productionCompliant": False,
@@ -281,10 +286,13 @@ def decide(order_id: str, payload: Decision, request: Request):
 def advice(order_id: str, request: Request):
     actor = authorize(request, need="operate")
     limit(request)
-    order = find_order(request.app.state.store.read(), order_id)
     if not advisor.configured():
-        raise HTTPException(503, "Live Azure OpenAI is not configured. Rules-demo mode is explicitly enabled.")
+        find_order(request.app.state.store.read(), order_id)
+        raise HTTPException(503, "No live AI advisor is configured. Rules-demo mode is explicitly enabled.")
     def reserve_advice(snapshot):
+        order = find_order(snapshot, order_id)
+        if order.get("enterpriseApproval") and order["enterpriseApproval"]["status"] != "approved":
+            raise ValueError("Enterprise approval is required before requesting agent advice")
         day = datetime.now(timezone.utc).date().isoformat()
         usage = snapshot.setdefault("aiUsage", {})
         if usage.get("day") != day:
@@ -292,17 +300,18 @@ def advice(order_id: str, request: Request):
         if usage["requests"] >= 30:
             raise ValueError("The persisted 30-request daily AI demo limit has been reached")
         usage["requests"] += 1
-    transact(request.app, reserve_advice)
+        return order
+    order = transact(request.app, reserve_advice)
     try:
         result = advisor.advise(order)
-    except (httpx.HTTPError, AzureError, ValidationError, KeyError, RuntimeError) as exc:
-        log.exception("Live advisor request failed")
+    except (httpx.HTTPError, AzureError, ValueError, KeyError, TypeError, RuntimeError) as exc:
+        log.warning("Live advisor request failed (%s)", type(exc).__name__)
         raise HTTPException(502, "Live AI request failed; no AI recommendation was saved or executed") from exc
     def save(snapshot):
         current = find_order(snapshot, order_id)
         current["aiAdvice"] = result
         audit(snapshot, order_id, actor, "live-ai-advice",
-              "Validated regional AI recommendation; executionAuthority=false")
+              f"Validated {advisor.label()} recommendation; executionAuthority=false")
         return result
     return transact(request.app, save)
 

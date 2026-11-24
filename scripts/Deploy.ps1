@@ -4,6 +4,8 @@ param(
     [Parameter(Mandatory=$true)][ValidatePattern('^rg-ama[a-zA-Z0-9-]+$')][string]$ResourceGroup,
     [string]$Location = 'westeurope',
     [switch]$EnableOpenAI,
+    [string]$FoundryProjectEndpoint = '',
+    [string]$FoundryAgentName = '',
     [switch]$EnablePrivateStorage,
     [switch]$EnableSql,
     [string]$BudgetEmail = '',
@@ -14,11 +16,9 @@ param(
     # The production site: customers register and sign in with their own account and e-mail is delivered through
     # Azure Communication Services (created in the same resource group).
     [switch]$Live,
-    # 'sso' replaces the shared manager access token with Microsoft Entra ID single sign-on: one account per person,
-    # role-based access, every change attributed to the person who made it. It registers the Entra application
-    # (scripts/Register-StaffSso.ps1) and needs -Live.
-    [ValidateSet('token','sso')][string]$StaffAuth = 'token',
-    # People (user principal names) to assign the three service roles. With -StaffAuth sso and no manager named,
+    # 'sso+token' also issues a separate operator token for onboarding; both SSO modes need -Live.
+    [ValidateSet('token','sso','sso+token')][string]$StaffAuth = 'token',
+    # People (user principal names) to assign the three service roles. With SSO and no manager named,
     # the signed-in Azure CLI user becomes the service manager.
     [string[]]$StaffManagers = @(),
     [string[]]$StaffOperators = @(),
@@ -32,7 +32,15 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
-$sso = $StaffAuth -eq 'sso'
+$StaffAuth = $StaffAuth.ToLowerInvariant()
+$sso = $StaffAuth -ne 'token'
+$fallback = $StaffAuth -eq 'sso+token'
+$foundry = [bool]($FoundryProjectEndpoint -or $FoundryAgentName)
+if ($foundry -and ($EnableOpenAI -or
+    $FoundryProjectEndpoint -notmatch '^https://[a-z0-9-]+\.services\.ai\.azure\.com/api/projects/[\w-]+/?$' -or
+    $FoundryAgentName -notmatch '^[a-zA-Z0-9_-]+$')) {
+    throw 'Provide a Foundry project HTTPS endpoint and prompt agent name, without -EnableOpenAI.'
+}
 if ($sso -and -not $Live) { throw 'Single sign-on is for the live site: add -Live (customers sign in with their own account and the service team with Microsoft Entra ID).' }
 function Invoke-Az([string[]]$Arguments) {
     $result = & $Az @Arguments
@@ -130,10 +138,10 @@ if ($account.environmentName -ne 'AzureCloud') { throw 'This demonstration is pr
 if ($Location -notin @('westeurope','swedencentral','northeurope')) { throw 'Only approved European demo regions are allowed by this script.' }
 $exists = Invoke-Az @('group','exists','--name',$ResourceGroup,'--subscription',$SubscriptionId)
 if ("$exists".Trim() -eq 'true') { throw 'Refusing an existing resource group. Supply a brand-new dedicated RG name.' }
-if ($CredentialsPath -eq '') { $CredentialsPath = Join-Path $root $(if ($sso) { 'demo-credentials.sso.local.json' } else { 'demo-credentials.local.json' }) }
+if ($CredentialsPath -eq '') { $CredentialsPath = Join-Path $root $(if ($fallback) { 'demo-credentials.foundry.local.json' } elseif ($sso) { 'demo-credentials.sso.local.json' } else { 'demo-credentials.local.json' }) }
 if (Test-Path -LiteralPath $CredentialsPath) { throw 'Credentials output already exists; choose a new path.' }
 # The original app's receipt is never replaced by a single sign-on deployment.
-if ($ReceiptPath -eq '') { $ReceiptPath = Join-Path $root $(if ($sso) { 'deployment.sso.local.json' } else { 'deployment.local.json' }) }
+if ($ReceiptPath -eq '') { $ReceiptPath = Join-Path $root $(if ($fallback) { 'deployment.foundry.local.json' } elseif ($sso) { 'deployment.sso.local.json' } else { 'deployment.local.json' }) }
 if ($sso -and (Test-Path -LiteralPath $ReceiptPath)) { throw 'Receipt output already exists; choose a new -ReceiptPath.' }
 if ($sso -and $StaffManagers.Count -eq 0) {
     $signedInUpn = ''
@@ -160,6 +168,7 @@ function New-Token {
 }
 $admin = New-Token
 $partner = New-Token
+$staffAccessToken = if ($fallback) { New-Token } else { '' }
 # Signs customer and staff sessions. Not needed by the original demo, where it falls back to the tokens.
 $sessionSecret = if ($Live -or $sso) { New-Token } else { '' }
 $imageTag = 'demo-' + (Get-Date -Format 'yyyyMMddHHmmss')
@@ -171,12 +180,14 @@ $parameters = @{
         location = @{value=$Location}; adminToken = @{value=$admin}; partnerToken = @{value=$partner}
         deployApp = @{value=$false}; imageTag = @{value=$imageTag}
         enableOpenAI = @{value=[bool]$EnableOpenAI}; budgetEmail = @{value=$BudgetEmail}
+        foundryProjectEndpoint = @{value=$FoundryProjectEndpoint}; foundryAgentName = @{value=$FoundryAgentName}
         enablePrivateStorage = @{value=[bool]$EnablePrivateStorage}
         enableSql = @{value=[bool]$EnableSql}; sqlAdminLogin = @{value=$sqlAdminLogin}; sqlAdminObjectId = @{value=$sqlAdminObjectId}
         openAiModel = @{value=$OpenAiModel}; openAiModelVersion = @{value=$OpenAiModelVersion}
         appMode = @{value=$(if ($Live) { 'live' } else { 'demo' })}; enableEmail = @{value=[bool]$Live}
         staffAuth = @{value=$StaffAuth}; ssoClientId = @{value=''}; staffSessionHours = @{value=$StaffSessionHours}
         sessionSecret = @{value=$sessionSecret}
+        staffAccessToken = @{value=$staffAccessToken}
     }
 }
 $registration = $null
@@ -207,12 +218,14 @@ try {
         '--name','ama-application','--template-file',(Join-Path $root 'infra\main.bicep'),'--parameters',"@$parametersPath",
         '-o','json')) | ConvertFrom-Json
     $url = $deployed.properties.outputs.demoUrl.value
-    # With single sign-on the shared manager token is not a way in, so it is never written down.
+    # Do not write the legacy manager token for either SSO mode.
     $credentials = if ($sso) { @{demoUrl=$url; staffSignIn='Microsoft Entra ID single sign-on'; partnerToken=$partner} }
                    else { @{demoUrl=$url; adminToken=$admin; partnerToken=$partner} }
+    if ($fallback) { $credentials.staffAccessToken = $staffAccessToken }
     $credentials | ConvertTo-Json | Set-Content -LiteralPath $CredentialsPath -Encoding UTF8
     $receipt = @{resourceGroup=$ResourceGroup; subscriptionId=$SubscriptionId; location=$Location; demoUrl=$url
-        appName=$deployed.properties.outputs.appName.value; imageTag=$imageTag; aiEnabled=[bool]$EnableOpenAI
+        appName=$deployed.properties.outputs.appName.value; imageTag=$imageTag; aiEnabled=([bool]$EnableOpenAI -or $foundry)
+        foundryAgentName=$FoundryAgentName; managedIdentityPrincipalId=$initial.properties.outputs.managedIdentityPrincipalId.value
         privateStorageEnabled=([bool]$EnablePrivateStorage -or [bool]$EnableSql); sqlEnabled=[bool]$EnableSql
         sqlServer=$initial.properties.outputs.sqlServerFqdn.value; sqlDatabase=$initial.properties.outputs.sqlDatabaseName.value
         mode=$(if ($Live) { 'live' } else { 'demo' }); staffAuth=$StaffAuth; emailSender=$deployed.properties.outputs.emailSender.value}

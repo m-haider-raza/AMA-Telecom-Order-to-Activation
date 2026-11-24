@@ -10,6 +10,8 @@ param adminToken string
 @secure()
 param partnerToken string
 param enableOpenAI bool = false
+param foundryProjectEndpoint string = ''
+param foundryAgentName string = ''
 @description('Use private Blob connectivity when subscription policy disables public storage access. Creates a separate VNet-integrated environment and app.')
 param enablePrivateStorage bool = false
 @description('Create an Azure SQL database as the order store and the source of the Analytics report. It accepts Microsoft Entra sign-in only and is reachable only through a private endpoint, so it implies enablePrivateStorage. scripts/Deploy.ps1 prepares it once (python -m app.sqlbootstrap) before the app starts.')
@@ -27,9 +29,11 @@ param budgetStartDate string = utcNow('yyyy-MM-01')
 @description('"live" is the production site: customers register and sign in with their own account and the console is for signed-in staff. "demo" is the synthetic-data demonstration.')
 @allowed(['demo', 'live'])
 param appMode string = 'demo'
-@description('How the service team signs in. "token" is the shared manager access token (the original app). "sso" is Microsoft Entra ID single sign-on: one account per person, role-based access and every change attributed to the person who made it. "sso" needs appMode live, ssoClientId and sessionSecret; scripts/Register-StaffSso.ps1 creates the app registration.')
-@allowed(['token', 'sso'])
+@description('Staff sign-in: legacy manager token, Entra SSO, or Entra SSO with a separate operator access token.')
+@allowed(['token', 'sso', 'sso+token'])
 param staffAuth string = 'token'
+@secure()
+param staffAccessToken string = ''
 @description('Application (client) ID of the Microsoft Entra app registration the service team signs in through. Required when staffAuth is sso.')
 param ssoClientId string = ''
 @description('Hours a staff sign-in lasts before the person must sign in again (the app accepts 0.25 to 12).')
@@ -326,6 +330,7 @@ resource communication 'Microsoft.Communication/communicationServices@2023-04-01
 var origin = 'https://${appName}.${environment.properties.defaultDomain}'
 var appSecrets = concat(
   [{ name: 'manager-token', value: adminToken }, { name: 'partner-token', value: partnerToken }],
+  staffAuth == 'sso+token' ? [{ name: 'staff-access-token', value: staffAccessToken }] : [],
   empty(sessionSecret) ? [] : [{ name: 'session-secret', value: sessionSecret }],
   enableEmail ? [{ name: 'acs-cs', value: communication!.listKeys().primaryConnectionString }] : []
 )
@@ -340,6 +345,8 @@ var appEnv = concat(
     { name: 'DEMO_TICK_SECONDS', value: '3' }
     { name: 'AZURE_OPENAI_ENDPOINT', value: enableOpenAI ? openai!.properties.endpoint : '' }
     { name: 'AZURE_OPENAI_DEPLOYMENT', value: enableOpenAI ? 'telecom-advisor' : '' }
+    { name: 'FOUNDRY_PROJECT_ENDPOINT', value: foundryProjectEndpoint }
+    { name: 'FOUNDRY_AGENT_NAME', value: foundryAgentName }
     { name: 'AMA_SQL_SERVER', value: enableSql ? sqlServer!.properties.fullyQualifiedDomainName : '' }
     { name: 'AMA_SQL_DATABASE', value: enableSql ? sqlDatabaseName : '' }
     { name: 'AMA_SQL_AUTO_SCHEMA', value: 'false' }
@@ -355,12 +362,13 @@ var appEnv = concat(
     { name: 'ACS_EMAIL_SENDER', value: 'DoNotReply@${emailDomain!.properties.mailFromSenderDomain}' }
     { name: 'AMA_DELIVERY', value: 'live' }
   ] : [],
-  staffAuth == 'sso' ? [
-    { name: 'AMA_STAFF_AUTH', value: 'sso' }
+  staffAuth != 'token' ? [
+    { name: 'AMA_STAFF_AUTH', value: staffAuth }
     { name: 'AMA_SSO_TENANT_ID', value: tenant().tenantId }
     { name: 'AMA_SSO_CLIENT_ID', value: ssoClientId }
     { name: 'AMA_STAFF_SESSION_HOURS', value: string(staffSessionHours) }
-  ] : []
+  ] : [],
+  staffAuth == 'sso+token' ? [{ name: 'AMA_STAFF_ACCESS_TOKEN', secretRef: 'staff-access-token' }] : []
 )
 resource app 'Microsoft.App/containerApps@2024-03-01' = if (deployApp) {
   name: appName

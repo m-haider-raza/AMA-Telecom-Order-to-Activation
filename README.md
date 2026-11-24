@@ -33,6 +33,8 @@ The recorded demo and the interactive app are separate chapters. The links below
 
 The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band. A second, standalone build of the same app signs the service team in with **Microsoft Entra ID single sign-on** instead, so every change is recorded against the person who made it. In that build a service engineer places an order for an enterprise chosen from a list, and that enterprise's contact approves it by e-mail before any agent starts. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md).
 
+For a new deployment with both sign-in options, see [Foundry with Microsoft sign-in and operator access tokens](docs/STAFF-SSO.md#foundry-with-microsoft-sign-in-and-operator-access-tokens). It uses the same console and data model, with Microsoft Foundry Agent Service for advisory recommendations.
+
 ## What's new in this update
 
 - **Five-step case-study journey.** Today → Architecture → Solution → Live App Demo → Live App. The 2:21 demo chapter covers customer, partner and service-team workflows, the five agents, Analytics and governance; step 5 is the separate interactive app. George speaks at natural speed; long pages scroll to the bottom, with captions below the app. The full 5:13 version is also available to download.

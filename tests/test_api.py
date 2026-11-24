@@ -175,6 +175,56 @@ def test_failed_live_ai_does_not_fake_advice_or_execute(client, monkeypatch):
     assert "aiAdvice" not in current and not current["reserved"]
 
 
+@pytest.mark.parametrize("status", ["completed", "incomplete"])
+def test_foundry_agent_receives_only_workflow_fields_and_cannot_execute(client, monkeypatch, status):
+    import json
+    import httpx
+
+    monkeypatch.setenv("FOUNDRY_PROJECT_ENDPOINT", "https://demo.services.ai.azure.com/api/projects/activation")
+    monkeypatch.setenv("FOUNDRY_AGENT_NAME", "order-advisor")
+    headers = {"Authorization": f"Bearer {ADMIN}"}
+    order = client.post("/api/orders", json=payload(), headers=headers).json()
+    actual_client = httpx.Client
+
+    class Credential:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            pass
+
+        def get_token(self, scope):
+            assert scope == "https://ai.azure.com/.default"
+            return type("Token", (), {"token": "test-managed-identity"})()
+
+    def foundry(request):
+        assert request.url.path.endswith("/agents/order-advisor/endpoint/protocols/openai/responses")
+        assert request.url.params["api-version"] == "v1"
+        assert request.headers["Authorization"] == "Bearer test-managed-identity"
+        body = json.loads(request.content)
+        assert not body["store"]
+        context = json.loads(body["input"][0]["content"].split("\n")[-1])
+        assert set(context) == {"state", "stage", "product", "scenario", "exceptionType"}
+        text = json.dumps({"diagnosis": "Review the route", "recommendedAction": "request_human_review",
+                           "customerMessageEn": "Under review", "customerMessageTr": "Inceleme bekleniyor"})
+        return httpx.Response(200, json={"status": status, "output": [
+            {"type": "message", "role": "assistant", "content": [{"type": "output_text", "text": text}]}]})
+
+    monkeypatch.setattr(advisor, "DefaultAzureCredential", Credential)
+    monkeypatch.setattr(advisor.httpx, "Client",
+                        lambda **kwargs: actual_client(transport=httpx.MockTransport(foundry), **kwargs))
+    response = client.post(f"/api/orders/{order['id']}/advice", headers=headers)
+    snapshot = client.get("/api/state").json()
+    assert snapshot["configuration"]["aiMode"] == "Microsoft Foundry agent"
+    current = snapshot["orders"][order["id"]]
+    assert not current["reserved"] and not current["approvals"]
+    if status == "completed":
+        assert response.status_code == 200 and response.json()["executionAuthority"] is False
+        assert current["aiAdvice"]["mode"] == "live-foundry-agent"
+    else:
+        assert response.status_code == 502 and "aiAdvice" not in current
+
+
 def test_contact_is_validated_and_never_exposed_unmasked(client):
     headers = {"Authorization": f"Bearer {ADMIN}"}
     body = {**payload(key="api-contact-order"), "contact": {

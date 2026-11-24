@@ -54,7 +54,7 @@ function roleNote(need) {
 }
 function requireToken(need = "operate") {
   if (!token && session.role !== "admin") {
-    if (session.staffAuth === "sso") { leaveConsole("Sign in with Microsoft to continue."); return false; }
+    if (staffSso()) { leaveConsole("Sign in as staff to continue."); return false; }
     $("#access-dialog").showModal(); toast("Sign in as staff or enter your demo token, then retry the action."); return false;
   }
   if (!can(need)) { toast(`Your role (${session.staff.roleLabel}) cannot ${NEED_TEXT[need]}. Ask a service manager.`, true); return false; }
@@ -346,7 +346,8 @@ function renderOrder(id) {
   host.append(node("p", contact ? `${contact.contactName} · ${contact.preferredChannel === "email" ? contact.email : contact.phone} via ${contact.preferredChannel.toUpperCase()} · updates: ${contact.updateFrequency}` : "No contact details on file; no updates can be sent.", "muted small"));
   (order.outbox || []).forEach(item => host.append(append(node("div", null, "message"), node("span", `${item.kind.toUpperCase()} · ${item.status}`, "language"), node("div", order.language === "en" ? item.en : item.tr), node("p", `${item.channel}${item.to ? " → " + item.to : ""} · ${new Date(item.at).toLocaleTimeString()} · simulation, nothing was sent`, "muted small"))));
   const adviceButton = node("button", "Request live AI advice (no execution authority)", "button secondary");
-  adviceButton.disabled = !snapshot.configuration.aiMode.startsWith("Regional") || !can("operate");
+  adviceButton.disabled = !snapshot.configuration.aiAdviceEnabled || !can("operate")
+    || Boolean(order.enterpriseApproval && order.enterpriseApproval.status !== "approved");
   adviceButton.onclick = async () => {
     if (!requireToken()) return;
     adviceButton.disabled = true;
@@ -381,7 +382,8 @@ const ORDER_TEXT = {
   demo: ["SYNTHETIC SERVICE REQUEST", "Start an order journey", "Use invented demo data only. No live service will be provisioned.", "Submit synthetic order →"],
   enterprise: ["SERVICE REQUEST FOR AN ENTERPRISE", "Place an order for an enterprise", "Choose the enterprise this order is for. No live service will be provisioned.", "Send for enterprise approval →"]
 };
-function enterpriseOrder() { return session.staffAuth === "sso" && $("#submission-channel").value === "operator"; }
+function staffSso() { return ["sso", "sso+token"].includes(session.staffAuth); }
+function enterpriseOrder() { return staffSso() && $("#submission-channel").value === "operator"; }
 function showOrderMode() {
   const enterprise = enterpriseOrder();
   [["#order-enterprise-field", false], ["#order-approval-note", false], ["#order-customer-field", true], ["#order-language-field", true], ["#order-contact-block", true]]
@@ -494,7 +496,7 @@ function applyRole() {
   });
 }
 function showSession() {
-  const admin = session.role === "admin", sso = session.staffAuth === "sso", staff = session.staff;
+  const admin = session.role === "admin", sso = staffSso(), staff = session.staff;
   $("#who").textContent = !admin ? "" : staff ? `${staff.name} · ${staff.roleLabel}` : "Signed in · Service manager";
   $("#who").title = staff ? staff.upn : "";
   $("#who").classList.toggle("named", Boolean(staff));
@@ -504,8 +506,10 @@ function showSession() {
   $("#access-button").classList.toggle("hidden", admin || sso);
   // The walkthrough page signs in with pasted tokens, which a Microsoft-signed-in team does not have.
   $("#walkthrough-link").classList.toggle("hidden", sso);
-  $("#signin-link").textContent = sso ? "Sign in with Microsoft" : "Staff sign in";
-  $("#audit-lede").textContent = sso
+  $("#signin-link").textContent = session.staffAuth === "sso" ? "Sign in with Microsoft" : "Staff sign in";
+  $("#audit-lede").textContent = session.staffAuth === "sso+token"
+    ? "Microsoft sign-in records the person and their role. Actions made with the shared staff access token are marked as such."
+    : sso
     ? "Every action by a signed-in team member is filed with their name, sign-in and role, and with what it changed."
     : "Actions by agents, customers and partners are recorded here. Staff share one manager token, so their actions are not attributed to a person.";
   if (sso) $("#partner-result").textContent = "Capacity answers appear here once a service operator or manager runs a check.";

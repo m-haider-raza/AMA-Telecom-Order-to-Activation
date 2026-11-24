@@ -6,6 +6,7 @@ disabled or had its password changed counts as signed out.
 """
 
 from app import auth
+from app.security import session_staff
 
 
 def resolve(request, snapshot=None):
@@ -14,7 +15,7 @@ def resolve(request, snapshot=None):
     if session is None:
         return None
     if session["r"] == "admin":
-        return {"role": "admin", "staff": auth.staff_person(session)}
+        return {"role": "admin", "staff": session_staff(session)}
     snapshot = snapshot if snapshot is not None else request.app.state.store.read()
     if session["r"] == "customer":
         customer = snapshot.get("customers", {}).get(session["s"])

@@ -12,6 +12,7 @@
   const INVOICE_RANK = {overdue: 0, issued: 1, scheduled: 2, paid: 3};
   const TERMS = [[0, "Due on receipt"], [14, "14 days"], [30, "30 days"], [45, "45 days"], [60, "60 days"]];
   const lockedText = () => session.staffAuth === "sso" ? "Sign in with Microsoft to manage partner accounts."
+    : session.staffAuth === "sso+token" ? "Sign in as staff to manage partner accounts."
     : "Sign in as staff, or load the manager token from Demo access, to manage partner accounts.";
   const refusedText = () => session.staff ? `Your role (${session.staff.roleLabel}) cannot open partner accounts.`
     : "This token can't manage partner accounts. Use the manager token, or sign in as staff.";

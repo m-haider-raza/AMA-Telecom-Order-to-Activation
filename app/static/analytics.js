@@ -7,6 +7,7 @@
   const FAST_MS = 2000, SLOW_MS = 6000, SOURCE_MS = 30000, DAY = 86400;
   const AXIS_LOW = 10, AXIS_HIGH = 100 * DAY;
   const lockedText = () => session.staffAuth === "sso" ? "Sign in with Microsoft to see the analytics."
+    : session.staffAuth === "sso+token" ? "Sign in as staff to see the analytics."
     : "Sign in as staff, or load the manager token from Demo access, to see the analytics.";
   const refusedText = () => session.staff ? `Your role (${session.staff.roleLabel}) cannot open the analytics.`
     : "This token can't open the analytics. Use the manager token, or sign in as staff.";

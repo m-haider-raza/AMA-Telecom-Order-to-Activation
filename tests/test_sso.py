@@ -170,6 +170,49 @@ def staff_order(sso, headers, enterprise_id, key, **changes):
     return placed.json()
 
 
+def test_sso_and_operator_token_share_the_console_without_sharing_privileges(sso, monkeypatch):
+    fallback = "test-staff-operator-token-not-a-real-token"
+    monkeypatch.setenv("AMA_STAFF_AUTH", "sso+token")
+    monkeypatch.setenv("AMA_STAFF_ACCESS_TOKEN", fallback)
+    manager = tab(sign_in(sso))
+    assert sso.get("/api/auth/me", headers=manager).json()["staff"]["role"] == "ServiceManager"
+    for invalid in (ADMIN, PARTNER):
+        assert sso.post("/api/auth/staff", headers=TAB, json={"token": invalid}).status_code == 401
+    signed_in = sso.post("/api/auth/staff", headers=TAB, json={"token": fallback})
+    assert signed_in.status_code == 200 and signed_in.headers["cache-control"] == "no-store"
+    operator_token = signed_in.json()["session"]
+    operator = tab(operator_token)
+    me = sso.get("/api/auth/me", headers=operator).json()
+    assert me["staffAuth"] == "sso+token" and me["staff"]["role"] == "ServiceOperator"
+    assert not sso.get("/api/auth/me", headers=TAB).json()["authenticated"]
+    for secret in (ADMIN, fallback):
+        assert sso.get("/api/state", headers={"Authorization": f"Bearer {secret}"}).status_code == 403
+
+    _, enterprise = enroll(sso)
+    placed = place_for(sso, operator, enterprise["id"], "fallback-enterprise")
+    assert placed.status_code == 201 and placed.json()["state"] == "awaitingEnterpriseApproval"
+    order_id = placed.json()["id"]
+    decision = {"decision": "approve"}
+    assert sso.post(f"/api/orders/{order_id}/decision", headers=operator, json=decision).status_code == 403
+    assert sso.post("/api/orders", headers=operator, json=order_body("fallback-bypass")).status_code == 409
+    monkeypatch.setattr("app.advisor.configured", lambda: True)
+    assert sso.post(f"/api/orders/{order_id}/advice", headers=operator).status_code == 409
+    report = trail(sso, operator_token, order=order_id)
+    assert any(entry.get("by", {}).get("name") == "Staff access token (shared)" for entry in report["entries"])
+    assert answer(sso, order_id).status_code == 200
+
+    monkeypatch.setenv("AMA_STAFF_ACCESS_TOKEN", fallback + "-rotated")
+    assert sso.get("/api/state", headers=operator).status_code == 401
+    assert sso.get("/api/state", headers=manager).status_code == 200
+
+
+@pytest.mark.parametrize("token", [None, ADMIN, "short"])
+def test_dual_mode_requires_a_distinct_staff_access_token(monkeypatch, tmp_path, token):
+    configure(monkeypatch, tmp_path, AMA_STAFF_AUTH="sso+token", AMA_STAFF_ACCESS_TOKEN=token)
+    with pytest.raises(RuntimeError, match="AMA_STAFF_ACCESS_TOKEN"), TestClient(app):
+        pass
+
+
 def test_sign_in_goes_to_microsoft_and_keeps_only_a_signed_flow_cookie(sso):
     response = sso.get("/auth/sso/login", follow_redirects=False)
     assert response.status_code == 302
@@ -212,7 +255,7 @@ def test_the_app_will_not_start_with_incomplete_or_unknown_staff_sign_in_setting
         with TestClient(app):
             pass
     configure(monkeypatch, tmp_path, AMA_STAFF_AUTH="entra")
-    with pytest.raises(RuntimeError, match="either 'token' or 'sso'"):
+    with pytest.raises(RuntimeError, match="AMA_STAFF_AUTH must be"):
         with TestClient(app):
             pass
 

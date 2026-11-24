@@ -157,10 +157,6 @@
           <h2 id="h-staff" tabindex="-1">Service team sign-in</h2>
           <p class="sub">For the TürkBizTel service team. Customers and partners sign in with their email address and password.</p>
           <p class="msg" id="staff-msg" role="alert" hidden></p>
-          <div id="staff-token" hidden>
-            <div data-slot="token"></div>
-            <button class="btn block" type="submit">Open the service console</button>
-          </div>
           <div id="staff-sso" hidden>
             <a class="btn block microsoft" id="sso-start" href="/auth/sso/login" target="_top">
               <svg class="ms-logo" viewBox="0 0 21 21" width="21" height="21" aria-hidden="true" focusable="false">
@@ -170,8 +166,13 @@
               <span>Sign in with Microsoft</span>
             </a>
             <p class="sso-wait" id="sso-wait" role="status" hidden><span class="spinner" aria-hidden="true"></span>Signing you in…</p>
-            <p class="hint sso-note">Use your TürkBizTel work account. Your name and role are recorded with every change you make to an order, so the audit trail always shows who did what.</p>
+            <p class="hint sso-note">Use your TürkBizTel work account. Your name and role are recorded with every change you make to an order when signed in with Microsoft.</p>
             <p class="hint sso-note">Your role decides what you can do. A <strong>service manager</strong> can do everything, a <strong>service operator</strong> can change orders and answer partner concerns, and a <strong>service auditor</strong> can view the console and the audit trail.</p>
+          </div>
+          <div id="staff-token" hidden>
+            <p class="hint" id="staff-fallback-hint" hidden>Still getting your work account set up? Use the staff access token issued by your service desk. It gives operator access, not manager access.</p>
+            <div data-slot="token"></div>
+            <button class="btn block" type="submit">Open the service console</button>
           </div>
           <p class="alt"><button class="btn link" type="button" data-go="signin">Back to sign in</button></p>
         </form>

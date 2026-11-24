@@ -32,6 +32,8 @@ CODE_ATTEMPTS = 5
 RESEND_SECONDS = 60
 INVITE_SECONDS = 7 * 24 * 3600
 ROLES = ("customer", "partner", "admin")
+STAFF_AUTH_MODES = ("token", "sso", "sso+token")
+FALLBACK_SUBJECT = "staff-access-token"
 SCRYPT = {"n": 2**14, "r": 8, "p": 1}
 SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
 COMMON_PASSWORDS = {
@@ -53,7 +55,6 @@ def _key():
     base = os.getenv("AMA_SESSION_SECRET") or os.getenv("AMA_TRACKING_SECRET")
     if not base:
         if sso_enabled():
-            # The shared access token is not a safe signing key once it is meant to be out of use.
             raise RuntimeError("Set AMA_SESSION_SECRET: staff sessions cannot be signed with an access token")
         base = os.getenv("DEMO_ADMIN_TOKEN", "")
     return hmac.new(base.encode(), b"myturkei.session.v1", hashlib.sha256).digest()
@@ -95,13 +96,20 @@ def verify_password(password, stored):
 
 
 def staff_auth_mode():
-    """How the service team signs in. "token" (the default) is the shared access token; "sso" requires each person
-    to sign in with Microsoft Entra ID, so every action can be tied to the person who took it."""
-    return "sso" if os.getenv("AMA_STAFF_AUTH", "token").strip().lower() == "sso" else "token"
+    return os.getenv("AMA_STAFF_AUTH", "token").strip().lower()
 
 
 def sso_enabled():
-    return staff_auth_mode() == "sso"
+    return staff_auth_mode() in ("sso", "sso+token")
+
+
+def fallback_enabled():
+    return staff_auth_mode() == "sso+token"
+
+
+def fallback_version():
+    return hmac.new(_key(), f"staff-fallback|{os.environ['AMA_STAFF_ACCESS_TOKEN']}".encode(),
+                    hashlib.sha256).hexdigest()
 
 
 def staff_session_seconds():
@@ -117,7 +125,7 @@ def admin_version():
 
 
 def staff_version():
-    """Ties staff sessions to the sign-in method that issued them, so changing the method ends them all."""
+    """Version for named SSO sessions (or legacy manager sessions in token-only mode)."""
     if sso_enabled():
         scope = f"sso|{os.getenv('AMA_SSO_TENANT_ID', '')}|{os.getenv('AMA_SSO_CLIENT_ID', '')}"
         return hashlib.sha256(scope.encode()).hexdigest()[:12]
@@ -192,9 +200,16 @@ def request_session(request: Request):
     their version checked against the stored account."""
     data = read_session(request.headers.get("x-session") if per_tab(request) else request.cookies.get(COOKIE))
     if data and data["r"] == "admin":
-        if not hmac.compare_digest(str(data.get("v")), staff_version()):
+        person = staff_person(data)
+        if data.get("s") == FALLBACK_SUBJECT and person is None:
+            if not fallback_enabled() or not os.getenv("AMA_STAFF_ACCESS_TOKEN"):
+                return None
+            version = fallback_version()
+        elif sso_enabled() == bool(person):
+            version = staff_version()
+        else:
             return None
-        if sso_enabled() and staff_person(data) is None:
+        if not hmac.compare_digest(str(data.get("v")), version):
             return None
     return data
 

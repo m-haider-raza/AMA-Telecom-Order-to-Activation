@@ -52,10 +52,12 @@ const fromHash = () => {
 
 /* The service team signs in with Microsoft or with an access token, and the server says which. The link
    keeps its space but stays invisible until then, so the wrong wording never flashes. */
-function applyStaffMode(sso) {
-  $("#staff-token").hidden = sso;
+function applyStaffMode(mode) {
+  const sso = mode === "sso" || mode === "sso+token";
+  $("#staff-token").hidden = mode !== "token" && mode !== "sso+token";
   $("#staff-sso").hidden = !sso;
-  if (sso) $("#staff-link").textContent = "Sign in with Microsoft";
+  $("#staff-fallback-hint").hidden = mode !== "sso+token";
+  if (sso) $("#staff-link").textContent = mode === "sso" ? "Sign in with Microsoft" : "Staff sign in";
   $("#staff-row").removeAttribute("data-pending");
 }
 
@@ -292,7 +294,7 @@ async function boot() {
   }
   try {
     const me = await api("/api/auth/me");
-    applyStaffMode(me.staffAuth === "sso");
+    applyStaffMode(me.staffAuth);
     // A visitor who was just sent here because a session ended must not be sent straight back, and
     // someone opening an invitation link must get to set up their account, whoever is signed in.
     if (me.authenticated && !bounced && !back && !INVITE_HASH.test(location.hash)) {

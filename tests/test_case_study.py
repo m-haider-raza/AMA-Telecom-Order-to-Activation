@@ -261,27 +261,31 @@ def slide_texts(deck):
 def test_published_deck_shows_the_cost_of_implementation_before_the_risks():
     with zipfile.ZipFile(PPTX) as deck:
         texts = slide_texts(deck)
-    assert len(texts) == 16
-    assert "cost of implementation" in texts[14].lower() and "payback" in texts[14].lower()
-    assert "risks" in texts[15].lower()
-    assert 'data-slide="15" data-kicker="Cost of implementation' in HTML
+    assert len(texts) == 20
+    assert "cost of implementation" in texts[18].lower() and "payback" in texts[18].lower()
+    assert "risks" in texts[19].lower()
+    assert 'data-slide="19" data-kicker="Cost of implementation' in HTML
 
 
 def test_published_deck_frames_the_design_with_the_market_research():
-    """Slide 3 shows where public B2B telecom orders stall and drop out; slide 10 answers it with the design."""
+    """Benchmarks and their design implications introduce the architecture."""
     with zipfile.ZipFile(PPTX) as deck:
         texts = slide_texts(deck)
     assert "market research" in texts[2].lower() and "benchmarks" in texts[2].lower()
-    assert "market research" in texts[9].lower() and "what it means for the design" in texts[9].lower()
+    assert "market research" in texts[3].lower() and "what it means for the design" in texts[3].lower()
     assert 'data-slide="3" data-kicker="Market research' in HTML
-    assert 'data-slide="10" data-kicker="Market research' in HTML
+    assert 'data-slide="4" data-kicker="Market research' in HTML
+    assert "Six agents, six projects" in texts[7]
+    assert "Use a model only" in texts[10]
+    assert "Task boundaries enforced" in texts[12]
+    assert "Separate identities" in texts[13]
 
 
 def test_published_deck_is_the_clean_web_edition():
     with zipfile.ZipFile(PPTX) as deck:
         names = deck.namelist()
         slides = [name for name in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
-        assert len(slides) == 16 and "ppt/slides/slide17.xml" not in names
+        assert len(slides) == 20
         for name in names:
             if name.endswith((".xml", ".rels")):
                 text = deck.read(name).decode("utf-8", "replace")

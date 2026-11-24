@@ -9,7 +9,7 @@
   const NAMES = { today: "Today", architecture: "Architecture", solution: "The solution in action",
     demo: "Live App Demo", app: "Live App" };
   const CHAPTER_KEYS = { 1: "today", 2: "architecture", 3: "solution", 4: "demo", 5: "app" };
-  const SLIDES = 16;
+  const SLIDES = 20;
   const PUBLIC_PAGES = ["/", "/order", "/track", "/login"];
   const BASE_TITLE = document.title;
   const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -416,6 +416,11 @@
     fetch("/api/auth/me", { credentials: "same-origin", headers: { Accept: "application/json" } })
       .then((reply) => (reply.ok ? reply.json() : null))
       .then((me) => {
+        if (me?.staffAuth === "sso+token") {
+          link.textContent = "Service team sign-in";
+          note.textContent = ". Sign in with your Microsoft work account or an operator access token from the service desk.";
+          return;
+        }
         if (!me || me.staffAuth !== "sso") return;
         link.textContent = "Sign in with your Microsoft work account";
         note.textContent = ". Your role decides what you can do, and your name is recorded with every change you "

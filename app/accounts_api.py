@@ -21,6 +21,7 @@ from app.domain import (SITES, correct_order, delivery_enabled, live_mode, owner
                         update_site)
 from app.schemas import Contact, PortalOrder, check_customer, transact
 from app.security import limit
+from app.security import FALLBACK_STAFF, session_staff
 from app.sso import public_staff, record_staff_event
 
 log = logging.getLogger("ama.accounts")
@@ -309,27 +310,35 @@ def accept_invite(payload: InviteAccept, request: Request, response: Response):
 
 @router.post("/api/auth/staff")
 def staff_login(payload: StaffLogin, request: Request, response: Response):
-    if auth.sso_enabled():
+    fallback = auth.fallback_enabled()
+    if auth.sso_enabled() and not fallback:
         raise HTTPException(403, "The service team signs in with Microsoft. Use Sign in with Microsoft.")
     auth.require_csrf(request)
     address = auth.client_ip(request)
     pair = f"staff|{address}"
     auth.guard(auth.LOGIN_PAIR, pair)
     auth.guard(auth.LOGIN_IP, address)
-    admin = os.getenv("DEMO_ADMIN_TOKEN", "")
-    if not (admin and hmac.compare_digest(payload.token.strip().encode(), admin.encode())):
+    expected = os.getenv("AMA_STAFF_ACCESS_TOKEN" if fallback else "DEMO_ADMIN_TOKEN", "")
+    if not (expected and hmac.compare_digest(payload.token.strip().encode(), expected.encode())):
         auth.LOGIN_PAIR.add(pair)
         auth.LOGIN_IP.add(address)
         raise HTTPException(401, "That access token is not valid.")
     auth.LOGIN_PAIR.clear(pair)
-    handover = auth.grant(request, response, auth.issue_session("admin", "staff", auth.admin_version()))
+    if fallback:
+        token = auth.issue_session("admin", auth.FALLBACK_SUBJECT, auth.fallback_version(),
+                                   seconds=auth.staff_session_seconds())
+        record_staff_event(request.app, FALLBACK_STAFF, "staff.signed-in", "Signed in with the shared staff access token")
+    else:
+        token = auth.issue_session("admin", "staff", auth.admin_version())
+    response.headers["Cache-Control"] = "no-store"
+    handover = auth.grant(request, response, token)
     return {"role": "admin", **handover}
 
 
 @router.post("/api/auth/logout")
 def logout(request: Request, response: Response):
     auth.require_csrf(request)
-    person = auth.staff_person(auth.request_session(request)) if auth.sso_enabled() else None
+    person = session_staff(auth.request_session(request))
     if person:
         try:
             record_staff_event(request.app, person, "staff.signed-out", "Signed out")

@@ -58,7 +58,7 @@ def test_downloadable_presentation_carries_the_brand_on_every_public_slide():
     folder = STATIC / "case-study"
     with zipfile.ZipFile(folder / "Agentic_Order_to_Activation_Architecture.pptx") as deck:
         slides = [name for name in deck.namelist() if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
-        assert len(slides) == 16
+        assert len(slides) == 20
         assert all("TürkBizTel" in deck.read(name).decode("utf-8") for name in slides)
 
 

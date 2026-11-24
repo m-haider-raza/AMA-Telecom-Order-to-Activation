@@ -1,8 +1,7 @@
 """Who may call the staff APIs, and which person is acting.
 
-Token mode (the default) keeps the single shared access token. Single sign-on mode (`AMA_STAFF_AUTH=sso`) accepts only
-a staff session issued after a Microsoft Entra ID sign-in. Every request then carries the person who made it, and the
-access token is no longer a way in, so nothing a member of the service team does is anonymous.
+Token mode keeps the legacy manager credential. Both SSO modes accept named Entra sessions; `sso+token` also
+accepts an operator session exchanged for a separate staff access token at the sign-in page.
 """
 
 import hmac
@@ -22,6 +21,8 @@ ROLE_LABELS = {"ServiceAuditor": "Service auditor", "ServiceOperator": "Service 
                "ServiceManager": "Service manager"}
 NEEDS = {"read": 1, "operate": 2, "manage": 3}
 NEED_TEXT = {"operate": "change orders", "manage": "make this decision or manage partners"}
+FALLBACK_STAFF = {"oid": auth.FALLBACK_SUBJECT, "name": "Staff access token (shared)", "upn": "",
+                  "role": "ServiceOperator"}
 
 
 class Actor(str):
@@ -41,9 +42,15 @@ def role_label(role):
     return ROLE_LABELS.get(role, "Staff")
 
 
+def session_staff(session):
+    if session and session["r"] == "admin" and session.get("s") == auth.FALLBACK_SUBJECT:
+        return FALLBACK_STAFF
+    return auth.staff_person(session)
+
+
 def staff_actor(session, need):
     """The acting staff member of a verified admin session, refused when their role is below what the call needs."""
-    person = auth.staff_person(session)
+    person = session_staff(session)
     if person is None:
         return Actor("service-manager")
     if STAFF_ROLES.get(person["role"], 0) < NEEDS[need]:
@@ -64,7 +71,7 @@ def authorize(request: Request, *, partner_allowed=False, need="manage"):
         token = supplied[7:]
         admin = os.getenv("DEMO_ADMIN_TOKEN", "")
         partner = os.getenv("DEMO_PARTNER_TOKEN", "")
-        if admin and not auth.sso_enabled() and hmac.compare_digest(token, admin):
+        if admin and auth.staff_auth_mode() == "token" and hmac.compare_digest(token, admin):
             return Actor("service-manager")
         if partner_allowed and partner and hmac.compare_digest(token, partner):
             return Actor("wholesale-partner")
@@ -75,8 +82,10 @@ def authorize(request: Request, *, partner_allowed=False, need="manage"):
         return staff_actor(session, need)
     if session:
         raise HTTPException(403, "Customer and partner accounts cannot use the staff console or its APIs")
-    raise HTTPException(401, "Sign in with Microsoft to continue" if auth.sso_enabled()
-                        else "Sign in as staff or supply an access token", headers={"WWW-Authenticate": "Bearer"})
+    message = {"sso": "Sign in with Microsoft to continue",
+               "sso+token": "Sign in with Microsoft or use your staff access token"}.get(
+                   auth.staff_auth_mode(), "Sign in as staff or supply an access token")
+    raise HTTPException(401, message, headers={"WWW-Authenticate": "Bearer"})
 
 
 def limit(request: Request):
