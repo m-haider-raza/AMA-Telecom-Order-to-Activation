@@ -12,7 +12,7 @@ jobs:
           python-version: '3.13'
           cache: pip
       - run: pip install -e ".[dev]"
-      - run: ruff check app tests scripts/Deploy_Isolated.py scripts/Verify_Isolated.py
+      - run: ruff check app tests scripts/Deploy_Isolated.py scripts/Verify_Isolated.py scripts/*Foundry*.py
       - run: pytest -q
       - name: Check every front-end script
         run: |

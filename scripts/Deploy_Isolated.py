@@ -48,6 +48,9 @@ def resume(args):
                              for item in receipt["identities"]}, "imageTag": args.image_tag,
               "adminToken": credentials["admin"], "partnerToken": credentials["partner"],
               "sessionSecret": credentials["session"]}
+    values.update(receipt.get("appConfiguration", {}))
+    if "staffAccessToken" in credentials:
+        values["staffAccessToken"] = credentials["staffAccessToken"]
     with tempfile.TemporaryDirectory(prefix="amai-resume-") as directory:
         parameters = Path(directory) / "parameters.json"
         save(parameters, {"parameters": {key: {"value": value} for key, value in values.items()}})
@@ -61,7 +64,7 @@ def resume(args):
     print(f"New isolated copy: {receipt['url']}")
 
 
-def deploy(args):
+def deploy(args, configure=None):
     if not AZ:
         raise RuntimeError("Azure CLI is required")
     if not re.fullmatch(r"rg-amai-[a-z0-9-]+", args.resource_group):
@@ -87,7 +90,8 @@ def deploy(args):
         outputs = az("deployment", "group", "create", "--name", "isolated-bootstrap", "--template-file",
                      str(ROOT / "infra" / "isolated.bicep"), "--parameters", f"location={args.location}",
                      "--query", "properties.outputs", "-o", "json", *target, json_result=True)
-        for name in ("identities", "registryName", "storageUrl", "logWorkspace"):
+        for name in ("identities", "registryName", "storageUrl", "logWorkspace",
+                     "boundaryName", "boundaryOrigin", "boundaryIdentity"):
             receipt[name] = outputs[name]["value"]
         save(receipt_path, receipt)
         roles = [{"allowedMemberTypes": ["Application"], "description": f"Only {identity['agent']} contracts",
@@ -117,6 +121,8 @@ def deploy(args):
             receipt["status"] = "app-roles-assigned"
             save(receipt_path, receipt)
             credentials = {name: secrets.token_urlsafe(36) for name in ("admin", "partner", "session")}
+            if configure is not None:
+                receipt["appConfiguration"] = configure(receipt, credentials)
             save(credentials_path, credentials)
             tag = "isolated-" + datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
             receipt["imageTag"] = tag
@@ -127,6 +133,9 @@ def deploy(args):
             values = {"location": args.location, "deployApps": True, "audience": receipt["audience"],
                       "principals": bindings, "imageTag": tag, "adminToken": credentials["admin"],
                       "partnerToken": credentials["partner"], "sessionSecret": credentials["session"]}
+            values.update(receipt.get("appConfiguration", {}))
+            if "staffAccessToken" in credentials:
+                values["staffAccessToken"] = credentials["staffAccessToken"]
             save(parameters, {"parameters": {key: {"value": value} for key, value in values.items()}})
             final = az("deployment", "group", "create", "--name", "isolated-apps", "--template-file",
                        str(ROOT / "infra" / "isolated.bicep"), "--parameters", f"@{parameters}",

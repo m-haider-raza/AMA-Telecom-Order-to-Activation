@@ -42,10 +42,11 @@ async def lifespan(application):
     tokens = [os.getenv("DEMO_ADMIN_TOKEN", ""), os.getenv("DEMO_PARTNER_TOKEN", "")]
     if min(map(len, tokens)) < 24 or tokens[0] == tokens[1]:
         raise RuntimeError("New, distinct staff and partner credentials are required")
-    if os.getenv("AMA_STAFF_AUTH", "token") not in ("token", "sso"):
+    if auth.staff_auth_mode() not in auth.STAFF_AUTH_MODES:
         raise RuntimeError("Invalid staff authentication mode")
     if auth.sso_enabled() and sso.configuration_problems():
         raise RuntimeError("New stack SSO configuration is incomplete")
+    auth.validate_fallback()
     configure_staff_log()
     application.state.verifier = EntraVerifier.from_env()
     endpoint = os.getenv("ISOLATED_STORAGE_URL")
@@ -188,7 +189,8 @@ def health(request: Request):
 
 @app.get("/api/auth/me")
 def me(request: Request):
-    return {**whoami(request), "enterpriseApprovals": True, "isolatedArchitecture": True}
+    return {**whoami(request), "enterpriseApprovals": True, "isolatedArchitecture": True,
+            "foundryArchitecture": os.getenv("ISOLATED_FOUNDRY") == "1"}
 
 
 @app.get("/api/state")
@@ -198,6 +200,9 @@ def state(request: Request):
     result.pop("isolatedJobs", None)
     result["configuration"].update(architecture="isolated-v1", agent365="not-registered",
                                    targetMonthlyBudgetUsd=None)
+    if os.getenv("ISOLATED_FOUNDRY") == "1":
+        result["configuration"].update(architecture="foundry-hosted-isolated-v1",
+                                       aiMode="Microsoft Foundry hosted agents (task-scoped)")
     return result
 
 

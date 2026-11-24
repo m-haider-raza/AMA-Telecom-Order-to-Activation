@@ -73,11 +73,7 @@ async def lifespan(app):
         problems = sso.configuration_problems()
         if problems:
             raise RuntimeError(f"AMA_STAFF_AUTH={auth.staff_auth_mode()} is not fully configured: " + "; ".join(problems))
-    if auth.fallback_enabled():
-        fallback = os.getenv("AMA_STAFF_ACCESS_TOKEN", "")
-        if len(fallback) < 32 or fallback != fallback.strip() or any(fallback == os.getenv(name) for name in (
-                "DEMO_ADMIN_TOKEN", "DEMO_PARTNER_TOKEN", "AMA_SESSION_SECRET", "AMA_TRACKING_SECRET")):
-            raise RuntimeError("Set a distinct random AMA_STAFF_ACCESS_TOKEN of at least 32 characters")
+    auth.validate_fallback()
     if problems := advisor.configuration_problems():
         raise RuntimeError("; ".join(problems))
     configure_staff_log()

@@ -2,15 +2,19 @@
 
 A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator**, presented under the **TürkBizTel** brand. It follows dedicated Internet, managed SD-WAN and cloud-connect orders from a customer or a wholesale partner through to activation, with one supervisor per order and five specialist AI agents.
 
-*Status as of 22 November 2026.*
+*Status as of 24 November 2026.*
 
 > **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. The Azure OpenAI advisor is real, but it has no authority to execute anything.
 
 ## Start here
 
 **Separate isolated-agent acceptance copy:** [architecture and provisioning runbook](docs/ISOLATED-AGENTS.md).
+
+**Latest Foundry edition:** [six hosted agents](docs/FOUNDRY-AGENTS.md) and
+[a separate app with Microsoft SSO plus service-engineer token login](docs/FOUNDRY-SSO-APP.md).
+The new app preserves the UI and copies the Foundry app's data once into its own private state store.
 It deploys five independently authenticated workers plus a dispatch-only supervisor and trusted policy boundary
-into a new `rg-amai-*` stack with new synthetic state. Neither existing Azure application is upgraded or retired.
+into a new `rg-amai-*` stack. Existing Azure applications are not upgraded or retired.
 Agent 365 is an optional, separately authorized governance integration, not an enabled feature.
 
 Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
@@ -20,13 +24,14 @@ The recorded demo and the interactive app are separate chapters. The links below
 |---|---|
 | Assignment: AMA Assignment 30 – Haider Raza | [Assignment PDF](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/blob/main/AMA_Assignment30_HaiderRaza.pdf) |
 | GitHub repository | [AMA Telecom Order-to-Activation](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation) |
+| Latest six-hosted-agent Foundry app: Microsoft SSO and engineer access token | [Service-team sign-in](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login#staff) or [case study](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study) |
 | Live case-study site, with the working demonstrator embedded | [case-study](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study) |
 | Current-state film (1:51) | [current-scenario.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/current-scenario.mp4) |
 | Solution film (2:56) | [solution-tower-v6.mp4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
 | App highlights (2:21), then try it live | [Live App Demo chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/demo), then [Live App](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app), or [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough.mp4) |
 | Live App with token option | [Service-team token sign-in](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/login#staff) or [interactive Live App chapter](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app) |
 | Complete app tour (5:13), natural-paced George narration | [MP4](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough-full.mp4) or [transcript](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/app-walkthrough-full-transcript.txt) |
-| Architecture deck (16 slides) | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
+| Architecture deck (20 slides, integrated Foundry narrative) | [PowerPoint](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pptx) or [PDF](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/Agentic_Order_to_Activation_Architecture.pdf) |
 | Market-research slides | [PowerPoint](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pptx) or [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pdf) |
 | Assignment brief | [PDF](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/AMA_Assignment30_HaiderRaza.pdf) |
 | Standalone service-team Microsoft SSO app | [Sign in](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/login#staff) or [case study](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/case-study) |
@@ -38,7 +43,9 @@ The recorded demo and the interactive app are separate chapters. The links below
 
 The live site runs on Azure Container Apps in Sweden Central. Its service-team console asks for an access token, which the service team shares out of band. A second, standalone build of the same app signs the service team in with **Microsoft Entra ID single sign-on** instead, so every change is recorded against the person who made it. In that build a service engineer places an order for an enterprise chosen from a list, and that enterprise's contact approves it by e-mail before any agent starts. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md).
 
-For a new deployment with both sign-in options, see [Foundry with Microsoft sign-in and operator access tokens](docs/STAFF-SSO.md#foundry-with-microsoft-sign-in-and-operator-access-tokens). It uses the same console and data model, with Microsoft Foundry Agent Service for advisory recommendations.
+The latest Foundry app above offers **both** staff sign-in options and uses all six real hosted agents.
+Its complete source-data snapshot is independent of the older apps. See the
+[Foundry dual-login runbook](docs/FOUNDRY-SSO-APP.md); the earlier optional prompt-advisor edition remains separate.
 
 ## What's new in this update
 
@@ -334,7 +341,7 @@ The script checks the AMA demo tags and refuses unrelated groups. Run it only wh
 ## Security notes
 
 - Keep secrets out of Git. `demo-credentials*.local.json`, `deployment*.local.json`, `.env` and local state are git-ignored.
-- Share service-team access tokens out of band. Never commit them or paste them into slides, films or documents. In the single sign-on build there is no shared staff token: people sign in with their own Microsoft Entra account, the app holds no client secret, and the deployment receipt and credentials file contain no staff secret.
+- Share service-team access tokens out of band. Never commit them or paste them into slides, films or documents. The SSO-only edition has no shared staff token or client secret. The latest dual-login Foundry edition also uses secretless Microsoft sign-in, but keeps a separate private, operator-only onboarding token.
 - Treat anything that has appeared in a document, a chat or Git history as exposed, even after the file is deleted, and rotate it. The deployed demonstrator's admin token and demo sign-ins were rotated on 20 November 2026.
 - Do not enter an Azure or GitHub password into the application.
 - The approval link e-mailed to an enterprise is a bearer credential for that one order. It is signed with the session secret, keeps its token after the `#` so servers and logs never see it, and only a `POST` can answer with it. Sending the e-mail again, or replacing the session secret, retires the old links. A service person can never answer for the enterprise.

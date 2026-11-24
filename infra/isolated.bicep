@@ -5,6 +5,13 @@ param deployApps bool = false
 param imageTag string = 'isolated-v1'
 param audience string = ''
 param principals object = {}
+@allowed(['token', 'sso', 'sso+token'])
+param staffAuth string = 'token'
+param ssoClientId string = ''
+param foundryBindings object = {}
+param workersPaused bool = false
+@secure()
+param staffAccessToken string = ''
 @secure()
 param adminToken string = ''
 @secure()
@@ -168,11 +175,13 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
       activeRevisionsMode: 'Single'
       ingress: { external: true, targetPort: 8000, transport: 'auto', allowInsecure: false }
       registries: [{ server: '${registryName}.azurecr.io', identity: boundaryIdentity.id }]
-      secrets: [
+      secrets: concat([
         { name: 'admin', value: adminToken }
         { name: 'partner', value: partnerToken }
         { name: 'session', value: sessionSecret }
-      ]
+      ], staffAuth == 'sso+token' ? [
+        { name: 'staff-access', value: staffAccessToken }
+      ] : [])
     }
     template: {
       containers: [{
@@ -181,7 +190,7 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
         command: ['uvicorn']
         args: ['app.isolated.api:app', '--host', '0.0.0.0', '--port', '8000', '--workers', '1', '--no-access-log']
         resources: { cpu: json('0.5'), memory: '1Gi' }
-        env: [
+        env: concat([
           { name: 'AZURE_CLIENT_ID', value: boundaryIdentity.properties.clientId }
           { name: 'ISOLATED_BOUNDARY_PRINCIPAL_ID', value: boundaryIdentity.properties.principalId }
           { name: 'ISOLATED_TENANT_ID', value: tenant().tenantId }
@@ -193,10 +202,17 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
           { name: 'DEMO_ADMIN_TOKEN', secretRef: 'admin' }
           { name: 'DEMO_PARTNER_TOKEN', secretRef: 'partner' }
           { name: 'AMA_SESSION_SECRET', secretRef: 'session' }
+          { name: 'AMA_STAFF_AUTH', value: staffAuth }
+          { name: 'AMA_SSO_CLIENT_ID', value: ssoClientId }
+          { name: 'AMA_SSO_TENANT_ID', value: tenant().tenantId }
+          { name: 'AMA_PUBLIC_ORIGIN', value: 'https://${boundaryName}.${environment.properties.defaultDomain}' }
+          { name: 'ISOLATED_FOUNDRY', value: empty(foundryBindings) ? '0' : '1' }
           { name: 'AZURE_REGION', value: location }
           { name: 'DEMO_PUBLIC_ORIGIN', value: 'https://${boundaryName}.${environment.properties.defaultDomain}' }
           { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: insights.properties.ConnectionString }
-        ]
+        ], staffAuth == 'sso+token' ? [
+          { name: 'AMA_STAFF_ACCESS_TOKEN', secretRef: 'staff-access' }
+        ] : [])
         probes: [{
           type: 'Readiness'
           httpGet: { path: '/isolated-health', port: 8000 }
@@ -227,17 +243,21 @@ resource workers 'Microsoft.App/containerApps@2024-03-01' = [for (name, i) in na
         command: ['python']
         args: ['-m', 'app.isolated.runtime']
         resources: { cpu: json('0.25'), memory: '0.5Gi' }
-        env: [
+        env: concat([
           { name: 'AZURE_CLIENT_ID', value: identities[i].properties.clientId }
           { name: 'ISOLATED_PRINCIPAL_ID', value: identities[i].properties.principalId }
           { name: 'ISOLATED_AGENT', value: agents[i] }
+          { name: 'ISOLATED_WORKERS_PAUSED', value: workersPaused ? '1' : '0' }
           { name: 'ISOLATED_AUDIENCE', value: audience }
           { name: 'ISOLATED_BOUNDARY_URL', value: 'https://${boundary!.properties.configuration.ingress.fqdn}' }
           { name: 'ISOLATED_VERIFY_DENIALS', value: '1' }
           { name: 'ISOLATED_TEST_STORAGE_URL', value: storage.properties.primaryEndpoints.blob }
           { name: 'ISOLATED_FORBIDDEN_CLIENT_ID', value: identities[(i + 1) % length(names)].properties.clientId }
           { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: insights.properties.ConnectionString }
-        ]
+        ], contains(foundryBindings, agents[i]) ? [
+          { name: 'FOUNDRY_AGENT_ENDPOINT', value: foundryBindings[agents[i]].endpoint }
+          { name: 'FOUNDRY_FORBIDDEN_ENDPOINT', value: foundryBindings[agents[i]].forbiddenEndpoint }
+        ] : [])
       }]
       scale: { minReplicas: 1, maxReplicas: 1 }
     }
@@ -247,6 +267,12 @@ resource workers 'Microsoft.App/containerApps@2024-03-01' = [for (name, i) in na
 
 output registryName string = registry.name
 output boundaryName string = boundaryName
+output boundaryOrigin string = 'https://${boundaryName}.${environment.properties.defaultDomain}'
+output boundaryIdentity object = {
+  oid: boundaryIdentity.properties.principalId
+  clientId: boundaryIdentity.properties.clientId
+  resourceId: boundaryIdentity.id
+}
 output url string = deployApps ? 'https://${boundary!.properties.configuration.ingress.fqdn}' : ''
 output identities array = [for (agent, i) in agents: {
   agent: agent

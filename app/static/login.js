@@ -290,7 +290,7 @@ async function boot() {
   const back = SSO_HASH.exec(location.hash);
   show(fromHash(), { focus: false });
   if (back) {
-    applyStaffMode(true);
+    applyStaffMode("sso");
     if (back[1]) say($("#staff-msg"), SSO_PROBLEMS[back[1]] || SSO_PROBLEMS.failed, "error");
     else await finishSso();
   }
@@ -314,7 +314,7 @@ async function boot() {
     }
   } catch {
     // The forms still work without this check; the server explains any rule they break.
-    applyStaffMode(Boolean(back));
+    applyStaffMode(back ? "sso" : "token");
   }
 }
 

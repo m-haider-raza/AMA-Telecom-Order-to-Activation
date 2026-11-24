@@ -14,6 +14,10 @@ group; it never replaces or modifies the token-based app.
 
 ## Foundry with Microsoft sign-in and operator access tokens
 
+For the latest **six hosted agents and isolated trusted boundary**, use
+[Foundry dual-login application](FOUNDRY-SSO-APP.md). The optional prompt-agent
+advisor deployment below is a different, legacy single-app architecture.
+
 Use `sso+token` to offer Microsoft sign-in first and a staff access token on the same sign-in page for engineers
 waiting for their work account. The fallback is a **shared operator credential**, not the old manager token: it
 cannot make manager decisions or administer partners. Its audit entries are labeled **Staff access token (shared)**,

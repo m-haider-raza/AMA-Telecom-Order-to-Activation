@@ -107,6 +107,16 @@ def fallback_enabled():
     return staff_auth_mode() == "sso+token"
 
 
+def validate_fallback():
+    if not fallback_enabled():
+        return
+    fallback = os.getenv("AMA_STAFF_ACCESS_TOKEN", "")
+    if len(fallback) < 32 or fallback != fallback.strip() or any(
+            fallback == os.getenv(name) for name in
+            ("DEMO_ADMIN_TOKEN", "DEMO_PARTNER_TOKEN", "AMA_SESSION_SECRET", "AMA_TRACKING_SECRET")):
+        raise RuntimeError("Set a distinct random AMA_STAFF_ACCESS_TOKEN of at least 32 characters")
+
+
 def fallback_version():
     return hmac.new(_key(), f"staff-fallback|{os.environ['AMA_STAFF_ACCESS_TOKEN']}".encode(),
                     hashlib.sha256).hexdigest()

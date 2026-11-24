@@ -73,6 +73,9 @@ def run():
     with credential, httpx.Client(base_url=base, timeout=30) as client:
         verified = False
         while True:
+            if os.getenv("ISOLATED_WORKERS_PAUSED") == "1":
+                time.sleep(5)
+                continue
             try:
                 token = credential.get_token(scope).token
                 headers = {"Authorization": "Bearer " + token}
