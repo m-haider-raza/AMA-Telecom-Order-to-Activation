@@ -9,7 +9,7 @@
   const NAMES = { today: "Today", architecture: "Architecture", solution: "The solution in action",
     demo: "Live App Demo", app: "Live App" };
   const CHAPTER_KEYS = { 1: "today", 2: "architecture", 3: "solution", 4: "demo", 5: "app" };
-  const SLIDES = 20;
+  const SLIDES = 19;
   const PUBLIC_PAGES = ["/", "/order", "/track", "/login"];
   const BASE_TITLE = document.title;
   const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

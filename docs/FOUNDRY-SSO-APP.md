@@ -17,7 +17,9 @@ new bridges receive only their own project invocation permission.
 [Open the service-team sign-in](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login#staff)
 or [the complete case study](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study).
 This stack is `rg-amai-foundry-runtime-sso-20261124`. The case study includes the
-20-slide architecture deck with the four Foundry slides integrated into its story.
+19-slide target architecture deck. Former slides 7 and 8 are merged into one
+governed, in-country solution view; model, access and identity slides describe
+the production target rather than presenting pilot resources as the end state.
 
 The verified full snapshot preserved all **7 existing orders and 239 audit
 entries**, including the complete catalogue, capacity, histories and other

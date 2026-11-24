@@ -261,10 +261,10 @@ def slide_texts(deck):
 def test_published_deck_shows_the_cost_of_implementation_before_the_risks():
     with zipfile.ZipFile(PPTX) as deck:
         texts = slide_texts(deck)
-    assert len(texts) == 20
-    assert "cost of implementation" in texts[18].lower() and "payback" in texts[18].lower()
-    assert "risks" in texts[19].lower()
-    assert 'data-slide="19" data-kicker="Cost of implementation' in HTML
+    assert len(texts) == 19
+    assert "cost of implementation" in texts[17].lower() and "payback" in texts[17].lower()
+    assert "risks" in texts[18].lower()
+    assert 'data-slide="18" data-kicker="COST OF IMPLEMENTATION' in HTML
 
 
 def test_published_deck_frames_the_design_with_the_market_research():
@@ -275,17 +275,22 @@ def test_published_deck_frames_the_design_with_the_market_research():
     assert "market research" in texts[3].lower() and "what it means for the design" in texts[3].lower()
     assert 'data-slide="3" data-kicker="Market research' in HTML
     assert 'data-slide="4" data-kicker="Market research' in HTML
-    assert "Six agents, six projects" in texts[7]
-    assert "Use a model only" in texts[10]
-    assert "Task boundaries enforced" in texts[12]
-    assert "Separate identities" in texts[13]
+    assert "One governed order journey, hosted in Türkiye" in texts[6]
+    assert all(term in texts[6] for term in (
+        "Per-order supervisor", "GOVERNANCE BY DESIGN", "RBAC", "KVKK/BTK",
+        "Local model endpoints", "Trusted execution boundary"))
+    assert "One order, end to end" in texts[7]
+    assert "Use a model only" in texts[9] and "locally hosted" in texts[9]
+    assert "Task boundaries enforced" in texts[11]
+    assert "Separate identities" in texts[12]
+    assert not any("IMPLEMENTED " in text or "DEPLOYED PILOT" in text for text in texts)
 
 
 def test_published_deck_is_the_clean_web_edition():
     with zipfile.ZipFile(PPTX) as deck:
         names = deck.namelist()
         slides = [name for name in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
-        assert len(slides) == 20
+        assert len(slides) == 19
         for name in names:
             if name.endswith((".xml", ".rels")):
                 text = deck.read(name).decode("utf-8", "replace")
