@@ -1,6 +1,7 @@
 """The guided assignment page: public, self-contained, safe under the strict policy and free of credentials."""
 
 import json
+import hashlib
 import re
 import zipfile
 from html.parser import HTMLParser
@@ -243,26 +244,65 @@ def test_app_demo_and_live_app_are_separate_connected_steps():
     assert HTML.index('id="scene-demo"') < HTML.index('id="film-app"') < HTML.index('id="scene-app"')
 
 
+def test_current_bundle_matches_the_story_videos_and_architecture():
+    manifest = json.loads((DECK / "artefacts.json").read_text(encoding="utf-8"))
+    assert manifest["release"] == "turkbiztel-case-study-2026-11-24"
+    assert manifest["bundle"] in HTML
+    with zipfile.ZipFile(DECK / manifest["bundle"]) as archive:
+        for row in manifest["files"]:
+            content = archive.read(row["file"])
+            assert len(content) == row["bytes"]
+            assert hashlib.sha256(content).hexdigest() == row["sha256"]
+        for name in ("app-walkthrough.mp4", "app-walkthrough.vtt", "app-walkthrough-data.json",
+                     "current-scenario-turkbiztel.mp4", "solution-tower-v6-turkbiztel.mp4"):
+            assert archive.read(name) == (STATIC / name).read_bytes()
+        for name in (PPTX.name, PDF.name, "slide-07.webp", "slide-19.webp"):
+            assert archive.read(name) == (DECK / name).read_bytes()
+        assert b"Inspect AI agent workspaces" in archive.read("app-walkthrough-transcript.txt")
+        assert "slide-20.webp" not in archive.namelist()
+
+
 def test_short_app_tour_prioritises_service_administration_at_normal_speed():
     story = json.loads((STATIC / "app-walkthrough-data.json").read_text(encoding="utf-8"))
-    assert 0 < story["duration"] < 180
-    assert abs(story["duration"] - 141.208333) < 20
+    assert 0 < story["duration"] <= 150
     assert story["narration"]["voice"] == "bm_george"
     assert story["narration"]["speed"] == story["narration"]["deliveryTempo"] == 1.0
     scenes = story["scenes"]
     assert sum(scene["duration"] for scene in scenes) == pytest.approx(story["duration"], abs=.05)
     admin_roles = {"SERVICE TEAM", "AGENT OPERATIONS", "ANALYTICS", "TRUST & GOVERNANCE"}
     admin_seconds = sum(scene["duration"] for scene in scenes if scene["role"] in admin_roles)
-    assert admin_seconds / story["duration"] >= .8
-    assert {"staff_new_order", "staff_approval", "staff_partners", "staff_manage",
+    assert .65 <= admin_seconds / story["duration"] < .75
+    assert scenes[0]["id"] == "shared_login" and scenes[0]["start"] == 0
+    assert scenes[0]["screens"] == ["shared_login"]
+    assert scenes[1]["id"] == "staff_login" and scenes[1]["screens"] == ["staff_login"]
+    assert {"staff_new_order", "staff_approval", "staff_partners",
             "staff_exception", "staff_governance"} <= {scene["id"] for scene in scenes}
     assert [chapter["start"] for chapter in story["chapters"]] == sorted(
         chapter["start"] for chapter in story["chapters"])
-    assert story["chapters"][0]["title"] == "Service administration"
+    assert story["chapters"][0]["title"] == "Shared sign-in and staff access"
     assert "local test staff session" in story["disclosure"]
     assert "No Microsoft sign-in, hosted inference" in story["disclosure"]
     captions = (STATIC / "app-walkthrough.vtt").read_text(encoding="utf-8")
     assert captions.count(" --> ") == len(scenes)
+
+
+def test_short_app_tour_explicitly_shows_customer_and_partner_workflows():
+    story = json.loads((STATIC / "app-walkthrough-data.json").read_text(encoding="utf-8"))
+    scenes = {scene["id"]: scene for scene in story["scenes"]}
+    assert scenes["staff_login"]["start"] < scenes["customer_request"]["start"]
+    assert scenes["customer_request"]["start"] < scenes["staff_tower"]["start"]
+    assert scenes["staff_approval"]["start"] < scenes["customer_consent"]["start"] < scenes["agent_validation"]["start"]
+    assert scenes["customer_tracking"] == story["scenes"][-1]
+    assert sum(scene["duration"] for scene in scenes.values() if scene["role"] == "CUSTOMER") >= 20
+    partner = scenes["partner_portal"]
+    assert partner["role"] == "PARTNER" and partner["duration"] >= 10
+    assert partner["screens"] == ["partner_deliveries", "partner_payments", "partner_concerns"]
+    assert partner["duration"] / len(partner["screens"]) >= 3.25
+    assert scenes["customer_request"]["screens"] == ["customer_new", "customer_preferences"]
+    assert scenes["customer_consent"]["screens"] == ["customer_approval"]
+    assert scenes["customer_tracking"]["screens"] == ["customer_tracking", "customer_updates"]
+    assert {chapter["title"] for chapter in story["chapters"]} >= {
+        "Customer service request", "Partner setup and portal", "Governance and customer outcome"}
 
 
 def slide_texts(deck):

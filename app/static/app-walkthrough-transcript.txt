@@ -1,49 +1,52 @@
-TurkBizTel service administration walkthrough
-Current Foundry-boundary app UI, recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.
+TurkBizTel login-to-activation walkthrough
+Current Foundry-boundary app UI: public sign-in screens captured from the live app; workflows recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.
 
 Existing films' British male George preset, generated locally at natural speed; no reference voice used.
 
-00:00:00.000  SERVICE TEAM - Start in the service control tower
-Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
+00:00:00.000  SHARED SIGN-IN - Customers and partners start here
+Customers and partners share this sign-in page.
 
-00:00:09.333  STAFF ACCESS - Use the right staff access
+00:00:04.125  STAFF ACCESS - Staff sign in: Microsoft or access token
 Microsoft sign-in applies assigned roles. The access-token fallback gives new engineers service-operator permissions.
 
-00:00:18.292  SERVICE TEAM - Set up an enterprise service request
+00:00:13.083  CUSTOMER - The journey starts with the customer
+Customers choose a service and installation site, then set their contact details and update preferences.
+
+00:00:20.917  SERVICE TEAM - Start in the service control tower
+Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
+
+00:00:30.250  SERVICE TEAM - Set up an enterprise service request
 Create a request for a registered enterprise. Choose the city, product and scenario, then send it for the enterprise's approval.
 
-00:00:27.375  SERVICE TEAM - Keep enterprise consent ahead of execution
+00:00:39.333  SERVICE TEAM - Keep enterprise consent ahead of execution
 Orders await enterprise approval. No agent starts provisioning before consent; administrators can inspect status or withdraw a request.
 
-00:00:38.000  SERVICE TEAM - Work the complete order queue
-The order workspace brings service requests together. Open an order to follow its current stage, ownership, updates and execution history.
+00:00:49.958  CUSTOMER - The customer approves work placed on their behalf
+For staff-created requests, the customer reviews the details and approves or declines before work starts.
 
-00:00:48.042  SERVICE TEAM - Handle exceptions without bypassing policy
+00:00:58.042  SERVICE TEAM - Handle exceptions without bypassing policy
 Review route conflicts and change-window holds in the exception desk. Recovery does not override a decision reserved for a service manager.
 
-00:00:58.208  SERVICE TEAM - Set up partner organisations and access
+00:01:08.208  SERVICE TEAM - Set up partner organisations and access
 Set up partner organisations and invite named contacts. Review account status and manage access without sharing administrator credentials.
 
-00:01:09.083  SERVICE TEAM - Manage billing terms and payment records
-Open a partner account to maintain billing contacts and payment terms, inspect invoices, and record or reverse a simulated payment.
-
-00:01:19.250  SERVICE TEAM - Keep partner concerns with their orders
+00:01:19.083  SERVICE TEAM - Keep partner concerns with their orders
 The shared inbox keeps delivery concerns and replies beside their orders, so the service team can resolve issues with context.
 
-00:01:28.833  AGENT OPERATIONS - Inspect the specialist agent work
-Inspect the specialist workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps through the boundary.
+00:01:28.667  PARTNER - Partners have their own working portal
+Partners follow assigned deliveries, check payment status, and raise concerns. Their conversation with the service team stays linked to the order.
 
-00:01:40.125  AGENT OPERATIONS - Oversee recovery and customer updates
+00:01:38.750  AGENT OPERATIONS - Inspect AI agent workspaces
+Inspect AI agent workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps through the boundary.
+
+00:01:50.333  AGENT OPERATIONS - Oversee recovery and customer updates
 Recover handles supported failures; Communicate prepares updates. Deployed Foundry workers use scoped tools, not unrestricted data access.
 
-00:01:50.833  ANALYTICS - Measure the operational workload
+00:02:01.042  ANALYTICS - Measure the operational workload
 Separate operational orders from benchmarks. Review completion, fallout and agent timings to identify where the process needs attention.
 
-00:02:01.000  ANALYTICS - Use benchmarks as synthetic evidence
-Repeatable synthetic scenarios compare outcomes and recovery. Their timings are not production commitments or measured carrier performance.
-
-00:02:10.958  TRUST & GOVERNANCE - Finish with decisions you can trace
+00:02:11.208  TRUST & GOVERNANCE - Finish with decisions you can trace
 Governance exposes policy gates and audit records. Filter decisions by person and order, then export evidence for review.
 
-00:02:20.125  CONNECTED PORTALS - One service operation, focused role views
-Customers track requests; partners manage assigned deliveries. The service team coordinates everything from the administrator's console.
+00:02:20.375  CUSTOMER - Close the loop with the customer
+Back in the customer portal, progress, activation and milestone updates complete the end-to-end journey.

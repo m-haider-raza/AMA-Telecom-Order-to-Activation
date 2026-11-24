@@ -1,7 +1,7 @@
 {
-  "title": "TurkBizTel service administration walkthrough",
-  "duration": 149.667,
-  "sourceCommit": "345da54572dc3c32175ec0e667550ec1fca5fe2e",
+  "title": "TurkBizTel login-to-activation walkthrough",
+  "duration": 148.042,
+  "sourceCommit": "eb454c216a595d86f56737c2de859f838edfb595",
   "narration": {
     "model": "Kokoro-82M v1.0",
     "voice": "bm_george",
@@ -9,138 +9,207 @@
     "speed": 1.0,
     "deliveryTempo": 1.0
   },
-  "disclosure": "Current Foundry-boundary app UI, recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.",
+  "disclosure": "Current Foundry-boundary app UI: public sign-in screens captured from the live app; workflows recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.",
   "chapters": [
     {
-      "title": "Service administration",
+      "title": "Shared sign-in and staff access",
       "start": 0.0
     },
     {
-      "title": "Orders and approvals",
-      "start": 18.292
+      "title": "Customer service request",
+      "start": 13.083
     },
     {
-      "title": "Partner administration",
-      "start": 58.208
+      "title": "Service setup and consent",
+      "start": 20.917
+    },
+    {
+      "title": "Partner setup and portal",
+      "start": 68.208
     },
     {
       "title": "Agent operations",
-      "start": 88.833
+      "start": 98.75
     },
     {
-      "title": "Analytics and benchmarks",
-      "start": 110.833
+      "title": "Analytics",
+      "start": 121.042
     },
     {
-      "title": "Audit and connected portals",
-      "start": 130.958
+      "title": "Governance and customer outcome",
+      "start": 131.208
     }
   ],
   "scenes": [
     {
-      "id": "staff_tower",
-      "role": "SERVICE TEAM",
-      "title": "Start in the service control tower",
+      "id": "shared_login",
+      "role": "SHARED SIGN-IN",
+      "title": "Customers and partners start here",
       "start": 0.0,
-      "duration": 9.333333333333334
+      "duration": 4.125,
+      "screens": [
+        "shared_login"
+      ]
     },
     {
       "id": "staff_login",
       "role": "STAFF ACCESS",
-      "title": "Use the right staff access",
-      "start": 9.333333,
-      "duration": 8.958333333333334
+      "title": "Staff sign in: Microsoft or access token",
+      "start": 4.125,
+      "duration": 8.958333333333334,
+      "screens": [
+        "staff_login"
+      ]
+    },
+    {
+      "id": "customer_request",
+      "role": "CUSTOMER",
+      "title": "The journey starts with the customer",
+      "start": 13.083333,
+      "duration": 7.833333333333333,
+      "screens": [
+        "customer_new",
+        "customer_preferences"
+      ]
+    },
+    {
+      "id": "staff_tower",
+      "role": "SERVICE TEAM",
+      "title": "Start in the service control tower",
+      "start": 20.916667,
+      "duration": 9.333333333333334,
+      "screens": [
+        "staff_tower"
+      ]
     },
     {
       "id": "staff_new_order",
       "role": "SERVICE TEAM",
       "title": "Set up an enterprise service request",
-      "start": 18.291667,
-      "duration": 9.083333333333334
+      "start": 30.25,
+      "duration": 9.083333333333334,
+      "screens": [
+        "staff_new_order"
+      ]
     },
     {
       "id": "staff_approval",
       "role": "SERVICE TEAM",
       "title": "Keep enterprise consent ahead of execution",
-      "start": 27.375,
-      "duration": 10.625
+      "start": 39.333333,
+      "duration": 10.625,
+      "screens": [
+        "staff_approval"
+      ]
     },
     {
-      "id": "staff_workspace",
-      "role": "SERVICE TEAM",
-      "title": "Work the complete order queue",
-      "start": 38.0,
-      "duration": 10.041666666666666
+      "id": "customer_consent",
+      "role": "CUSTOMER",
+      "title": "The customer approves work placed on their behalf",
+      "start": 49.958333,
+      "duration": 8.083333333333334,
+      "screens": [
+        "customer_approval"
+      ]
     },
     {
       "id": "staff_exception",
       "role": "SERVICE TEAM",
       "title": "Handle exceptions without bypassing policy",
-      "start": 48.041667,
-      "duration": 10.166666666666666
+      "start": 58.041667,
+      "duration": 10.166666666666666,
+      "screens": [
+        "staff_exception"
+      ]
     },
     {
       "id": "staff_partners",
       "role": "SERVICE TEAM",
       "title": "Set up partner organisations and access",
-      "start": 58.208333,
-      "duration": 10.875
-    },
-    {
-      "id": "staff_manage",
-      "role": "SERVICE TEAM",
-      "title": "Manage billing terms and payment records",
-      "start": 69.083333,
-      "duration": 10.166666666666666
+      "start": 68.208333,
+      "duration": 10.875,
+      "screens": [
+        "staff_partners",
+        "staff_partner_setup"
+      ]
     },
     {
       "id": "staff_inbox",
       "role": "SERVICE TEAM",
       "title": "Keep partner concerns with their orders",
-      "start": 79.25,
-      "duration": 9.583333333333334
+      "start": 79.083333,
+      "duration": 9.583333333333334,
+      "screens": [
+        "staff_inbox"
+      ]
+    },
+    {
+      "id": "partner_portal",
+      "role": "PARTNER",
+      "title": "Partners have their own working portal",
+      "start": 88.666667,
+      "duration": 10.083333333333334,
+      "screens": [
+        "partner_deliveries",
+        "partner_payments",
+        "partner_concerns"
+      ]
     },
     {
       "id": "agent_validation",
       "role": "AGENT OPERATIONS",
-      "title": "Inspect the specialist agent work",
-      "start": 88.833333,
-      "duration": 11.291666666666666
+      "title": "Inspect AI agent workspaces",
+      "start": 98.75,
+      "duration": 11.583333333333334,
+      "screens": [
+        "agent_validation",
+        "agent_decomposition",
+        "agent_provisioning"
+      ]
     },
     {
       "id": "agent_fallout",
       "role": "AGENT OPERATIONS",
       "title": "Oversee recovery and customer updates",
-      "start": 100.125,
-      "duration": 10.708333333333334
+      "start": 110.333333,
+      "duration": 10.708333333333334,
+      "screens": [
+        "agent_fallout",
+        "agent_customer_update"
+      ]
     },
     {
       "id": "analytics_overview",
       "role": "ANALYTICS",
       "title": "Measure the operational workload",
-      "start": 110.833333,
-      "duration": 10.166666666666666
-    },
-    {
-      "id": "analytics_benchmark",
-      "role": "ANALYTICS",
-      "title": "Use benchmarks as synthetic evidence",
-      "start": 121.0,
-      "duration": 9.958333333333334
+      "start": 121.041667,
+      "duration": 10.166666666666666,
+      "screens": [
+        "analytics_overview",
+        "analytics_agents"
+      ]
     },
     {
       "id": "staff_governance",
       "role": "TRUST & GOVERNANCE",
       "title": "Finish with decisions you can trace",
-      "start": 130.958333,
-      "duration": 9.166666666666666
+      "start": 131.208333,
+      "duration": 9.166666666666666,
+      "screens": [
+        "staff_governance",
+        "staff_audit"
+      ]
     },
     {
-      "id": "connected_portals",
-      "role": "CONNECTED PORTALS",
-      "title": "One service operation, focused role views",
-      "start": 140.125,
-      "duration": 9.541666666666666
+      "id": "customer_tracking",
+      "role": "CUSTOMER",
+      "title": "Close the loop with the customer",
+      "start": 140.375,
+      "duration": 7.666666666666667,
+      "screens": [
+        "customer_tracking",
+        "customer_updates"
+      ]
     }
   ]
 }

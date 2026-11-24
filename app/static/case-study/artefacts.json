@@ -1,10 +1,10 @@
 {
-  "release": "turkbiztel-case-study-2026-11-22",
+  "release": "turkbiztel-case-study-2026-11-24",
   "github": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation",
-  "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-22",
+  "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-24",
   "caseStudy": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study",
   "appHighlights": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/demo",
-  "appHighlightsRevision": "2026-11-24-service-administration",
+  "appHighlightsRevision": "2026-11-24-ai-agent-workspaces",
   "liveApp": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/app",
   "tokenSignIn": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login#staff",
   "journey": [
@@ -39,18 +39,18 @@
     },
     {
       "file": "app-walkthrough.mp4",
-      "bytes": 6422061,
-      "sha256": "fa3f1a6ab2a2d5033b3402fcd8f69874c9e417d96e71c326a0d0e22838d7d3ac"
+      "bytes": 6438146,
+      "sha256": "17ddb1b791df1a70390b2d94fd1d4209491ffacd0fb5137e19a8588c3e8e84bc"
     },
     {
       "file": "app-walkthrough.vtt",
-      "bytes": 2595,
-      "sha256": "c559df10fb6d8edf23e534f0ed657a3f5e6b1e1c9afc095eab56c463f01afaaa"
+      "bytes": 2590,
+      "sha256": "2bd3be19881fcb8bdef68b3a105234229c24a150effdb7458c01b07038bca4f6"
     },
     {
       "file": "app-walkthrough-transcript.txt",
-      "bytes": 3472,
-      "sha256": "a4e2c4fe31678738d1a1662b825cea61c3a5b682435f5d04756b4a11448d1146"
+      "bytes": 3554,
+      "sha256": "757a699d01cad74cb06afa3b9aec9aeee1676767be0b9a72135f63a0076bb104"
     },
     {
       "file": "app-walkthrough-full.mp4",
@@ -104,13 +104,13 @@
     },
     {
       "file": "README.md",
-      "bytes": 43079,
-      "sha256": "fa280795985373030ffacd730de57c4831338d6e621518e28dba8ed01b763747"
+      "bytes": 45745,
+      "sha256": "5c71f2928eeefdcda56e490307237031bf46ac7fa30e777ad9941169bd4fec0b"
     },
     {
       "file": "guides/APPLICATION-GUIDE.md",
-      "bytes": 83884,
-      "sha256": "da466d8675c7f9c13539effb66eb484f9533bad181007eb6c72d9c908c7c6207"
+      "bytes": 84952,
+      "sha256": "c0cb071cffeddf6417a95a4a50a702760994ea23e8f99ef1e4e4b776ddb80372"
     },
     {
       "file": "guides/azure-architecture.md",
@@ -124,18 +124,245 @@
     },
     {
       "file": "guides/STAFF-SSO.md",
-      "bytes": 29334,
-      "sha256": "d20537c4441439bc854291068266c62587206d9a8c704e202210da860ad3be8a"
+      "bytes": 32142,
+      "sha256": "459e20a824cb45345a1c8dd0e935caed040888f04ce9b6f6928054b36d2af9c4"
     },
     {
       "file": "app-walkthrough-data.json",
-      "bytes": 4015,
-      "sha256": "e3642f66d626c06dabb681aa143545c87ef7426c320893ff23fd105a186c3e4a"
+      "bytes": 5550,
+      "sha256": "ca58cdf3d2d2bc2315afc695e8440aadcf748d7f2dffe1a4533e9d16ab82b06d"
     },
     {
       "file": "app-walkthrough-poster.jpg",
-      "bytes": 92579,
-      "sha256": "9af14d24e1f3dc60fd8ea02adcfda46febc0efa4b1fe2c9febb94b84604db55d"
+      "bytes": 89132,
+      "sha256": "339909e177d8450b8ecb05edec1c21243021a9b98fe672c94695b3ad53504795"
+    },
+    {
+      "file": "slide-01.webp",
+      "bytes": 167704,
+      "sha256": "5e64e8b2fe3cf16a983de1bf5b253378e6cbe785ba909f5468df7c477a7651e5"
+    },
+    {
+      "file": "slide-02.webp",
+      "bytes": 166696,
+      "sha256": "8cdbfc7ed69df8d05328af4644dc46640c549c7f7af5ca2dbcf83d038bf730e2"
+    },
+    {
+      "file": "slide-03.webp",
+      "bytes": 184884,
+      "sha256": "fd24381812e7c9248ab4bb79dc42f34cdacc0f11eeef250e3a1c4161b5fc0d38"
+    },
+    {
+      "file": "slide-04.webp",
+      "bytes": 171314,
+      "sha256": "64c9412969fadbf9634c05105cab75f5da02acddeb78741dd4b71d3df910c8dd"
+    },
+    {
+      "file": "slide-05.webp",
+      "bytes": 119500,
+      "sha256": "0132cc37dc89c41e6164837dc7a39ca5a987eddd36e630e02650a944b883f1f3"
+    },
+    {
+      "file": "slide-06.webp",
+      "bytes": 127312,
+      "sha256": "03e948db7b9923b309b92e51bad53199a102f5282758b9ee4da6f9f77e1f44f8"
+    },
+    {
+      "file": "slide-07.webp",
+      "bytes": 162286,
+      "sha256": "b0e63bea123f0712d94d6cd5f3ed682807782c3070ca823afefb178b776c3972"
+    },
+    {
+      "file": "slide-08.webp",
+      "bytes": 99100,
+      "sha256": "647be5af946014f3e2e3e59fefe04f5b9e11d635acad89bb90b3ee26551293cf"
+    },
+    {
+      "file": "slide-09.webp",
+      "bytes": 141832,
+      "sha256": "0e664b96cc56e7ec5bf66b3b8be796315933a0d6c4425f9c58e9993543386db6"
+    },
+    {
+      "file": "slide-10.webp",
+      "bytes": 141328,
+      "sha256": "6680df59fd4f90456cf43bb81064330b742e93c29dd0585d80f5de1ef2857a41"
+    },
+    {
+      "file": "slide-11.webp",
+      "bytes": 130534,
+      "sha256": "cc4e5517dc277dfa60638c37e7759cd325524bd019f89a013716f47b08894693"
+    },
+    {
+      "file": "slide-12.webp",
+      "bytes": 134600,
+      "sha256": "c4761a1c0498c55265d60a7cca70195921e45f2e2aa5b462c04fe42f3ca64f97"
+    },
+    {
+      "file": "slide-13.webp",
+      "bytes": 146518,
+      "sha256": "00572684d8f6a0270ac64a0fe2d179541342423ff73c25a1b22591ceae283311"
+    },
+    {
+      "file": "slide-14.webp",
+      "bytes": 154082,
+      "sha256": "b3e468760b0e81d5474dc8c0cad0572dcc7d1395090665868a8fbd2f87e42f2e"
+    },
+    {
+      "file": "slide-15.webp",
+      "bytes": 107722,
+      "sha256": "13458dcab09e551c351755424aa054769bc79bc565a97229ac5f9f4479197cc3"
+    },
+    {
+      "file": "slide-16.webp",
+      "bytes": 101626,
+      "sha256": "1ab5a0d8719559c2de2f39f54b8942cb01d1823dfe3f14eb7e651cfee5d2d6de"
+    },
+    {
+      "file": "slide-17.webp",
+      "bytes": 70036,
+      "sha256": "280fcfbc41cff5878abc288baaec3849ea377c68d6b6740ead032e9d7f764326"
+    },
+    {
+      "file": "slide-18.webp",
+      "bytes": 146650,
+      "sha256": "02830f4164dc11e3712164de3c9dd5271bb482809a16b1ec8713b31c1c139dd4"
+    },
+    {
+      "file": "slide-19.webp",
+      "bytes": 122850,
+      "sha256": "e7f0f9df2f613774b475194380550e4096b351b64365243a696c52077f27b33e"
+    },
+    {
+      "file": "thumb-01.webp",
+      "bytes": 18358,
+      "sha256": "a2f3b65fad3468e9028a5852e6ac0f05f3c896638fde0569a6bf56d5eb4e68cd"
+    },
+    {
+      "file": "thumb-02.webp",
+      "bytes": 23890,
+      "sha256": "69b8a29ccab52cf4d9d5e2d68b6c5a45786026bda55a3d638e51dc7087554769"
+    },
+    {
+      "file": "thumb-03.webp",
+      "bytes": 22944,
+      "sha256": "f11ea74044311b634a3da8c4e0ed137102d10173cca2fabcd97ac7ab30b2d838"
+    },
+    {
+      "file": "thumb-04.webp",
+      "bytes": 20422,
+      "sha256": "6299a660d681035716a35948a13fc7a1df2356a51bb0070c500fd4a891112439"
+    },
+    {
+      "file": "thumb-05.webp",
+      "bytes": 15980,
+      "sha256": "5b0f34ab426bfb4e57a8569e4a690ee909a86567456f445fa504c98735ea209f"
+    },
+    {
+      "file": "thumb-06.webp",
+      "bytes": 17374,
+      "sha256": "96b3314b2128a58654d16c9758fdb6c15335b6b01a6799cbf346ca08508eb0d8"
+    },
+    {
+      "file": "thumb-07.webp",
+      "bytes": 20698,
+      "sha256": "1c491d10f75528e2df3425e69b883a8126b42114573c262c9a772f8fdb1587da"
+    },
+    {
+      "file": "thumb-08.webp",
+      "bytes": 12868,
+      "sha256": "451e92e673837663daeac9f3f2cfb7f283221e5b18f1e15fa7d75d8d2bf73a20"
+    },
+    {
+      "file": "thumb-09.webp",
+      "bytes": 17756,
+      "sha256": "03228f15016a2584dd3d73ed23b5a1161bdad0af6490084ea067c33d6322f6d6"
+    },
+    {
+      "file": "thumb-10.webp",
+      "bytes": 17654,
+      "sha256": "94509fd8430e35e893eae0f1b339a5b22fd7a9305868d5c86e48e8da79b4207e"
+    },
+    {
+      "file": "thumb-11.webp",
+      "bytes": 17976,
+      "sha256": "f7304e9acb55fe9f121c465dff1f7dde1391e0755eb627a38ba99b99b17cac8b"
+    },
+    {
+      "file": "thumb-12.webp",
+      "bytes": 17138,
+      "sha256": "9812c04829c223b5e2285c59350690e6fa74db4fa278c4e1c65ef17042cb91cb"
+    },
+    {
+      "file": "thumb-13.webp",
+      "bytes": 17580,
+      "sha256": "6c06e41317727c6a47ddfc32ffea21e73527b7bcd3ec2a636f6074a005867c87"
+    },
+    {
+      "file": "thumb-14.webp",
+      "bytes": 18800,
+      "sha256": "72427ea25939042190b87e8adb983b4fc586cd97c32fbe3027d1ff226f1cca8f"
+    },
+    {
+      "file": "thumb-15.webp",
+      "bytes": 14876,
+      "sha256": "ca29886220989078c0c8e125c819f5c8fad34d6d87f008fb1947576aad134057"
+    },
+    {
+      "file": "thumb-16.webp",
+      "bytes": 13850,
+      "sha256": "9a449ea7a52dc999e39256f240f816c1ccc03d303ed5223a75937138a34cfe89"
+    },
+    {
+      "file": "thumb-17.webp",
+      "bytes": 9902,
+      "sha256": "95bbc9c562a3022e3cc1fe65f7168392b4b31196f2ea5bea33579b455dbd92d3"
+    },
+    {
+      "file": "thumb-18.webp",
+      "bytes": 20982,
+      "sha256": "e5c3053cc4271592346e65d244326704385bfdeb0d48115a24b309fb57b498cc"
+    },
+    {
+      "file": "thumb-19.webp",
+      "bytes": 14998,
+      "sha256": "556d2a305e960d4148f7ad057763e64cdb5d7eac4ce52f5595778fc450c5732e"
+    },
+    {
+      "file": "case-study.html",
+      "bytes": 56996,
+      "sha256": "5b0877347c2479dd7efc73208bd018381da0b5c66ea748ffebe241e3324943dd"
+    },
+    {
+      "file": "case-study.css",
+      "bytes": 35711,
+      "sha256": "7c34ef9be12a80f558880f13c1b06110f35206fc7d99d2c7dfacce91d2223e99"
+    },
+    {
+      "file": "case-study.js",
+      "bytes": 24998,
+      "sha256": "2955bb994b4c13be5232fcb13cc4d85866ffef74d06f126fadceb9b010490445"
+    },
+    {
+      "file": "current-scenario-turkbiztel-poster.jpg",
+      "bytes": 111343,
+      "sha256": "39eecb5ecd94cf24ec436479e9a1ed5ad8fcf9ceddfffb16eeefc1c5b68a1028"
+    },
+    {
+      "file": "journey-data.json",
+      "bytes": 8075,
+      "sha256": "4c1b021c989df7d376920df7d9c228398ffd6a35ea55909306da9f2a759bac28"
+    },
+    {
+      "file": "solution-tower-v6-turkbiztel-poster.jpg",
+      "bytes": 261312,
+      "sha256": "522db91f0a018918ece8e351e484dce3d6a1f364bd5039d4726ae9e622be4596"
+    },
+    {
+      "file": "solution-tower-v6-data.json",
+      "bytes": 25739,
+      "sha256": "74b9551de5a9e36cffafe03bf58feba5473b8800529cac64e1ef79aae02ab283"
     }
-  ]
+  ],
+  "bundle": "TurkBizTel-Case-Study-2026-11-24.zip",
+  "architectureRevision": "2026-11-24-governed-production-target-19-slides"
 }

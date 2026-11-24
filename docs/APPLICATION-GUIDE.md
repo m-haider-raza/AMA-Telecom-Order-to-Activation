@@ -32,7 +32,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
 
 ## Assignment case-study page
 
-The public app, messages, films and sixteen-slide presentation use **TürkBizTel**.
+The public app, messages, films and 19-slide presentation use **TürkBizTel**.
 Every film has a separate `*-turkbiztel.mp4` edition and poster; existing public
 film URLs serve those editions through `app/branded_static.py`. Source MP4s remain
 byte-for-byte intact, and captions, chapters and soundtracks are unchanged.
@@ -50,7 +50,7 @@ existing sign-ins; they are compatibility identifiers, not public branding.
 | 1 Today | The latest current-state film, `current-scenario.mp4` (1 min 51 s), with chapters, captions and a transcript |
 | 2 Architecture | The 16-slide architecture deck, including two market-research slides on where public B2B telecom orders stall and drop out (slides 3 and 10) and the cost of implementation (slide 15), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
 | 3 Solution | The customer solution film, `solution-tower-v6.mp4` (2 min 56 s), using the current-state film's British-English male narrator, introducing each AI agent once and using shorter agent names afterward, with chapters, captions and a transcript |
-| 4 Live App Demo | The 2:30 service-administration film (`app-walkthrough.mp4`) bridges the solution story to the interactive app in step 5. It prioritises enterprise requests and consent, partner setup/billing, exceptions, agent workspaces, Analytics and audit. Login and customer/partner portals appear briefly. The same George narrator speaks at normal speed, with six task-based chapter jumps, captions below the app and a transcript |
+| 4 Live App Demo | The 2:28 login-to-activation film (`app-walkthrough.mp4`) opens on the shared customer/partner `/login` screen, then follows **Staff sign in** to Microsoft SSO and access-token options. It retains customer service selection/contact preferences and approval, partner deliveries/payment status/order-linked concerns, and customer activation tracking and milestone updates. Service administration remains about two thirds of the film, covering enterprise requests, partner setup, exceptions, agent workspaces, Analytics and audit; detailed queue, billing and benchmark sections are omitted. The same George narrator speaks at normal speed, with seven chapter jumps, captions below the app and a transcript. Only public sign-in screens come from the live app; workflows use locally captured synthetic fixtures, with no actual Microsoft sign-in, hosted inference or carrier execution |
 | 5 Live App | Try the running app: sign in, place or track an order, or enter the service-team console. The embedded app loads only when this chapter is opened |
 
 The complete 5:13 tour is available at `/static/app-walkthrough-full.mp4`, with captions at
@@ -63,6 +63,7 @@ outbound email, or create orders in the deployed app. The unchanged full tour sh
 Move with **Start the journey**, the chapter rail or the *Next* and *Back* buttons, with ← → (slides inside the deck, chapters elsewhere), **1**–**5** to jump to a chapter and **F** for full screen on the deck. Every chapter and slide has a link you can share: `/case-study#/today`, `#/architecture/7`, `#/solution`, `#/demo`, `#/app`. Existing `#/app` links still open the interactive app.
 
 - **Self-contained.** Films, captions, slide images and downloads are all served by the app from `app/static/` and `app/static/case-study/`; there are no third-party scripts, fonts or images, and the page follows the same strict content-security policy as the rest of the site (no inline script or style). Films load only when their chapter is opened and never start by themselves.
+- **Current release download.** The 24 November bundle linked from the story contains the same latest videos, 19-slide target architecture and previews, captions, transcripts and current guides. Rebuild it with `python scripts/Publish_Case_Study.py` after updating those sources; the script refreshes `artefacts.json` and `SHA256SUMS.txt` and verifies every archived file. Older dated bundles remain unchanged.
 - **Framing.** The live-app chapter shows the app in a frame, so the site sends `X-Frame-Options: SAMEORIGIN` and `frame-ancestors 'self'` on every page: only this origin may frame it.
 - **Service-team entry.** Select **Service team sign-in** above the embedded app, or open `/login#staff` directly. The token option also appears above the email fields on the normal sign-in form. The frame's **Open in a new tab** link preserves that panel; each tab still signs in separately. On a single sign-on deployment the page asks the app which sign-in it uses and describes the entry that is really there: **Sign in with your Microsoft work account**.
 - **No credentials.** The page never shows a token or a password. Partner and service-team sign-in details are shared with the submission, not published on the page.

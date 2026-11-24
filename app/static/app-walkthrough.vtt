@@ -1,67 +1,71 @@
 WEBVTT
 
 1
-00:00:00.000 --> 00:00:08.725
-Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
+00:00:00.000 --> 00:00:03.518
+Customers and partners share this sign-in page.
 
 2
-00:00:09.333 --> 00:00:17.664
+00:00:04.125 --> 00:00:12.456
 Microsoft sign-in applies assigned roles. The access-token fallback gives new engineers service-operator permissions.
 
 3
-00:00:18.292 --> 00:00:26.770
-Create a request for a registered enterprise. Choose the city, product and scenario, then send it for the enterprise's approval.
+00:00:13.083 --> 00:00:20.293
+Customers choose a service and installation site, then set their contact details and update preferences.
 
 4
-00:00:27.375 --> 00:00:37.380
-Orders await enterprise approval. No agent starts provisioning before consent; administrators can inspect status or withdraw a request.
+00:00:20.917 --> 00:00:29.641
+Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
 
 5
-00:00:38.000 --> 00:00:47.417
-The order workspace brings service requests together. Open an order to follow its current stage, ownership, updates and execution history.
+00:00:30.250 --> 00:00:38.729
+Create a request for a registered enterprise. Choose the city, product and scenario, then send it for the enterprise's approval.
 
 6
-00:00:48.042 --> 00:00:57.608
+00:00:39.333 --> 00:00:49.338
+Orders await enterprise approval. No agent starts provisioning before consent; administrators can inspect status or withdraw a request.
+
+7
+00:00:49.958 --> 00:00:57.424
+For staff-created requests, the customer reviews the details and approves or declines before work starts.
+
+8
+00:00:58.042 --> 00:01:07.608
 Review route conflicts and change-window holds in the exception desk. Recovery does not override a decision reserved for a service
 manager.
 
-7
-00:00:58.208 --> 00:01:08.480
+9
+00:01:08.208 --> 00:01:18.480
 Set up partner organisations and invite named contacts. Review account status and manage access without sharing administrator
 credentials.
 
-8
-00:01:09.083 --> 00:01:18.640
-Open a partner account to maintain billing contacts and payment terms, inspect invoices, and record or reverse a simulated payment.
-
-9
-00:01:19.250 --> 00:01:28.231
+10
+00:01:19.083 --> 00:01:28.064
 The shared inbox keeps delivery concerns and replies beside their orders, so the service team can resolve issues with context.
 
-10
-00:01:28.833 --> 00:01:39.498
-Inspect the specialist workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps
+11
+00:01:28.667 --> 00:01:38.127
+Partners follow assigned deliveries, check payment status, and raise concerns. Their conversation with the service team stays linked to the
+order.
+
+12
+00:01:38.750 --> 00:01:49.703
+Inspect AI agent workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps
 through the boundary.
 
-11
-00:01:40.125 --> 00:01:50.225
+13
+00:01:50.333 --> 00:02:00.433
 Recover handles supported failures; Communicate prepares updates. Deployed Foundry workers use scoped tools, not unrestricted data
 access.
 
-12
-00:01:50.833 --> 00:02:00.369
+14
+00:02:01.042 --> 00:02:10.577
 Separate operational orders from benchmarks. Review completion, fallout and agent timings to identify where the process needs
 attention.
 
-13
-00:02:01.000 --> 00:02:10.332
-Repeatable synthetic scenarios compare outcomes and recovery. Their timings are not production commitments or measured carrier
-performance.
-
-14
-00:02:10.958 --> 00:02:19.522
+15
+00:02:11.208 --> 00:02:19.772
 Governance exposes policy gates and audit records. Filter decisions by person and order, then export evidence for review.
 
-15
-00:02:20.125 --> 00:02:29.052
-Customers track requests; partners manage assigned deliveries. The service team coordinates everything from the administrator's console.
+16
+00:02:20.375 --> 00:02:27.434
+Back in the customer portal, progress, activation and milestone updates complete the end-to-end journey.
