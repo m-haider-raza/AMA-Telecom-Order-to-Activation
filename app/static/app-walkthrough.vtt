@@ -1,64 +1,67 @@
 WEBVTT
 
 1
-00:00:00.000 --> 00:00:08.063
-Customers register, verify email, and sign in. Forgotten passwords can be reset. All accounts shown are synthetic.
+00:00:00.000 --> 00:00:08.725
+Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
 
 2
-00:00:08.667 --> 00:00:16.538
-My orders shows your requests, progress, and next action. Open an order for its delivery tracker and update history.
+00:00:09.333 --> 00:00:17.664
+Microsoft sign-in applies assigned roles. The access-token fallback gives new engineers service-operator permissions.
 
 3
-00:00:17.167 --> 00:00:24.673
-Choose Internet, SD-WAN, or Cloud Connect, then enter the site details and your preferred contact channel.
+00:00:18.292 --> 00:00:26.770
+Create a request for a registered enterprise. Choose the city, product and scenario, then send it for the enterprise's approval.
 
 4
-00:00:25.292 --> 00:00:32.874
-Correct missing site information to release a hold. Profile manages contact preferences and your password.
+00:00:27.375 --> 00:00:37.380
+Orders await enterprise approval. No agent starts provisioning before consent; administrators can inspect status or withdraw a request.
 
 5
-00:00:33.500 --> 00:00:40.165
-Partners accept a staff invitation, choose a password, and sign in to their own organisation.
+00:00:38.000 --> 00:00:47.417
+The order workspace brings service requests together. Open an order to follow its current stage, ownership, updates and execution history.
 
 6
-00:00:40.792 --> 00:00:50.306
-Deliveries highlights expected dates, delays, and required actions. Update installation details and access notes to keep work moving.
+00:00:48.042 --> 00:00:57.608
+Review route conflicts and change-window holds in the exception desk. Recovery does not override a decision reserved for a service
+manager.
 
 7
-00:00:50.917 --> 00:00:58.989
-Payments shows outstanding, overdue, and paid invoices, with due dates and references. No money actually moves.
+00:00:58.208 --> 00:01:08.480
+Set up partner organisations and invite named contacts. Review account status and manage access without sharing administrator
+credentials.
 
 8
-00:00:59.625 --> 00:01:06.673
-Raise a delivery, billing, or technical concern, link an order, and follow the service team's replies.
+00:01:09.083 --> 00:01:18.640
+Open a partner account to maintain billing contacts and payment terms, inspect invoices, and record or reverse a simulated payment.
 
 9
-00:01:07.292 --> 00:01:11.750
-Service staff sign in with the access token on this deployment.
+00:01:19.250 --> 00:01:28.231
+The shared inbox keeps delivery concerns and replies beside their orders, so the service team can resolve issues with context.
 
 10
-00:01:12.375 --> 00:01:23.051
-The control tower summarises activations, exceptions, and recoveries. Order workspace opens each journey's execution history and tool
-activity.
+00:01:28.833 --> 00:01:39.498
+Inspect the specialist workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps
+through the boundary.
 
 11
-00:01:23.667 --> 00:01:30.993
-Exception desk brings route conflicts and change-window holds to people for explicit approval or rejection.
+00:01:40.125 --> 00:01:50.225
+Recover handles supported failures; Communicate prepares updates. Deployed Foundry workers use scoped tools, not unrestricted data
+access.
 
 12
-00:01:31.625 --> 00:01:39.816
-Staff invite partners, create orders, manage billing terms, and resolve questions through the shared concerns inbox.
+00:01:50.833 --> 00:02:00.369
+Separate operational orders from benchmarks. Review completion, fallout and agent timings to identify where the process needs
+attention.
 
 13
-00:01:40.417 --> 00:01:55.817
-Validate checks feasibility. Decompose plans service and resource work. Provision orchestrates tasks. Recover retries known faults.
-Communicate sends updates. The supervisor coordinates handoffs; exceptions need people.
+00:02:01.000 --> 00:02:10.332
+Repeatable synthetic scenarios compare outcomes and recovery. Their timings are not production commitments or measured carrier
+performance.
 
 14
-00:01:56.458 --> 00:02:10.879
-Analytics measures delivery time, fallout, and agent bottlenecks. Compare live orders with isolated benchmarks against seven-day and
-eight-percent targets. Synthetic timings are not real carrier performance.
+00:02:10.958 --> 00:02:19.522
+Governance exposes policy gates and audit records. Filter decisions by person and order, then export evidence for review.
 
 15
-00:02:11.500 --> 00:02:20.587
-Trust and governance explains safety boundaries and provenance, with an exportable audit trail. Service provisioning remains simulated.
+00:02:20.125 --> 00:02:29.052
+Customers track requests; partners manage assigned deliveries. The service team coordinates everything from the administrator's console.

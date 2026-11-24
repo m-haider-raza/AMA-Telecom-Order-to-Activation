@@ -1,6 +1,7 @@
 {
-  "title": "TürkBizTel app highlights",
-  "duration": 141.208333,
+  "title": "TurkBizTel service administration walkthrough",
+  "duration": 149.667,
+  "sourceCommit": "345da54572dc3c32175ec0e667550ec1fca5fe2e",
   "narration": {
     "model": "Kokoro-82M v1.0",
     "voice": "bm_george",
@@ -8,13 +9,138 @@
     "speed": 1.0,
     "deliveryTempo": 1.0
   },
-  "disclosure": "Isolated local capture with synthetic accounts and hidden credentials. Provisioning and payments are simulated.",
+  "disclosure": "Current Foundry-boundary app UI, recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.",
   "chapters": [
-    {"title": "Customer", "start": 0.0},
-    {"title": "Partner", "start": 33.500},
-    {"title": "Service team", "start": 67.292},
-    {"title": "Five agents", "start": 100.417},
-    {"title": "Analytics", "start": 116.458},
-    {"title": "Trust and governance", "start": 131.500}
+    {
+      "title": "Service administration",
+      "start": 0.0
+    },
+    {
+      "title": "Orders and approvals",
+      "start": 18.292
+    },
+    {
+      "title": "Partner administration",
+      "start": 58.208
+    },
+    {
+      "title": "Agent operations",
+      "start": 88.833
+    },
+    {
+      "title": "Analytics and benchmarks",
+      "start": 110.833
+    },
+    {
+      "title": "Audit and connected portals",
+      "start": 130.958
+    }
+  ],
+  "scenes": [
+    {
+      "id": "staff_tower",
+      "role": "SERVICE TEAM",
+      "title": "Start in the service control tower",
+      "start": 0.0,
+      "duration": 9.333333333333334
+    },
+    {
+      "id": "staff_login",
+      "role": "STAFF ACCESS",
+      "title": "Use the right staff access",
+      "start": 9.333333,
+      "duration": 8.958333333333334
+    },
+    {
+      "id": "staff_new_order",
+      "role": "SERVICE TEAM",
+      "title": "Set up an enterprise service request",
+      "start": 18.291667,
+      "duration": 9.083333333333334
+    },
+    {
+      "id": "staff_approval",
+      "role": "SERVICE TEAM",
+      "title": "Keep enterprise consent ahead of execution",
+      "start": 27.375,
+      "duration": 10.625
+    },
+    {
+      "id": "staff_workspace",
+      "role": "SERVICE TEAM",
+      "title": "Work the complete order queue",
+      "start": 38.0,
+      "duration": 10.041666666666666
+    },
+    {
+      "id": "staff_exception",
+      "role": "SERVICE TEAM",
+      "title": "Handle exceptions without bypassing policy",
+      "start": 48.041667,
+      "duration": 10.166666666666666
+    },
+    {
+      "id": "staff_partners",
+      "role": "SERVICE TEAM",
+      "title": "Set up partner organisations and access",
+      "start": 58.208333,
+      "duration": 10.875
+    },
+    {
+      "id": "staff_manage",
+      "role": "SERVICE TEAM",
+      "title": "Manage billing terms and payment records",
+      "start": 69.083333,
+      "duration": 10.166666666666666
+    },
+    {
+      "id": "staff_inbox",
+      "role": "SERVICE TEAM",
+      "title": "Keep partner concerns with their orders",
+      "start": 79.25,
+      "duration": 9.583333333333334
+    },
+    {
+      "id": "agent_validation",
+      "role": "AGENT OPERATIONS",
+      "title": "Inspect the specialist agent work",
+      "start": 88.833333,
+      "duration": 11.291666666666666
+    },
+    {
+      "id": "agent_fallout",
+      "role": "AGENT OPERATIONS",
+      "title": "Oversee recovery and customer updates",
+      "start": 100.125,
+      "duration": 10.708333333333334
+    },
+    {
+      "id": "analytics_overview",
+      "role": "ANALYTICS",
+      "title": "Measure the operational workload",
+      "start": 110.833333,
+      "duration": 10.166666666666666
+    },
+    {
+      "id": "analytics_benchmark",
+      "role": "ANALYTICS",
+      "title": "Use benchmarks as synthetic evidence",
+      "start": 121.0,
+      "duration": 9.958333333333334
+    },
+    {
+      "id": "staff_governance",
+      "role": "TRUST & GOVERNANCE",
+      "title": "Finish with decisions you can trace",
+      "start": 130.958333,
+      "duration": 9.166666666666666
+    },
+    {
+      "id": "connected_portals",
+      "role": "CONNECTED PORTALS",
+      "title": "One service operation, focused role views",
+      "start": 140.125,
+      "duration": 9.541666666666666
+    }
   ]
 }

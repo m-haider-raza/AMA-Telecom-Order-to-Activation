@@ -2,10 +2,11 @@
   "release": "turkbiztel-case-study-2026-11-22",
   "github": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation",
   "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-22",
-  "caseStudy": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study",
-  "appHighlights": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/demo",
-  "liveApp": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/case-study#/app",
-  "tokenSignIn": "https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/login#staff",
+  "caseStudy": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study",
+  "appHighlights": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/demo",
+  "appHighlightsRevision": "2026-11-24-service-administration",
+  "liveApp": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/app",
+  "tokenSignIn": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login#staff",
   "journey": [
     "Today",
     "Architecture",
@@ -13,7 +14,7 @@
     "Live App Demo",
     "Live App"
   ],
-  "ssoApp": "https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io",
+  "ssoApp": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io",
   "disclosure": "Synthetic demonstrator. No credentials, session data, or private hand-off slide included.",
   "files": [
     {
@@ -38,18 +39,18 @@
     },
     {
       "file": "app-walkthrough.mp4",
-      "bytes": 10582446,
-      "sha256": "4050d96077cde8ec515090e6b55c0700fc9239b198d767a1c92093898c0f0189"
+      "bytes": 6422061,
+      "sha256": "fa3f1a6ab2a2d5033b3402fcd8f69874c9e417d96e71c326a0d0e22838d7d3ac"
     },
     {
       "file": "app-walkthrough.vtt",
-      "bytes": 2458,
-      "sha256": "a696a009eb6bee16e64698ac24b7d0c341a6ca0d38afcec281f737eeaa541bca"
+      "bytes": 2595,
+      "sha256": "c559df10fb6d8edf23e534f0ed657a3f5e6b1e1c9afc095eab56c463f01afaaa"
     },
     {
       "file": "app-walkthrough-transcript.txt",
-      "bytes": 2915,
-      "sha256": "2bda90618dde1320e02574ece994f8050508405f1d1a34f7655b5cc7983054b5"
+      "bytes": 3472,
+      "sha256": "a4e2c4fe31678738d1a1662b825cea61c3a5b682435f5d04756b4a11448d1146"
     },
     {
       "file": "app-walkthrough-full.mp4",
@@ -125,6 +126,16 @@
       "file": "guides/STAFF-SSO.md",
       "bytes": 29334,
       "sha256": "d20537c4441439bc854291068266c62587206d9a8c704e202210da860ad3be8a"
+    },
+    {
+      "file": "app-walkthrough-data.json",
+      "bytes": 4015,
+      "sha256": "e3642f66d626c06dabb681aa143545c87ef7426c320893ff23fd105a186c3e4a"
+    },
+    {
+      "file": "app-walkthrough-poster.jpg",
+      "bytes": 92579,
+      "sha256": "9af14d24e1f3dc60fd8ea02adcfda46febc0efa4b1fe2c9febb94b84604db55d"
     }
   ]
 }

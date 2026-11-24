@@ -50,13 +50,15 @@ existing sign-ins; they are compatibility identifiers, not public branding.
 | 1 Today | The latest current-state film, `current-scenario.mp4` (1 min 51 s), with chapters, captions and a transcript |
 | 2 Architecture | The 16-slide architecture deck, including two market-research slides on where public B2B telecom orders stall and drop out (slides 3 and 10) and the cost of implementation (slide 15), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
 | 3 Solution | The customer solution film, `solution-tower-v6.mp4` (2 min 56 s), using the current-state film's British-English male narrator, introducing each AI agent once and using shorter agent names afterward, with chapters, captions and a transcript |
-| 4 Live App Demo | The 2:21 app-highlights film (`app-walkthrough.mp4`) bridges the solution story to the interactive app in step 5. It covers customers, partners, the service team, five agents, Analytics and governance, with six chapter jumps and a transcript. George narrates without acceleration; long pages scroll to the bottom and captions stay below the app. The recording uses isolated synthetic accounts and simulated provisioning/payments |
+| 4 Live App Demo | The 2:30 service-administration film (`app-walkthrough.mp4`) bridges the solution story to the interactive app in step 5. It prioritises enterprise requests and consent, partner setup/billing, exceptions, agent workspaces, Analytics and audit. Login and customer/partner portals appear briefly. The same George narrator speaks at normal speed, with six task-based chapter jumps, captions below the app and a transcript |
 | 5 Live App | Try the running app: sign in, place or track an order, or enter the service-team console. The embedded app loads only when this chapter is opened |
 
 The complete 5:13 tour is available at `/static/app-walkthrough-full.mp4`, with captions at
 `/static/app-walkthrough-full.vtt` and a chaptered transcript at `/static/app-walkthrough-full-transcript.txt`.
-The highlights transcript is `/static/app-walkthrough-transcript.txt`. Both recordings show the access-token
-deployment; the standalone SSO app uses Microsoft work-account sign-in instead.
+The highlights transcript is `/static/app-walkthrough-transcript.txt`. The new short recording uses the
+current Foundry-boundary UI, including both staff sign-in options, with synthetic local fixtures and a local
+test staff session. It does not perform Microsoft sign-in, hosted inference, live provisioning, payments or
+outbound email, or create orders in the deployed app. The unchanged full tour shows the earlier token-only edition.
 
 Move with **Start the journey**, the chapter rail or the *Next* and *Back* buttons, with ← → (slides inside the deck, chapters elsewhere), **1**–**5** to jump to a chapter and **F** for full screen on the deck. Every chapter and slide has a link you can share: `/case-study#/today`, `#/architecture/7`, `#/solution`, `#/demo`, `#/app`. Existing `#/app` links still open the interactive app.
 

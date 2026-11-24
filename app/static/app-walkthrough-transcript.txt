@@ -1,49 +1,49 @@
-TürkBizTel | App highlights
-Isolated local capture with synthetic accounts. No production credentials or personal data. Locally generated narration.
+TurkBizTel service administration walkthrough
+Current Foundry-boundary app UI, recorded locally with synthetic fixtures and a local test staff session. No Microsoft sign-in, hosted inference, live carrier provisioning, payments or outbound email is performed by this recording.
 
 Existing films' British male George preset, generated locally at natural speed; no reference voice used.
 
-00:00:00.000  CUSTOMER - Customer sign-in
-Customers register, verify email, and sign in. Forgotten passwords can be reset. All accounts shown are synthetic.
+00:00:00.000  SERVICE TEAM - Start in the service control tower
+Start in the service administrator's control tower: outstanding orders, active services and exceptions together in one view.
 
-00:00:08.667  CUSTOMER - Track your orders
-My orders shows your requests, progress, and next action. Open an order for its delivery tracker and update history.
+00:00:09.333  STAFF ACCESS - Use the right staff access
+Microsoft sign-in applies assigned roles. The access-token fallback gives new engineers service-operator permissions.
 
-00:00:17.167  CUSTOMER - Request a service
-Choose Internet, SD-WAN, or Cloud Connect, then enter the site details and your preferred contact channel.
+00:00:18.292  SERVICE TEAM - Set up an enterprise service request
+Create a request for a registered enterprise. Choose the city, product and scenario, then send it for the enterprise's approval.
 
-00:00:25.292  CUSTOMER - Keep information current
-Correct missing site information to release a hold. Profile manages contact preferences and your password.
+00:00:27.375  SERVICE TEAM - Keep enterprise consent ahead of execution
+Orders await enterprise approval. No agent starts provisioning before consent; administrators can inspect status or withdraw a request.
 
-00:00:33.500  PARTNER - Partner sign-in
-Partners accept a staff invitation, choose a password, and sign in to their own organisation.
+00:00:38.000  SERVICE TEAM - Work the complete order queue
+The order workspace brings service requests together. Open an order to follow its current stage, ownership, updates and execution history.
 
-00:00:40.792  PARTNER - Manage deliveries
-Deliveries highlights expected dates, delays, and required actions. Update installation details and access notes to keep work moving.
+00:00:48.042  SERVICE TEAM - Handle exceptions without bypassing policy
+Review route conflicts and change-window holds in the exception desk. Recovery does not override a decision reserved for a service manager.
 
-00:00:50.917  PARTNER - Review payments
-Payments shows outstanding, overdue, and paid invoices, with due dates and references. No money actually moves.
+00:00:58.208  SERVICE TEAM - Set up partner organisations and access
+Set up partner organisations and invite named contacts. Review account status and manage access without sharing administrator credentials.
 
-00:00:59.625  PARTNER - Raise a concern
-Raise a delivery, billing, or technical concern, link an order, and follow the service team's replies.
+00:01:09.083  SERVICE TEAM - Manage billing terms and payment records
+Open a partner account to maintain billing contacts and payment terms, inspect invoices, and record or reverse a simulated payment.
 
-00:01:07.292  SERVICE TEAM - Service-team sign-in
-Service staff sign in with the access token on this deployment.
+00:01:19.250  SERVICE TEAM - Keep partner concerns with their orders
+The shared inbox keeps delivery concerns and replies beside their orders, so the service team can resolve issues with context.
 
-00:01:12.375  SERVICE TEAM - Run the order desk
-The control tower summarises activations, exceptions, and recoveries. Order workspace opens each journey's execution history and tool activity.
+00:01:28.833  AGENT OPERATIONS - Inspect the specialist agent work
+Inspect the specialist workspaces: Validate checks the request, Decompose builds the plan, and Provision executes permitted service steps through the boundary.
 
-00:01:23.667  SERVICE TEAM - Resolve exceptions
-Exception desk brings route conflicts and change-window holds to people for explicit approval or rejection.
+00:01:40.125  AGENT OPERATIONS - Oversee recovery and customer updates
+Recover handles supported failures; Communicate prepares updates. Deployed Foundry workers use scoped tools, not unrestricted data access.
 
-00:01:31.625  SERVICE TEAM - Manage wholesale partners
-Staff invite partners, create orders, manage billing terms, and resolve questions through the shared concerns inbox.
+00:01:50.833  ANALYTICS - Measure the operational workload
+Separate operational orders from benchmarks. Review completion, fallout and agent timings to identify where the process needs attention.
 
-00:01:40.417  AGENT TEAM - Five bounded agents
-Validate checks feasibility. Decompose plans service and resource work. Provision orchestrates tasks. Recover retries known faults. Communicate sends updates. The supervisor coordinates handoffs; exceptions need people.
+00:02:01.000  ANALYTICS - Use benchmarks as synthetic evidence
+Repeatable synthetic scenarios compare outcomes and recovery. Their timings are not production commitments or measured carrier performance.
 
-00:01:56.458  ANALYTICS - Measure delivery and fallout
-Analytics measures delivery time, fallout, and agent bottlenecks. Compare live orders with isolated benchmarks against seven-day and eight-percent targets. Synthetic timings are not real carrier performance.
+00:02:10.958  TRUST & GOVERNANCE - Finish with decisions you can trace
+Governance exposes policy gates and audit records. Filter decisions by person and order, then export evidence for review.
 
-00:02:11.500  TRUST & GOVERNANCE - Traceable work. Human control.
-Trust and governance explains safety boundaries and provenance, with an exportable audit trail. Service provisioning remains simulated.
+00:02:20.125  CONNECTED PORTALS - One service operation, focused role views
+Customers track requests; partners manage assigned deliveries. The service team coordinates everything from the administrator's console.
