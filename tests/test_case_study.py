@@ -260,6 +260,12 @@ def test_current_bundle_matches_the_story_videos_and_architecture():
             assert archive.read(name) == (STATIC / name).read_bytes()
         for name in (PPTX.name, PDF.name, "slide-07.webp", "slide-19.webp"):
             assert archive.read(name) == (DECK / name).read_bytes()
+        for extension in ("pptx", "pdf"):
+            name = f"TurkBizTel-Foundry-Model-Economics.{extension}"
+            assert archive.read(name) == (STATIC.parents[1] / "docs" / "presentations" / name).read_bytes()
+            assert f"/static/case-study/{name}" in HTML
+        assert archive.read("guides/FOUNDRY-SSO-APP.md") == (
+            STATIC.parents[1] / "docs" / "FOUNDRY-SSO-APP.md").read_bytes()
         assert b"Inspect AI agent workspaces" in archive.read("app-walkthrough-transcript.txt")
         assert "slide-20.webp" not in archive.namelist()
 

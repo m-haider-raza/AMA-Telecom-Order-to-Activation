@@ -22,7 +22,7 @@ from app.isolated.boundary import Boundary, Denied
 from app.isolated.identity import EntraVerifier
 from app.isolated.store import BlobStore, LocalStore
 from app.isolated.telemetry import configure
-from app.main import app as legacy_app, mcp as legacy_mcp, state as legacy_state, submit as legacy_submit
+from app.main import app as legacy_app, login_page, mcp as legacy_mcp, state as legacy_state, submit as legacy_submit
 from app.schemas import OrderInput, configure_staff_log, transact
 from app.security import authorize
 
@@ -100,10 +100,15 @@ async def lifespan(application):
 # Reuse endpoint contracts, not the legacy application instance or its background executor.
 app = FastAPI(title="TurkBizTel isolated identities", version="2.0.0", lifespan=lifespan,
               routes=[route for route in legacy_app.routes if getattr(route, "path", None) not in {
-                  "/health", "/api/state", "/api/auth/me", "/api/orders", "/tmf-api/productOrderingManagement/v4/productOrder",
+                  "/", "/health", "/api/state", "/api/auth/me", "/api/orders", "/tmf-api/productOrderingManagement/v4/productOrder",
                   "/mcp"}],
               middleware=list(legacy_app.user_middleware),
               exception_handlers=dict(legacy_app.exception_handlers))
+
+
+@app.get("/", include_in_schema=False)
+def index():
+    return login_page()
 
 
 class Submission(BaseModel):

@@ -473,12 +473,39 @@ $("#order-form").onsubmit = async event => {
   } catch (error) { $("#order-error").textContent = error.message; }
   finally { $("#submit-order").disabled = false; }
 };
+function renderPartnerCapacity(response) {
+  if (response.error) throw new Error(response.error.message || "Capacity check failed.");
+  const result = response.result;
+  if (result?.isError) throw new Error(result.content?.[0]?.text || "Capacity check failed.");
+  let capacity;
+  try { capacity = JSON.parse(result?.content?.[0]?.text); }
+  catch { throw new Error("The capacity service returned an unreadable response. Please retry."); }
+  if (!capacity || typeof capacity.city !== "string" || typeof capacity.partner !== "string" ||
+      typeof capacity.simulated !== "boolean" || !Array.isArray(capacity.capacity) ||
+      capacity.capacity.some(item => !item || typeof item.product !== "string" ||
+        !Number.isInteger(item.availableUnits) || item.availableUnits < 0 || typeof item.changeWindow !== "string")) {
+    throw new Error("The capacity service returned incomplete results. Please retry.");
+  }
+  const output = $("#partner-result");
+  output.replaceChildren(node("h3", `${capacity.city} capacity`),
+    node("p", `${capacity.partner}${capacity.simulated ? " · Simulated availability, not a reservation." : ""}`, "muted"));
+  if (!capacity.capacity.length) { output.append(node("p", "No capacity entries are available for this city.")); return; }
+  const table = node("table");
+  const heading = append(node("tr"), node("th", "Product"), node("th", "Available units"), node("th", "Change window"));
+  const body = node("tbody");
+  capacity.capacity.forEach(item => body.append(append(node("tr"),
+    node("td", productNames[item.product] || item.product), node("td", item.availableUnits), node("td", item.changeWindow))));
+  output.append(append(table, append(node("thead"), heading), body));
+}
 $("#capacity-button").onclick = async () => {
   if (!requireToken()) return;
+  const button = $("#capacity-button"), output = $("#partner-result");
+  button.disabled = true; output.textContent = "Checking Istanbul capacity...";
   try {
     const response = await api("/mcp", {method: "POST", body: JSON.stringify({jsonrpc: "2.0", id: 1, method: "tools/call", params: {name: "check_partner_capacity", arguments: {city: "Istanbul"}}})});
-    $("#partner-result").textContent = JSON.stringify(response.result || response.error, null, 2);
-  } catch (error) { toast(error.message, true); }
+    renderPartnerCapacity(response);
+  } catch (error) { output.textContent = `Capacity check failed: ${error.message}`; toast(error.message, true); }
+  finally { button.disabled = false; }
 };
 $("#audit-download").onclick = async () => {
   if (!requireToken("read")) return;
@@ -532,7 +559,7 @@ window.addEventListener("pageshow", event => { if (event.persisted) location.rel
 async function boot() {
   try { session = await api("/api/auth/me"); } catch { /* Keep the defaults; the first poll reports a connection problem. */ }
   if (session.authenticated && session.role !== "admin") { location.replace(HOME[session.role] || "/login"); return; }
-  if (!session.authenticated && session.mode === "live") { leaveConsole(); return; }
+  if (!session.authenticated && (session.mode === "live" || session.isolatedArchitecture)) { leaveConsole(); return; }
   showSession();
   document.body.classList.remove("booting");
   refresh(); pollTimer = setInterval(refresh, 3000);

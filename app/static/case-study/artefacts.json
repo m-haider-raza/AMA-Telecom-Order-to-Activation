@@ -104,8 +104,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 45386,
-      "sha256": "f458a04fdd551f864e76e85d94de4e91e3faf9be80260a5e2f9af108b7de3275"
+      "bytes": 46176,
+      "sha256": "50a3e6f3e350a32169eb74545b099b013db6e9ca683a418e06ca33869ce0c695"
     },
     {
       "file": "guides/APPLICATION-GUIDE.md",
@@ -329,8 +329,8 @@
     },
     {
       "file": "case-study.html",
-      "bytes": 56567,
-      "sha256": "e3cb144b4eed0df8dc2b453ad4d0f58c9e0e546ac7300dae7aefd3b73aba8cb2"
+      "bytes": 56883,
+      "sha256": "c638adc8c19ab63e9506e5bdc3189e49d9ebe7a1c97d3866d3903849648d8974"
     },
     {
       "file": "case-study.css",
@@ -361,6 +361,21 @@
       "file": "solution-tower-v6-data.json",
       "bytes": 24926,
       "sha256": "9f85b2a074cc58544ffa58a3d61e61b8d74e792e814a427524271e1dab8fb212"
+    },
+    {
+      "file": "guides/FOUNDRY-SSO-APP.md",
+      "bytes": 11361,
+      "sha256": "2988e7fb5c1eae167eae0bfd4d48eb0d501b90c6be81c09fe070026cb50248fd"
+    },
+    {
+      "file": "TurkBizTel-Foundry-Model-Economics.pptx",
+      "bytes": 76549,
+      "sha256": "5953b28f050d3352e9f7921427430b9a3b9657a284b40c6629a4187a902b5d60"
+    },
+    {
+      "file": "TurkBizTel-Foundry-Model-Economics.pdf",
+      "bytes": 116611,
+      "sha256": "71ea809761254d56c24b3e54cf99f6d8b782fa3f6f47350467ffd15ce5ad1697"
     }
   ],
   "bundle": "TurkBizTel-Case-Study-2026-11-24.zip",

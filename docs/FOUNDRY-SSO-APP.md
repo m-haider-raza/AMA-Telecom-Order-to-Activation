@@ -37,6 +37,13 @@ separately as described below.
 
 ## Staff login
 
+The application root `/` opens the shared customer/partner sign-in page, including
+inside the interactive story. Select **Staff sign in** for the staff options.
+Opening `/console` without a session also redirects to sign-in without an expiry
+warning; the warning is reserved for an authenticated console session that ends.
+The partner capacity check displays product, available units and change window
+as a table; availability remains simulated and does not reserve anything.
+
 `AMA_STAFF_AUTH=sso+token` shows both choices on `/login#staff`:
 
 - **Sign in with Microsoft**: the existing OIDC authorization-code/PKCE flow,

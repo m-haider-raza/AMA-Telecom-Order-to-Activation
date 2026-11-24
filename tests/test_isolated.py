@@ -276,6 +276,16 @@ def test_http_contract_workflow_and_portals(client):
     assert client.get("/isolated-health").json()["agent365"] == "not-registered"
 
 
+def test_isolated_home_opens_shared_signin_without_exposing_the_staff_console(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.content == client.get("/login").content
+    assert 'id="panel-signin"' in response.text and 'id="staff-link"' in response.text
+    assert 'src="/static/app.js' not in response.text
+    assert client.get("/api/auth/me").json()["authenticated"] is False
+    assert client.get("/api/state").status_code == 401
+
+
 def test_empty_polls_do_not_write_state_and_health_uses_real_heartbeats(client, monkeypatch):
     client.app.state.store.transact(lambda state: state.update(orders={}, events=[], isolatedJobs={}))
     before = client.app.state.store.read()

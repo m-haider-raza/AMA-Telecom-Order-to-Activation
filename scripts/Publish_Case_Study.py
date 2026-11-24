@@ -32,6 +32,12 @@ def main():
     for name in ("case-study.html", "case-study.css", "case-study.js", "current-scenario-turkbiztel-poster.jpg",
                  "journey-data.json", "solution-tower-v6-turkbiztel-poster.jpg", "solution-tower-v6-data.json"):
         sources[name] = STATIC / name
+    sources["guides/FOUNDRY-SSO-APP.md"] = ROOT / "docs" / "FOUNDRY-SSO-APP.md"
+    for extension in ("pptx", "pdf"):
+        name = f"TurkBizTel-Foundry-Model-Economics.{extension}"
+        content = (ROOT / "docs" / "presentations" / name).read_bytes()
+        (DEST / name).write_bytes(content)
+        sources[name] = DEST / name
     manifest.update(
         release=RELEASE,
         githubRelease=manifest["github"] + "/releases/tag/" + RELEASE,
