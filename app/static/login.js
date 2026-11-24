@@ -25,6 +25,7 @@ let resetEmail = "";
 let inviteToken = "";
 let inviteEmail = "";
 let inviteRun = 0;
+let isolatedArchitecture = false;
 
 /* Leaves the button busy until the browser has actually moved on, so it never flashes back to normal. */
 function navigate(url, { replace = false } = {}) {
@@ -193,7 +194,8 @@ async function requestCode(email) {
   $("#reset-demo").hidden = !code;
   $("#reset-demo-code").textContent = code;
   $("#reset-sub").textContent =
-    `If an account exists for ${email}, we have sent it a 6-digit code. The code works for 15 minutes.`;
+    code || isolatedArchitecture ? "No email was sent. If a test account exists, its simulated code is shown below and works for 15 minutes."
+      : `If an account exists for ${email}, we have sent it a 6-digit code. The code works for 15 minutes.`;
 }
 
 onSubmit(forms.forgot, $("#forgot-msg"), [
@@ -294,7 +296,12 @@ async function boot() {
   }
   try {
     const me = await api("/api/auth/me");
+    isolatedArchitecture = Boolean(me.isolatedArchitecture);
     applyStaffMode(me.staffAuth);
+    if (me.isolatedArchitecture) {
+      $("#partner-invitation-note").textContent = "Partner? Your service-team contact shares a test invitation link. No invitation email is sent in this isolated application.";
+      $("#panel-forgot .sub").textContent = "Enter your test email address to generate a simulated 6-digit code. No email is sent.";
+    }
     // A visitor who was just sent here because a session ended must not be sent straight back, and
     // someone opening an invitation link must get to set up their account, whoever is signed in.
     if (me.authenticated && !bounced && !back && !INVITE_HASH.test(location.hash)) {

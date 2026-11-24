@@ -136,6 +136,42 @@
     else if (bench && bench.status === "failed") text = `The last run did not finish: ${bench.run.error || "unknown error"}`;
     else if (bench) text = `Last run ${bench.run.id}: ${number(size, 0)} orders, finished ${stamp(bench.run.completedAt)}. Mix: ${mixText(bench.run.mix)}. A person takes ${bench.run.humanDelaySeconds} s to decide.`;
     $("#an-run-status").textContent = text;
+    if (session.isolatedArchitecture) paintIsolatedReviews();
+  }
+  let loadingReviews = false;
+  async function paintIsolatedReviews() {
+    if (loadingReviews) return;
+    loadingReviews = true;
+    let host = $("#an-isolated-reviews");
+    if (!host) {
+      host = make("div", {id: "an-isolated-reviews"});
+      $("#an-run-status").after(host);
+    }
+    try {
+      const {orders} = await api("/api/isolated/benchmark/holds");
+      host.replaceChildren();
+      if (orders.length) host.append(make("p", {text: "Isolated benchmark: a service manager must explicitly decide these synthetic holds. No agent or supervisor can approve them."}));
+      orders.forEach(order => {
+        const row = make("div", {class: "an-actions"}, make("span", {text: `${order.id}: ${order.exception?.type || order.state} `}));
+        const decisions = order.state === "awaitingCustomer" ? [["correct-site", "Confirm synthetic site"]] : [["approve", "Approve simulated change"], ["reject", "Reject"]];
+        decisions.forEach(([decision, label]) => {
+          const button = make("button", {type: "button", text: label, disabled: !can("manage")});
+          button.addEventListener("click", async () => {
+            button.disabled = true;
+            try {
+              const body = {decision};
+              if (decision === "correct-site") body.siteReference = order.exception.expectedSiteReference;
+              await api(`/api/isolated/benchmark/orders/${encodeURIComponent(order.id)}/decision`, {method: "POST", body: JSON.stringify(body)});
+              loadingReviews = false;
+              paintIsolatedReviews();
+            } catch (error) { toast(error.message); button.disabled = false; }
+          });
+          row.append(button);
+        });
+        host.append(row);
+      });
+    } catch (error) { host.textContent = `Benchmark review unavailable: ${error.message}`; }
+    finally { loadingReviews = false; }
   }
   function paintVerdict() {
     const {cycle, fallout, sample} = report, met = [cycle.verdict, fallout.verdict].filter(item => item === "met").length;

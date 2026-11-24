@@ -429,13 +429,13 @@ function verifyBox() {
     icon("mail"),
     h("div", { class: "banner-body" },
       h("strong", { id: "verify-title", text: "Confirm your email address" }),
-      h("p", {}, "Enter the 6-digit code we emailed to ", h("b", { text: state.account.email }),
+      h("p", {}, state.mode !== "live" ? "Enter the simulated 6-digit code for " : "Enter the 6-digit code we emailed to ", h("b", { text: state.account.email }),
         ". It secures your account and brings in any orders you placed before signing up."),
       demoCode
         ? h("p", {}, "This is a demo site, so no email is sent. Your code is ", h("span", { class: "demo-code mono", text: demoCode }))
         : null,
       mailProblem ? h("p", { text: "We couldn't send that email just now. Choose “Send a new code” to try again." }) : null,
-      h("p", { class: "hint", text: "Codes work for 15 minutes. Can't find it? Check your junk folder or send a new code." }),
+      h("p", { class: "hint", text: state.mode !== "live" ? "Codes work for 15 minutes. Generate a new simulated code if needed." : "Codes work for 15 minutes. Can't find it? Check your junk folder or send a new code." }),
       form));
 }
 

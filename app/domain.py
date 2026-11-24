@@ -352,7 +352,7 @@ def flush_digests(state, at=None):
             release_digest(order, at)
 
 
-def follow_up(state, interval_seconds=None, at=None):
+def follow_up(state, interval_seconds=None, at=None, actor="Customer Update Agent"):
     """Automatically chase customers whose order is stuck (incorrect details) or under review."""
     if interval_seconds is None:
         interval_seconds = float(os.getenv("DEMO_REMINDER_SECONDS", "300"))
@@ -370,7 +370,7 @@ def follow_up(state, interval_seconds=None, at=None):
         if sent >= REMINDER_LIMIT:
             if not exception.get("escalated"):
                 exception["escalated"] = True
-                step(state, order, "Customer Update Agent", "customer.reminders-exhausted",
+                step(state, order, actor, "customer.reminders-exhausted",
                      f"{REMINDER_LIMIT} automatic reminders sent without resolution; manager follow-up needed",
                      "human-required")
             continue
@@ -393,7 +393,7 @@ def follow_up(state, interval_seconds=None, at=None):
         dispatch(state, order, en, tr, "critical")
         exception["reminders"] = sent + 1
         exception["lastContactAt"] = current.isoformat()
-        audit(state, order["id"], "Customer Update Agent", "customer.reminder",
+        audit(state, order["id"], actor, "customer.reminder",
               f"Automatic stuck-order reminder {sent + 1}/{REMINDER_LIMIT} queued")
 
 
@@ -416,18 +416,18 @@ def progress(state, order, en, tr):
     dispatch(state, order, en, tr, "progress")
 
 
-def pause(state, order, kind, detail):
+def pause(state, order, kind, detail, actor="Provisioning Orchestration Agent"):
     order["state"] = "held" if kind == "change-window" else "pendingApproval"
     order["exception"] = {"type": kind, "detail": detail, "createdAt": now(),
                           "resumeStage": order["stage"]}
-    step(state, order, "Provisioning Orchestration Agent", "policy.hold", detail, "human-required")
+    step(state, order, actor, "policy.hold", detail, "human-required")
     notify(state, order, "Your order needs service-manager review." if live_mode()
            else "Your demo order needs service-manager review.",
            "Siparişiniz hizmet yöneticisinin incelemesini bekliyor." if live_mode()
            else "Demo siparişiniz hizmet yöneticisinin incelemesini bekliyor.")
 
 
-def process_next(state, order_id):
+def process_next(state, order_id, policy_actor="Provisioning Orchestration Agent"):
     order = state["orders"][order_id]
     if order["state"] in TERMINAL | WAITING | {"awaitingCustomer", AWAITING_ENTERPRISE}:
         return order
@@ -437,7 +437,8 @@ def process_next(state, order_id):
         return order
     if datetime.now(timezone.utc) > datetime.fromisoformat(order["deadline"]) and not order.get("slaWaiver"):
         order["slaBreached"] = True
-        pause(state, order, "sla-breach", "Seven-day contractual demo SLA has elapsed; explicit review required")
+        pause(state, order, "sla-breach", "Seven-day contractual demo SLA has elapsed; explicit review required",
+              actor=policy_actor)
         return order
     pending["status"] = "processed"
     pending["processedAt"] = now()
@@ -467,7 +468,8 @@ def process_next(state, order_id):
             order["exception"]["createdAt"] = now()
             return order
         if capacity["availableUnits"] < 1:
-            pause(state, order, "capacity", "No available demo capacity; manager must reject or resolve inventory")
+            pause(state, order, "capacity", "No available demo capacity; manager must reject or resolve inventory",
+                  actor=policy_actor)
             return order
         step(state, order, "Order Validation Agent", "feasibility.check",
              f"Public city reference, synthetic address zone and {product['bandwidthMbps']} Mbps capacity validated")
@@ -489,17 +491,20 @@ def process_next(state, order_id):
     elif stage == "provisioning":
         if order["scenario"] == "change-window" and not order.get("windowApproved"):
             pause(state, order, "change-window",
-                  "Outside the simulated change window. Manager can open a labelled demo window; no real override.")
+                  "Outside the simulated change window. Manager can open a labelled demo window; no real override.",
+                  actor=policy_actor)
         elif order["scenario"] == "human-exception" and not order.get("riskApproved"):
             pause(state, order, "route-conflict",
-                  "Simulated overlapping route / high-risk customer change exceeds autonomous playbook authority")
+                  "Simulated overlapping route / high-risk customer change exceeds autonomous playbook authority",
+                  actor=policy_actor)
         elif order["scenario"] == "auto-recovery" and not order["recovered"]:
             step(state, order, "Provisioning Orchestration Agent", "partner.reserve",
                  "Simulated partner timeout; no resources were committed", "timeout")
             order["stage"] = "fallout"
             enqueue(state, order, "fallout.detected")
         elif capacity["availableUnits"] < 1:
-            pause(state, order, "capacity", "Capacity was consumed by another order; review required")
+            pause(state, order, "capacity", "Capacity was consumed by another order; review required",
+                  actor=policy_actor)
         else:
             availability = partner_capacity(state, order["city"], order["product"])
             if not availability["capacity"]:

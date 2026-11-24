@@ -416,6 +416,15 @@
     fetch("/api/auth/me", { credentials: "same-origin", headers: { Accept: "application/json" } })
       .then((reply) => (reply.ok ? reply.json() : null))
       .then((me) => {
+        if (me?.isolatedArchitecture) {
+          $("#h-architecture").textContent = "Five isolated workers, one trusted policy boundary";
+          const summary = document.createElement("p");
+          summary.className = "scene-lede";
+          summary.textContent = "Isolated acceptance edition: Validation, Decomposition, Provisioning, Fallout Resolution and Customer Update run as separate workers with separate managed identities. A separate supervisor dispatches; authenticated tool APIs independently validate every result and own the private state. Agents cannot approve exceptions or access shared state. Provisioning and notifications remain simulated; Agent 365 governance is not enabled. The original concept deck and films below are preserved.";
+          $("#scene-architecture .scene-head").append(summary);
+          note.textContent = ". This is a new synthetic-only application. Staff orders wait for the enterprise's approval; neither original application is replaced.";
+          $(".role-warn").textContent = "Synthetic acceptance environment: orders are saved in the new isolated state only. Approval messages, email and SMS delivery are simulated; nothing is sent. Use invented test details.";
+        }
         if (me?.staffAuth === "sso+token") {
           link.textContent = "Service team sign-in";
           note.textContent = ". Sign in with your Microsoft work account or an operator access token from the service desk.";

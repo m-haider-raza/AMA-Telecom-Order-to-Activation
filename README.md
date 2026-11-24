@@ -8,6 +8,11 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 
 ## Start here
 
+**Separate isolated-agent acceptance copy:** [architecture and provisioning runbook](docs/ISOLATED-AGENTS.md).
+It deploys five independently authenticated workers plus a dispatch-only supervisor and trusted policy boundary
+into a new `rg-amai-*` stack with new synthetic state. Neither existing Azure application is upgraded or retired.
+Agent 365 is an optional, separately authorized governance integration, not an enabled feature.
+
 Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
 The recorded demo and the interactive app are separate chapters. The links below point to the current published editions.
 

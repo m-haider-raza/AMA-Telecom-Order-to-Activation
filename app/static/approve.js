@@ -384,7 +384,27 @@ for (const button of $$(".lang-switch [data-lang]")) {
   button.addEventListener("click", () => setLang(button.dataset.lang, true));
 }
 
-setLang(startingLanguage());
+setLang(lang);
+api("/api/auth/me").then(me => {
+  if (!me.isolatedArchitecture) return;
+  Object.assign(TEXT.en, {
+    b2t: "Synthetic approval only",
+    b2s: "No email is sent. Approve in your customer account or use a shared test link.",
+    replacedTitle: "A newer approval request replaced this link",
+    replacedBody: "Use the latest test link, or sign in to your account to answer.",
+    missingTitle: "Approve in your account",
+    missingBody: "No approval email is sent in this isolated application. Sign in to your customer account to approve, or use a test link shared by the service team.",
+  });
+  Object.assign(TEXT.tr, {
+    b2t: "Yalnızca sentetik onay",
+    b2s: "E-posta gönderilmez. Müşteri hesabınızda onaylayın veya paylaşılan test bağlantısını kullanın.",
+    replacedTitle: "Bu bağlantının yerini yeni bir onay talebi aldı",
+    replacedBody: "En son test bağlantısını kullanın veya yanıtlamak için hesabınıza giriş yapın.",
+    missingTitle: "Hesabınızda onaylayın",
+    missingBody: "Bu izole uygulamada onay e-postası gönderilmez. Onaylamak için müşteri hesabınıza giriş yapın veya hizmet ekibinin paylaştığı test bağlantısını kullanın.",
+  });
+  setLang(startingLanguage());
+}).catch(error => console.error("Could not determine approval delivery mode", error));
 const link = readLink();
 if (link.bad) show({ kind: "problem", problem: "bad" }, false);
 else if (!link.token) show({ kind: "problem", problem: "missing" }, false);

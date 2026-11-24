@@ -279,12 +279,12 @@ function approvalBlock(order) {
   const box = append(node("div", null, `approval-box ${expired ? "expired" : record.status}`), node("strong", title));
   lines.filter(Boolean).forEach(line => box.append(node("p", line)));
   if (!waiting) return box;
-  const actions = node("div", null, "approval-actions"), resend = node("button", "Send the e-mail again", "button secondary"), withdraw = node("button", "Withdraw request", "button secondary");
+  const actions = node("div", null, "approval-actions"), resend = node("button", session.isolatedArchitecture ? "Renew approval request" : "Send the e-mail again", "button secondary"), withdraw = node("button", "Withdraw request", "button secondary");
   resend.disabled = withdraw.disabled = !can("operate");
   resend.onclick = async () => {
     if (!requireToken()) return;
     resend.disabled = true;
-    try { await api(`/api/orders/${order.id}/approval/resend`, {method: "POST"}); toast(`Sending a new approval e-mail to ${contact}.`); await refresh(); }
+    try { await api(`/api/orders/${order.id}/approval/resend`, {method: "POST"}); toast(session.isolatedArchitecture ? `Approval request renewed for ${contact}; no email was sent.` : `Sending a new approval e-mail to ${contact}.`); await refresh(); }
     catch (error) { toast(error.message, true); } finally { resend.disabled = false; }
   };
   withdraw.onclick = async () => {
@@ -383,9 +383,10 @@ const ORDER_TEXT = {
   enterprise: ["SERVICE REQUEST FOR AN ENTERPRISE", "Place an order for an enterprise", "Choose the enterprise this order is for. No live service will be provisioned.", "Send for enterprise approval →"]
 };
 function staffSso() { return ["sso", "sso+token"].includes(session.staffAuth); }
-function enterpriseOrder() { return staffSso() && $("#submission-channel").value === "operator"; }
+function enterpriseOrder() { return (staffSso() || session.enterpriseApprovals) && $("#submission-channel").value === "operator"; }
 function showOrderMode() {
   const enterprise = enterpriseOrder();
+  if (session.isolatedArchitecture) $("#order-approval-note").textContent = "The enterprise's contact must approve this order in their account. Approval email is simulated; nothing is sent. No agent starts and nothing is provisioned until they approve.";
   [["#order-enterprise-field", false], ["#order-approval-note", false], ["#order-customer-field", true], ["#order-language-field", true], ["#order-contact-block", true]]
     .forEach(([selector, demoOnly]) => $(selector).classList.toggle("hidden", demoOnly === enterprise));
   // A hidden control is still validated and submitted unless it is disabled too.
