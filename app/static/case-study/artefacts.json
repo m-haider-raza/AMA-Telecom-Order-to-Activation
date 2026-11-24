@@ -24,8 +24,8 @@
     },
     {
       "file": "current-scenario.vtt",
-      "bytes": 2171,
-      "sha256": "9484b0318b03cb019be2a34003e7d270f6ee9d17f36379fb236c6bea0b0e62fa"
+      "bytes": 2116,
+      "sha256": "504730391b89e1b8b354de7ab081e49fa6bd5d73477659a81a193274d71ca63e"
     },
     {
       "file": "solution-tower-v6-turkbiztel.mp4",
@@ -34,8 +34,8 @@
     },
     {
       "file": "solution-tower-v6.vtt",
-      "bytes": 3663,
-      "sha256": "6ba85b633c1e4fa0d450a5b8d141b764c22786e4ebe3c742b022d368c7884465"
+      "bytes": 3590,
+      "sha256": "d4fb66f94f1ca78b3a75999253e141ac9ce46ce64507d42ef11b5b246e0cfb96"
     },
     {
       "file": "app-walkthrough.mp4",
@@ -44,13 +44,13 @@
     },
     {
       "file": "app-walkthrough.vtt",
-      "bytes": 2590,
-      "sha256": "2bd3be19881fcb8bdef68b3a105234229c24a150effdb7458c01b07038bca4f6"
+      "bytes": 2519,
+      "sha256": "9637c78c9b829bad44e68c8c2e9a99e99b2a7c3911b7e52a9a0919e9a208079c"
     },
     {
       "file": "app-walkthrough-transcript.txt",
-      "bytes": 3554,
-      "sha256": "757a699d01cad74cb06afa3b9aec9aeee1676767be0b9a72135f63a0076bb104"
+      "bytes": 3502,
+      "sha256": "7ca5e1401ceaac0ca2a5f4768a35c1c729c27b3c1545eba7bdf53a7c45140a4e"
     },
     {
       "file": "app-walkthrough-full.mp4",
@@ -59,13 +59,13 @@
     },
     {
       "file": "app-walkthrough-full.vtt",
-      "bytes": 5327,
-      "sha256": "bdef5ba0e0d490f25ee18d12135fd6ded5fe016224f1e2b85b0ba5ac4852428c"
+      "bytes": 5184,
+      "sha256": "24477eb46f75862004baf6c7b845150de59622f9f0c2c6997dd68b712c3d13cc"
     },
     {
       "file": "app-walkthrough-full-transcript.txt",
-      "bytes": 6548,
-      "sha256": "9109c87f638e5746c1c47148c9b18b655367a8b4239b7d89c2e18da9639ae59a"
+      "bytes": 6445,
+      "sha256": "40e1ad7e6c4ee25ec536916f95f1d8877e21692660727a8c43c2ad1bab095552"
     },
     {
       "file": "Agentic_Order_to_Activation_Architecture.pptx",
@@ -104,33 +104,33 @@
     },
     {
       "file": "README.md",
-      "bytes": 45745,
-      "sha256": "5c71f2928eeefdcda56e490307237031bf46ac7fa30e777ad9941169bd4fec0b"
+      "bytes": 45386,
+      "sha256": "f458a04fdd551f864e76e85d94de4e91e3faf9be80260a5e2f9af108b7de3275"
     },
     {
       "file": "guides/APPLICATION-GUIDE.md",
-      "bytes": 84952,
-      "sha256": "c0cb071cffeddf6417a95a4a50a702760994ea23e8f99ef1e4e4b776ddb80372"
+      "bytes": 84202,
+      "sha256": "9fa64df6ce4591555a35d6a2001ae45f659f22da64a852b6635af253012803cd"
     },
     {
       "file": "guides/azure-architecture.md",
-      "bytes": 21616,
-      "sha256": "56048ffa252ec183b8ae219c1949840c81263510aa7b4c74539b113ab95aa4ff"
+      "bytes": 21392,
+      "sha256": "8e528b4d8c29b7cb68e04ec081ddcf758ba90af823806d4e83764d41dce18da7"
     },
     {
       "file": "guides/PRODUCTION.md",
-      "bytes": 24549,
-      "sha256": "10e7033681bf41ce6b84ea0945337681437adb98d95ea287f3fa315e1cac3a87"
+      "bytes": 24397,
+      "sha256": "e35885663fc02d7fb1407adf75fe11cf25ac50c07449e75d9d0f9fcd6596d3b8"
     },
     {
       "file": "guides/STAFF-SSO.md",
-      "bytes": 32142,
-      "sha256": "459e20a824cb45345a1c8dd0e935caed040888f04ce9b6f6928054b36d2af9c4"
+      "bytes": 31746,
+      "sha256": "e683d46064f52c2ca1bc091a789b0c93ba9aa0961636130288ee085c0c087df8"
     },
     {
       "file": "app-walkthrough-data.json",
-      "bytes": 5550,
-      "sha256": "ca58cdf3d2d2bc2315afc695e8440aadcf748d7f2dffe1a4533e9d16ab82b06d"
+      "bytes": 5335,
+      "sha256": "d639811d87f0b18d49d4af09bf9769d4fda820b485778b69009dd24cd0337066"
     },
     {
       "file": "app-walkthrough-poster.jpg",
@@ -329,8 +329,8 @@
     },
     {
       "file": "case-study.html",
-      "bytes": 56996,
-      "sha256": "5b0877347c2479dd7efc73208bd018381da0b5c66ea748ffebe241e3324943dd"
+      "bytes": 56567,
+      "sha256": "e3cb144b4eed0df8dc2b453ad4d0f58c9e0e546ac7300dae7aefd3b73aba8cb2"
     },
     {
       "file": "case-study.css",
@@ -339,8 +339,8 @@
     },
     {
       "file": "case-study.js",
-      "bytes": 24998,
-      "sha256": "2955bb994b4c13be5232fcb13cc4d85866ffef74d06f126fadceb9b010490445"
+      "bytes": 24427,
+      "sha256": "ab3f9c7f2208cbe1952c40efd4c2cb062f8b2f87d7cdd114daf960901b94f7c4"
     },
     {
       "file": "current-scenario-turkbiztel-poster.jpg",
@@ -349,8 +349,8 @@
     },
     {
       "file": "journey-data.json",
-      "bytes": 8075,
-      "sha256": "4c1b021c989df7d376920df7d9c228398ffd6a35ea55909306da9f2a759bac28"
+      "bytes": 7846,
+      "sha256": "285e9b061f2d1384c399e85bf0422afb32b560489c8f5031064c380e0bb08a36"
     },
     {
       "file": "solution-tower-v6-turkbiztel-poster.jpg",
@@ -359,8 +359,8 @@
     },
     {
       "file": "solution-tower-v6-data.json",
-      "bytes": 25739,
-      "sha256": "74b9551de5a9e36cffafe03bf58feba5473b8800529cac64e1ef79aae02ab283"
+      "bytes": 24926,
+      "sha256": "9f85b2a074cc58544ffa58a3d61e61b8d74e792e814a427524271e1dab8fb212"
     }
   ],
   "bundle": "TurkBizTel-Case-Study-2026-11-24.zip",

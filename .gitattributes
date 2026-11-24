@@ -1,0 +1,10 @@
+/README.md text eol=lf
+/docs/*.md text eol=lf
+/app/static/*.html text eol=lf
+/app/static/*.css text eol=lf
+/app/static/*.js text eol=lf
+/app/static/*.json text eol=lf
+/app/static/*.vtt text eol=lf
+/app/static/*transcript.txt text eol=lf
+/app/static/case-study/*.json text eol=lf
+/app/static/case-study/*.txt text eol=lf

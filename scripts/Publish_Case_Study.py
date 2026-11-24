@@ -41,12 +41,16 @@ def main():
     manifest["files"] = []
     for name, source in sources.items():
         content = source.read_bytes()
+        if source.suffix in {".md", ".html", ".css", ".js", ".json", ".vtt", ".txt"}:
+            content = content.replace(b"\r\n", b"\n")
+            source.write_bytes(content)
         manifest["files"].append({
             "file": name, "bytes": len(content), "sha256": hashlib.sha256(content).hexdigest(),
         })
-    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+                             encoding="utf-8", newline="\n")
     sums = "".join(f"{row['sha256']}  {row['file']}\n" for row in manifest["files"])
-    (DEST / "SHA256SUMS.txt").write_text(sums, encoding="utf-8")
+    (DEST / "SHA256SUMS.txt").write_text(sums, encoding="utf-8", newline="\n")
     with zipfile.ZipFile(DEST / BUNDLE, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for name, source in sources.items():
             archive.write(source, name)

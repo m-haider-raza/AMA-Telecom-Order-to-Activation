@@ -253,6 +253,8 @@ def test_current_bundle_matches_the_story_videos_and_architecture():
             content = archive.read(row["file"])
             assert len(content) == row["bytes"]
             assert hashlib.sha256(content).hexdigest() == row["sha256"]
+            if Path(row["file"]).suffix in {".md", ".html", ".css", ".js", ".json", ".vtt", ".txt"}:
+                assert b"\r\n" not in content
         for name in ("app-walkthrough.mp4", "app-walkthrough.vtt", "app-walkthrough-data.json",
                      "current-scenario-turkbiztel.mp4", "solution-tower-v6-turkbiztel.mp4"):
             assert archive.read(name) == (STATIC / name).read_bytes()
