@@ -44,7 +44,7 @@ class NewContact(Loose):
 
 
 class Organisation(Loose):
-    """Partner organisation names follow the same demo rule as customer company names."""
+    """Partner organisation names follow the same validation as customer company names."""
 
     @field_validator("name", check_fields=False)
     @classmethod

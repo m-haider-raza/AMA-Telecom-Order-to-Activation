@@ -10,6 +10,12 @@ param staffAuth string = 'token'
 param ssoClientId string = ''
 param foundryBindings object = {}
 param workersPaused bool = false
+@description('Customer email delivery only; network provisioning remains simulated.')
+@allowed(['simulated', 'live'])
+param deliveryMode string = 'simulated'
+param emailSender string = ''
+@secure()
+param emailConnectionString string = ''
 @secure()
 param staffAccessToken string = ''
 @secure()
@@ -181,6 +187,8 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
         { name: 'session', value: sessionSecret }
       ], staffAuth == 'sso+token' ? [
         { name: 'staff-access', value: staffAccessToken }
+      ] : [], deliveryMode == 'live' ? [
+        { name: 'acs-cs', value: emailConnectionString }
       ] : [])
     }
     template: {
@@ -198,7 +206,7 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
           { name: 'ISOLATED_PRINCIPALS', value: string(principals) }
           { name: 'ISOLATED_STORAGE_URL', value: storage.properties.primaryEndpoints.blob }
           { name: 'AMA_MODE', value: 'demo' }
-          { name: 'AMA_DELIVERY', value: 'simulated' }
+          { name: 'AMA_DELIVERY', value: deliveryMode }
           { name: 'DEMO_ADMIN_TOKEN', secretRef: 'admin' }
           { name: 'DEMO_PARTNER_TOKEN', secretRef: 'partner' }
           { name: 'AMA_SESSION_SECRET', secretRef: 'session' }
@@ -212,6 +220,9 @@ resource boundary 'Microsoft.App/containerApps@2024-03-01' = if (deployApps) {
           { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: insights.properties.ConnectionString }
         ], staffAuth == 'sso+token' ? [
           { name: 'AMA_STAFF_ACCESS_TOKEN', secretRef: 'staff-access' }
+        ] : [], deliveryMode == 'live' ? [
+          { name: 'ACS_CONNECTION_STRING', secretRef: 'acs-cs' }
+          { name: 'ACS_EMAIL_SENDER', value: emailSender }
         ] : [])
         probes: [{
           type: 'Readiness'

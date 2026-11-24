@@ -64,7 +64,7 @@ const TERMINAL = new Set(["completed", "rejected", "failed"]);
 const POLL_MS = 8000;
 
 const state = {
-  account: null, orders: [], mode: "demo", filter: "", accountSig: "", ordersSig: "", dirty: false, moreOpen: false,
+  account: null, orders: [], mode: "demo", delivery: false, filter: "", accountSig: "", ordersSig: "", dirty: false, moreOpen: false,
   declining: "",
 };
 
@@ -331,13 +331,10 @@ function contactBody(form) {
 function companyProblem(value) {
   const text = value.trim();
   if (text.length < 2) return "Enter your company name.";
-  if (state.mode !== "live" && !text.startsWith("Demo ")) {
-    return "In this demo, company names start with “Demo ”, for example “Demo Bosphorus Foods”.";
-  }
   return "";
 }
 
-const demoHint = () => (state.mode === "live" ? null : "This is a demo site: company names start with “Demo ”.");
+const demoHint = () => (state.mode === "live" ? null : "Use invented company details. No live service will be provisioned.");
 
 const stuckNote = () => h("p", { class: "note" }, icon("info"),
   "If your order gets stuck, for example because a detail looks incorrect, we message you immediately and "
@@ -403,7 +400,8 @@ async function resendCode(message) {
 
 function verifyBox() {
   if (!state.account || state.account.verified) return null;
-  const demoCode = state.mode === "live" ? "" : sessionStorage.getItem(DEMO_CODE_KEY) || "";
+  const simulated = state.mode !== "live" && !state.delivery;
+  const demoCode = simulated ? sessionStorage.getItem(DEMO_CODE_KEY) || "" : "";
   const mailProblem = !demoCode && Boolean(sessionStorage.getItem(MAIL_PROBLEM_KEY));
   const code = h("input", {
     type: "text", name: "code", class: "code-input", inputmode: "numeric", autocomplete: "one-time-code",
@@ -429,13 +427,13 @@ function verifyBox() {
     icon("mail"),
     h("div", { class: "banner-body" },
       h("strong", { id: "verify-title", text: "Confirm your email address" }),
-      h("p", {}, state.mode !== "live" ? "Enter the simulated 6-digit code for " : "Enter the 6-digit code we emailed to ", h("b", { text: state.account.email }),
+      h("p", {}, simulated ? "Enter the simulated 6-digit code for " : "Enter the 6-digit code we emailed to ", h("b", { text: state.account.email }),
         ". It secures your account and brings in any orders you placed before signing up."),
       demoCode
         ? h("p", {}, "This is a demo site, so no email is sent. Your code is ", h("span", { class: "demo-code mono", text: demoCode }))
         : null,
       mailProblem ? h("p", { text: "We couldn't send that email just now. Choose “Send a new code” to try again." }) : null,
-      h("p", { class: "hint", text: state.mode !== "live" ? "Codes work for 15 minutes. Generate a new simulated code if needed." : "Codes work for 15 minutes. Can't find it? Check your junk folder or send a new code." }),
+      h("p", { class: "hint", text: simulated ? "Codes work for 15 minutes. Generate a new simulated code if needed." : "Codes work for 15 minutes. Can't find it? Check your junk folder or send a new code." }),
       form));
 }
 
@@ -1220,6 +1218,7 @@ async function boot() {
       return;
     }
     state.mode = me.mode === "live" ? "live" : "demo";
+    state.delivery = Boolean(me.delivery);
     await load();
   } catch (error) {
     if (!(error instanceof ApiError)) console.error(error);

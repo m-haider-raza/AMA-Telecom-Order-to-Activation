@@ -424,10 +424,14 @@
           summary.className = "scene-lede";
           summary.textContent = "Validation, Decomposition, Provisioning, Fallout Resolution, Customer Update and a dispatch-only supervisor use separate managed identities. " +
             (me.foundryArchitecture ? "Each bridge invokes its own real hosted Foundry agent and project. " : "") +
-            "Authenticated tool APIs independently validate every result and own the private state. Agents cannot approve exceptions or access shared state. Provisioning and notifications remain simulated; Agent 365 governance is not enabled. The deck distinguishes the production target from the synthetic pilot.";
+            "Authenticated tool APIs independently validate every result and own the private state. Agents cannot approve exceptions or access shared state. " +
+            (me.delivery ? "Provisioning remains simulated; customer email is sent by the trusted boundary. " : "Provisioning and notifications remain simulated. ") +
+            "Agent 365 governance is not enabled. The deck distinguishes the production target from the synthetic pilot.";
           $("#scene-architecture .scene-head").append(summary);
           note.textContent = ". This is a new synthetic-only application. Staff orders wait for the enterprise's approval; neither original application is replaced.";
-          $(".role-warn").textContent = "Synthetic acceptance environment: orders are saved in the new isolated state only. Approval messages, email and SMS delivery are simulated; nothing is sent. Use invented test details.";
+          $(".role-warn").textContent = me.delivery
+            ? "Synthetic provisioning environment: orders use the new isolated state. Verification, approval and customer-update emails are real; use only email addresses you control. No live telecom service is provisioned."
+            : "Synthetic acceptance environment: orders are saved in the new isolated state only. Approval messages, email and SMS delivery are simulated; nothing is sent. Use invented test details.";
         }
         if (me?.staffAuth === "sso+token") {
           link.textContent = "Service team sign-in";

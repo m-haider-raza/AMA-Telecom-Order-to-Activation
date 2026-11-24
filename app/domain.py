@@ -154,8 +154,6 @@ def create_order(state, payload, actor, max_orders=None, start=True):
         raise ValueError("Unsupported scenario or language")
     if not isinstance(payload["customer"], str) or not payload["customer"].strip():
         raise ValueError("A customer name is required")
-    if not live_mode() and not payload["customer"].startswith("Demo "):
-        raise ValueError("Only synthetic company names beginning with 'Demo ' are allowed")
     key = payload["idempotencyKey"]
     if not isinstance(key, str) or not 8 <= len(key) <= 128:
         raise ValueError("Supply an idempotency key of 8-128 characters")
@@ -298,10 +296,10 @@ def _recipient(contact):
 
 
 def dispatch(state, order, en, tr, kind):
-    """Queue a simulated customer message honouring contact details and update frequency.
+    """Queue a customer message honouring contact details and update frequency.
 
     kind "critical" (action needed, delays, outcomes) always goes out immediately;
-    kind "progress" follows the customer's chosen cadence. Nothing leaves the simulator.
+    kind "progress" follows the customer's chosen cadence. External delivery is separately configured.
     """
     contact = order.get("contact")
     timestamp = now()
@@ -338,7 +336,7 @@ def sent_status():
 def release_digest(order, timestamp):
     for queued in order.get("outbox", []):
         if queued["status"] == "scheduled-digest":
-            queued["status"] = sent_status()
+            queued["status"] = "simulated-sent" if queued["channel"].startswith("Simulated ") else sent_status()
             if queued["status"] == "simulated-sent":
                 queued["sentAt"] = timestamp
 

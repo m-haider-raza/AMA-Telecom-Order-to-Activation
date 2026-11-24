@@ -86,7 +86,9 @@ def tab_staff(client, token=ADMIN):
     return reply.json()["session"]
 
 
-def test_an_invitation_is_single_use_and_opens_the_partner_portal(portal):
+@pytest.mark.parametrize("mode", ["demo", "live"])
+def test_an_invitation_is_single_use_and_opens_the_partner_portal(portal, monkeypatch, mode):
+    monkeypatch.setenv("AMA_MODE", mode)
     boss = staff()
     created = boss.post("/api/partners", json={"name": "Aegean Wholesale", "contactName": "Deniz Kaya",
                                                "email": "Deniz@Aegean.example", "billingEmail": "",

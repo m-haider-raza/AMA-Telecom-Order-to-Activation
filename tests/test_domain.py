@@ -162,7 +162,7 @@ def test_late_sla_rejection_compensates_simulated_resources():
 
 
 @pytest.mark.parametrize("field,value", [("city", "London"), ("product", "free-unlimited"),
-                                         ("customer", "Real Customer"), ("scenario", "bypass-approval")])
+                                         ("customer", "   "), ("scenario", "bypass-approval")])
 def test_invalid_domain_inputs(field, value):
     state = initial_state()
     value_payload = payload()

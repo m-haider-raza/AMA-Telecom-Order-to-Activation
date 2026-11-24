@@ -29,6 +29,12 @@ one copy-provenance audit entry before its workers were activated. Its source
 SHA256 is `d6302f11f900a54c164f567977c5e8efc21f37117872e75ac53affbc62c5776d`.
 Acceptance uses additional, explicitly named synthetic records on the new app.
 
+Company and partner names do not need a `Demo ` prefix. Registration, profile
+updates, customer/staff/partner orders and partner administration use the same
+normal name validation in both demo and live modes. Removing the prefix rule
+does not enable real provisioning or production-data use. Email is configured
+separately as described below.
+
 ## Staff login
 
 `AMA_STAFF_AUTH=sso+token` shows both choices on `/login#staff`:
@@ -115,6 +121,39 @@ the legacy template defaults over them. Verify all six runtime attestations,
 real hosted invocation receipts, both login routes and role denials before
 sharing the new origin. Never publish the credentials file or a live session.
 
+## Customer email
+
+The trusted boundary supports the existing verification/reset, partner invitation,
+approval and order-update emails through Azure Communication Services. Network
+provisioning remains simulated; enabling email does not enable carrier operations,
+SMS or Agent 365. Use only recipient addresses you control when testing.
+
+Set `deliveryMode` to `live` and `emailSender` to the approved ACS sender in the
+private runtime receipt's `appConfiguration`. Store `emailConnectionString` only
+in the private credentials file, never in the receipt or source. Resume with the
+reviewed image tag. Deployment binds the connection string as a Container App
+secret on the boundary only; none of the six bridges receives it or additional
+mail permissions. Incomplete live-email configuration stops startup.
+
+The boundary runs a mail-only outbox worker, not the legacy in-process agent
+supervisor. It uses existing retry and delivery-status recording. Already
+simulated-sent messages are not replayed; pending enterprise requests can be
+resent explicitly from the service console. The UI follows the server's delivery
+flag, so live-email deployments do not show simulated-code or no-email guidance.
+Other isolated stacks retain simulated delivery by default.
+`Verify_Foundry_App.py` uses invented recipients and simulated verification codes,
+so it refuses a live-email receipt before making calls. Do not disable delivery
+on the user's running app merely to rerun that historical fixture acceptance.
+
+Email restoration was deployed on 24 November 2026 using
+`foundry-sso-20261124-email-final` and the older application's existing ACS
+provider. Synthetic order `AMA-9C0FA9026D` completed through the hosted agents;
+its one critical-only outcome email was accepted by ACS and recorded as sent
+on its first attempt. Inbox receipt was not independently verified. All six
+runtimes were healthy, both staff login paths remained available, existing
+records and audit entries were preserved, and no historical simulated messages
+were replayed. The original applications were not modified.
+
 ## Achieved acceptance
 
 Live verification passed on **24 November 2026 at 10:14:53 UTC**, using the
@@ -139,8 +178,8 @@ own Microsoft consent/MFA, subject to tenant policy.
 
 ## Pilot boundaries
 
-This remains a synthetic-only Sweden Central pilot with simulated network
-provisioning and email/SMS delivery. The mini/nano GlobalStandard model policy
+This remains a synthetic-provisioning Sweden Central pilot. Email may be real
+when explicitly configured; SMS has no gateway configured. The mini/nano GlobalStandard model policy
 and deterministic no-model roles are unchanged; global inference is not an
 in-country residency guarantee. Agent 365 tenant enablement is not claimed.
 The additional seven runtime apps have separate compute, registry, storage and

@@ -80,6 +80,22 @@ def test_registration_signs_the_customer_in_and_never_returns_secrets(live):
     assert live.get("/api/auth/me").json()["authenticated"] is False
 
 
+@pytest.mark.parametrize("mode", ["demo", "live"])
+def test_company_names_need_no_demo_prefix_for_registration_profile_and_orders(live, monkeypatch, mode):
+    monkeypatch.setenv("AMA_MODE", mode)
+    response = register(live, company="  Anatolia Retail  ")
+    assert response.status_code == 201, response.text
+    assert response.json()["account"]["company"] == "Anatolia Retail"
+    response = live.put("/api/me/profile", json={
+        "name": "Ayse Yilmaz", "company": "Bosphorus Foods", "language": "en"})
+    assert response.status_code == 200, response.text
+    placed = live.post("/api/me/orders", json=order_body(customer="Bosphorus Foods"))
+    assert placed.status_code == 201, placed.text
+    assert placed.json()["customer"] == "Bosphorus Foods"
+    assert live.put("/api/me/profile", json={
+        "name": "Ayse Yilmaz", "company": "   ", "language": "en"}).status_code == 422
+
+
 def test_weak_passwords_and_duplicate_accounts_are_refused(live):
     assert register(live, password="short").status_code == 422
     assert register(live, password="ayse@acme.example").status_code == 422
@@ -328,8 +344,7 @@ def test_a_live_site_without_mail_delivery_never_reveals_one_time_codes(live, mo
 def test_a_demo_site_shows_the_code_on_screen_instead_of_mailing_it(live, monkeypatch):
     monkeypatch.setenv("AMA_MODE", "demo")
     monkeypatch.delenv("AMA_DELIVERY")
-    assert register(live).status_code == 422
-    registered = register(live, company="Demo Lojistik AS")
+    registered = register(live)
     body = registered.json()
     assert registered.status_code == 201 and body["delivery"] == "simulated" and len(body["simulatedCode"]) == 6
     assert live.post("/api/auth/verify", json={"code": body["simulatedCode"]}).json()["verified"] is True

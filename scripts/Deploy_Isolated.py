@@ -51,6 +51,10 @@ def resume(args):
     values.update(receipt.get("appConfiguration", {}))
     if "staffAccessToken" in credentials:
         values["staffAccessToken"] = credentials["staffAccessToken"]
+    if values.get("deliveryMode") == "live":
+        if not credentials.get("emailConnectionString") or not values.get("emailSender"):
+            raise ValueError("Live email requires a private emailConnectionString and configured emailSender")
+        values["emailConnectionString"] = credentials["emailConnectionString"]
     with tempfile.TemporaryDirectory(prefix="amai-resume-") as directory:
         parameters = Path(directory) / "parameters.json"
         save(parameters, {"parameters": {key: {"value": value} for key, value in values.items()}})

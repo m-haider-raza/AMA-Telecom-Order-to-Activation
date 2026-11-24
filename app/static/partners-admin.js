@@ -129,12 +129,7 @@
   function openAdd() {
     if (!requireToken("manage")) return;
     const name = $("#partner-form").elements.namedItem("name");
-    if (session.mode === "live") {
-      name.removeAttribute("pattern"); name.removeAttribute("title"); name.placeholder = "Anatolia Wholesale AS";
-    } else {
-      name.setAttribute("pattern", "Demo .+"); name.title = "Must start with 'Demo ' followed by a name, e.g. Demo Anatolia Wholesale";
-      name.placeholder = "Demo Anatolia Wholesale"; if (!name.value) name.value = "Demo ";
-    }
+    name.placeholder = "Anatolia Wholesale AS";
     $("#partner-error").textContent = ""; $("#partner-dialog").showModal();
   }
   async function createPartner(event) {
@@ -190,7 +185,6 @@
     const message = make("p", {role: "status"}), save = make("button", {class: "button primary", type: "submit", text: "Save changes"});
     const toggle = make("button", {class: "button outline", type: "button", text: partner.status === "active" ? "Switch partner off" : "Switch partner back on"});
     const name = make("input", {name: "name", value: partner.name, required: true, minlength: "2", maxlength: "80", autocomplete: "off"});
-    if (session.mode !== "live") { name.setAttribute("pattern", "Demo .+"); name.title = "Must start with 'Demo ' followed by a name"; }
     const form = make("form", {class: "mini-form"},
       make("label", null, "Organisation", name),
       make("div", {class: "two-column"},

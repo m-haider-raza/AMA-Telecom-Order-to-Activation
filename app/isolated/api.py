@@ -1,5 +1,6 @@
 """Existing customer/partner/staff UX with no in-process agent loop."""
 
+import asyncio
 import json
 import hmac
 import logging
@@ -15,7 +16,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from app import auth, sso
 from app.accounts_api import whoami
-from app.domain import approve_exception, correct_order, public_order
+from app.delivery import configuration_problems, deliver_outbox
+from app.domain import approve_exception, correct_order, delivery_enabled, public_order
 from app.isolated.boundary import Boundary, Denied
 from app.isolated.identity import EntraVerifier
 from app.isolated.store import BlobStore, LocalStore
@@ -31,14 +33,29 @@ def emit(record):
     log.info("isolated.authorization %s", json.dumps(record, sort_keys=True))
 
 
+async def deliver_messages(store):
+    while True:
+        try:
+            await asyncio.to_thread(deliver_outbox, store)
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            log.exception("Boundary message delivery failed; persisted messages will be retried")
+        await asyncio.sleep(2)
+
+
 @asynccontextmanager
 async def lifespan(application):
     configure("boundary")
     forbidden = ("AMA_SQL_SERVER", "AMA_SQL_DATABASE", "AZURE_STORAGE_ACCOUNT_URL", "AMA_SQL_ADMIN_TOKEN")
     if any(os.getenv(name) for name in forbidden):
         raise RuntimeError("Legacy storage/SQL settings are prohibited in the isolated copy")
-    if os.getenv("AMA_MODE", "demo") != "demo" or os.getenv("AMA_DELIVERY", "simulated") != "simulated":
-        raise RuntimeError("This isolated release permits synthetic fixtures and simulated delivery only")
+    if os.getenv("AMA_MODE", "demo") != "demo":
+        raise RuntimeError("This isolated release permits synthetic provisioning only")
+    if os.getenv("AMA_DELIVERY", "simulated") not in ("simulated", "live"):
+        raise RuntimeError("AMA_DELIVERY must be 'simulated' or 'live'")
+    if delivery_enabled() and (problems := configuration_problems()):
+        raise RuntimeError("AMA_DELIVERY=live is not fully configured: " + "; ".join(problems))
     tokens = [os.getenv("DEMO_ADMIN_TOKEN", ""), os.getenv("DEMO_PARTNER_TOKEN", "")]
     if min(map(len, tokens)) < 24 or tokens[0] == tokens[1]:
         raise RuntimeError("New, distinct staff and partner credentials are required")
@@ -67,9 +84,16 @@ async def lifespan(application):
     if boundary_oid:
         application.state.boundary.record(bound, "boundary.identity", "allow", "verified")
     application.state.runtime_seen = {}
+    delivery_task = asyncio.create_task(deliver_messages(application.state.store)) if delivery_enabled() else None
     try:
         yield
     finally:
+        if delivery_task:
+            delivery_task.cancel()
+            try:
+                await delivery_task
+            except asyncio.CancelledError:
+                pass
         application.state.store.close()
 
 
@@ -174,7 +198,7 @@ def identity(request: Request):
 def isolated_health(request: Request):
     request.app.state.store.read()
     return {"status": "ok", "architecture": "isolated-v1", "networkProvisioning": "simulated",
-            "agent365": "not-registered"}
+            "emailDelivery": "live" if delivery_enabled() else "simulated", "agent365": "not-registered"}
 
 
 @app.get("/health")
@@ -200,6 +224,8 @@ def state(request: Request):
     result.pop("isolatedJobs", None)
     result["configuration"].update(architecture="isolated-v1", agent365="not-registered",
                                    targetMonthlyBudgetUsd=None)
+    if delivery_enabled() and not os.getenv("AMA_SMS_WEBHOOK_URL"):
+        result["configuration"]["customerDelivery"] = "E-mail (SMS is not configured)"
     if os.getenv("ISOLATED_FOUNDRY") == "1":
         result["configuration"].update(architecture="foundry-hosted-isolated-v1",
                                        aiMode="Microsoft Foundry hosted agents (task-scoped)")

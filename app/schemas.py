@@ -8,9 +8,6 @@ from typing import Literal
 from fastapi import HTTPException
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from app.domain import live_mode
-
-
 class Contact(BaseModel):
     model_config = ConfigDict(extra="forbid")
     contactName: str = Field(min_length=2, max_length=80)
@@ -28,9 +25,10 @@ class Contact(BaseModel):
 
 
 def check_customer(value):
-    if not live_mode() and not (len(value) >= 5 and value.startswith("Demo ")):
-        raise ValueError("Demo mode only accepts company names that begin with 'Demo '")
-    return value.strip()
+    value = value.strip()
+    if len(value) < 2:
+        raise ValueError("Enter a company name of at least 2 characters")
+    return value
 
 
 class OrderInput(BaseModel):
@@ -47,7 +45,7 @@ class OrderInput(BaseModel):
 
     @field_validator("customer")
     @classmethod
-    def demo_names(cls, value):
+    def company_name(cls, value):
         return check_customer(value)
 
 
@@ -64,7 +62,7 @@ class PortalOrder(BaseModel):
 
     @field_validator("customer")
     @classmethod
-    def demo_names(cls, value):
+    def company_name(cls, value):
         return check_customer(value)
 
 

@@ -23,6 +23,8 @@ def require(condition, message):
 
 def verify(args):
     runtime = json.loads(args.runtime.read_text(encoding="utf-8"))
+    if runtime.get("appConfiguration", {}).get("deliveryMode", "simulated") != "simulated":
+        raise ValueError("This fixture-based verifier requires simulated delivery; do not email synthetic recipients")
     credentials = json.loads(args.credentials.read_text(encoding="utf-8"))
     copied = json.loads(args.copy_receipt.read_text(encoding="utf-8"))
     require(copied["status"] == "copied-and-verified" and copied["target"] == runtime["resourceGroup"],

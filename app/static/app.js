@@ -279,12 +279,12 @@ function approvalBlock(order) {
   const box = append(node("div", null, `approval-box ${expired ? "expired" : record.status}`), node("strong", title));
   lines.filter(Boolean).forEach(line => box.append(node("p", line)));
   if (!waiting) return box;
-  const actions = node("div", null, "approval-actions"), resend = node("button", session.isolatedArchitecture ? "Renew approval request" : "Send the e-mail again", "button secondary"), withdraw = node("button", "Withdraw request", "button secondary");
+  const actions = node("div", null, "approval-actions"), resend = node("button", session.isolatedArchitecture && !session.delivery ? "Renew approval request" : "Send the e-mail again", "button secondary"), withdraw = node("button", "Withdraw request", "button secondary");
   resend.disabled = withdraw.disabled = !can("operate");
   resend.onclick = async () => {
     if (!requireToken()) return;
     resend.disabled = true;
-    try { await api(`/api/orders/${order.id}/approval/resend`, {method: "POST"}); toast(session.isolatedArchitecture ? `Approval request renewed for ${contact}; no email was sent.` : `Sending a new approval e-mail to ${contact}.`); await refresh(); }
+    try { await api(`/api/orders/${order.id}/approval/resend`, {method: "POST"}); toast(session.isolatedArchitecture && !session.delivery ? `Approval request renewed for ${contact}; no email was sent.` : `Sending a new approval e-mail to ${contact}.`); await refresh(); }
     catch (error) { toast(error.message, true); } finally { resend.disabled = false; }
   };
   withdraw.onclick = async () => {
@@ -340,11 +340,11 @@ function renderOrder(id) {
   order.timeline.forEach(item => timeline.append(append(node("article", null, "timeline-item"), node("h3", item.agent), node("code", item.tool), node("p", item.detail), node("time", `${new Date(item.at).toLocaleTimeString()} · ${item.result} · simulation`))));
   host.append(timeline);
   append(host, node("h3", "Customer updates / Müşteri bildirimleri"));
-  order.notifications.forEach(message => host.append(append(node("div", null, "message"), node("span", "ENGLISH", "language"), node("div", message.en), node("span", "TÜRKÇE", "language"), node("div", message.tr), node("p", "Simulated portal delivery · no email or SMS sent", "muted small"))));
+  order.notifications.forEach(message => host.append(append(node("div", null, "message"), node("span", "ENGLISH", "language"), node("div", message.en), node("span", "TÜRKÇE", "language"), node("div", message.tr), node("p", "Portal update · see the outbound message status below for email or SMS delivery", "muted small"))));
   append(host, node("h3", "Customer contact & update preferences"));
   const contact = order.contact;
   host.append(node("p", contact ? `${contact.contactName} · ${contact.preferredChannel === "email" ? contact.email : contact.phone} via ${contact.preferredChannel.toUpperCase()} · updates: ${contact.updateFrequency}` : "No contact details on file; no updates can be sent.", "muted small"));
-  (order.outbox || []).forEach(item => host.append(append(node("div", null, "message"), node("span", `${item.kind.toUpperCase()} · ${item.status}`, "language"), node("div", order.language === "en" ? item.en : item.tr), node("p", `${item.channel}${item.to ? " → " + item.to : ""} · ${new Date(item.at).toLocaleTimeString()} · simulation, nothing was sent`, "muted small"))));
+  (order.outbox || []).forEach(item => host.append(append(node("div", null, "message"), node("span", `${item.kind.toUpperCase()} · ${item.status}`, "language"), node("div", order.language === "en" ? item.en : item.tr), node("p", `${item.channel}${item.to ? " → " + item.to : ""} · ${new Date(item.at).toLocaleTimeString()} · ${item.deliveredExternally ? "sent through the delivery provider" : "not sent externally"}`, "muted small"))));
   const adviceButton = node("button", "Request live AI advice (no execution authority)", "button secondary");
   adviceButton.disabled = !snapshot.configuration.aiAdviceEnabled || !can("operate")
     || Boolean(order.enterpriseApproval && order.enterpriseApproval.status !== "approved");
@@ -386,7 +386,9 @@ function staffSso() { return ["sso", "sso+token"].includes(session.staffAuth); }
 function enterpriseOrder() { return (staffSso() || session.enterpriseApprovals) && $("#submission-channel").value === "operator"; }
 function showOrderMode() {
   const enterprise = enterpriseOrder();
-  if (session.isolatedArchitecture) $("#order-approval-note").textContent = "The enterprise's contact must approve this order in their account. Approval email is simulated; nothing is sent. No agent starts and nothing is provisioned until they approve.";
+  if (session.isolatedArchitecture) $("#order-approval-note").textContent = session.delivery
+    ? "The enterprise's contact receives an approval email and can approve from its link or their account. No agent starts and nothing is provisioned until they approve."
+    : "The enterprise's contact must approve this order in their account. Approval email is simulated; nothing is sent. No agent starts and nothing is provisioned until they approve.";
   [["#order-enterprise-field", false], ["#order-approval-note", false], ["#order-customer-field", true], ["#order-language-field", true], ["#order-contact-block", true]]
     .forEach(([selector, demoOnly]) => $(selector).classList.toggle("hidden", demoOnly === enterprise));
   // A hidden control is still validated and submitted unless it is disabled too.

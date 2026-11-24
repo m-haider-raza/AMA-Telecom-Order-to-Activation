@@ -78,7 +78,8 @@ The five-step case study, customer/partner accounts and tracking, staff console,
 enterprise approvals, Analytics and audit exports reuse their existing contracts/assets. Staff orders
 in the isolated copy always go through the enterprise picker and await that enterprise's approval.
 Staff cannot submit a wholesale order through MCP; authenticated partners retain their own channel.
-Customer ownership checks remain on the account APIs. Only synthetic `Demo ...` companies are accepted.
+Customer ownership checks remain on the account APIs. Company names need no special prefix.
+Use invented details: this remains a synthetic-only pilot, not a live carrier service.
 Registration, password resets, approval mail, notifications and network/partner provisioning remain
 explicit simulations; no existing account or live data is imported.
 

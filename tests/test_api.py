@@ -77,6 +77,15 @@ def test_api_idempotency_validation_and_advice_not_faked(client):
     assert client.post("/api/orders", json=invalid, headers=headers).status_code == 409
 
 
+def test_demo_operator_and_partner_api_orders_accept_names_without_a_prefix(client, monkeypatch):
+    monkeypatch.setenv("AMA_MODE", "demo")
+    for token in (ADMIN, PARTNER):
+        body = {**payload(key="unprefixed-order-" + token[:12]), "customer": "Anatolia Retail"}
+        response = client.post("/api/orders", json=body, headers={"Authorization": f"Bearer {token}"})
+        assert response.status_code == 201, response.text
+        assert response.json()["customer"] == "Anatolia Retail"
+
+
 def test_partner_cannot_review_or_read_operator_orders(client):
     admin = {"Authorization": f"Bearer {ADMIN}"}
     partner = {"Authorization": f"Bearer {PARTNER}"}

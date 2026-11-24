@@ -1,6 +1,10 @@
 import copy
 import importlib
+import json
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 from app.domain import create_order, follow_up
 from app.isolated.store import fresh_state
@@ -21,3 +25,12 @@ def test_idle_probe_does_not_confuse_due_reminders_with_no_work(monkeypatch):
     follow_up(state, interval_seconds=0, actor="Trusted Policy Boundary")
     assert order["exception"]["reminders"] == 1
     assert not verifier.scheduled_work_within(state, 75, reminder_interval=300)
+
+
+def test_fixture_app_verifier_refuses_live_email_before_any_external_calls(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "scripts"))
+    verifier = importlib.import_module("Verify_Foundry_App")
+    runtime = tmp_path / "runtime.json"
+    runtime.write_text(json.dumps({"appConfiguration": {"deliveryMode": "live"}}), encoding="utf-8")
+    with pytest.raises(ValueError, match="requires simulated delivery"):
+        verifier.verify(SimpleNamespace(runtime=runtime))

@@ -117,3 +117,20 @@ def test_real_delivery_sends_once_and_records_outcome(tmp_path, monkeypatch):
     last = next(iter(store.read()["orders"].values()))["outbox"][-1]
     assert last["status"] == "failed" and last["attempts"] == 3 and last["deliveredExternally"] is False
     assert deliver_outbox(store, sender=broken) == 0
+
+
+def test_enabling_delivery_does_not_send_preexisting_simulated_digests(monkeypatch):
+    from app.domain import create_order, dispatch, flush_digests
+    monkeypatch.setenv("AMA_MODE", "live")
+    monkeypatch.setenv("AMA_DELIVERY", "simulated")
+    state = initial_state()
+    order = create_order(state, {
+        "customer": "Demo Digest", "city": "Istanbul", "product": "sdwan", "scenario": "happy",
+        "language": "en", "idempotencyKey": "simulated-digest-test",
+        "contact": {**CONTACT, "updateFrequency": "daily"},
+    }, "customer-portal")
+    item = dispatch(state, order, "Scheduled update", "Scheduled update", "progress")
+    assert item["status"] == "scheduled-digest"
+    monkeypatch.setenv("AMA_DELIVERY", "live")
+    flush_digests(state, item["sendAfter"])
+    assert item["status"] == "simulated-sent" and item["deliveredExternally"] is False

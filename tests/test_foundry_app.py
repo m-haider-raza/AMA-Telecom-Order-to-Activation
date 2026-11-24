@@ -1,4 +1,6 @@
 import copy
+import re
+import time
 import pytest
 from fastapi.testclient import TestClient
 
@@ -8,7 +10,7 @@ from app.isolated.migration import digest, import_snapshot
 from app.isolated.store import LocalStore
 from app.security import _requests
 from scripts.Deploy_Foundry_App import AGENTS, foundry_bindings
-from tests.test_isolated import verifier  # noqa: F401
+from tests.test_isolated import advance, verifier  # noqa: F401
 from tests.test_sso import CLIENT, PUBLIC, TENANT, Microsoft, identity
 
 FALLBACK = "synthetic-onboarding-operator-credential-1234567890"
@@ -41,6 +43,12 @@ def test_isolated_app_supports_both_staff_logins_without_granting_token_manager_
     tab = {"X-Session-Mode": "tab"}
     with TestClient(app) as client:
         client.headers.update({"Origin": PUBLIC, "X-Requested-With": "fetch"})
+        registration = client.post("/api/auth/register", headers=tab, json={
+            "name": "Test Contact", "company": "Anatolia Retail", "email": "contact@example.invalid",
+            "password": "Correct-Horse-42", "consent": True})
+        assert registration.status_code == 201, registration.text
+        assert registration.json()["account"]["company"] == "Anatolia Retail"
+        client.cookies.clear()
         response = client.post("/api/auth/staff", headers=tab, json={"token": FALLBACK})
         assert response.status_code == 200
         operator = {**tab, "X-Session": response.json()["session"]}
@@ -75,6 +83,70 @@ def test_isolated_dual_login_refuses_weak_fallback_at_startup(tmp_path, monkeypa
     monkeypatch.setenv("AMA_STAFF_ACCESS_TOKEN", "short")
     from app.isolated.api import app
     with pytest.raises(RuntimeError, match="AMA_STAFF_ACCESS_TOKEN"), TestClient(app):
+        pass
+
+
+def test_isolated_live_email_uses_existing_account_approval_and_outbox_paths(
+        tmp_path, monkeypatch, verifier):  # noqa: F811
+    configure(monkeypatch, tmp_path, verifier)
+    monkeypatch.setenv("AMA_DELIVERY", "live")
+    monkeypatch.setenv("ACS_CONNECTION_STRING", "synthetic-email-provider")
+    monkeypatch.setenv("ACS_EMAIL_SENDER", "sender@example.invalid")
+    mailbox = []
+    monkeypatch.setattr("app.delivery.send_plain_email", lambda *args: mailbox.append(args))
+    from app.isolated.api import app
+    tab = {"X-Session-Mode": "tab"}
+    with TestClient(app) as client:
+        client.headers.update({"Origin": PUBLIC, "X-Requested-With": "fetch"})
+        response = client.post("/api/auth/register", headers=tab, json={
+            "name": "Test Contact", "company": "Demo Email Test", "email": "contact@example.invalid",
+            "password": "Correct-Horse-42", "consent": True})
+        assert response.status_code == 201, response.text
+        account = response.json()
+        assert account["delivery"] == "email" and "simulatedCode" not in account
+        customer = {**tab, "X-Session": account["session"]}
+        assert len(mailbox) == 1 and mailbox[0][0] == "contact@example.invalid"
+        code = re.search(r"code is (\d{6})", mailbox[0][2]).group(1)
+        assert client.post("/api/auth/verify", headers=customer, json={"code": code}).status_code == 200
+        client.cookies.clear()
+        response = client.post("/api/auth/forgot", headers=tab, json={"email": "contact@example.invalid"})
+        assert response.status_code == 202 and "simulatedCode" not in response.json()
+        assert "password reset code" in mailbox[-1][1]
+        response = client.post("/api/auth/staff", headers=tab, json={"token": FALLBACK})
+        operator = {**tab, "X-Session": response.json()["session"]}
+        assert client.get("/api/auth/me", headers=operator).json()["delivery"] is True
+        response = client.post(f"/api/enterprises/{account['account']['id']}/orders", headers=operator, json={
+            "city": "Istanbul", "product": "sdwan", "idempotencyKey": "email-approval-test"})
+        assert response.status_code == 201, response.text
+        order_id = response.json()["id"]
+        approval = next(body for _, subject, body in mailbox if "Approval needed" in subject)
+        assert PUBLIC + "/approve#token=" in approval
+        boundary = client.app.state.boundary
+        held = advance(boundary, order_id)
+        assert held["state"] == "awaitingEnterpriseApproval" and not held["reserved"]
+        assert client.post(f"/api/me/orders/{order_id}/approval", headers=customer,
+                           json={"decision": "approve"}).status_code == 200
+        assert advance(boundary, order_id)["state"] == "completed"
+        deadline = time.monotonic() + 5
+        while True:
+            order = boundary.store.read()["orders"][order_id]
+            if order["outbox"] and all(item["status"] == "sent" for item in order["outbox"]):
+                break
+            assert time.monotonic() < deadline, "Boundary delivery worker did not drain the outbox"
+            time.sleep(0.02)
+        assert all(item["deliveredExternally"] for item in order["outbox"])
+        assert any("/track#order=" + order_id in body for _, _, body in mailbox)
+        assert client.get("/isolated-health").json()["networkProvisioning"] == "simulated"
+
+
+def test_isolated_live_email_rejects_missing_provider_configuration(
+        tmp_path, monkeypatch, verifier):  # noqa: F811
+    configure(monkeypatch, tmp_path, verifier)
+    monkeypatch.setenv("AMA_DELIVERY", "live")
+    for key in ("ACS_CONNECTION_STRING", "ACS_EMAIL_SENDER", "SMTP_HOST", "SMTP_FROM"):
+        monkeypatch.delenv(key, raising=False)
+    from app.isolated.api import app
+    with pytest.raises(RuntimeError, match="AMA_DELIVERY=live is not fully configured"), TestClient(app):
         pass
 
 

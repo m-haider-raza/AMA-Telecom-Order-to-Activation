@@ -418,7 +418,7 @@ CUDA-enabled `torch==2.8.0` / `torchaudio==2.8.0`; keep it in a separate environ
 4. Create a **Closed change window** order. Release it only through an explicitly audited *simulated* window approval. No production change window is bypassed.
 5. Create an **Invalid site** order. The validation agent requests customer correction. Confirm the provided fictional site reference to resume.
 6. Use **Wholesale partners** with the partner token: capacity checks and new orders go through the implemented MCP HTTP endpoint. Partner-submitted orders remain subject to the same supervisor policies.
-7. In **Wholesale partners**, click **Add partner** (demo partners are named “Demo …”), copy the one-time invitation link and open it in a private window to set a password. As the partner, check each delivery's expected date, confirm an address that needs attention and raise a concern. As staff, answer it from the **Concerns** inbox, then record the payment under **Manage** and watch it appear on the partner's **Payments** page (see [Partner portal](#partner-portal)).
+7. In **Wholesale partners**, click **Add partner** (no company-name prefix is required), copy the one-time invitation link and open it in a private window to set a password. As the partner, check each delivery's expected date, confirm an address that needs attention and raise a concern. As staff, answer it from the **Concerns** inbox, then record the payment under **Manage** and watch it appear on the partner's **Payments** page (see [Partner portal](#partner-portal)).
 8. Open **Trust & governance** to inspect provenance and the hash-linked audit. Export CSV using a manager token.
 9. If regional Azure OpenAI is configured, request live advice from an order drawer. It produces schema-validated advice and TR/EN messages; it cannot approve or execute changes. Failure is explicit, never disguised as live AI success.
 
@@ -474,7 +474,7 @@ Settings (container app environment variables):
 
 | Variable | Purpose |
 | --- | --- |
-| `AMA_MODE=live` | Accept real company names, seed no demo orders, require staff authentication (a staff session or, unless `AMA_STAFF_AUTH=sso`, the admin token) for `/api/state`, show anonymous visitors the sign-in page instead of the console, use customer-neutral wording. Default `demo`. |
+| `AMA_MODE=live` | Seed no demo orders, require staff authentication (a staff session or, unless `AMA_STAFF_AUTH=sso`, the admin token) for `/api/state`, show anonymous visitors the sign-in page instead of the console, use customer-neutral wording. Company names need no special prefix in either mode. Default `demo`. |
 | `AMA_MAX_ORDERS` | Order cap (default 200). |
 | `AMA_MAX_CUSTOMERS` | Customer account cap (default 1000). |
 | `AMA_MAX_ORDERS_PER_CUSTOMER` | Orders one customer account may place (default 25). |
