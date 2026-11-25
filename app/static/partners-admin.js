@@ -155,7 +155,13 @@
     $("#invite-lede").textContent = `Send this link to ${person.email}. ${person.name} opens it, chooses a password and lands in the ${organisation} partner portal.`;
     $("#invite-link").value = `${location.origin}${invite.path}`;
     $("#invite-copy").textContent = "Copy link";
-    $("#invite-note").textContent = `${invite.delivery === "email" ? `We also emailed this link to ${invite.email}.` : "This link was not emailed, so copy it and send it yourself."} It works once and expires ${stamp(invite.expiresAt)}. Open it in a private window to try the partner experience without leaving this staff session.`;
+    const note = $("#invite-note"), failed = invite.delivery === "failed";
+    const delivery = invite.delivery === "email"
+      ? `The email service accepted this invitation for ${invite.email}. Ask them to check their inbox and junk/spam folder; acceptance does not confirm inbox delivery.`
+      : `${failed ? "Email delivery was not confirmed." : "This link was not emailed."} ${invite.deliveryError || ""} Copy and share the link securely.`;
+    note.className = failed ? "form-error" : "muted small";
+    note.setAttribute("role", failed ? "alert" : "status");
+    note.textContent = `${delivery} It works once and expires ${stamp(invite.expiresAt)}. Open it in a private window to try the partner experience without leaving this staff session.`;
     $("#invite-dialog").showModal();
   }
   async function copyInvite(event) {

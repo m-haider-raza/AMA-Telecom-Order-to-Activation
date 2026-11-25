@@ -2,7 +2,7 @@
 
 A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator**, presented under the **TürkBizTel** brand. It follows dedicated Internet, managed SD-WAN and cloud-connect orders from a customer or a wholesale partner through to activation, with one supervisor per order and five specialist AI agents.
 
-*Status as of 24 November 2026.*
+*Status as of 25 November 2026.*
 
 > **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. Six real Foundry hosted agents return bounded proposals; only the trusted policy boundary can commit a transition after identity, approval and policy checks.
 
@@ -16,6 +16,9 @@ five independently authenticated task bridges and a dispatch-only supervisor,
 with private Blob state and live ACS email. All seven services were updated to
 `foundry-sso-20261124-complete-release` from application commit
 [`9989889`](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/commit/998988911b04b11afb2298431b3e31e42e891496).
+The boundary subsequently received `foundry-sso-20261125-partner-email`: partner
+invitations now report actual email-service acceptance or a visible failure,
+not success when a background send is merely queued. The six bridges are unchanged.
 The six scoped hosted agents and two model deployments are shared from
 `rg-amai-foundry-20261123`. Older applications remain historical editions with
 independent state. Agent 365 registration was retried on 24 November and returned

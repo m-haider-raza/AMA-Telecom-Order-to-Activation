@@ -3,6 +3,8 @@
 **Observed 24 November 2026, after the unified release.** This is the deployed
 Foundry dual-login application, not the proposed Turkish production target and
 not the [historical single-app SQL estate](legacy-azure-architecture.md).
+The boundary-only partner-email patch and ACS delivery diagnostics were verified
+on 25 November; the topology, six bridge revisions and agent/model pins are unchanged.
 Azure inventory, running revisions, RBAC, network settings, model deployments and
 health were read directly with Azure CLI and the application health endpoints.
 No tenant grants, application data or runtime settings were changed to produce
@@ -45,7 +47,7 @@ identity services; these are not all ARM resources.
 | Network | `amai-network`, `amai-state-endpoint` | VNet-integrated apps; approved Blob private endpoint; private DNS zone `privatelink.blob.core.windows.net` and VNet link `amai-storage` |
 | Network policy artifacts | Two `amai-network-*-nsg-swedencentral` NSGs; endpoint NIC | Present in live inventory. Their presence alone does not establish a restrictive egress policy |
 | Managed identities | `amai-boundary-identity` plus `amai-{agent}-identity` for each bridge | Seven separate user-assigned managed identities. Boundary state permissions and individual project-consumer permissions are not shared |
-| Monitoring | `amai-logs`, `amai-insights` | Log Analytics (30 days, PerGB2018) and Application Insights. Workspace daily quota is `-1` (no configured daily cap), **not the old estate's 0.1 GB/day cap** |
+| Monitoring | `amai-logs`, `amai-insights` | Log Analytics (30 days, PerGB2018) and Application Insights. Shared ACS send/delivery-status logs also flow here from 25 November; engagement tracking is not enabled. Workspace daily quota is `-1` (no configured daily cap), **not the old estate's 0.1 GB/day cap** |
 | Policy-created storage artifact | Event Grid system topic on the state account | Present in inventory; not the order workflow/event queue |
 | Foundry account | `amaif20261123sc` in `rg-amai-foundry-20261123` | AIServices S0, local/key authentication disabled, public TLS endpoint enabled |
 | Foundry projects | `validation`, `decomposition`, `provisioning`, `fallout`, `customer-update`, `supervisor` | One hosted-code agent per project. Each bridge has Foundry Agent Consumer only on its own project |
@@ -63,15 +65,19 @@ Shared email and hosted agents are deliberate dependencies, not copies.
 
 ## Deployed compute and agent versions
 
-All seven apps run image
+The six bridges retain image
 `amaiacrqwc6ymcrjozog.azurecr.io/amai:foundry-sso-20261124-complete-release`,
 digest `sha256:d04cf7e30626623a6b1735b6e5017a4fd48d14dd23ac4f85ff31e9b45c7398c5`.
+The boundary runs `amaiacrqwc6ymcrjozog.azurecr.io/amai:foundry-sso-20261125-partner-email`,
+digest `sha256:d7bf3dd9224f0ce322ae3a07a3d158daabe7b479d6692ceb443ae5e3c05eaf13`:
+a two-file invitation API/UI overlay on that immutable base, preserving the
+existing sign-in, email settings, state, videos and presentation artifacts.
 The boundary uses 0.5 vCPU / 1 GiB; each bridge uses 0.25 vCPU / 0.5 GiB
 (2 vCPU / 4 GiB configured total, **excluding hosted-agent compute**).
 
 | Runtime Container App | Ready revision suffix | Hosted agent / pinned version | Inference role |
 |---|---|---|---|
-| `amai-boundary-qwc6ymcrjozog` | `0000014` | None | Authoritative state/approval boundary, not a sixth specialist |
+| `amai-boundary-qwc6ymcrjozog` | `0000015` | None | Authoritative state/approval boundary, not a sixth specialist |
 | `amai-validation-qwc6ymcrjozog` | `0000005` | `amai-validation:3` | Deterministic scoped validation; no model |
 | `amai-decomposition-qwc6ymcrjozog` | `0000005` | `amai-decomposition:4` | Deterministic decomposition plus mini explanation |
 | `amai-provisioning-qwc6ymcrjozog` | `0000005` | `amai-provisioning:2` | Deterministic simulated allocation proposal; no model |

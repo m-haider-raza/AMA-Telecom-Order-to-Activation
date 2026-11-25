@@ -150,6 +150,45 @@ def test_isolated_live_email_rejects_missing_provider_configuration(
         pass
 
 
+@pytest.mark.parametrize("rejected", [False, True])
+def test_isolated_partner_setup_checks_live_email_even_with_simulated_provisioning(
+        tmp_path, monkeypatch, verifier, rejected):  # noqa: F811
+    configure(monkeypatch, tmp_path, verifier)
+    monkeypatch.setenv("AMA_DELIVERY", "live")
+    monkeypatch.setenv("ACS_CONNECTION_STRING", "synthetic-email-provider")
+    monkeypatch.setenv("ACS_EMAIL_SENDER", "sender@example.invalid")
+    mailbox = []
+
+    def send(*args):
+        mailbox.append(args)
+        if rejected:
+            raise TimeoutError("private transport details")
+    monkeypatch.setattr("app.delivery.send_plain_email", send)
+    microsoft = Microsoft()
+    monkeypatch.setattr("app.sso.msal_app", lambda: microsoft)
+    from app.isolated.api import app
+    tab = {"X-Session-Mode": "tab"}
+    with TestClient(app) as client:
+        client.headers.update({"Origin": PUBLIC, "X-Requested-With": "fetch"})
+        assert client.get("/auth/sso/login", follow_redirects=False).status_code == 302
+        microsoft.result = identity()
+        assert client.get("/auth/sso/callback?code=abc&state=state-1",
+                          follow_redirects=False).status_code == 302
+        manager = {**tab, "X-Session": client.post("/api/auth/sso/handoff", headers=tab).json()["session"]}
+        response = client.post("/api/partners", headers=manager, json={
+            "name": "Anatolia Wholesale", "contactName": "Test Contact", "email": "contact@example.invalid"})
+        assert response.status_code == 201, response.text
+        invitation = response.json()["invite"]
+        assert invitation["delivery"] == ("failed" if rejected else "email")
+        assert len(mailbox) == 1
+        assert mailbox[0][0] == "contact@example.invalid"
+        assert PUBLIC + invitation["path"] in mailbox[0][2]
+        assert "private transport details" not in response.text
+        assert client.post("/api/auth/invite/check", headers=tab,
+                           json={"token": invitation["token"]}).status_code == 200
+        assert client.get("/isolated-health").json()["networkProvisioning"] == "simulated"
+
+
 def settled(store):
     snapshot = store.read()
     snapshot.update(orders={}, events=[], audit=[], isolatedJobs={},

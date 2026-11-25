@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace
 
 import pytest
+from azure.core.exceptions import HttpResponseError
 
 from app import auth, partners
 from app.domain import SITES
@@ -144,6 +146,68 @@ def test_invitations_expire_are_reissued_and_can_be_emailed(portal, monkeypatch)
     assert new_client().post("/api/auth/invite/accept", json={"token": fresh["token"], "password": PASSWORD}
                              ).status_code == 200
     assert boss.post(f"/api/partners/{created['partner']['id']}/users/{contact_id}/invite").status_code == 409
+
+
+@pytest.mark.parametrize("operation", ["create", "contact", "resend"])
+@pytest.mark.parametrize("outcome", ["accepted", "suppressed", "timeout"])
+def test_invitation_email_reports_actual_acceptance_without_losing_the_link(
+        portal, monkeypatch, caplog, operation, outcome):
+    boss = staff()
+    body = {"name": "Aegean Wholesale", "contactName": "Deniz Kaya", "email": "deniz@aegean.example"}
+    if operation != "create":
+        initial = boss.post("/api/partners", json=body).json()
+        partner_id, contact_id = initial["partner"]["id"], initial["contact"]["id"]
+    monkeypatch.setenv("AMA_PUBLIC_ORIGIN", "https://turkbiztel.example")
+
+    def send(*args):
+        portal.invites.append(args)
+        if outcome == "suppressed":
+            error = HttpResponseError("private provider response")
+            error.error = SimpleNamespace(code="EmailDroppedAllRecipientsSuppressed")
+            raise error
+        if outcome == "timeout":
+            raise TimeoutError("private provider response")
+    monkeypatch.setattr("app.partners_api.send_invite_email", send)
+    if operation == "create":
+        response = boss.post("/api/partners", json=body)
+    elif operation == "contact":
+        response = boss.post(f"/api/partners/{partner_id}/users",
+                             json={"name": "Ayse Yilmaz", "email": "ayse@aegean.example"})
+    else:
+        response = boss.post(f"/api/partners/{partner_id}/users/{contact_id}/invite")
+    assert response.status_code == (200 if operation == "resend" else 201), response.text
+    invitation = response.json()["invite"]
+    assert len(portal.invites) == 1
+    assert portal.invites[0][3] == f"https://turkbiztel.example{invitation['path']}"
+    assert invitation["delivery"] == ("email" if outcome == "accepted" else "failed")
+    if outcome == "accepted":
+        assert "deliveryError" not in invitation
+    else:
+        assert invitation["deliveryError"]
+        assert "was not confirmed" in caplog.text
+        if outcome == "suppressed":
+            assert "suppressed" in invitation["deliveryError"]
+        assert "private provider response" not in response.text + caplog.text
+        assert invitation["token"] not in caplog.text
+        assert invitation["email"] not in caplog.text
+    if operation == "resend":
+        assert new_client().post("/api/auth/invite/check",
+                                 json={"token": initial["invite"]["token"]}).status_code == 422
+    guest = new_client()
+    assert guest.post("/api/auth/invite/accept",
+                      json={"token": invitation["token"], "password": PASSWORD}).status_code == 200
+    assert new_client().post("/api/auth/invite/check",
+                             json={"token": invitation["token"]}).status_code == 422
+
+
+def test_simulated_invitation_delivery_does_not_send_an_email(portal, monkeypatch):
+    monkeypatch.setenv("AMA_PUBLIC_ORIGIN", "https://turkbiztel.example")
+    monkeypatch.setenv("AMA_DELIVERY", "simulated")
+    response = staff().post("/api/partners", json={
+        "name": "Aegean Wholesale", "contactName": "Deniz Kaya", "email": "deniz@aegean.example"})
+    assert response.status_code == 201
+    assert response.json()["invite"]["delivery"] == "manual"
+    assert not portal.invites
 
 
 def test_each_role_is_kept_out_of_the_others_apis(portal):

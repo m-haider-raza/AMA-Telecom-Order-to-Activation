@@ -142,8 +142,8 @@ reviewed image tag. Deployment binds the connection string as a Container App
 secret on the boundary only; none of the six bridges receives it or additional
 mail permissions. Incomplete live-email configuration stops startup.
 
-The boundary runs a mail-only outbox worker, not the legacy in-process agent
-supervisor. It uses existing retry and delivery-status recording. Already
+The boundary runs a mail-only order-update outbox worker, not the legacy in-process
+agent supervisor. Order updates use existing retry and delivery-status recording. Already
 simulated-sent messages are not replayed; pending enterprise requests can be
 resent explicitly from the service console. The UI follows the server's delivery
 flag, so live-email deployments do not show simulated-code or no-email guidance.
@@ -160,6 +160,35 @@ on its first attempt. Inbox receipt was not independently verified. All six
 runtimes were healthy, both staff login paths remained available, existing
 records and audit entries were preserved, and no historical simulated messages
 were replayed. The original applications were not modified.
+
+On 25 November, boundary revision `0000015`
+(`foundry-sso-20261125-partner-email`) replaced background-only invitation sends
+with a checked email-service response for partner creation, additional contacts
+and re-sends. Sending happens after the account transaction, so a failed send
+does not lose the account or its copyable single-use link. The dialog distinguishes
+accepted, not confirmed and manual delivery, and explains ACS recipient suppression
+without exposing private provider details. Acceptance is not confirmed inbox delivery.
+The six bridges, identities, settings and existing records are unchanged.
+
+The shared ACS resource now exports only `EmailSendMailOperational` and
+`EmailStatusUpdateOperational` to the existing `amai-logs` workspace, with its
+30-day retention; no engagement tracking was enabled. Use
+`ACSEmailStatusUpdateOperational` and the send result's `CorrelationId` to
+distinguish provider acceptance from recipient-server delivery, suppression or a
+bounce. These logs include recipient addresses and should remain restricted to
+authorized support staff. They do not reconstruct delivery reports from before
+the diagnostic setting was enabled. Verify that a contact address is an actual
+working mailbox; an Entra sign-in name does not by itself establish that.
+
+The deployed transport check on 25 November was accepted by ACS. At 10:54 UTC,
+its latest delivery update was message-level `OutForDelivery`, with no
+recipient-level outcome or SMTP code; inbox delivery was not confirmed. The
+sender's Domain, SPF, DKIM, DKIM2 and DMARC checks were verified and the domain
+was linked to the communication resource. Do not treat service acceptance as
+proof that the original missing invitation reached the contact. If the mailbox
+still receives nothing, correlate the private send receipt with ACS delivery
+reports and escalate to the email provider rather than repeatedly sending or
+removing suppression without resolving its cause.
 
 ## Achieved acceptance
 

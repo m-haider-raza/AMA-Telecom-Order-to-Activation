@@ -115,3 +115,44 @@ for (const [name, me, destination] of [
     assert.deepEqual(destinations, [destination]);
   });
 }
+
+const partnersSource = readFileSync(join(__dirname, "..", "app", "static", "partners-admin.js"), "utf8");
+const showInvite = partnersSource.slice(partnersSource.indexOf("  function showInvite("), partnersSource.indexOf("  async function copyInvite("));
+
+for (const delivery of ["email", "failed", "manual"]) {
+  test(`partner invitation dialog reports ${delivery} without claiming inbox delivery`, () => {
+    const elements = new Map(), attributes = new Map();
+    const element = selector => {
+      if (!elements.has(selector)) elements.set(selector, {
+        setAttribute: (name, value) => attributes.set(`${selector}:${name}`, value),
+        showModal: () => { elements.get(selector).opened = true; },
+      });
+      return elements.get(selector);
+    };
+    const invite = {
+      path: "/login#invite=single-use-link", email: "contact@example.invalid",
+      delivery, expiresAt: "expiry", ...(delivery === "failed" ? {deliveryError: "Recipient is suppressed."} : {}),
+    };
+    runInNewContext(showInvite + ";showInvite(person, invite, 'Anatolia Wholesale')", {
+      $: element, location: {origin: "https://turkbiztel.example"}, stamp: value => value,
+      person: {name: "Test Contact", email: invite.email}, invite,
+    });
+    const note = element("#invite-note");
+    assert.equal(element("#invite-link").value, "https://turkbiztel.example" + invite.path);
+    assert.equal(element("#invite-dialog").opened, true);
+    assert.match(note.textContent, /works once and expires expiry/);
+    assert.doesNotMatch(note.textContent, /We also emailed/);
+    if (delivery === "email") {
+      assert.match(note.textContent, /email service accepted/);
+      assert.match(note.textContent, /does not confirm inbox delivery/);
+    } else {
+      assert.match(note.textContent, /Copy and share the link securely/);
+      assert.doesNotMatch(note.textContent, /email service accepted/);
+    }
+    if (delivery === "failed") {
+      assert.match(note.textContent, /not confirmed.*Recipient is suppressed/);
+      assert.equal(note.className, "form-error");
+      assert.equal(attributes.get("#invite-note:role"), "alert");
+    }
+  });
+}

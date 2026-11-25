@@ -139,22 +139,33 @@ def mine(state, user, partner):
     return state["partnerUsers"][user["id"]], partners.get_partner(state, partner["id"])
 
 
-def deliver_invite(background, partner, user, token, invite):
-    """The one-time link always goes back to the staff member; it is also e-mailed when delivery is live."""
+def deliver_invite(partner, user, token, invite):
+    """Keep the one-time link usable even when the mail service does not confirm acceptance."""
     result = {"token": token, "path": f"/login#invite={token}", "expiresAt": partners.iso(invite["expires"]),
               "delivery": "manual", "contactId": user["id"], "email": user["email"]}
+    if not delivery_enabled():
+        return result
     link = invite_link(token)
-    if delivery_enabled() and link:
-        background.add_task(send_invite, user["email"], user["name"], partner["name"], link, user["language"])
+    if not link:
+        result["deliveryError"] = "Automatic email is unavailable because the app's public origin is not configured."
+        log.warning("Partner invitation email is unavailable: public origin is not configured")
+        return result
+    try:
+        send_invite_email(user["email"], user["name"], partner["name"], link, user["language"])
+    except Exception as exc:
+        suppressed = getattr(getattr(exc, "error", None), "code", None) == "EmailDroppedAllRecipientsSuppressed"
+        result["delivery"] = "failed"
+        result["deliveryError"] = (
+            "The email provider has suppressed this recipient after previous delivery failures. "
+            "Confirm that the address is a working mailbox before sending another invitation."
+            if suppressed else
+            "The email service did not confirm acceptance. Check email delivery before sending another invitation."
+        )
+        log.warning("Partner invitation email was not confirmed for contact %s: %s (%s)",
+                    user["id"], type(exc).__name__, "recipient-suppressed" if suppressed else "send-not-confirmed")
+    else:
         result["delivery"] = "email"
     return result
-
-
-def send_invite(email, name, partner, link, language):
-    try:
-        send_invite_email(email, name, partner, link, language)
-    except Exception as exc:  # the staff member still holds the link and can pass it on
-        log.warning("Could not send a partner invitation: %s", type(exc).__name__)
 
 
 def send_reply(email, name, subject, text, concern_id, language):
@@ -257,14 +268,14 @@ def list_partners(request: Request):
 
 
 @router.post("/api/partners", status_code=201)
-def create_partner(payload: NewPartner, request: Request, background: BackgroundTasks):
+def create_partner(payload: NewPartner, request: Request):
     actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
     data = payload.model_dump()
     partner, user = run(request, lambda state: partners.create_partner(state, data, invite, actor))
     return {"partner": partners.partner_view(partner), "contact": partners.contact_view(user),
-            "invite": deliver_invite(background, partner, user, token, invite)}
+            "invite": deliver_invite(partner, user, token, invite)}
 
 
 @router.put("/api/partners/{partner_id}")
@@ -280,7 +291,7 @@ def update_partner(partner_id: str, payload: PartnerChanges, request: Request):
 
 
 @router.post("/api/partners/{partner_id}/users", status_code=201)
-def invite_contact(partner_id: str, payload: NewContact, request: Request, background: BackgroundTasks):
+def invite_contact(partner_id: str, payload: NewContact, request: Request):
     actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
@@ -292,11 +303,11 @@ def invite_contact(partner_id: str, payload: NewContact, request: Request, backg
             raise ValueError("Switch the partner back on before inviting new contacts")
         return organisation, partners.add_contact(state, organisation, data, invite, actor)
     partner, user = run(request, action)
-    return {"contact": partners.contact_view(user), "invite": deliver_invite(background, partner, user, token, invite)}
+    return {"contact": partners.contact_view(user), "invite": deliver_invite(partner, user, token, invite)}
 
 
 @router.post("/api/partners/{partner_id}/users/{user_id}/invite")
-def resend_invite(partner_id: str, user_id: str, request: Request, background: BackgroundTasks):
+def resend_invite(partner_id: str, user_id: str, request: Request):
     actor = authorize(request)
     limit(request)
     token, invite = auth.new_invite()
@@ -304,7 +315,7 @@ def resend_invite(partner_id: str, user_id: str, request: Request, background: B
     def action(state):
         return partners.get_partner(state, partner_id), partners.reinvite(state, partner_id, user_id, invite, actor)
     partner, user = run(request, action)
-    return {"contact": partners.contact_view(user), "invite": deliver_invite(background, partner, user, token, invite)}
+    return {"contact": partners.contact_view(user), "invite": deliver_invite(partner, user, token, invite)}
 
 
 @router.get("/api/partners/{partner_id}/invoices")
