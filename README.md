@@ -4,18 +4,23 @@ A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B orde
 
 *Status as of 24 November 2026.*
 
-> **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. The Azure OpenAI advisor is real, but it has no authority to execute anything.
+> **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. Six real Foundry hosted agents return bounded proposals; only the trusted policy boundary can commit a transition after identity, approval and policy checks.
 
 ## Start here
 
-**Separate isolated-agent acceptance copy:** [architecture and provisioning runbook](docs/ISOLATED-AGENTS.md).
-
-**Latest Foundry edition:** [six hosted agents](docs/FOUNDRY-AGENTS.md) and
-[a separate app with Microsoft SSO plus service-engineer token login](docs/FOUNDRY-SSO-APP.md).
-The new app preserves the UI and copies the Foundry app's data once into its own private state store.
-It deploys five independently authenticated workers plus a dispatch-only supervisor and trusted policy boundary
-into a new `rg-amai-*` stack. Existing Azure applications are not upgraded or retired.
-Agent 365 is an optional, separately authorized governance integration, not an enabled feature.
+**Current edition:** [Foundry app with Microsoft SSO and operator-token fallback](docs/FOUNDRY-SSO-APP.md),
+[current deployed Azure architecture](docs/azure-architecture.md) and
+[six hosted-agent contracts](docs/FOUNDRY-AGENTS.md).
+The active runtime is `rg-amai-foundry-runtime-sso-20261124`: a trusted boundary,
+five independently authenticated task bridges and a dispatch-only supervisor,
+with private Blob state and live ACS email. All seven services were updated to
+`foundry-sso-20261124-complete-release` from application commit
+[`9989889`](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/commit/998988911b04b11afb2298431b3e31e42e891496).
+The six scoped hosted agents and two model deployments are shared from
+`rg-amai-foundry-20261123`. Older applications remain historical editions with
+independent state. Agent 365 registration was retried on 24 November and returned
+HTTP 403; existing Foundry identities are active, but the registration token lacks
+`AgentRegistration.ReadWrite.All`. See [retry and administrator action](docs/AGENT365-STATUS.md).
 
 Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
 The recorded demo and the interactive app are separate chapters. The links below point to the current published editions.
@@ -35,8 +40,8 @@ The recorded demo and the interactive app are separate chapters. The links below
 | Foundry agents, model selection and cost per order | [PowerPoint](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Foundry-Model-Economics.pptx) or [PDF](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Foundry-Model-Economics.pdf) |
 | Market-research slides | [PowerPoint](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pptx) or [PDF](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/research/AMA_O2A_Research_Slides.pdf) |
 | Assignment brief | [PDF](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/AMA_Assignment30_HaiderRaza.pdf) |
-| Standalone service-team Microsoft SSO app | [Sign in](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/login#staff) or [case study](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/case-study) |
-| Azure architecture as deployed | [docs/azure-architecture.md](docs/azure-architecture.md) |
+| Earlier standalone Microsoft SSO edition (historical) | [Sign in](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/login#staff) or [case study](https://ama30-private-nbfy3ijurs3j2.lemonwave-c45cdea3.swedencentral.azurecontainerapps.io/case-study) |
+| Current Azure artifacts and architecture | [Inventory and flows](docs/azure-architecture.md) · [SVG](docs/images/current-azure-architecture.svg) · [PNG](docs/images/current-azure-architecture.png) |
 | What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |
 | Latest videos, architecture previews, decks, research and guides | [Current artefact bundle](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-24.zip) or [24 November release](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-24) |
@@ -56,7 +61,8 @@ Its complete source-data snapshot is independent of the older apps. See the
 - **Orders placed for an enterprise, approved by the enterprise.** In the single sign-on build, **New order** now lists every enterprise in the database instead of one demo company. A service engineer picks one and places the order on its behalf. The enterprise's point of contact is e-mailed a personal link, and no agent starts until they approve, from the e-mail or from their own account. They can decline, and the service team can send the e-mail again or withdraw the request. Every step is recorded against the person who took it. [How it works](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise).
 - **Data copied across, once.** `scripts/Copy-AppData.ps1` copies what the access-token app holds into the single sign-on app: the enterprise accounts, the partners and their contacts, every order that has settled with its messages and history, the partner concerns and the audit trail. Enterprises and partner contacts keep their passwords. The two apps stay separate: it is a one-time snapshot, nothing is synchronised afterwards, and the access-token app is only read. [How it works](docs/STAFF-SSO.md#copying-the-data-from-the-token-mode-app).
 - **Service-team single sign-on.** A new deployment mode replaces the shared access token with Microsoft Entra ID. Each person signs in with their own work account, an Entra app role (service manager, operator or auditor) decides what they can do, and the audit trail records who changed what on every order. It is a separate stack, so the existing app is unchanged, and customers still register and sign in with their own e-mail and password. [How it works and how to deploy it](docs/STAFF-SSO.md).
-- **Azure architecture, as deployed.** [A new page](docs/azure-architecture.md) documents the 25-resource estate in Sweden Central: what each service is, how it was created, how traffic and identity flow, what is hardened and what is still open, and what it costs.
+- **Azure architecture, as deployed.** The [current inventory and diagram](docs/azure-architecture.md) distinguish the seven-service runtime, private Blob state, six shared Foundry projects/agents, mini/nano inference, scoped identities, email and monitoring. The original single-app SQL diagram is retained as a [historical snapshot](docs/legacy-azure-architecture.md), not presented as the current app.
+- **Agent 365 retried, not claimed.** All six existing hosted identities/blueprints were confirmed. The documented catalog POST returned HTTP 403; the signed-in user has Global Reader and the token has no registration-write scope. No duplicate identities or grants were created. [Exact status and administrator prerequisites](docs/AGENT365-STATUS.md).
 - **Solution film v6 (2:56).** Customers place orders, the supervisor wakes each agent in turn, TM Forum and MCP standards connect them, and the Azure Local design keeps customer data in Türkiye. Each AI agent is named in full once, then by its short name.
 - **The deployed source is on `main`.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are all in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
 - **TürkBizTel branding** across the films, the deck and the app.
@@ -111,7 +117,13 @@ flowchart TB
   AI["Azure OpenAI advisor<br/>advice only"] -.-> API
 ```
 
-The advisor is optional. It gives schema-validated advice and Turkish and English wording for an order. It cannot approve, execute or change anything, and a failure is shown as a failure, never disguised as live AI.
+The lifecycle diagram above is logical, not a single-process deployment diagram.
+In the current Foundry edition, the six roles execute through separate bridges
+and hosted endpoints. Decomposition and fallout use `gpt-5.4-mini` for bounded
+explanations; customer update uses `gpt-5.4-nano` for wording. Validation,
+provisioning and dispatch use no model. The trusted boundary recomputes/checks
+proposals before committing state. Optional legacy advice is a separate feature,
+not the current edition's only model-backed behavior; failures are explicit.
 
 ### Industry standards
 
@@ -121,23 +133,29 @@ The advisor is optional. It gives schema-validated advice and Turkish and Englis
 | TM Forum TMF641 Service Ordering | Service orders produced by decomposition | A GET subset |
 | TM Forum TMF652 Resource Order Management | Resource orders produced by decomposition | A GET subset |
 | Model Context Protocol (MCP) | Lets wholesale partners and agents call capacity and order tools | `POST /mcp`: JSON-RPC over HTTP with `initialize`, `ping`, `tools/list` and `tools/call` |
-| Target design | TM Forum Open APIs exposed as MCP tools through Azure API Management, with Microsoft Entra Agent ID for agent identity | Shown in the deck and the film. Not built here |
+| Target design | TM Forum Open APIs exposed as MCP tools through Azure API Management, with Microsoft Entra Agent ID for agent identity | APIM remains a target, not deployed. Current bridges already use Entra tokens; hosted Foundry agent identities/blueprints are active, but Agent 365 catalog/export is blocked |
 
 ## Azure architecture
 
-![Azure architecture of the TürkBizTel order-to-activation demonstrator](docs/images/azure-architecture.png)
+![Current Azure architecture of the TürkBizTel Foundry application](docs/images/current-azure-architecture.svg)
 
-*Vector version: [azure-architecture.svg](docs/images/azure-architecture.svg).*
+*Download [SVG](docs/images/current-azure-architecture.svg) or [PNG](docs/images/current-azure-architecture.png).
+Observed from Azure on 24 November 2026; this is not the proposed production-target deck.*
 
-- **One resource group in Sweden Central.** An Azure Container Apps app (a single 0.25 vCPU replica) runs the portal, API, supervisor and agents in an environment integrated into a virtual network.
-- **Data.** Azure SQL Database is the system of record, and a Blob container holds the legacy snapshot that seeds it. The app reaches both through private endpoints.
-- **AI.** An Azure OpenAI deployment (`gpt-4.1-mini`) gives advice only and receives synthetic fields only.
-- **Identity.** One user-assigned managed identity. No storage keys, registry admin user, SQL passwords or OpenAI keys.
-- **Customer updates.** Azure Communication Services Email.
-- **Operations.** Log Analytics, a US$100 monthly budget with alerts, and Microsoft Defender plans. About US$80 a month at list price, always on.
-- **Open hardening items.** On 20 November the SQL server still had public network access enabled, with client-IP firewall rules added through the Azure portal, and SQL auditing was off. The app itself uses the private endpoint. Both items are in the [hardening checklist](docs/azure-architecture.md#hardening-checklist-for-any-use-beyond-a-demo).
+| Layer | Current deployment |
+|---|---|
+| Runtime | Seven Container Apps in a VNet-integrated Consumption environment; boundary 0.5 vCPU / 1 GiB, six bridges 0.25 vCPU / 0.5 GiB each; one replica each |
+| State | Private Blob account `amaistqwc6ymcrjozog`, container `boundary`; only the boundary identity has state access. No SQL dependency in this edition |
+| AI | Six real hosted-code agents in six projects in `amaif20261123sc`; `gpt-5.4-mini` and `gpt-5.4-nano`, pinned `2026-03-17`, GlobalStandard, no auto-upgrade |
+| Identity | Seven runtime managed identities; own-project Foundry Agent Consumer per bridge, container-scoped boundary state permissions; six active hosted agent identities/blueprints; separate staff SSO app roles |
+| Delivery | Existing ACS Email provider reused; live email, no SMS gateway; network/partner operations still simulated |
+| Operations | ACR Basic, Log Analytics (30 days, **no configured daily cap**) and Application Insights. Agent 365 is not a synonym for those services |
+| Scope | 27 runtime ARM inventory resources plus 7 shared Foundry ARM resources; hosted-agent versions, model deployments and shared email are listed separately |
 
-[docs/azure-architecture.md](docs/azure-architecture.md) has the full resource inventory, the timeline of how each service was created, the runtime flow, the security checklist, the cost table and read-only commands to check the estate yourself.
+[Current architecture](docs/azure-architecture.md) includes actual artifact names,
+version pins, runtime flows, network/identity boundaries, open gaps and read-only
+verification commands. The [old SQL estate](docs/legacy-azure-architecture.md),
+its US$80 estimate and its log cap are historical, not the current cost baseline.
 
 ## Data residency
 
@@ -149,7 +167,7 @@ The production design keeps customer data and inference in Türkiye with **Azure
 - **Azure outside Türkiye, with no customer data:** Azure Container Registry for approved container images, Azure Arc management metadata after an assessment of what leaves the country (disconnected operations is the alternative), and opt-in aggregate Azure Monitor metrics after a re-identification review.
 - **Leaves Türkiye by default:** no customer payloads, prompts, raw logs or backups.
 
-Encryption, private endpoints and EU hosting do not by themselves establish localisation, and legal counsel and the operator's data protection officer decide the actual KVKK and BTK obligations. See [Data residency in the Azure architecture](docs/azure-architecture.md#data-residency) and the residency section of [docs/PRODUCTION.md](docs/PRODUCTION.md).
+Encryption, private endpoints and EU hosting do not by themselves establish localisation, and legal counsel and the operator's data protection officer decide the actual KVKK and BTK obligations. See [Data residency in the Azure architecture](docs/azure-architecture.md#current-gaps-and-data-residency) and the residency section of [docs/PRODUCTION.md](docs/PRODUCTION.md).
 
 ## Requirements map
 
@@ -162,7 +180,7 @@ Encryption, private endpoints and EU hosting do not by themselves establish loca
 | Customer updates in Turkish and English | Persisted bilingual portal messages. The deployed build also sends e-mail through Azure Communication Services. SMS is not connected |
 | Per-order event-driven supervision | Durable queued and processed events, atomic commits and idempotency keys |
 | Partner integration through MCP | `/mcp`: initialization, discovery, capacity and order tools |
-| Human service-manager queue | Exception desk. Decisions need a server-enforced manager role: the shared manager token, or a Microsoft Entra service-manager sign-in in the [single sign-on build](docs/STAFF-SSO.md) |
+| Human service-manager queue | Current app: Microsoft Entra ServiceManager role; the operator-token fallback cannot approve manager decisions. Earlier token-only editions have a separate shared manager token |
 | Customer consent before work starts | In the single sign-on build an order a service engineer places for an enterprise waits for that enterprise's contact to approve it. No agent starts until then, staff cannot answer for the enterprise, and the answer is on the audit trail. See [Placing an order for an enterprise](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise) |
 | SLA enforcement | Seven-day demo deadline. Overdue work stops for an audited explicit review |
 | Auditability | Hash-linked records, verification and an authorized CSV export. With single sign-on every staff change names the person, their role and the fields they altered. Not WORM storage and not a regulatory certification |
@@ -173,15 +191,15 @@ Encryption, private endpoints and EU hosting do not by themselves establish loca
 
 | Real | Simulated or not built |
 |---|---|
-| A deployed Azure estate in Sweden Central: private endpoints, managed identity, Azure SQL as the system of record, an Azure OpenAI advisor and Azure Communication Services e-mail | Network, CRM, inventory, field-service and partner adapters. Activating an order does not provision a real service |
-| An event-driven supervisor with five agents, durable events, idempotency keys and a hash-linked audit trail | SMS delivery and any live carrier or OSS/BSS integration |
+| Seven-service Foundry runtime, private Blob state, per-role managed identities, six hosted agents, mini/nano inference and live ACS email | Network, CRM, inventory, field-service and partner adapters. Activating an order does not provision a real service |
+| Dispatch supervisor, five bounded task roles, durable events, idempotency keys and hash-linked audit | SMS delivery, Agent 365 governance/export and live carrier or OSS/BSS integration |
 | A TMF-inspired REST subset and an MCP endpoint | TM Forum conformance, the full TMF schemas, filtering, pagination, hubs and callbacks |
-| Schema-validated, advisory Azure OpenAI output | KVKK and BTK compliance, and the Türkiye-hosted Azure Local environment |
+| Schema-validated bounded model explanations/wording; authoritative state changes enforced in the boundary | KVKK and BTK compliance, EU-only GlobalStandard inference and the Türkiye-hosted Azure Local environment |
 
-- **The agents are bounded.** In this demonstrator the five specialist agents are deterministic implementations built on rules, allowlists and playbooks. The Azure OpenAI advisor is the only model-backed part, and it cannot execute or approve.
+- **The agents are bounded.** Current hosted code combines deterministic proposals with mini explanations for decomposition/fallout and nano customer wording. Validation, provisioning and supervisor do not call models. No model can approve, commit state or invoke carrier tools. The older `app.main` demo remains deterministic with an optional advisor; do not confuse it with the current `app.isolated.api` runtime.
 - **The numbers are not results.** The Analytics view of the deployed build times synthetic orders against the 7-day and 8% targets. Those are simulator orchestration times from a scenario mix with a built-in 30% incident rate, so they show that the pipeline and the measurement work. They exclude partner field work and customer delays, and they are not evidence of production lead time, fallout or NPS. A representative pilot would provide that.
-- **`main` holds the deployed source, but the template does not describe every deployed resource.** `app/`, `infra/` and `scripts/` are the code the demonstrator runs. The running SQL layer, the Communication Services e-mail resources and the two network security groups of the original deployment were created by direct CLI commands or by governance policy, so `scripts/Deploy.ps1` builds a close relative of the estate in [docs/azure-architecture.md](docs/azure-architecture.md), not a copy of it. (`-Live` now creates the e-mail resources from the template too, which is how the single sign-on stack gets them.) See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
-- **Live mode and delivery are set on the app, not by the template, unless you deploy with `-Live`.** A template deployment runs in demo mode: `AMA_MODE` is unset, so the synthetic views are public and writes need a token, and customer updates stay in the portal. The original deployed demonstrator also sets `AMA_MODE=live` and `AMA_DELIVERY=live` directly on the Container App, together with `AMA_SESSION_SECRET` and the ACS settings. `-Live` sets those, the session secret and the e-mail resources from the template. With `AMA_DELIVERY=live` the app sends e-mail through Azure Communication Services (`ACS_CONNECTION_STRING`, `ACS_EMAIL_SENDER`) or an SMTP relay (`SMTP_HOST`, `SMTP_FROM`), and can post text messages to an HTTPS webhook (`AMA_SMS_WEBHOOK_URL`). The deployed build uses ACS e-mail only.
+- **Deployment paths are edition-specific.** `infra/isolated.bicep` and the Foundry scripts describe the current isolated stack; `scripts/Deploy.ps1` and `infra/main.bicep` describe the older single-app option. Reapplying bootstrap defaults to the current app can remove Foundry bindings or delivery/authentication settings. See [reproduction boundaries](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+- **Demo mode is not anonymous staff access.** The current isolated app intentionally retains `AMA_MODE=demo` for synthetic workflow rules, but protects `/api/state` and staff operations, opens shared sign-in at `/`, and uses `AMA_STAFF_AUTH=sso+token` with `AMA_DELIVERY=live`. The legacy `app.main` local demo behaves differently. Do not disable authorization or live email to make an old fixture-based verifier pass.
 
 ## Run it locally
 
@@ -219,9 +237,9 @@ On a single sign-on deployment, **New order** in steps 2 to 5 asks you to pick a
 
 | Endpoint | Purpose and authorization |
 |---|---|
-| `GET /health` | Supervisor health |
-| `GET /api/state` | The synthetic workspace. Public in demo mode (`AMA_MODE` unset), staff-only when `AMA_MODE=live`, as deployed |
-| `POST /api/orders` | A manager or partner creates an idempotent synthetic order. With single sign-on, a service operator or manager |
+| `GET /health` | Current isolated runtime: six recent worker/supervisor heartbeats; legacy local demo: supervisor health |
+| `GET /api/state` | Current isolated runtime: staff-authorized synthetic workspace regardless of `AMA_MODE`. Legacy `app.main`: public in demo mode, staff-only in live mode |
+| `POST /api/orders` | Current app: authorized wholesale-partner token intake. Staff must use the enterprise workflow below; staff direct intake returns 409. Legacy token-only edition also accepts its manager token |
 | `GET /api/enterprises`, `POST /api/enterprises/{id}/orders` | Single sign-on build: a service operator or manager lists every enterprise and places an order for one. The order waits for that enterprise's contact, who is e-mailed. A staff session on `POST /api/orders` answers 409 and is pointed here |
 | `POST /api/orders/{id}/approval/resend`, `POST /api/orders/{id}/approval/withdraw` | A service operator or manager sends the approval e-mail again (a new link; one a minute, five in all) or withdraws the request |
 | `POST /api/approvals/check`, `POST /api/approvals/decide` | Public, with the signed token from the e-mail and an `X-Requested-With` header. Show the request, then approve or decline it. Throttled per address, and never answers 401 |
@@ -243,11 +261,19 @@ MCP supports `initialize`, `notifications/initialized`, `ping`, `tools/list` and
 
 ## Deploy to Azure
 
-`scripts/Deploy.ps1` deploys `infra/main.bicep` into one brand-new resource group. With the options below it builds the core of the estate in [docs/azure-architecture.md](docs/azure-architecture.md): the private network, the SQL layer and the AI advisor. It creates the Communication Services e-mail resources only with `-Live`. See [what the repository can and cannot reproduce](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+**Current Foundry edition:** use the [dual-login deployment runbook](docs/FOUNDRY-SSO-APP.md)
+and [current reproduction boundaries](docs/azure-architecture.md#what-the-repository-can-and-cannot-reproduce).
+Do not run the legacy bootstrap below against an existing Foundry runtime.
+
+### Legacy single-app deployment option
+
+`scripts/Deploy.ps1` deploys `infra/main.bicep` into one brand-new resource group.
+The options below describe the [historical SQL/advisor architecture](docs/legacy-azure-architecture.md),
+not the current hosted-agent edition. It creates Communication Services email resources only with `-Live`.
 
 1. Run `az login`, then `az account list --all -o table`. Select an **Enabled** subscription. `-EnableSql` needs a **user** sign-in, because that account becomes the SQL Microsoft Entra administrator. `-StaffAuth sso` also needs a user sign-in that is allowed to register applications in the tenant.
 2. Make sure the subscription has `Microsoft.App`, `Microsoft.Storage`, `Microsoft.ContainerRegistry`, `Microsoft.ManagedIdentity` and `Microsoft.OperationalInsights` registered, plus `Microsoft.Network` (private network), `Microsoft.Sql` (`-EnableSql`), `Microsoft.CognitiveServices` (AI), `Microsoft.Communication` (`-Live`) and `Microsoft.Consumption` (budget) if you use those options. Register providers only with the subscription owner's approval.
-3. For AI, first confirm model availability and **regional Standard** quota in the target region. Do not switch to Global Standard to get around a regional constraint. The script defaults to `gpt-4.1-mini`, version `2025-04-14`, which is what the deployed estate runs. Models retire (`gpt-4o-mini` 2024-07-18 already has), so verify and override with a supported version.
+3. For this legacy advisor option, confirm model availability/lifecycle and **regional Standard** quota. Do not switch to Global Standard to get around a regional constraint. The script default is `gpt-4.1-mini`, version `2025-04-14`, used by the earlier estate, not the current Foundry mini/nano deployment; override with a currently supported model before creating a new advisor.
 4. Deploy with Azure CLI and Bicep. No local Docker is needed.
 
 ```powershell
@@ -330,12 +356,12 @@ The script checks the AMA demo tags and refuses unrelated groups. Run it only wh
 
 | Path | Contents |
 |---|---|
-| `app/` | The FastAPI application. `main.py` is the app and `domain.py` the guarded simulation with the supervisor and agents. `auth.py`, `sso.py`, `security.py`, `accounts*.py`, `identity.py` and `delivery.py` cover sign-in (customer passwords, service-team tokens or Microsoft Entra single sign-on), role checks, customer accounts and e-mail. `approvals*.py` is the enterprise picker and the approval an enterprise gives before its order starts. `partners*.py` is the wholesale partner portal. `advisor.py` is the optional Azure OpenAI advice. `analytics.py` and `benchmark.py` measure order-to-delivery. `store.py` (JSON or Blob), `sqlstore.py`, `sqlwrite.py`, `sqlschema.py`, `sqlbootstrap.py` and `projection.py` keep state in Blob storage or Azure SQL |
+| `app/` | Current web entry point `isolated/api.py`; `isolated/boundary.py` owns authorization/transitions, `isolated/runtime.py` the bridges, and `foundry/` the hosted contracts/code. `main.py` is the legacy/local demo. Shared `auth.py`, `sso.py`, accounts/partners/approvals and `delivery.py` provide the UX. Current state uses `isolated/store.py` Blob storage; SQL modules remain for older editions |
 | `app/static/` | The pages (landing, console, customer portal, partner portal, live demo, journey, solution players, case study), their scripts and styles, and the films, posters, captions and deck slides. Plain-named films such as `solution-tower-v6.mp4` are the source editions. The matching `*-turkbiztel.*` files are the TürkBizTel editions that `branded_static.py` serves under the plain names |
 | `app/static/film3d-assets/` | Assets for the 3D film, with their licences and an `ATTRIBUTION.md` |
 | `infra/main.bicep` | The Azure infrastructure |
 | `scripts/` | `Deploy.ps1`, `Register-StaffSso.ps1` (the Entra registration for single sign-on), `Remove-Demo.ps1`, `Start-Local.ps1`, `Smoke.py` and `Verify_Demo.py` for the app. The film pipeline: the `Render_*.py` renderers, `Synthesize_*.py` narration, `Rebrand_Media.py`, `requirements-narrator.txt` and `film3d/`, whose scenes need Node.js |
-| `tests/` | Twenty-two test modules covering the API, domain rules, accounts, partners, single sign-on and roles, enterprise approvals, analytics, the Blob and SQL stores, the case-study site and the films |
+| `tests/` | API/domain/identity/Foundry/account/approval/store/media regressions plus `console_ui.test.cjs` for sign-in and capacity behavior. The unified application release passed 423 Python cases and 12 console cases; see GitHub CI for current results |
 | `docs/` | The [application guide](docs/APPLICATION-GUIDE.md), the [service-team single sign-on guide](docs/STAFF-SSO.md), the [Azure architecture](docs/azure-architecture.md), [PRODUCTION.md](docs/PRODUCTION.md) and the diagrams in `docs/images/` |
 | `Dockerfile`, `pyproject.toml` | The container image and the Python project metadata |
 | `.github/workflows/ci.yml` | The quality workflow |

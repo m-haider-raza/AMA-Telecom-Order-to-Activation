@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1060" viewBox="0 0 1600 1060" role="img" aria-labelledby="title description">
+  <title id="title">TurkBizTel current Azure architecture, 24 November 2026</title>
+  <desc id="description">Customers, partners and staff access a trusted Container Apps boundary. It alone owns private Blob state and email. Six ingress-free managed-identity bridges invoke six scoped Foundry hosted agents, of which decomposition and fallout use mini and customer update uses nano. Monitoring is Azure Monitor; Agent 365 is a separate unverified integration.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#476477"/></marker>
+    <style>
+      text {font-family:Segoe UI,Arial,sans-serif;fill:#17364a}
+      .title {font-size:30px;font-weight:700}
+      .sub {font-size:17px;fill:#526a79}
+      .heading {font-size:20px;font-weight:700}
+      .label {font-size:17px;font-weight:600}
+      .body {font-size:16px}
+      .small {font-size:14px;fill:#526a79}
+      .box {fill:#fff;stroke:#9cb7c8;stroke-width:1.5;rx:12}
+      .group {fill:#f4f8fc;stroke:#84a8c0;stroke-width:1.5;rx:16}
+      .line {stroke:#476477;stroke-width:2;fill:none;marker-end:url(#arrow)}
+      .dashed {stroke-dasharray:6 5}
+    </style>
+  </defs>
+  <rect width="1600" height="1060" fill="#fff"/>
+  <text x="40" y="48" class="title">TurkBizTel | Current Azure deployment</text>
+  <text x="40" y="77" class="sub">Observed 24 November 2026 | Sweden Central synthetic pilot | Not the proposed Turkish production target</text>
+
+  <rect x="40" y="110" width="370" height="110" class="box"/>
+  <text x="60" y="140" class="heading">Customers, partners and staff</text>
+  <text x="60" y="169" class="body">Shared customer / partner sign-in</text>
+  <text x="60" y="195" class="body">Staff: Microsoft SSO or operator token</text>
+  <rect x="455" y="110" width="450" height="110" class="box"/>
+  <text x="475" y="140" class="heading">Microsoft Entra tenant</text>
+  <text x="475" y="169" class="body">Staff app roles + code / PKCE sign-in</text>
+  <text x="475" y="195" class="body">Seven distinct runtime managed identities</text>
+  <rect x="950" y="110" width="610" height="110" class="box"/>
+  <text x="970" y="140" class="heading">Identity is not the same as governance</text>
+  <text x="970" y="169" class="body">Hosted identities / blueprints are separate from bridge identities</text>
+  <text x="970" y="195" class="body">Agent 365: separate registration and telemetry verification gate</text>
+
+  <rect x="40" y="265" width="870" height="545" class="group"/>
+  <text x="60" y="299" class="heading">Current runtime | rg-amai-foundry-runtime-sso-20261124</text>
+  <text x="60" y="324" class="small">27 ARM inventory resources | VNet-integrated Consumption environment | One replica per service</text>
+  <path d="M225 220V265" class="line"/>
+  <path d="M650 220V265" class="line"/>
+  <rect x="60" y="350" width="475" height="145" rx="12" fill="#e1f1fb" stroke="#0078d4" stroke-width="2"/>
+  <text x="80" y="381" class="heading">Trusted policy boundary + UI / API</text>
+  <text x="80" y="410" class="body">amai-boundary-qwc6ymcrjozog | HTTPS ingress only</text>
+  <text x="80" y="438" class="body">Approvals, exact operation checks, atomic transitions</text>
+  <text x="80" y="465" class="body">0.5 vCPU / 1 GiB | Staff, customer and partner portals</text>
+  <rect x="590" y="350" width="295" height="145" class="box"/>
+  <text x="610" y="381" class="heading">Private Blob state</text>
+  <text x="610" y="410" class="body">amaistqwc6ymcrjozog</text>
+  <text x="610" y="437" class="body">boundary container; events / audit</text>
+  <text x="610" y="464" class="body">Private endpoint + private DNS</text>
+  <path d="M535 414H590" class="line"/>
+  <text x="555" y="396" text-anchor="middle" class="small">MI</text>
+  <rect x="60" y="545" width="825" height="145" class="box"/>
+  <text x="80" y="578" class="heading">Six isolated managed-identity bridges | No ingress</text>
+  <text x="80" y="611" class="body">Validation   |   Decomposition   |   Provisioning   |   Fallout   |   Customer update   |   Supervisor</text>
+  <text x="80" y="642" class="body">Each: 0.25 vCPU / 0.5 GiB; own principal, own operation allowlist, own Foundry project</text>
+  <text x="80" y="669" class="small">No direct state or email access | Only the dispatch supervisor may dispatch; it cannot approve or act as a worker</text>
+  <path d="M295 545V495" class="line"/>
+  <text x="312" y="525" class="small">Verified Entra tokens; scoped facts and proposals</text>
+  <rect x="60" y="725" width="390" height="60" class="box"/>
+  <text x="78" y="750" class="label">ACR Basic | amaiacrqwc6ymcrjozog</text>
+  <text x="78" y="773" class="small">Same release image on all seven apps; MI AcrPull</text>
+  <rect x="475" y="725" width="410" height="60" class="box"/>
+  <text x="493" y="750" class="label">Azure Monitor | amai-logs + amai-insights</text>
+  <text x="493" y="773" class="small">30-day logs; no daily quota configured; durable audit in state</text>
+
+  <rect x="950" y="265" width="610" height="545" class="group"/>
+  <text x="970" y="299" class="heading">Shared Foundry | rg-amai-foundry-20261123</text>
+  <text x="970" y="324" class="small">amaif20261123sc | 1 AIServices account + 6 projects | Public TLS, key auth off</text>
+  <rect x="975" y="350" width="560" height="210" class="box"/>
+  <text x="995" y="381" class="heading">Six real hosted-code agents</text>
+  <text x="995" y="413" class="body">validation : 3                 decomposition : 4</text>
+  <text x="995" y="444" class="body">provisioning : 2              fallout : 4</text>
+  <text x="995" y="475" class="body">customer-update : 4         supervisor : 3</text>
+  <text x="995" y="508" class="small">One agent per project; exact 100% version pins</text>
+  <text x="995" y="536" class="small">Proposal-only code; no state, carrier, approval or email tools</text>
+  <path d="M885 614H930V454H975" class="line"/>
+  <rect x="975" y="610" width="560" height="175" class="box"/>
+  <text x="995" y="642" class="heading">Bounded inference only where needed</text>
+  <text x="995" y="672" class="body">amai-mini: gpt-5.4-mini | Decomposition + fallout</text>
+  <text x="995" y="702" class="body">amai-nano: gpt-5.4-nano | Customer wording</text>
+  <text x="995" y="732" class="small">2026-03-17 | GlobalStandard | Capacity 2 each | NoAutoUpgrade</text>
+  <text x="995" y="761" class="small">Validation, provisioning and supervisor do not call a model</text>
+  <path d="M1250 560V610" class="line"/>
+
+  <rect x="40" y="850" width="510" height="100" class="box"/>
+  <text x="60" y="882" class="heading">Shared Azure Communication Services Email</text>
+  <text x="60" y="911" class="body">myturkei-comm / myturkei-email | Original provider</text>
+  <text x="60" y="936" class="small">Live email; boundary-only secret | No SMS gateway</text>
+  <path d="M40 423H20V900H40" class="line"/>
+  <rect x="585" y="850" width="465" height="100" class="box"/>
+  <text x="605" y="882" class="heading">Business authority stays in the boundary</text>
+  <text x="605" y="911" class="body">Enterprise consent + manager decisions + replay checks</text>
+  <text x="605" y="936" class="small">Carrier / CRM / inventory / partner operations are simulators</text>
+  <rect x="1085" y="850" width="475" height="100" class="box"/>
+  <text x="1105" y="882" class="heading">Historical editions remain separate</text>
+  <text x="1105" y="911" class="body">Original SQL app + earlier isolated / SSO runtimes retained</text>
+  <text x="1105" y="936" class="small">No ongoing state synchronization; shared dependencies are explicit</text>
+
+  <rect x="40" y="980" width="1520" height="48" rx="10" fill="#fff2d6"/>
+  <text x="60" y="1010" class="body">Synthetic pilot only. GlobalStandard is not an EU-only inference guarantee. No Turkish residency, production compliance or Agent 365 governance is claimed.</text>
+</svg>
