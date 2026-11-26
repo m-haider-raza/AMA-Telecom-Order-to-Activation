@@ -72,7 +72,7 @@ async function finishSso() {
   try {
     const result = await api("/api/auth/sso/handoff", { method: "POST" });
     // Replace this page in history so the back button does not return to a finished sign-in.
-    return navigate(HOME[result.role] || HOME.admin, { replace: true });
+    return navigate(loginDestination(result.role), { replace: true });
   } catch (error) {
     wait.hidden = true;
     start.hidden = false;
@@ -158,7 +158,7 @@ onSubmit(forms.signin, $("#signin-msg"), [
   const result = await api("/api/auth/login", {
     method: "POST", body: { email: form.elements.email.value.trim(), password: form.elements.password.value },
   });
-  return navigate(HOME[result.role] || "/account");
+  return navigate(loginDestination(result.role));
 });
 
 onSubmit(forms.register, $("#register-msg"), [
@@ -184,7 +184,7 @@ onSubmit(forms.register, $("#register-msg"), [
   sessionStorage.removeItem(MAIL_PROBLEM_KEY);
   if (result.simulatedCode) sessionStorage.setItem(DEMO_CODE_KEY, result.simulatedCode);
   if (result.delivery === "unavailable") sessionStorage.setItem(MAIL_PROBLEM_KEY, "1");
-  return navigate("/account");
+  return navigate(loginDestination("customer"));
 });
 
 async function requestCode(email) {
@@ -240,7 +240,7 @@ onSubmit(forms.invite, $("#invite-msg"), [
     method: "POST", body: { token: inviteToken, password: form.elements.password.value },
   });
   // Replace this page in history so the used invitation link is not one tap away on the back button.
-  return navigate(HOME[result.role] || "/partner", { replace: true });
+  return navigate(loginDestination(result.role), { replace: true });
 });
 
 onSubmit(forms.staff, $("#staff-msg"), [
@@ -305,7 +305,7 @@ async function boot() {
     // A visitor who was just sent here because a session ended must not be sent straight back, and
     // someone opening an invitation link must get to set up their account, whoever is signed in.
     if (me.authenticated && !bounced && !back && !INVITE_HASH.test(location.hash)) {
-      location.replace(HOME[me.role] || "/account");
+      location.replace(loginDestination(me.role));
       return;
     }
     if (me.mode !== "live") {

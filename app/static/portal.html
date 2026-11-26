@@ -45,44 +45,17 @@
 
   <section id="confirm-section" class="hidden">
     <h1>Order received</h1>
-    <p>Your order reference is <strong id="confirm-id"></strong>. Keep your tracking link: it is the only way to view or change this order.</p>
+    <p>Your order reference is <strong id="confirm-id"></strong>. Sign in to your customer account to view its status or change its details.</p>
     <p><a id="confirm-link" class="button" href="/track">Track my order</a></p>
-    <p class="muted small account-hint">Prefer one place for all your orders? <a href="/login#register">Create a free account</a> with the same email address you used here. Once you confirm that email, this order appears in your account and you can fix any missing details there.</p>
+    <p>Guest linking code: <code id="confirm-code"></code></p>
+    <p class="muted small">Keep this code if you need to link an earlier guest order from your signed-in account. It cannot open order status without sign-in.</p>
+    <p class="muted small account-hint">Don't have an account? <a href="/login#register">Create a free account</a>. If you supplied an email, use that same address and confirm it to add this order automatically. Otherwise, sign in and link the order with the code above.</p>
   </section>
 
   <section id="track-section" class="hidden">
-    <h1>Track your order</h1>
-    <form id="lookup-form" class="row">
-      <label>Order reference<input name="order" required pattern="AMA-[A-Z0-9]{10}"></label>
-      <label>Tracking code<input name="token" required minlength="20" maxlength="64" autocomplete="off"></label>
-      <button type="submit">Find order</button>
-    </form>
-    <p id="track-error" class="error" role="alert"></p>
-    <div id="order-view" class="hidden">
-      <h2 id="view-title"></h2>
-      <p>Status: <span id="view-status" class="state"></span></p>
-      <div id="action-box" class="alert hidden">
-        <p id="action-text"></p>
-        <button id="confirm-site" type="button"></button>
-      </div>
-      <h3>Updates</h3>
-      <ul id="updates"></ul>
-      <h3>Update preferences</h3>
-      <form id="prefs-form">
-        <div class="row">
-          <label>Send updates by<select name="preferredChannel"><option value="email">Email</option><option value="sms">SMS</option></select></label>
-          <label>How often?<select name="updateFrequency"><option value="every-step">Every step</option><option value="daily">Daily summary</option><option value="weekly">Weekly summary</option><option value="critical-only">Only when action is needed</option></select></label>
-        </div>
-        <div class="row">
-          <label>Contact person<input name="contactName" required minlength="2" maxlength="80"></label>
-          <label>Email<input name="email" type="email" maxlength="120"></label>
-          <label>Mobile<input name="phone" type="tel" pattern="\+[1-9][0-9]{7,14}"></label>
-        </div>
-        <p class="muted small">Current details are masked for your security. Re-enter any address you want to keep.</p>
-        <p id="prefs-msg" class="muted" role="status"></p>
-        <button type="submit">Save preferences</button>
-      </form>
-    </div>
+    <h1>Sign in to check your order</h1>
+    <p>Opening your customer account. Order status is available only after you sign in.</p>
+    <p><a class="button" href="/login">Sign in</a></p>
   </section>
 </main>
 <script src="/static/portal.js?v=tb2"></script>

@@ -4,7 +4,8 @@
 Foundry dual-login application, not the proposed Turkish production target and
 not the [historical single-app SQL estate](legacy-azure-architecture.md).
 The boundary-only partner-email patch and ACS delivery diagnostics were verified
-on 25 November; the topology, six bridge revisions and agent/model pins are unchanged.
+on 25 November, and customer-status sign-in enforcement on 26 November. The
+topology, six bridge revisions and agent/model pins are unchanged.
 Azure inventory, running revisions, RBAC, network settings, model deployments and
 health were read directly with Azure CLI and the application health endpoints.
 No tenant grants, application data or runtime settings were changed to produce
@@ -12,7 +13,7 @@ this inventory.
 
 [Open application](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io)
 | [Interactive story](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study)
-| [Current source release](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/commit/998988911b04b11afb2298431b3e31e42e891496)
+| [Base application source release](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/commit/998988911b04b11afb2298431b3e31e42e891496)
 
 ![Current Azure deployment: boundary, private state, six bridges and six hosted agents](images/current-azure-architecture.svg)
 
@@ -31,7 +32,7 @@ identity services; these are not all ARM resources.
 | Compute | Seven Container Apps in `amai-environment`: one boundary/API/UI plus five task bridges and one dispatch-supervisor bridge. Each has one replica, min=max=1 |
 | State | Private Azure Blob Storage, `amaistqwc6ymcrjozog`, container `boundary`. Only the boundary identity has data access. **Azure SQL is not the system of record for this edition** |
 | AI execution | Six real hosted-code agents in six Foundry projects. Three roles use no model; mini/nano add bounded explanation/wording, never execution authority |
-| Human access | Customer/partner email-password login; staff Microsoft Entra SSO with service roles or a distinct ServiceOperator token fallback |
+| Human access | Customer/partner email-password login; status links require a valid session and customer ownership or partner organisation scope. Staff Microsoft Entra SSO with service roles or a distinct ServiceOperator token fallback |
 | Outbound delivery | Live Azure Communication Services Email through the original shared provider; SMS is not configured. Telecom/CRM/partner provisioning remains simulated |
 | Governance | Azure RBAC, receiving-API operation allowlists, enterprise/manager approvals, hash-linked audit and Azure Monitor. Agent 365 registration/export is **not active**; see [latest retry](AGENT365-STATUS.md) |
 
@@ -68,16 +69,19 @@ Shared email and hosted agents are deliberate dependencies, not copies.
 The six bridges retain image
 `amaiacrqwc6ymcrjozog.azurecr.io/amai:foundry-sso-20261124-complete-release`,
 digest `sha256:d04cf7e30626623a6b1735b6e5017a4fd48d14dd23ac4f85ff31e9b45c7398c5`.
-The boundary runs `amaiacrqwc6ymcrjozog.azurecr.io/amai:foundry-sso-20261125-partner-email`,
-digest `sha256:d7bf3dd9224f0ce322ae3a07a3d158daabe7b479d6692ceb443ae5e3c05eaf13`:
-a two-file invitation API/UI overlay on that immutable base, preserving the
-existing sign-in, email settings, state, videos and presentation artifacts.
+The boundary runs `amaiacrqwc6ymcrjozog.azurecr.io/amai:foundry-sso-20261126-customer-signin`,
+digest `sha256:dc0a426f83f5f60c4c3223ff557912baae3bdfaba020bcc4ada1de022db2c9b5`:
+a ten-file authentication, update-link and portal overlay on the immutable
+partner-email release (`sha256:d7bf3dd9224f0ce322ae3a07a3d158daabe7b479d6692ceb443ae5e3c05eaf13`).
+It preserves the invitation fix, staff login, email settings, existing order
+ownership and audit, videos and presentation artifacts. Customer update links
+no longer carry a status-access token; old links require sign-in too.
 The boundary uses 0.5 vCPU / 1 GiB; each bridge uses 0.25 vCPU / 0.5 GiB
 (2 vCPU / 4 GiB configured total, **excluding hosted-agent compute**).
 
 | Runtime Container App | Ready revision suffix | Hosted agent / pinned version | Inference role |
 |---|---|---|---|
-| `amai-boundary-qwc6ymcrjozog` | `0000015` | None | Authoritative state/approval boundary, not a sixth specialist |
+| `amai-boundary-qwc6ymcrjozog` | `0000016` | None | Authoritative state/approval boundary, not a sixth specialist |
 | `amai-validation-qwc6ymcrjozog` | `0000005` | `amai-validation:3` | Deterministic scoped validation; no model |
 | `amai-decomposition-qwc6ymcrjozog` | `0000005` | `amai-decomposition:4` | Deterministic decomposition plus mini explanation |
 | `amai-provisioning-qwc6ymcrjozog` | `0000005` | `amai-provisioning:2` | Deterministic simulated allocation proposal; no model |
@@ -125,6 +129,13 @@ sequenceDiagram
   Boundary->>State: Atomic transition, allocation, audit and outbox
   Boundary->>ACS: Authorized queued email
   ACS-->>Person: Email
+  Person->>Boundary: Open order-status link
+  opt No valid customer / partner session
+    Boundary-->>Person: Sign in, retaining the order destination
+    Person->>Boundary: Authenticate in this browser tab
+  end
+  Boundary->>State: Read order with customer / organisation ownership checks
+  Boundary-->>Person: Authorized order status
 ```
 
 Events/outbox are persisted application state, not Azure Service Bus, Event Grid
@@ -138,7 +149,7 @@ heartbeats; this does not by itself prove a new model invocation or inbox receip
 
 | Path | Transport and authorization |
 |---|---|
-| Browser to boundary | Public HTTPS; no WAF is claimed. Shared customer/partner sign-in; staff SSO or distinct operator fallback. Tab-scoped sessions preserve role separation |
+| Browser to boundary | Public HTTPS; no WAF is claimed. Shared customer/partner sign-in with server-side order ownership/scope checks, including legacy tracking endpoints; staff SSO or distinct operator fallback. Tab-scoped sessions preserve role separation |
 | Bridge to boundary | Public TLS boundary endpoint plus audience/tenant/application-role/principal-verified Entra tokens; exact operation allowlists. No implicit trust from caller-supplied agent names |
 | Boundary to state | Approved Blob private endpoint and private DNS; managed identity, container-scoped Storage Blob Data Contributor |
 | Bridge to Foundry | Public TLS data plane; own-project Foundry Agent Consumer. No cross-project role or state Blob role |

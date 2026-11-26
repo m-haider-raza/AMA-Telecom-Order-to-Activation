@@ -1210,7 +1210,7 @@ async function boot() {
   try {
     const me = await api("/api/auth/me");
     if (!me.authenticated) {
-      location.replace("/login");
+      location.replace(signInPath());
       return;
     }
     if (me.role !== "customer") {

@@ -138,6 +138,24 @@ function keepSession(path, data) {
   }
 }
 
+function orderDestination(role, path) {
+  const pattern = role === "customer" ? /^\/account#order\/AMA-[A-Z0-9]{10}$/
+    : role === "partner" ? /^\/partner#deliveries\/AMA-[A-Z0-9]{10}$/ : null;
+  const match = pattern && pattern.exec(path);
+  return match && match[0] === path ? path : "";
+}
+
+function signInPath() {
+  const path = location.pathname + location.hash;
+  const next = orderDestination("customer", path) || orderDestination("partner", path);
+  return next ? `/login?next=${encodeURIComponent(next)}` : "/login";
+}
+
+function loginDestination(role) {
+  const next = new URLSearchParams(location.search).get("next") || "";
+  return orderDestination(role, next) || HOME[role] || HOME.customer;
+}
+
 async function api(path, { method = "GET", body } = {}) {
   const init = {
     method,
@@ -171,7 +189,7 @@ async function api(path, { method = "GET", body } = {}) {
     const reason = data && typeof data.detail === "string" ? data.detail : "Please sign in to continue.";
     forgetSession();
     sessionStorage.setItem(NOTICE_KEY, reason);
-    location.replace("/login");
+    location.replace(signInPath());
     return new Promise(() => {});
   }
   throw new ApiError(friendly(data, response.status), response.status, Number(response.headers.get("Retry-After")) || 0);

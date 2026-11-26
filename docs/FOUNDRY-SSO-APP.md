@@ -148,6 +148,14 @@ simulated-sent messages are not replayed; pending enterprise requests can be
 resent explicitly from the service console. The UI follows the server's delivery
 flag, so live-email deployments do not show simulated-code or no-email guidance.
 Other isolated stacks retain simulated delivery by default.
+Order-update emails contain signed-in portal destinations, not bearer tracking
+links: `/account#order/<id>` for customers and `/partner#deliveries/<id>` for
+partners. A signed-out recipient must sign in, then returns to that same order;
+only allowlisted same-role order destinations are accepted. The APIs verify
+customer ownership or partner organisation scope. Older customer `/track` links
+also require sign-in, and their tokens cannot authorize status reads or changes.
+Guest submission and explicit guest-order linking from a signed-in account remain
+available. Separate enterprise approval links are unchanged.
 `Verify_Foundry_App.py` uses invented recipients and simulated verification codes,
 so it refuses a live-email receipt before making calls. Do not disable delivery
 on the user's running app merely to rerun that historical fixture acceptance.
@@ -169,6 +177,15 @@ does not lose the account or its copyable single-use link. The dialog distinguis
 accepted, not confirmed and manual delivery, and explains ACS recipient suppression
 without exposing private provider details. Acceptance is not confirmed inbox delivery.
 The six bridges, identities, settings and existing records are unchanged.
+
+On 26 November, boundary revision `0000016`
+(`foundry-sso-20261126-customer-signin`) enforced customer authentication and
+order ownership on the legacy tracking read/change APIs, including transactional
+ownership checks on writes. New update emails lead to the signed-in customer or
+partner portal without a tracking bearer token; older customer links also lead
+through sign-in, preserving the requested order. The invitation fix, six bridges,
+staff login, email settings, existing accounts/order ownership/audit and public
+story, videos and architecture assets were preserved.
 
 The shared ACS resource now exports only `EmailSendMailOperational` and
 `EmailStatusUpdateOperational` to the existing `amai-logs` workspace, with its

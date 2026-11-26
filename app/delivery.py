@@ -12,7 +12,7 @@ from email.message import EmailMessage
 import httpx
 
 from app.auth import CODE_SECONDS, INVITE_SECONDS
-from app.domain import now, tracking_token
+from app.domain import now, order_status_path
 
 log = logging.getLogger("ama.delivery")
 MAX_ATTEMPTS = 3
@@ -37,7 +37,7 @@ def compose(order, item):
     language = order.get("language", "en")
     text = item["tr"] if language == "tr" else item["en"]
     origin = _origin()
-    link = f"{origin}/track#order={order['id']}&token={tracking_token(order['id'])}" if origin else ""
+    link = f"{origin}{order_status_path(order)}" if origin else ""
     return f"TürkBizTel order {order['id']}", text, link
 
 
@@ -72,7 +72,8 @@ def send_plain_email(to, subject, body):
 
 def send_email(contact, order, item):
     subject, text, link = compose(order, item)
-    footer = f"\n\nTrack your order: {link}" if link else ""
+    label = "Sipariş durumunuzu görmek için giriş yapın" if order.get("language") == "tr" else "Sign in to check your order"
+    footer = f"\n\n{label}: {link}" if link else ""
     send_plain_email(contact["email"], subject, f"Hello {contact['contactName']},\n\n{text}{footer}\n")
 
 

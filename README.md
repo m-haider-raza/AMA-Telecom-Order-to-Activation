@@ -2,7 +2,7 @@
 
 A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator**, presented under the **TürkBizTel** brand. It follows dedicated Internet, managed SD-WAN and cloud-connect orders from a customer or a wholesale partner through to activation, with one supervisor per order and five specialist AI agents.
 
-*Status as of 25 November 2026.*
+*Status as of 26 November 2026.*
 
 > **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. Six real Foundry hosted agents return bounded proposals; only the trusted policy boundary can commit a transition after identity, approval and policy checks.
 
@@ -19,6 +19,12 @@ with private Blob state and live ACS email. All seven services were updated to
 The boundary subsequently received `foundry-sso-20261125-partner-email`: partner
 invitations now report actual email-service acceptance or a visible failure,
 not success when a background send is merely queued. The six bridges are unchanged.
+The latest boundary patch, `foundry-sso-20261126-customer-signin`, is ready as
+revision `0000016`, verified on 26 November at 22:37 UTC. It requires customer
+sign-in and order ownership for status links, including older token-bearing links,
+and returns the customer to the requested order after login. Partner update links
+open the organisation-scoped delivery portal. Email settings, existing accounts,
+agents and presentation artifacts are preserved.
 The six scoped hosted agents and two model deployments are shared from
 `rg-amai-foundry-20261123`. Older applications remain historical editions with
 independent state. Agent 365 registration was retried on 24 November and returned
@@ -27,6 +33,9 @@ HTTP 403; existing Foundry identities are active, but the registration token lac
 
 Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
 The recorded demo and the interactive app are separate chapters. The links below point to the current published editions.
+The presentation bundle remains the 24 November edition; the subsequent email
+and authentication patches update the live app, not the recorded videos or decks.
+Use this README and the linked runbooks for current application behavior.
 
 | What | Where |
 |---|---|
@@ -58,6 +67,7 @@ Its complete source-data snapshot is independent of the older apps. See the
 
 ## What's new in this update
 
+- **Customer status links require sign-in.** New email updates open `/account#order/<id>` without a bearer tracking token; older tracking links no longer bypass login. Status and detail-change APIs require a valid customer session and ownership. The order destination survives sign-in or an expired session; a different customer cannot view it. Guest submission remains available, with matching-email verification or explicit linking from a signed-in account. Partner updates open their own organisation-scoped `/partner#deliveries/<id>` portal.
 - **Sign-in and capacity fixes included.** The active Foundry app opens shared sign-in rather than mistaking a signed-out visitor for an expired staff session, including inside the story. Partner capacity checks show readable product, available-unit and change-window rows with explicit failure messages. The complete bundle also includes the Foundry agents/model-economics deck and the current dual-login runbook.
 - **One current interactive story and download.** The 24 November edition combines the latest current-state and solution films, the 19-slide governed target-architecture deck with matching previews, and the 2:28 app walkthrough including the corrected "Inspect AI agent workspaces" narration. The downloadable bundle and SHA-256 manifest are rebuilt from those same assets with `python scripts/Publish_Case_Study.py`; earlier bundles remain archived.
 - **Login-to-activation live app demo (2:28).** Step 4 opens on the shared `/login` page for customers and partners, then follows **Staff sign in** to Microsoft SSO and access-token options. It retains customer service selection/preferences and approval, partner deliveries/payments/concerns, and customer activation tracking and updates. Service administration remains about two thirds of the film: enterprise orders, partner setup, exceptions, agent workspaces, Analytics and audit. Detailed admin queue, billing and benchmark segments are omitted to stay below 2:30 without speeding up. The same George narrator speaks at normal speed, with captions below the app and seven chapter jumps. Public sign-in screens are captured from the live app without entering credentials; workflows are recorded locally with synthetic fixtures and a test staff session, not Microsoft sign-in, hosted inference or carrier execution. Step 5 remains the interactive app; the earlier full 5:13 tour remains available.
@@ -67,7 +77,7 @@ Its complete source-data snapshot is independent of the older apps. See the
 - **Azure architecture, as deployed.** The [current inventory and diagram](docs/azure-architecture.md) distinguish the seven-service runtime, private Blob state, six shared Foundry projects/agents, mini/nano inference, scoped identities, email and monitoring. The original single-app SQL diagram is retained as a [historical snapshot](docs/legacy-azure-architecture.md), not presented as the current app.
 - **Agent 365 retried, not claimed.** All six existing hosted identities/blueprints were confirmed. The documented catalog POST returned HTTP 403; the signed-in user has Global Reader and the token has no registration-write scope. No duplicate identities or grants were created. [Exact status and administrator prerequisites](docs/AGENT365-STATUS.md).
 - **Solution film v6 (2:56).** Customers place orders, the supervisor wakes each agent in turn, TM Forum and MCP standards connect them, and the Azure Local design keeps customer data in Türkiye. Each AI agent is named in full once, then by its short name.
-- **The deployed source is on `main`.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are all in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
+- **Application source and runbooks.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
 - **TürkBizTel branding** across the films, the deck and the app.
 - **This README** is now a landing page. The Azure detail lives in `docs/`.
 

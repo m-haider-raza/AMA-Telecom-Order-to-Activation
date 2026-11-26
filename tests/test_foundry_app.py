@@ -135,7 +135,8 @@ def test_isolated_live_email_uses_existing_account_approval_and_outbox_paths(
             assert time.monotonic() < deadline, "Boundary delivery worker did not drain the outbox"
             time.sleep(0.02)
         assert all(item["deliveredExternally"] for item in order["outbox"])
-        assert any("/track#order=" + order_id in body for _, _, body in mailbox)
+        assert any("/account#order/" + order_id in body for _, _, body in mailbox)
+        assert all("/track#order=" not in body for _, _, body in mailbox)
         assert client.get("/isolated-health").json()["networkProvisioning"] == "simulated"
 
 
@@ -187,6 +188,42 @@ def test_isolated_partner_setup_checks_live_email_even_with_simulated_provisioni
         assert client.post("/api/auth/invite/check", headers=tab,
                            json={"token": invitation["token"]}).status_code == 200
         assert client.get("/isolated-health").json()["networkProvisioning"] == "simulated"
+
+
+def test_isolated_customer_tracking_requires_a_session_and_the_order_owner(
+        tmp_path, monkeypatch, verifier):  # noqa: F811
+    configure(monkeypatch, tmp_path, verifier)
+    from app.domain import tracking_token
+    from app.isolated.api import app
+    tab = {"X-Session-Mode": "tab"}
+    with TestClient(app) as client:
+        client.headers.update({"Origin": PUBLIC, "X-Requested-With": "fetch"})
+        response = client.post("/api/auth/register", headers=tab, json={
+            "name": "Test Contact", "company": "Anatolia Retail", "email": "contact@example.invalid",
+            "password": "Correct-Horse-42", "consent": True})
+        assert response.status_code == 201, response.text
+        customer = {**tab, "X-Session": response.json()["session"]}
+        response = client.post("/api/me/orders", headers=customer, json={
+            "customer": "Anatolia Retail", "city": "Istanbul", "product": "sdwan", "language": "en",
+            "idempotencyKey": "signed-tracking-test", "siteAddress": "Levent Mah. 12, Besiktas, Istanbul",
+            "contact": {"contactName": "Test Contact", "email": "contact@example.invalid",
+                        "preferredChannel": "email", "updateFrequency": "critical-only"}})
+        assert response.status_code == 201, response.text
+        order_id = response.json()["id"]
+        path = f"/api/portal/orders/{order_id}"
+        legacy = {**tab, "X-Tracking-Token": tracking_token(order_id)}
+        assert client.get(path, headers=legacy).status_code == 401
+        assert client.put(path + "/contact", headers=legacy, json={
+            "contactName": "Changed Contact", "email": "other@example.invalid",
+            "preferredChannel": "email", "updateFrequency": "critical-only"}).status_code == 401
+        assert client.get(path, headers=customer).json()["id"] == order_id
+        response = client.post("/api/auth/register", headers=tab, json={
+            "name": "Other Contact", "company": "Bosphorus Retail", "email": "other@example.invalid",
+            "password": "Correct-Horse-42", "consent": True})
+        assert response.status_code == 201, response.text
+        other = {**legacy, "X-Session": response.json()["session"]}
+        refused = client.get(path, headers=other)
+        assert refused.status_code == 404 and order_id not in refused.text
 
 
 def settled(store):

@@ -1,6 +1,5 @@
 import asyncio
 import csv
-import hmac
 import io
 import json
 import logging
@@ -19,13 +18,13 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 
 from app import advisor, analytics, auth, benchmark, partners, sso
 from app.branded_static import BrandedStaticFiles
-from app.accounts_api import router as accounts_router
+from app.accounts_api import owned, signed_in, router as accounts_router
 from app.approvals_api import router as approvals_router
 from app.partners_api import router as partners_router
 from app.sso import router as sso_router
 from app.delivery import configuration_problems, deliver_outbox
 from app.domain import (approve_exception, audit, correct_order, create_order, customer_view, delivery_enabled,
-                        follow_up, live_mode, metrics, partner_capacity, process_next, public_order,
+                        follow_up, live_mode, metrics, order_status_path, partner_capacity, process_next, public_order,
                         tracking_token, update_contact, verify_audit)
 from app.schemas import (BenchmarkRequest, Contact, Decision, OrderInput, PortalOrder,  # noqa: F401
                          SiteConfirmation, check_customer, configure_staff_log, transact)
@@ -174,37 +173,36 @@ def portal_submit(payload: PortalOrder, request: Request):
     order = transact(request.app, lambda snapshot: create_order(snapshot, data, "customer-portal"))
     token = tracking_token(order["id"])
     return {**customer_view(order), "trackingToken": token,
-            "trackPath": f"/track#order={order['id']}&token={token}"}
-
-
-def portal_order(request, snapshot, order_id):
-    supplied = request.headers.get("x-tracking-token", "")
-    order = snapshot["orders"].get(order_id)
-    if order is None or not hmac.compare_digest(supplied, tracking_token(order_id)):
-        raise HTTPException(404, "Order not found or tracking token is wrong")
-    return order
+            "trackPath": order_status_path(order)}
 
 
 @app.get("/api/portal/orders/{order_id}")
 def portal_track(order_id: str, request: Request):
+    customer, snapshot = signed_in(request)
     limit(request)
-    return customer_view(portal_order(request, request.app.state.store.read(), order_id))
+    return customer_view(owned(snapshot, customer["id"], order_id))
 
 
 @app.post("/api/portal/orders/{order_id}/address")
 def portal_confirm_site(order_id: str, payload: SiteConfirmation, request: Request):
+    customer, _ = signed_in(request)
     limit(request)
-    portal_order(request, request.app.state.store.read(), order_id)
-    return customer_view(transact(request.app, lambda snapshot: correct_order(
-        snapshot, order_id, "customer-portal", payload.siteReference)))
+
+    def confirm(snapshot):
+        order = owned(snapshot, customer["id"], order_id)
+        return correct_order(snapshot, order["id"], "customer-portal", payload.siteReference)
+    return customer_view(transact(request.app, confirm))
 
 
 @app.put("/api/portal/orders/{order_id}/contact")
 def portal_update_contact(order_id: str, payload: Contact, request: Request):
+    customer, _ = signed_in(request)
     limit(request)
-    portal_order(request, request.app.state.store.read(), order_id)
-    return customer_view(transact(request.app, lambda snapshot: update_contact(
-        snapshot, order_id, payload.model_dump())))
+
+    def change(snapshot):
+        order = owned(snapshot, customer["id"], order_id)
+        return update_contact(snapshot, order["id"], payload.model_dump())
+    return customer_view(transact(request.app, change))
 
 
 def create_for_channel(snapshot, payload, actor):

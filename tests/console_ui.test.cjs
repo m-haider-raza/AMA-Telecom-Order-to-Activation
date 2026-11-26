@@ -156,3 +156,76 @@ for (const delivery of ["email", "failed", "manual"]) {
     }
   });
 }
+
+const uiSource = readFileSync(join(__dirname, "..", "app", "static", "ui.js"), "utf8");
+const orderNavigation = uiSource.slice(uiSource.indexOf("function orderDestination("), uiSource.indexOf("async function api("));
+const customerSource = readFileSync(join(__dirname, "..", "app", "static", "account.js"), "utf8");
+const customerBoot = customerSource.slice(customerSource.indexOf("async function boot()"), customerSource.indexOf("function wire()"));
+const loginSource = readFileSync(join(__dirname, "..", "app", "static", "login.js"), "utf8");
+const customerSignin = loginSource.slice(loginSource.indexOf("onSubmit(forms.signin,"), loginSource.indexOf("onSubmit(forms.register,"));
+
+test("an anonymous customer email link asks for sign-in before loading order data and keeps its destination", async () => {
+  const destinations = [], dataReads = [];
+  const context = {
+    URLSearchParams, HOME: {customer: "/account", partner: "/partner", admin: "/console"},
+    location: {pathname: "/account", hash: "#order/AMA-0123456789", replace: path => destinations.push(path)},
+    api: async path => { assert.equal(path, "/api/auth/me"); return {authenticated: false}; },
+    load: () => dataReads.push("orders"),
+  };
+  await runInNewContext(orderNavigation + customerBoot + ";boot()", context);
+  assert.deepEqual(destinations, ["/login?next=%2Faccount%23order%2FAMA-0123456789"]);
+  assert.deepEqual(dataReads, []);
+});
+
+for (const [role, next, expected] of [
+  ["customer", "/account#order/AMA-0123456789", "/account#order/AMA-0123456789"],
+  ["partner", "/partner#deliveries/AMA-0123456789", "/partner#deliveries/AMA-0123456789"],
+  ["partner", "/account#order/AMA-0123456789", "/partner"],
+  ["customer", "https://other.example/account#order/AMA-0123456789", "/account"],
+  ["customer", "//other.example/account#order/AMA-0123456789", "/account"],
+  ["customer", "/account#order/AMA-0123456789\n", "/account"],
+]) {
+  test(`sign-in returns ${role} only to a valid same-role order destination: ${JSON.stringify(next)}`, async () => {
+    const destinations = [];
+    let submit;
+    const context = {
+      URLSearchParams, HOME: {customer: "/account", partner: "/partner", admin: "/console"},
+      location: {search: "?next=" + encodeURIComponent(next)},
+      forms: {signin: {elements: {email: {value: "contact@example.invalid"}, password: {value: "test-password"}}}},
+      $: () => ({}), onSubmit: (form, message, fields, attempt) => { submit = attempt; },
+      api: async path => { assert.equal(path, "/api/auth/login"); return {role}; },
+      navigate: path => destinations.push(path),
+    };
+    runInNewContext(orderNavigation + customerSignin, context);
+    await submit(context.forms.signin);
+    assert.deepEqual(destinations, [expected]);
+  });
+}
+
+test("a legacy tracking link redirects to the authenticated order route without sending its token", () => {
+  const portalSource = readFileSync(join(__dirname, "..", "app", "static", "portal.js"), "utf8");
+  const trackingBoot = portalSource.slice(portalSource.indexOf('if (location.pathname === "/track")'));
+  const destinations = [];
+  runInNewContext(trackingBoot, {
+    URLSearchParams, show: () => {},
+    location: {pathname: "/track", hash: "#order=AMA-0123456789&token=old-private-token", replace: path => destinations.push(path)},
+  });
+  assert.deepEqual(destinations, ["/account#order/AMA-0123456789"]);
+});
+
+test("an expired customer session returns to sign-in with the order destination and forgets the old session", async () => {
+  const saved = new Map([["myturkei-session", "expired-session"]]), destinations = [];
+  const context = {
+    URLSearchParams,
+    sessionStorage: {getItem: key => saved.get(key), setItem: (key, value) => saved.set(key, value), removeItem: key => saved.delete(key)},
+    document: {body: {classList: {contains: () => false}}},
+    location: {pathname: "/account", hash: "#order/AMA-0123456789", replace: path => destinations.push(path)},
+    fetch: async () => ({ok: false, status: 401, json: async () => ({detail: "Please sign in to continue."})}),
+  };
+  runInNewContext(uiSource.slice(0, uiSource.indexOf("/* ---- feedback ---- */")), context);
+  context.api("/api/me/orders/AMA-0123456789");
+  await new Promise(resolve => setImmediate(resolve));
+  assert.deepEqual(destinations, ["/login?next=%2Faccount%23order%2FAMA-0123456789"]);
+  assert.equal(saved.has("myturkei-session"), false);
+  assert.equal(saved.get("myturkei-notice"), "Please sign in to continue.");
+});

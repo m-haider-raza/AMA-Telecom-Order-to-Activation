@@ -213,9 +213,16 @@ def public_order(order):
 
 
 def tracking_token(order_id):
-    """Stateless, unguessable per-order token; lets a customer track one order without an account."""
+    """Proof for linking an earlier guest order to a signed-in account; never authorizes status access."""
     secret = os.getenv("AMA_TRACKING_SECRET") or os.getenv("DEMO_ADMIN_TOKEN", "")
     return hmac.new(secret.encode(), order_id.encode(), hashlib.sha256).hexdigest()[:40]
+
+
+def order_status_path(order):
+    """Order updates lead to the appropriate signed-in portal, without a bearer credential."""
+    if order.get("partnerId") or order.get("actor") == "wholesale-partner":
+        return f"/partner#deliveries/{order['id']}"
+    return f"/account#order/{order['id']}"
 
 
 def approval_expired(record):

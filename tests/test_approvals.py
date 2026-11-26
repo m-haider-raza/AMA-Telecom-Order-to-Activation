@@ -143,7 +143,9 @@ def test_an_order_placed_for_an_enterprise_waits_for_its_contact_and_nothing_sta
     assert seen["id"] == order_id and seen["state"] == WAITING and "enterpriseApproval" not in seen
     assert seen["approval"]["status"] == "pending" and seen["approval"]["requestedBy"] == "Ömer Operatör"
     assert seen["approval"]["expired"] is False
-    tracked = desk.get(f"/api/portal/orders/{order_id}", headers={"X-Tracking-Token": tracking_token(order_id)})
+    assert desk.get(f"/api/portal/orders/{order_id}",
+                    headers={"X-Tracking-Token": tracking_token(order_id)}).status_code == 401
+    tracked = desk.browser.get(f"/api/portal/orders/{order_id}")
     assert tracked.status_code == 200 and tracked.json()["approval"]["status"] == "pending"
     for text in (mine.text, tracked.text):
         assert OPERATOR["upn"] not in text and OPERATOR["oid"] not in text
