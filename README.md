@@ -2,7 +2,7 @@
 
 A working, synthetic-data demonstrator for **AMA Case Study 30: agentic B2B order-to-activation for a Turkish telecommunications operator**, presented under the **TürkBizTel** brand. It follows dedicated Internet, managed SD-WAN and cloud-connect orders from a customer or a wholesale partner through to activation, with one supervisor per order and five specialist AI agents.
 
-*Status as of 26 November 2026.*
+*Status as of 27 November 2026.*
 
 > **This is not** a live carrier integration, a TM Forum-certified API or a KVKK/BTK-compliant production system. The network, CRM, inventory and partner adapters are labelled simulators, and the deployed demonstrator holds synthetic data only. Six real Foundry hosted agents return bounded proposals; only the trusted policy boundary can commit a transition after identity, approval and policy checks.
 
@@ -19,12 +19,15 @@ with private Blob state and live ACS email. All seven services were updated to
 The boundary subsequently received `foundry-sso-20261125-partner-email`: partner
 invitations now report actual email-service acceptance or a visible failure,
 not success when a background send is merely queued. The six bridges are unchanged.
-The latest boundary patch, `foundry-sso-20261126-customer-signin`, is ready as
-revision `0000016`, verified on 26 November at 22:37 UTC. It requires customer
+The customer-sign-in boundary patch, `foundry-sso-20261126-customer-signin`, was
+verified ready as revision `0000016` on 26 November at 22:37 UTC. It requires customer
 sign-in and order ownership for status links, including older token-bearing links,
 and returns the customer to the requested order after login. Partner update links
 open the organisation-scoped delivery portal. Email settings, existing accounts,
-agents and presentation artifacts are preserved.
+agents and presentation artifacts are preserved. The 27 November presentation-only
+update replaces the case-study solution chapter with the v8 customer-proposal film,
+including its poster, captions, twelve chapter jumps and current download bundle.
+The introduction now shows the matching 2:45 solution runtime and 2:28 app tour.
 The six scoped hosted agents and two model deployments are shared from
 `rg-amai-foundry-20261123`. Older applications remain historical editions with
 independent state. Agent 365 registration was retried on 24 November and returned
@@ -33,9 +36,10 @@ HTTP 403; existing Foundry identities are active, but the registration token lac
 
 Follow the end-to-end journey: **1) Today → 2) Architecture → 3) Solution → 4) Live App Demo → 5) Live App**.
 The recorded demo and the interactive app are separate chapters. The links below point to the current published editions.
-The presentation bundle remains the 24 November edition; the subsequent email
-and authentication patches update the live app, not the recorded videos or decks.
-Use this README and the linked runbooks for current application behavior.
+The 27 November customer-proposal update revises the solution film for identity,
+least privilege, accountable ownership and Agent 365 governance; the app-tour recording
+and 19-slide target deck remain the 24 November editions. The refreshed bundle
+includes the current film, captions and guides. Use the runbooks for live application behavior.
 
 | What | Where |
 |---|---|
@@ -44,7 +48,7 @@ Use this README and the linked runbooks for current application behavior.
 | Latest six-hosted-agent Foundry app: Microsoft SSO and engineer access token | [Service-team sign-in](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login#staff) or [case study](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study) |
 | Interactive solution story, with the latest videos, target deck and working demonstrator | [Start the story](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study) |
 | Current-state film (1:51) | [current-scenario.mp4](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/current-scenario.mp4) |
-| Solution film (2:56) | [solution-tower-v6.mp4](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/solution-tower-v6.mp4) |
+| Customer-proposal solution film (2:45, 23.52 MB; 3.4% smaller than v7) | [solution-tower-v8.mp4](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/solution-tower-v8.mp4) · [transcript](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/solution-tower-v8-transcript.txt) |
 | Login-to-activation highlights (2:28), then try it live | [Live App Demo chapter](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/demo), then [Live App](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/app), or [MP4](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/app-walkthrough.mp4) |
 | Shared customer and partner sign-in, with a staff SSO/token option | [Sign in](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/login) or [interactive Live App chapter](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/app) |
 | Earlier complete app tour (5:13), natural-paced George narration | [MP4](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/app-walkthrough-full.mp4) or [transcript](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/app-walkthrough-full-transcript.txt) |
@@ -56,7 +60,7 @@ Use this README and the linked runbooks for current application behavior.
 | Current Azure artifacts and architecture | [Inventory and flows](docs/azure-architecture.md) · [SVG](docs/images/current-azure-architecture.svg) · [PNG](docs/images/current-azure-architecture.png) |
 | What the application does and how to use it, page by page | [docs/APPLICATION-GUIDE.md](docs/APPLICATION-GUIDE.md) |
 | Residency release gate, gap list and runbook | [docs/PRODUCTION.md](docs/PRODUCTION.md) |
-| Latest videos, architecture previews, decks, research and guides | [Current artefact bundle](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-24.zip) or [24 November release](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-24) |
+| Latest videos, architecture previews, decks, research and guides | [27 November proposal artefact bundle](https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-27-Proposal.zip); earlier bundles and the [24 November GitHub release](https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-24) remain archived |
 | Original 22 November films, captions, transcripts, decks, research and guides | [Archived artefact bundle](https://ama30-private-zm5qigrnxeyay.wittywater-4a8731b1.swedencentral.azurecontainerapps.io/static/case-study/TurkBizTel-Case-Study-2026-11-22.zip); use the links above for the revised admin film and target deck |
 
 The current interactive story runs on the Foundry app in Azure Container Apps in Sweden Central. Customers and partners share email/password sign-in; staff can use **Microsoft Entra ID single sign-on** with named roles or the engineer access-token fallback with operator permissions. Enterprise approval is required before work starts on staff-created requests. Older token-only and standalone SSO deployments remain separate historical editions. See [docs/STAFF-SSO.md](docs/STAFF-SSO.md).
@@ -67,16 +71,17 @@ Its complete source-data snapshot is independent of the older apps. See the
 
 ## What's new in this update
 
+- **Customer-proposal film v8.** AI-powered agents are introduced once, then called agents throughout. The film presents Agent 365 as part of the proposed governance solution, alongside distinct Entra identities, personal manager sign-in, least privilege, named sponsors/owners, audit and access reviews. Its narration and visuals use proposal framing rather than demonstrator data or deployment-status commentary. The existing v6/v7 links, players, captions and transcript resolve to v8; prior branded MP4s and bundles remain unchanged. This presentation update does not register agents or change live governance configuration; the runbooks below retain the current deployment facts.
 - **Customer status links require sign-in.** New email updates open `/account#order/<id>` without a bearer tracking token; older tracking links no longer bypass login. Status and detail-change APIs require a valid customer session and ownership. The order destination survives sign-in or an expired session; a different customer cannot view it. Guest submission remains available, with matching-email verification or explicit linking from a signed-in account. Partner updates open their own organisation-scoped `/partner#deliveries/<id>` portal.
 - **Sign-in and capacity fixes included.** The active Foundry app opens shared sign-in rather than mistaking a signed-out visitor for an expired staff session, including inside the story. Partner capacity checks show readable product, available-unit and change-window rows with explicit failure messages. The complete bundle also includes the Foundry agents/model-economics deck and the current dual-login runbook.
-- **One current interactive story and download.** The 24 November edition combines the latest current-state and solution films, the 19-slide governed target-architecture deck with matching previews, and the 2:28 app walkthrough including the corrected "Inspect AI agent workspaces" narration. The downloadable bundle and SHA-256 manifest are rebuilt from those same assets with `python scripts/Publish_Case_Study.py`; earlier bundles remain archived.
+- **One current interactive story and download.** The 27 November Proposal bundle combines the customer-proposal solution film with the unchanged current-state film, 19-slide governed target-architecture deck and matching previews, and 2:28 app walkthrough. The downloadable bundle and SHA-256 manifest are rebuilt from those same assets with `python scripts/Publish_Case_Study.py`; earlier bundles remain archived. This artifact-only update does not create a new GitHub release.
 - **Login-to-activation live app demo (2:28).** Step 4 opens on the shared `/login` page for customers and partners, then follows **Staff sign in** to Microsoft SSO and access-token options. It retains customer service selection/preferences and approval, partner deliveries/payments/concerns, and customer activation tracking and updates. Service administration remains about two thirds of the film: enterprise orders, partner setup, exceptions, agent workspaces, Analytics and audit. Detailed admin queue, billing and benchmark segments are omitted to stay below 2:30 without speeding up. The same George narrator speaks at normal speed, with captions below the app and seven chapter jumps. Public sign-in screens are captured from the live app without entering credentials; workflows are recorded locally with synthetic fixtures and a test staff session, not Microsoft sign-in, hosted inference or carrier execution. Step 5 remains the interactive app; the earlier full 5:13 tour remains available.
 - **Orders placed for an enterprise, approved by the enterprise.** In the single sign-on build, **New order** now lists every enterprise in the database instead of one demo company. A service engineer picks one and places the order on its behalf. The enterprise's point of contact is e-mailed a personal link, and no agent starts until they approve, from the e-mail or from their own account. They can decline, and the service team can send the e-mail again or withdraw the request. Every step is recorded against the person who took it. [How it works](docs/STAFF-SSO.md#placing-an-order-for-an-enterprise).
 - **Data copied across, once.** `scripts/Copy-AppData.ps1` copies what the access-token app holds into the single sign-on app: the enterprise accounts, the partners and their contacts, every order that has settled with its messages and history, the partner concerns and the audit trail. Enterprises and partner contacts keep their passwords. The two apps stay separate: it is a one-time snapshot, nothing is synchronised afterwards, and the access-token app is only read. [How it works](docs/STAFF-SSO.md#copying-the-data-from-the-token-mode-app).
 - **Service-team single sign-on.** A new deployment mode replaces the shared access token with Microsoft Entra ID. Each person signs in with their own work account, an Entra app role (service manager, operator or auditor) decides what they can do, and the audit trail records who changed what on every order. It is a separate stack, so the existing app is unchanged, and customers still register and sign in with their own e-mail and password. [How it works and how to deploy it](docs/STAFF-SSO.md).
 - **Azure architecture, as deployed.** The [current inventory and diagram](docs/azure-architecture.md) distinguish the seven-service runtime, private Blob state, six shared Foundry projects/agents, mini/nano inference, scoped identities, email and monitoring. The original single-app SQL diagram is retained as a [historical snapshot](docs/legacy-azure-architecture.md), not presented as the current app.
 - **Agent 365 retried, not claimed.** All six existing hosted identities/blueprints were confirmed. The documented catalog POST returned HTTP 403; the signed-in user has Global Reader and the token has no registration-write scope. No duplicate identities or grants were created. [Exact status and administrator prerequisites](docs/AGENT365-STATUS.md).
-- **Solution film v6 (2:56).** Customers place orders, the supervisor wakes each agent in turn, TM Forum and MCP standards connect them, and the Azure Local design keeps customer data in Türkiye. Each AI agent is named in full once, then by its short name.
+- **Archived solution film v6 (2:56).** Each AI agent is named in full once, then by its short name. Version 7 retains that introduction style while adding the current identity and governance architecture.
 - **Application source and runbooks.** The customer and partner portals, accounts and staff sign-in, analytics, the Azure SQL store, the case-study site, the film build scripts and the tests are in this repository, and the [application guide](docs/APPLICATION-GUIDE.md) describes them.
 - **TürkBizTel branding** across the films, the deck and the app.
 - **This README** is now a landing page. The Azure detail lives in `docs/`.
@@ -370,7 +375,7 @@ The script checks the AMA demo tags and refuses unrelated groups. Run it only wh
 | Path | Contents |
 |---|---|
 | `app/` | Current web entry point `isolated/api.py`; `isolated/boundary.py` owns authorization/transitions, `isolated/runtime.py` the bridges, and `foundry/` the hosted contracts/code. `main.py` is the legacy/local demo. Shared `auth.py`, `sso.py`, accounts/partners/approvals and `delivery.py` provide the UX. Current state uses `isolated/store.py` Blob storage; SQL modules remain for older editions |
-| `app/static/` | The pages (landing, console, customer portal, partner portal, live demo, journey, solution players, case study), their scripts and styles, and the films, posters, captions and deck slides. Plain-named films such as `solution-tower-v6.mp4` are the source editions. The matching `*-turkbiztel.*` files are the TürkBizTel editions that `branded_static.py` serves under the plain names |
+| `app/static/` | The pages, scripts, styles, films, posters, captions and deck slides. Versioned source films have matching `*-turkbiztel.*` branded editions served under plain names. The v6 public link family now resolves to v7; the explicit v6 branded MP4 remains archived |
 | `app/static/film3d-assets/` | Assets for the 3D film, with their licences and an `ATTRIBUTION.md` |
 | `infra/main.bicep` | The Azure infrastructure |
 | `scripts/` | `Deploy.ps1`, `Register-StaffSso.ps1` (the Entra registration for single sign-on), `Remove-Demo.ps1`, `Start-Local.ps1`, `Smoke.py` and `Verify_Demo.py` for the app. The film pipeline: the `Render_*.py` renderers, `Synthesize_*.py` narration, `Rebrand_Media.py`, `requirements-narrator.txt` and `film3d/`, whose scenes need Node.js |
@@ -397,4 +402,4 @@ City names and approximate coordinates reference Wikidata: [Istanbul (Q406)](htt
 - **Operator marks.** The Turkcell, Türk Telekom and Vodafone Türkiye marks appear only to introduce the real Turkish telecom market, and Türk Telekom's public-domain geometric logo is used as industry context. The players link to each company's official website and to the source of its logo. The fictional case's challenges are not attributed to any of them. This project has no affiliation with, endorsement from, customer relationship with or live integration to those companies.
 - **Microsoft.** The Azure diagram and the 3D film use Microsoft's Azure icons unchanged, under Microsoft's icon terms. Microsoft's trademark rights remain, and no Microsoft endorsement or partnership is claimed. The 3D people are Microsoft Rocketbox avatars (MIT licence).
 - **Libraries.** The 3D film bundles three.js and fflate, both MIT. Their licence notices are in `app/static/film3d-assets/`, next to an `ATTRIBUTION.md`.
-- **Narration.** All narration is synthetic. The current-state film and solution film v6 use the Kokoro `bm_george` preset voice (the Kokoro-82M weights are Apache-2.0, and the kokoro-onnx runtime is MIT). Some earlier editions use a locally cloned voice of the author, and their players say so. The voice sample itself is not in this repository.
+- **Narration.** All narration is synthetic. The current-state film and solution films v6/v7 use the Kokoro `bm_george` preset voice (the Kokoro-82M weights are Apache-2.0, and the kokoro-onnx runtime is MIT). Some earlier editions use a locally cloned voice of the author, and their players say so. The voice sample itself is not in this repository.

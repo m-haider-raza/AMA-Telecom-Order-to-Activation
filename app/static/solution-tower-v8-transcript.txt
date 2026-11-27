@@ -1,0 +1,50 @@
+One order. Governed at every step.
+A customer proposal for secure order activation and accountable agent governance.
+
+A governed customer journey
+This proposal uses AI-powered agents. The Orchestration Agent dispatches work to five specialists. A trusted boundary controls every state change.
+The goal stays simple: less rework, faster activation, and clear customer status.
+
+Durable intake
+Intake saves the order and event together. A stable request key prevents duplicate acceptance.
+Invalid requests return for correction. Accepted work resumes from its saved stage.
+
+Validation checks feasibility
+The Validation Agent checks the site and capacity. Early checks prevent downstream rework.
+Wrong addresses need customer correction. Missing capacity needs resolution, not an invented approval.
+
+Decomposition builds the plan
+The Decomposition Agent creates linked service and resource orders using approved catalogue mappings.
+TM Forum inspired contracts remove rekeying. Planning grants no permission to activate.
+
+Policy-guarded provisioning
+The Provisioning Agent proposes activation. The boundary rechecks capacity, risk and the change window, then allocates once.
+Timeouts wake the Fallout Recovery Agent. High-risk work waits for a human decision.
+
+Bounded recovery
+The Fallout Recovery Agent retries one allowlisted timeout, then hands control back to the Provisioning Agent.
+Other faults go to the service desk. People own resolution; agents gain no broader authority.
+
+Service-manager identity
+Each service manager signs in with their own Microsoft Entra account. The manager role controls high-risk decisions.
+Agents and partners cannot approve. Decisions are audited; approval cannot create missing capacity.
+
+Customer updates and security
+The Customer Updates Agent prepares Turkish and English confirmations. Only the boundary sends email.
+Status links require customer sign-in and order ownership. Partner tools remain authenticated and organisation-scoped.
+
+Agent identity and least privilege
+Every agent has a separate Entra identity. Each runtime reaches only its own project and tools, with no direct state access.
+APIs verify the token, caller and permitted operation. Model output is a proposal, never permission to bypass policy.
+
+Security and residency
+The proposed design protects state with private storage and scoped access. Customer data and inference stay in Turkey.
+Azure Local hosts the workload with local keys, logs and backups. Every outbound metadata flow is reviewed.
+
+Ownership and Agent 365 governance
+Every agent has a named business sponsor and technical owner. The sponsor approves purpose, risk and budget; the owner controls releases and incidents.
+Agent 365 is part of the governance solution, bringing inventory and oversight alongside audit trails, access reviews, alerts and identity revocation.
+
+Customer value with governance
+Early validation, linked work and bounded recovery reduce avoidable waiting.
+The objective: faster activation with visible status, named accountability, and no excess agent authority.

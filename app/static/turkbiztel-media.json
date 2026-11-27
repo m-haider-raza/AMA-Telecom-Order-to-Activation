@@ -154,6 +154,34 @@
       "narrationCopied": true,
       "fullDecodeVerified": true,
       "chapterCount": 12
+    },
+    {
+      "source": "solution-tower-v7.mp4",
+      "sourceSHA256": "c0e24cfb3fd9f4fed964311a1bf23634efc7308fb46ff251c06d82699918ce62",
+      "file": "solution-tower-v7-turkbiztel.mp4",
+      "sha256": "6240b45d3145fed03510db1d657291d3eb7fe630239882dd73a73355936ed7dd",
+      "poster": "solution-tower-v7-turkbiztel-poster.jpg",
+      "brand": "TürkBizTel",
+      "duration": 171.082,
+      "width": 1920,
+      "height": 1080,
+      "narrationCopied": true,
+      "fullDecodeVerified": true,
+      "chapterCount": 12
+    },
+    {
+      "source": "solution-tower-v8.mp4",
+      "sourceSHA256": "b105807c4d1c0b1631bd3231e5662df0f50b70e377c09da723a9b4cce1f51791",
+      "file": "solution-tower-v8-turkbiztel.mp4",
+      "sha256": "f5ef77e09b7bcc6c7c5744d59b4862b89d4b49a61cc60c53bf57c07bc83fede1",
+      "poster": "solution-tower-v8-turkbiztel-poster.jpg",
+      "brand": "TürkBizTel",
+      "duration": 165.224,
+      "width": 1920,
+      "height": 1080,
+      "narrationCopied": true,
+      "fullDecodeVerified": true,
+      "chapterCount": 12
     }
   ]
 }

@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from app import auth, delivery, partners
-from app.branded_static import FILMS
+from app.branded_static import CURRENT_SOLUTION_ALIASES, FILMS, MEDIA_ALIASES
 from tests.test_accounts import ADMIN
 from tests.test_accounts import live as accounts_live  # noqa: F401
 
@@ -28,7 +28,8 @@ def brand_site(accounts_live):  # noqa: F811
 def test_public_pages_and_api_metadata_use_the_new_brand(brand_site):
     for path in ("/", "/order", "/track", "/login", "/account", "/partner", "/case-study", "/openapi.json",
                  "/static/journey.html", "/static/solution-tower-v4.html", "/static/solution-tower-v5.html",
-                 "/static/solution-tower-v6.html"):
+                 "/static/solution-tower-v6.html", "/static/solution-tower-v7.html",
+                 "/static/solution-tower-v8.html"):
         reply = brand_site.get(path)
         assert reply.status_code == 200, path
         assert "TürkBizTel" in reply.text, path
@@ -43,7 +44,9 @@ def test_existing_film_links_serve_seekable_branded_editions_and_preserve_source
     evidence = json.loads((STATIC / "turkbiztel-media.json").read_text(encoding="utf-8"))
     assert {row["source"] for row in evidence["films"]} == {name + ".mp4" for name in FILMS}
     for row in evidence["films"]:
-        original, branded = STATIC / row["source"], STATIC / row["file"]
+        original = STATIC / row["source"]
+        current = CURRENT_SOLUTION_ALIASES.get(original.name, original.name)
+        branded = STATIC / MEDIA_ALIASES[current]
         with original.open("rb") as source:
             assert hashlib.file_digest(source, "sha256").hexdigest() == row["sourceSHA256"]
         reply = brand_site.get(f"/static/{original.name}", headers={"Range": "bytes=100-199"})
@@ -52,6 +55,22 @@ def test_existing_film_links_serve_seekable_branded_editions_and_preserve_source
             assert reply.content == source.read(100)
         assert reply.status_code == 206 and reply.headers["content-type"] == "video/mp4"
         assert reply.headers["content-range"] == f"bytes 100-199/{branded.stat().st_size}"
+        archive = brand_site.get(f"/static/{row['file']}", headers={"Range": "bytes=100-199"})
+        with (STATIC / row["file"]).open("rb") as source:
+            source.seek(100)
+            assert archive.status_code == 206 and archive.content == source.read(100)
+
+
+def test_previous_current_solution_links_keep_video_captions_and_player_in_sync(brand_site):
+    for old, new in CURRENT_SOLUTION_ALIASES.items():
+        headers = {"Range": "bytes=0-199"} if old.endswith(".mp4") else {}
+        previous = brand_site.get("/static/" + old, headers=headers)
+        current = brand_site.get("/static/" + new, headers=headers)
+        assert previous.status_code == current.status_code in (200, 206)
+        assert previous.content == current.content, old
+        assert previous.headers["etag"] == current.headers["etag"], old
+    player = brand_site.get("/static/solution-tower-v6.html").text
+    assert "/static/solution-tower-v8.mp4" in player and "/static/solution-tower-v8.vtt" in player
 
 
 def test_downloadable_presentation_carries_the_brand_on_every_public_slide():

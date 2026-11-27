@@ -60,6 +60,9 @@ def prepare(edition, directory, scratch, script_path=SCRIPT):
         "no reference audio or script was uploaded."
     )
     source.update(script.get("presentationLabels", {}))
+    if script.get("proposalEdition"):
+        source["proposalEdition"] = True
+        source["references"] = deepcopy(script["references"])
     source["scenes"] = []
     for revised in script["scenes"]:
         scene = old_scenes[revised["id"]]
@@ -138,6 +141,65 @@ def prepare(edition, directory, scratch, script_path=SCRIPT):
 
 
 def customer_player(edition, script):
+    governance = script.get("governanceEdition", False)
+    proposal = script.get("proposalEdition", False)
+    channel_scope = (
+        "The trusted boundary sends real Azure Communication Services email. "
+        "Customer status links require sign-in and order ownership; partner access is organisation-scoped."
+        if governance else
+        "The customer portal is the demonstrated message channel; external delivery needs integrated channel services."
+    )
+    governance_scope = (
+        "<p>Hosted Entra agent identities and runtime managed identities are distinct. "
+        "Receiving APIs enforce caller identity, roles, operation allowlists and current policy; "
+        "agents cannot write state or grant approvals directly. Staff token fallback has operator permissions, "
+        "not a personal service-manager identity.</p>"
+        "<p>Named business sponsor and technical-owner assignments, access reviews and incident alerts "
+        "are production operating-model requirements, not verified live assignments. "
+        "Agent 365 catalog registration remains pending tenant approval; "
+        "it does not replace the authorization controls already enforced.</p>"
+        if governance else ""
+    )
+    previous = (
+        '<a href="/static/solution-tower-v6-turkbiztel.mp4">Archived first-mention film</a>'
+        if governance else
+        '<a href="/static/solution-tower-v2.html">Previous crisp tower edition</a>'
+    )
+    scope = (
+        "This customer walkthrough describes the solution design and illustrative workflow. "
+        "The running Azure reference implementation uses synthetic data and simulated carrier adapters. "
+        "Türkiye residency requires supported Azure Local infrastructure at an approved Turkish site, "
+        "local application services, inference, keys, logs and backups, and approved egress controls. "
+        "Connected Arc platform metadata requires review; disconnected operation requires eligibility and capacity."
+    )
+    delivery = (
+        "Business objectives describe the intended value, rather than a quantified customer outcome. "
+        "TMF622/TMF641-inspired interfaces require customer-specific contracts and conformance acceptance. "
+        f"{channel_scope} "
+        "Unknown-fault escalation requires a service-desk integration and accountable operational owner."
+    )
+    if proposal:
+        scope = (
+            "This film presents a customer solution proposal. Azure Local at an approved Turkish operator site "
+            "hosts customer workloads and inference, with local keys, logs and backups. "
+            "Outbound metadata flows are reviewed and controlled."
+        )
+        delivery = (
+            "TM Forum-inspired product, service and resource contracts keep the order journey linked. "
+            "The trusted boundary controls state changes and Azure Communication Services email. "
+            "Customers sign in to see their own orders; partner access is organisation-scoped. "
+            "Bounded recovery hands other faults to an accountable service desk."
+        )
+        governance_scope = (
+            "<p>Each agent has a distinct Entra identity and only the projects, tools and operations it needs. "
+            "Receiving APIs enforce caller identity, role and current policy. "
+            "Service managers use personal Entra sign-in; agents and partners cannot grant approvals.</p>"
+            "<p>Microsoft Agent 365 is part of the proposed agent-governance solution, providing inventory, "
+            "ownership visibility and oversight. Named business sponsors approve purpose, risk and budget; "
+            "technical owners control releases and incidents. Audit trails, access reviews, alerts and "
+            "identity revocation complement server-enforced permissions.</p>"
+        )
+        previous = '<a href="/static/solution-tower-v7-turkbiztel.mp4">Previous governance film</a>'
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TürkBizTel | Customer solution</title><link rel="stylesheet" href="/static/solution.css">
@@ -155,19 +217,13 @@ def customer_player(edition, script):
 <nav id="chapters" aria-label="Video chapters"></nav>
 <details><summary>Full narration transcript</summary><div id="transcript"></div></details>
 <details><summary>Solution scope and delivery requirements</summary>
-<p>This customer walkthrough describes the solution design and illustrative workflow.
-The running Azure reference implementation uses synthetic data and simulated carrier adapters.
-Türkiye residency requires supported Azure Local infrastructure at an approved Turkish site,
-local application services, inference, keys, logs and backups, and approved egress controls.
-Connected Arc platform metadata requires review; disconnected operation requires eligibility and capacity.</p>
-<p>Business objectives describe the intended value, rather than a quantified customer outcome.
-TMF622/TMF641-inspired interfaces require customer-specific contracts and conformance acceptance.
-The customer portal is the demonstrated message channel; external delivery needs integrated channel services.
-Unknown-fault escalation requires a service-desk integration and accountable operational owner.</p>
+<p>{scope}</p>
+<p>{delivery}</p>
+{governance_scope}
 <p>Microsoft product icons identify their services. Operator branding supplies industry context;
 it implies no endorsement, relationship or actual carrier integration.</p>
 <div id="references"></div></details>
-<p><a href="/static/solution-tower-v2.html">Previous crisp tower edition</a>.
+<p>{previous}.
 All earlier videos are preserved.</p>
 <details id="animation-panel"><summary>Interactive solution walkthrough</summary>
 <button id="animation-play" type="button">Play animation</button>
@@ -214,6 +270,15 @@ def verify_visuals(url, story, review):
                 if row["changedPixels"] < 1000 or row["tower"]["height"] < 500 or len(row["avatars"]) != 5:
                     raise ValueError(f"Tower identity or animation missing: {scene['id']}")
                 for check in row["beatChecks"]:
+                    if story.get("proposalEdition"):
+                        text = " ".join(check["visibleText"]).lower()
+                        if any(phrase in text for phrase in (
+                            "synthetic", "simulat", "pilot", "pending", "not deployed", "not registered",
+                            "not measured", "registration blocked", "no live network changes",
+                        )) or re.search(r"\bdemo\b", text):
+                            raise ValueError(f"Proposal contains demonstrator status wording: {scene['id']}")
+                        if scene["id"] != "opening" and re.search(r"\bai\b", text):
+                            raise ValueError(f"Proposal repeats AI after the introduction: {scene['id']}")
                     if story.get("editionLabel") == "CUSTOMER SOLUTION / ORDER TO ACTIVATION":
                         text = " ".join(check["visibleText"]).lower()
                         if any(phrase in text for phrase in ["proposed", "not deployed", "not measured",
@@ -264,8 +329,12 @@ def build(edition, directory, review, preview, script_path=SCRIPT):
             worker.join(timeout=10)
             if worker.is_alive():
                 raise RuntimeError("The render server did not stop")
-        metadata = [";FFMETADATA1", "title=TürkBizTel - One order. One accountable flow.",
-                    "comment=Distinct local neural preset voice; no author voice cloning; illustrative simulation"]
+        comment = (
+            "Customer proposal: secure order activation and Agent 365 governance; locally generated preset narration"
+            if story.get("proposalEdition") else
+            "Distinct local neural preset voice; no author voice cloning; illustrative simulation"
+        )
+        metadata = [";FFMETADATA1", f"title=TürkBizTel - {story['title']}", f"comment={comment}"]
         position = 0
         for scene in story["scenes"]:
             end = position + round(scene["duration"] * 1000)
@@ -295,6 +364,11 @@ def build(edition, directory, review, preview, script_path=SCRIPT):
             "fullDecodeVerified": True, "captionCount": sum(len(s["beats"]) for s in story["scenes"]),
         }
         (STATIC / f"{edition}-evidence.json").write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
+        if story.get("editionLabel") == "IDENTITY & GOVERNANCE" or story.get("proposalEdition"):
+            transcript = [story["title"], story["subtitle"], ""]
+            for scene in story["scenes"]:
+                transcript.extend([scene["chapter"], *(beat["text"] for beat in scene["beats"]), ""])
+            (STATIC / f"{edition}-transcript.txt").write_text("\n".join(transcript), encoding="utf-8")
         print(f"Created {edition}.mp4: {actual:.3f}s; all previous MP4s unchanged.", flush=True)
 
 

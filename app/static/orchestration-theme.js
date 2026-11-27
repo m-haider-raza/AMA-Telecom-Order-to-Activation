@@ -177,7 +177,7 @@ window.amaFilmTheme = {
           f.agentStates.every(s => s === "done") ? "MISSION COMPLETE" : "AWAITING THE ORDER";
       text(status, x, 975, 17, color, 600, "center");
       text("One persisted handoff at a time.", x, 1008, 17, C.muted, 400, "center");
-      text("No unlimited AI execution authority.", x, 1034, 15, C.muted, 400, "center");
+      text(data.authorityLabel || "No unlimited AI execution authority.", x, 1034, 15, C.muted, 400, "center");
     }
 
     ctx.fillStyle = "#081322"; ctx.fillRect(0, 0, 1920, 1080);

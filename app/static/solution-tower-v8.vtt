@@ -1,0 +1,73 @@
+WEBVTT
+
+00:00:00.220 --> 00:00:09.094
+This proposal uses AI-powered agents. The Orchestration Agent dispatches work to five specialists. A trusted boundary controls every state change.
+
+00:00:09.274 --> 00:00:13.985
+The goal stays simple: less rework, faster activation, and clear customer status.
+
+00:00:14.885 --> 00:00:20.526
+Intake saves the order and event together. A stable request key prevents duplicate acceptance.
+
+00:00:20.706 --> 00:00:25.659
+Invalid requests return for correction. Accepted work resumes from its saved stage.
+
+00:00:26.559 --> 00:00:31.678
+The Validation Agent checks the site and capacity. Early checks prevent downstream rework.
+
+00:00:31.858 --> 00:00:37.849
+Wrong addresses need customer correction. Missing capacity needs resolution, not an invented approval.
+
+00:00:38.749 --> 00:00:44.359
+The Decomposition Agent creates linked service and resource orders using approved catalogue mappings.
+
+00:00:44.539 --> 00:00:50.028
+TM Forum inspired contracts remove rekeying. Planning grants no permission to activate.
+
+00:00:50.928 --> 00:00:57.994
+The Provisioning Agent proposes activation. The boundary rechecks capacity, risk and the change window, then allocates once.
+
+00:00:58.174 --> 00:01:02.866
+Timeouts wake the Fallout Recovery Agent. High-risk work waits for a human decision.
+
+00:01:03.766 --> 00:01:09.894
+The Fallout Recovery Agent retries one allowlisted timeout, then hands control back to the Provisioning Agent.
+
+00:01:10.074 --> 00:01:15.425
+Other faults go to the service desk. People own resolution; agents gain no broader authority.
+
+00:01:16.325 --> 00:01:23.142
+Each service manager signs in with their own Microsoft Entra account. The manager role controls high-risk decisions.
+
+00:01:23.322 --> 00:01:29.055
+Agents and partners cannot approve. Decisions are audited; approval cannot create missing capacity.
+
+00:01:29.955 --> 00:01:35.832
+The Customer Updates Agent prepares Turkish and English confirmations. Only the boundary sends email.
+
+00:01:36.012 --> 00:01:43.201
+Status links require customer sign-in and order ownership. Partner tools remain authenticated and organisation-scoped.
+
+00:01:44.101 --> 00:01:51.566
+Every agent has a separate Entra identity. Each runtime reaches only its own project and tools, with no direct state access.
+
+00:01:51.746 --> 00:01:59.089
+APIs verify the token, caller and permitted operation. Model output is a proposal, never permission to bypass policy.
+
+00:01:59.989 --> 00:02:06.532
+The proposed design protects state with private storage and scoped access. Customer data and inference stay in Turkey.
+
+00:02:06.712 --> 00:02:13.142
+Azure Local hosts the workload with local keys, logs and backups. Every outbound metadata flow is reviewed.
+
+00:02:14.042 --> 00:02:22.479
+Every agent has a named business sponsor and technical owner. The sponsor approves purpose, risk and budget; the owner controls releases and incidents.
+
+00:02:22.659 --> 00:02:32.544
+Agent 365 is part of the governance solution, bringing inventory and oversight alongside audit trails, access reviews, alerts and identity revocation.
+
+00:02:33.444 --> 00:02:37.827
+Early validation, linked work and bounded recovery reduce avoidable waiting.
+
+00:02:38.007 --> 00:02:44.397
+The objective: faster activation with visible status, named accountability, and no excess agent authority.

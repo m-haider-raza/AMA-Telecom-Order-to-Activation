@@ -1,0 +1,252 @@
+{
+  "title": "One order. Governed at every step.",
+  "subtitle": "A customer proposal for secure order activation and accountable agent governance.",
+  "customerEdition": true,
+  "governanceEdition": true,
+  "proposalEdition": true,
+  "deliveryTempo": 1.20,
+  "presentationLabels": {
+    "editionLabel": "CUSTOMER PROPOSAL",
+    "footerLabel": "CUSTOMER PROPOSAL / GOVERNED ORDER TO ACTIVATION",
+    "localSupervisorLabel": "GOVERNED SUPERVISOR",
+    "architectureStatusLabel": "SECURE SOLUTION DESIGN",
+    "authorityLabel": "No unlimited agent authority.",
+    "loadStatusLabel": "Explore the proposed order journey, separate Entra identities, enforced permissions and Agent 365 governance."
+  },
+  "sources": [
+    "app/isolated/identity.py",
+    "app/isolated/boundary.py",
+    "app/isolated/api.py",
+    "app/sso.py",
+    "app/accounts_api.py",
+    "docs/FOUNDRY-AGENTS.md",
+    "docs/PRODUCTION.md"
+  ],
+  "references": [
+    {
+      "name": "Microsoft Agent 365 management, governance and security",
+      "url": "https://learn.microsoft.com/en-us/microsoft-agent-365/overview"
+    },
+    {
+      "name": "Azure Local overview",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/overview"
+    },
+    {
+      "name": "Azure Arc data and privacy",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/servers/security-data-privacy"
+    },
+    {
+      "name": "TM Forum TMF622 product ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/product-ordering-management-api-TMF622/v5.0"
+    },
+    {
+      "name": "TM Forum TMF641 service ordering",
+      "url": "https://www.tmforum.org/open-digital-architecture/open-apis/service-ordering-management-api-TMF641/v4.1"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "title": "One order. Governed at every step.",
+      "chapter": "A governed customer journey",
+      "banner": "One order / separate identities / trusted boundary / accountable people",
+      "customerLabel": "Business connectivity",
+      "industryContextLabel": "Turkish industry context. No affiliation implied.",
+      "takeaway": "ONE SUPERVISOR. FIVE SPECIALISTS. A TRUSTED POLICY BOUNDARY.",
+      "beats": [
+        {"text": "This proposal uses AI-powered agents. The Orchestration Agent dispatches work to five specialists. A trusted boundary controls every state change."},
+        {"text": "The goal stays simple: less rework, faster activation, and clear customer status."}
+      ]
+    },
+    {
+      "id": "intake",
+      "title": "Accept once. Keep the handoff.",
+      "chapter": "Durable intake",
+      "ownerLabel": "ORDER INTAKE / ATOMIC SAVE AND REPLAY CHECKS",
+      "takeaway": "SAVE THE ORDER AND EVENT TOGETHER. DO NOT ACCEPT A DUPLICATE.",
+      "cards": [
+        {"title": "CUSTOMER ORDER", "body": "Approved product.\nStable request key."},
+        {"title": "ATOMIC SAVE", "body": "Order and event together.\nNo lost handoff."},
+        {"title": "SAFE REPLAY", "body": "Resume saved work.\nReject changed replays."}
+      ],
+      "exception": {"title": "INVALID REQUEST", "body": "Return for correction.\nDo not invent details."},
+      "beats": [
+        {"text": "Intake saves the order and event together. A stable request key prevents duplicate acceptance."},
+        {"text": "Invalid requests return for correction. Accepted work resumes from its saved stage."}
+      ]
+    },
+    {
+      "id": "validation",
+      "title": "Catch errors before allocation.",
+      "chapter": "Validation checks feasibility",
+      "ownerLabel": "VALIDATION / FEASIBILITY ONLY, NO ACTIVATION AUTHORITY",
+      "takeaway": "CHECK THE SITE AND CAPACITY. NEVER INVENT AN APPROVAL.",
+      "cards": [
+        {"title": "RECEIVED ORDER", "body": "Relevant site facts.\nApproved catalogue."},
+        {"title": "VALIDATE", "body": "Check references\nand available capacity."},
+        {"title": "FEASIBLE INTENT", "body": "Only validated work\nmoves to planning."}
+      ],
+      "exception": {"title": "STOP AND RESOLVE", "body": "Customer corrects the site.\nManager reviews capacity."},
+      "beats": [
+        {"text": "The Validation Agent checks the site and capacity. Early checks prevent downstream rework."},
+        {"text": "Wrong addresses need customer correction. Missing capacity needs resolution, not an invented approval."}
+      ]
+    },
+    {
+      "id": "decomposition",
+      "title": "Plan once. Keep every task linked.",
+      "chapter": "Decomposition builds the plan",
+      "ownerLabel": "DECOMPOSITION / APPROVED MAPPINGS, NOT EXECUTION",
+      "takeaway": "TM FORUM-INSPIRED CONTRACTS. LINKED WORK. NO REKEYING.",
+      "cards": [
+        {"title": "PRODUCT ORDER", "body": "TMF622-inspired intake.\nApproved catalogue."},
+        {"title": "SERVICE ORDERS", "body": "TMF641-inspired services.\nLinked to the product."},
+        {"title": "RESOURCE ORDERS", "body": "Ports and IP blocks.\nSame order identity."}
+      ],
+      "beats": [
+        {"text": "The Decomposition Agent creates linked service and resource orders using approved catalogue mappings."},
+        {"text": "TM Forum inspired contracts remove rekeying. Planning grants no permission to activate."}
+      ]
+    },
+    {
+      "id": "provisioning",
+      "title": "The boundary checks. Then commits.",
+      "chapter": "Policy-guarded provisioning",
+      "ownerLabel": "ONLY THE TRUSTED BOUNDARY COMMITS POLICY-VALIDATED CHANGES",
+      "takeaway": "MODELS PROPOSE. POLICY ENFORCES. ALLOCATE ONCE.",
+      "cards": [
+        {"title": "AGENT PROPOSAL", "body": "Approved plan and stage.\nNo arbitrary allocation."},
+        {"title": "BOUNDARY CHECKS", "body": "Capacity, risk and window.\nIdentity and revision."},
+        {"title": "ATOMIC COMMIT", "body": "Allocate only once.\nPersist result and audit."}
+      ],
+      "exception": {"title": "TIMEOUT OR RISK", "body": "Bounded recovery,\nor manager review."},
+      "beats": [
+        {"text": "The Provisioning Agent proposes activation. The boundary rechecks capacity, risk and the change window, then allocates once."},
+        {"text": "Timeouts wake the Fallout Recovery Agent. High-risk work waits for a human decision."}
+      ]
+    },
+    {
+      "id": "recovery",
+      "title": "One known fault. One permitted retry.",
+      "chapter": "Bounded recovery",
+      "ownerLabel": "RECOVERY / ONE ALLOWLISTED PLAYBOOK, NO APPROVAL AUTHORITY",
+      "events": ["Known timeout -> one allowlisted recovery", "Other faults -> accountable service-desk resolution"],
+      "takeaway": "ONE ALLOWLISTED RETRY. HAND BACK. NO UNRESTRICTED TOOLS.",
+      "cards": [
+        {"title": "KNOWN TIMEOUT", "body": "Allowlisted fault only.\nNo general-purpose tools."},
+        {"title": "RETRY ONCE", "body": "One approved playbook.\nNo endless loop."},
+        {"title": "HAND BACK", "body": "Return to provisioning.\nNever reserve twice."}
+      ],
+      "exception": {"title": "OTHER FAULTS", "body": "Escalate to people.\nService-desk resolution."},
+      "beats": [
+        {"text": "The Fallout Recovery Agent retries one allowlisted timeout, then hands control back to the Provisioning Agent."},
+        {"text": "Other faults go to the service desk. People own resolution; agents gain no broader authority."}
+      ]
+    },
+    {
+      "id": "human",
+      "title": "A named person owns the decision.",
+      "chapter": "Service-manager identity",
+      "ownerLabel": "PERSONAL ENTRA SIGN-IN / SERVICE MANAGER ROLE / AUDITED DECISIONS",
+      "takeaway": "MANAGER AUTHORITY IS NEVER SHARED WITH AGENTS OR PARTNERS.",
+      "parallelLanes": true,
+      "cards": [
+        {"title": "PERSONAL SIGN-IN", "body": "Own Microsoft Entra ID.\nNamed service manager."},
+        {"title": "ROLE-CHECKED ACTION", "body": "Approve or reject risk.\nRecord who decided."},
+        {"title": "NO BYPASS", "body": "Agents cannot approve.\nNeither can partners."}
+      ],
+      "beats": [
+        {"text": "Each service manager signs in with their own Microsoft Entra account. The manager role controls high-risk decisions."},
+        {"text": "Agents and partners cannot approve. Decisions are audited; approval cannot create missing capacity."}
+      ]
+    },
+    {
+      "id": "communication",
+      "title": "Truthful status. Authorized access.",
+      "chapter": "Customer updates and security",
+      "ownerLabel": "BOUNDARY-ONLY EMAIL / CUSTOMER SIGN-IN AND ORDER OWNERSHIP",
+      "takeaway": "ACTIVATE FIRST. CONFIRM SECOND. SHOW ONLY THE CUSTOMER'S ORDER.",
+      "cards": [
+        {"title": "ACTIVATION RESULT", "body": "Verified service status.\nNo false success."},
+        {"title": "BILINGUAL UPDATE", "body": "Turkish and English.\nBoundary-controlled email."},
+        {"title": "CUSTOMER SIGN-IN", "body": "Check order ownership.\nNo anonymous tracking."}
+      ],
+      "beats": [
+        {"text": "The Customer Updates Agent prepares Turkish and English confirmations. Only the boundary sends email."},
+        {"text": "Status links require customer sign-in and order ownership. Partner tools remain authenticated and organisation-scoped."}
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "One identity. Only the permitted job.",
+      "chapter": "Agent identity and least privilege",
+      "ownerLabel": "AZURE RBAC + RECEIVING-API ALLOWLISTS / DENY CROSS-ROLE ACCESS",
+      "takeaway": "IDENTITY IS NOT UNLIMITED PERMISSION. ENFORCE THE LIMITS AT THE API.",
+      "parallelLanes": true,
+      "events": ["Separate Entra agent and runtime identities", "Exact role + caller + operation / reject excess authority"],
+      "cards": [
+        {"title": "ENTRA IDENTITIES", "body": "Separate hosted agent IDs\nand runtime identities."},
+        {"title": "LEAST PRIVILEGE", "body": "Only own project and tools.\nNo direct state access."},
+        {"title": "API ENFORCEMENT", "body": "Token, caller and operation.\nModel output is a proposal."}
+      ],
+      "beats": [
+        {"text": "Every agent has a separate Entra identity. Each runtime reaches only its own project and tools, with no direct state access."},
+        {"text": "APIs verify the token, caller and permitted operation. Model output is a proposal, never permission to bypass policy."}
+      ]
+    },
+    {
+      "id": "residency",
+      "title": "Protect the data. Keep it local.",
+      "chapter": "Security and residency",
+      "mode": "proposed",
+      "ownerLabel": "TURKIYE RESIDENCY / PRIVATE STATE, LOCAL INFERENCE AND CONTROLLED EGRESS",
+      "events": ["Customer data and inference at an approved Turkish operator site", "Local keys, logs and backups / reviewed metadata flows"],
+      "takeaway": "LOCAL CUSTOMER DATA AND INFERENCE. REVIEW EVERY OUTBOUND FLOW.",
+      "cards": [
+        {"title": "DATA PROTECTION", "body": "HTTPS and private state.\nScoped identity access."},
+        {"title": "AZURE LOCAL", "body": "Turkish operator site.\nLocal data and inference.", "icon": "azure-local.svg"},
+        {"title": "CONTROLLED EGRESS", "body": "Local keys and backups.\nApprove metadata flows."}
+      ],
+      "beats": [
+        {"text": "The proposed design protects state with private storage and scoped access. Customer data and inference stay in Turkey."},
+        {"text": "Azure Local hosts the workload with local keys, logs and backups. Every outbound metadata flow is reviewed."}
+      ]
+    },
+    {
+      "id": "hybrid",
+      "title": "Accountable people. Governed agents.",
+      "chapter": "Ownership and Agent 365 governance",
+      "mode": "proposed",
+      "ownerLabel": "AGENT 365 + ENTRA / GOVERNANCE, OVERSIGHT AND ENFORCED PERMISSIONS",
+      "parallelLanes": true,
+      "events": ["Every agent has a named business sponsor and technical owner", "Agent 365 governance / inventory, oversight and access reviews"],
+      "takeaway": "SPONSOR: PURPOSE, RISK, BUDGET. TECHNICAL OWNER: RELEASES AND INCIDENTS.",
+      "cards": [
+        {"title": "BUSINESS SPONSOR", "body": "Approve purpose, risk\nand budget."},
+        {"title": "TECHNICAL OWNER", "body": "Test releases and monitor.\nOwn incidents and rollback."},
+        {"title": "AGENT 365 GOVERNANCE", "body": "Inventory and oversight.\nPolicies and access reviews."}
+      ],
+      "beats": [
+        {"text": "Every agent has a named business sponsor and technical owner. The sponsor approves purpose, risk and budget; the owner controls releases and incidents."},
+        {"text": "Agent 365 is part of the governance solution, bringing inventory and oversight alongside audit trails, access reviews, alerts and identity revocation."}
+      ]
+    },
+    {
+      "id": "impact",
+      "title": "Faster progress. Controlled authority.",
+      "chapter": "Customer value with governance",
+      "ownerLabel": "CUSTOMER VALUE / FASTER PROGRESS WITH ACCOUNTABLE CONTROL",
+      "events": ["Early checks + durable handoffs + bounded recovery", "Named people + scoped identities + auditable decisions"],
+      "takeaway": "FASTER DELIVERY WITHOUT GIVING AGENTS MORE AUTHORITY THAN THEIR JOB.",
+      "cards": [
+        {"title": "LESS REWORK", "body": "Validate early.\nKeep tasks linked."},
+        {"title": "SAFER PROGRESS", "body": "Bounded actions.\nHuman risk decisions."},
+        {"title": "ACCOUNTABLE VALUE", "body": "Visible customer status.\nReview outcomes and cost."}
+      ],
+      "beats": [
+        {"text": "Early validation, linked work and bounded recovery reduce avoidable waiting."},
+        {"text": "The objective: faster activation with visible status, named accountability, and no excess agent authority."}
+      ]
+    }
+  ]
+}

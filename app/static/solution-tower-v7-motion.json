@@ -1,0 +1,4034 @@
+[
+  {
+    "scene": "opening",
+    "beat": 0,
+    "event": "Customer selects a product",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.75,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 19475,
+    "beatChecks": [
+      {
+        "scene": "opening",
+        "beat": 0,
+        "event": "Customer selects a product",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.03486446439466574,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "01 / A GOVERNED CUSTOMER JOURNEY",
+          "One order. Governed at every step.",
+          "ORDER A / Customer selects a product",
+          "CUSTOMER",
+          "Demo Marmara Logistics",
+          "PLACE ORDER",
+          "T\u00fcrkBizTel",
+          "DEDICATED INTERNET",
+          "MANAGED SD-WAN",
+          "CLOUD CONNECT",
+          "ORDER A",
+          "Turkish industry context only. No affiliation or live",
+          "integration.",
+          "One order / separate identities / trusted boundary / accountable people",
+          "ONE SUPERVISOR. FIVE SPECIALISTS. A TRUSTED POLICY BOUNDARY.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "A business orders connectivity. The Orchestration AI Agent dispatches work to five specialists. A trusted",
+          "boundary controls every state change.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:00 / 2:51"
+        ]
+      },
+      {
+        "scene": "opening",
+        "beat": 1,
+        "event": "Customer prepares an order",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.06368250450553735,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "01 / A GOVERNED CUSTOMER JOURNEY",
+          "One order. Governed at every step.",
+          "ORDER A / Customer prepares an order",
+          "CUSTOMER",
+          "Demo Marmara Logistics",
+          "PLACE ORDER",
+          "T\u00fcrkBizTel",
+          "DEDICATED INTERNET",
+          "MANAGED SD-WAN",
+          "CLOUD CONNECT",
+          "ORDER A",
+          "Turkish industry context only. No affiliation or live",
+          "integration.",
+          "One order / separate identities / trusted boundary / accountable people",
+          "ONE SUPERVISOR. FIVE SPECIALISTS. A TRUSTED POLICY BOUNDARY.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The goal stays simple: less rework, faster activation, and clear customer status.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:09 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 19867
+  },
+  {
+    "scene": "intake",
+    "beat": 0,
+    "event": "POST productOrder / idempotency key",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7500000000000003,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 188.29248046875,
+        "bodyWidth": 188.3857421875,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 136.96142578125,
+        "bodyWidth": 258.5322265625,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 129.3427734375,
+        "bodyWidth": 234.39453125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "intake",
+        "beat": 0,
+        "event": "POST productOrder / idempotency key",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.053179703079991376,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 188.29248046875,
+            "bodyWidth": 188.3857421875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 136.96142578125,
+            "bodyWidth": 258.5322265625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 129.3427734375,
+            "bodyWidth": 234.39453125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "02 / DURABLE INTAKE",
+          "Accept once. Keep the handoff.",
+          "ORDER A / POST productOrder / idempotency key",
+          "CUSTOMER ORDER",
+          "Approved product.",
+          "Stable request key.",
+          "ATOMIC SAVE",
+          "Order and event together.",
+          "No lost handoff.",
+          "SAFE REPLAY",
+          "Resume saved work.",
+          "Reject changed replays.",
+          "ORDER INTAKE / ATOMIC SAVE AND REPLAY CHECKS",
+          "SAVE THE ORDER AND EVENT TOGETHER. DO NOT ACCEPT A DUPLICATE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Intake saves the order and event together. A stable request key prevents duplicate acceptance.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:14 / 2:51"
+        ]
+      },
+      {
+        "scene": "intake",
+        "beat": 1,
+        "event": "Invalid request -> submitter corrects before acceptance",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.060670898798918946,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 188.29248046875,
+            "bodyWidth": 188.3857421875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 136.96142578125,
+            "bodyWidth": 258.5322265625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 180.84814453125,
+            "bodyWidth": 214.11328125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "02 / DURABLE INTAKE",
+          "Accept once. Keep the handoff.",
+          "ORDER A / Invalid request -> submitter corrects before acceptance",
+          "CUSTOMER ORDER",
+          "Approved product.",
+          "Stable request key.",
+          "ATOMIC SAVE",
+          "Order and event together.",
+          "No lost handoff.",
+          "INVALID REQUEST",
+          "Return for correction.",
+          "Do not invent details.",
+          "ORDER INTAKE / ATOMIC SAVE AND REPLAY CHECKS",
+          "SAVE THE ORDER AND EVENT TOGETHER. DO NOT ACCEPT A DUPLICATE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Invalid requests return for correction. Accepted work resumes from its saved stage.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:20 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5485
+  },
+  {
+    "scene": "validation",
+    "beat": 0,
+    "event": "order.received -> validation agent",
+    "agentStates": [
+      "active",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999998,
+    "activeAgent": 0,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 172.2861328125,
+        "bodyWidth": 207.58203125,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 97.0224609375,
+        "bodyWidth": 222.642578125,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 172.37841796875,
+        "bodyWidth": 199.1494140625,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "validation",
+        "beat": 0,
+        "event": "order.received -> validation agent",
+        "agentStates": [
+          "active",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05289494007003283,
+        "activeAgent": 0,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 172.2861328125,
+            "bodyWidth": 207.58203125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 97.0224609375,
+            "bodyWidth": 222.642578125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 172.37841796875,
+            "bodyWidth": 199.1494140625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "03 / VALIDATION CHECKS FEASIBILITY",
+          "Catch errors before allocation.",
+          "ORDER A / order.received -> validation agent",
+          "RECEIVED ORDER",
+          "Relevant site facts.",
+          "Approved catalogue.",
+          "VALIDATE",
+          "Check references",
+          "and available capacity.",
+          "FEASIBLE INTENT",
+          "Only validated work",
+          "moves to planning.",
+          "VALIDATION / FEASIBILITY ONLY, NO ACTIVATION AUTHORITY",
+          "CHECK THE SITE AND CAPACITY. NEVER INVENT AN APPROVAL.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "ACTIVE",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: VALIDATION",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The Validation AI Agent checks the site and capacity. Early checks prevent downstream rework.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:26 / 2:51"
+        ]
+      },
+      {
+        "scene": "validation",
+        "beat": 1,
+        "event": "Site or capacity problem -> correction or manager review",
+        "agentStates": [
+          "held",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.050073357468691015,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 172.2861328125,
+            "bodyWidth": 207.58203125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 97.0224609375,
+            "bodyWidth": 222.642578125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 197.84912109375,
+            "bodyWidth": 265.93359375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "03 / VALIDATION CHECKS FEASIBILITY",
+          "Catch errors before allocation.",
+          "ORDER A / Site or capacity problem -> correction or manager review",
+          "RECEIVED ORDER",
+          "Relevant site facts.",
+          "Approved catalogue.",
+          "VALIDATE",
+          "Check references",
+          "and available capacity.",
+          "STOP AND RESOLVE",
+          "Customer corrects the site.",
+          "Manager reviews capacity.",
+          "VALIDATION / FEASIBILITY ONLY, NO ACTIVATION AUTHORITY",
+          "CHECK THE SITE AND CAPACITY. NEVER INVENT AN APPROVAL.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "HELD",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "HOLD: POLICY / HUMAN REVIEW",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Wrong addresses need customer correction. Missing capacity needs resolution, not an invented approval.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:32 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5450
+  },
+  {
+    "scene": "decomposition",
+    "beat": 0,
+    "event": "order.validated -> decomposition agent",
+    "agentStates": [
+      "done",
+      "active",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999998,
+    "activeAgent": 1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 174.20361328125,
+        "bodyWidth": 241.2587890625,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 169.1689453125,
+        "bodyWidth": 256.115234375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 193.1220703125,
+        "bodyWidth": 201.265625,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "decomposition",
+        "beat": 0,
+        "event": "order.validated -> decomposition agent",
+        "agentStates": [
+          "done",
+          "active",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.04835098950299954,
+        "activeAgent": 1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 174.20361328125,
+            "bodyWidth": 241.2587890625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 169.1689453125,
+            "bodyWidth": 256.115234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 193.1220703125,
+            "bodyWidth": 201.265625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "04 / DECOMPOSITION BUILDS THE PLAN",
+          "Plan once. Keep every task linked.",
+          "ORDER A / order.validated -> decomposition agent",
+          "PRODUCT ORDER",
+          "TMF622-inspired intake.",
+          "Approved catalogue.",
+          "SERVICE ORDERS",
+          "TMF641-inspired services.",
+          "Linked to the product.",
+          "RESOURCE ORDERS",
+          "Ports and IP blocks.",
+          "Same order identity.",
+          "DECOMPOSITION / APPROVED MAPPINGS, NOT EXECUTION",
+          "TM FORUM-INSPIRED CONTRACTS. LINKED WORK. NO REKEYING.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "ACTIVE",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: DECOMPOSITION",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The Decomposition AI Agent creates linked service and resource orders using approved catalogue",
+          "mappings.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:39 / 2:51"
+        ]
+      },
+      {
+        "scene": "decomposition",
+        "beat": 1,
+        "event": "services.planned -> provisioning queued",
+        "agentStates": [
+          "done",
+          "done",
+          "queued",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.054658946394148304,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 174.20361328125,
+            "bodyWidth": 241.2587890625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 169.1689453125,
+            "bodyWidth": 256.115234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 193.1220703125,
+            "bodyWidth": 201.265625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "04 / DECOMPOSITION BUILDS THE PLAN",
+          "Plan once. Keep every task linked.",
+          "ORDER A / services.planned -> provisioning queued",
+          "PRODUCT ORDER",
+          "TMF622-inspired intake.",
+          "Approved catalogue.",
+          "SERVICE ORDERS",
+          "TMF641-inspired services.",
+          "Linked to the product.",
+          "RESOURCE ORDERS",
+          "Ports and IP blocks.",
+          "Same order identity.",
+          "DECOMPOSITION / APPROVED MAPPINGS, NOT EXECUTION",
+          "TM FORUM-INSPIRED CONTRACTS. LINKED WORK. NO REKEYING.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "QUEUED",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "NEXT EVENT QUEUED",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "TM Forum inspired contracts remove rekeying. Planning grants no permission to activate.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:45 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5671
+  },
+  {
+    "scene": "provisioning",
+    "beat": 0,
+    "event": "services.planned -> provisioning agent",
+    "agentStates": [
+      "done",
+      "done",
+      "active",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7500000000000003,
+    "activeAgent": 2,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 183.78076171875,
+        "bodyWidth": 256.5126953125,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 202.01220703125,
+        "bodyWidth": 262.216796875,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 174.32666015625,
+        "bodyWidth": 232.7080078125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "provisioning",
+        "beat": 0,
+        "event": "services.planned -> provisioning agent",
+        "agentStates": [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.03945182997313278,
+        "activeAgent": 2,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.78076171875,
+            "bodyWidth": 256.5126953125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 202.01220703125,
+            "bodyWidth": 262.216796875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 174.32666015625,
+            "bodyWidth": 232.7080078125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "05 / POLICY-GUARDED PROVISIONING",
+          "The boundary checks. Then commits.",
+          "ORDER A / services.planned -> provisioning agent",
+          "AGENT PROPOSAL",
+          "Approved plan and stage.",
+          "No arbitrary allocation.",
+          "BOUNDARY CHECKS",
+          "Capacity, risk and window.",
+          "Identity and revision.",
+          "ATOMIC COMMIT",
+          "Allocate only once.",
+          "Persist result and audit.",
+          "ONLY THE TRUSTED BOUNDARY COMMITS POLICY-VALIDATED CHANGES",
+          "MODELS PROPOSE. POLICY ENFORCES. ALLOCATE ONCE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "ACTIVE",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: PROVISIONING",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The Provisioning AI Agent proposes activation. The boundary rechecks capacity, risk and the change",
+          "window, then allocates once.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:52 / 2:51"
+        ]
+      },
+      {
+        "scene": "provisioning",
+        "beat": 1,
+        "event": "Partner timeout -> fallout.detected",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "queued",
+          "waiting"
+        ],
+        "progress": 0.05869979944235135,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.78076171875,
+            "bodyWidth": 256.5126953125,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 202.01220703125,
+            "bodyWidth": 262.216796875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 180.6328125,
+            "bodyWidth": 190.931640625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "05 / POLICY-GUARDED PROVISIONING",
+          "The boundary checks. Then commits.",
+          "ORDER A / Partner timeout -> fallout.detected",
+          "AGENT PROPOSAL",
+          "Approved plan and stage.",
+          "No arbitrary allocation.",
+          "BOUNDARY CHECKS",
+          "Capacity, risk and window.",
+          "Identity and revision.",
+          "TIMEOUT OR RISK",
+          "Bounded recovery,",
+          "or manager review.",
+          "ONLY THE TRUSTED BOUNDARY COMMITS POLICY-VALIDATED CHANGES",
+          "MODELS PROPOSE. POLICY ENFORCES. ALLOCATE ONCE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "HELD",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "QUEUED",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "HOLD: POLICY / HUMAN REVIEW",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Timeouts wake the Fallout Recovery AI Agent. High-risk work waits for a human decision.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "0:59 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5319
+  },
+  {
+    "scene": "recovery",
+    "beat": 0,
+    "event": "Known timeout -> one allowlisted recovery",
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "active",
+      "waiting"
+    ],
+    "progress": 0.7499999999999991,
+    "activeAgent": 3,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 183.2783203125,
+        "bodyWidth": 262.2275390625,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 126.21533203125,
+        "bodyWidth": 247.19921875,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 123.36474609375,
+        "bodyWidth": 229.2275390625,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": true,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4922,
+    "beatChecks": [
+      {
+        "scene": "recovery",
+        "beat": 0,
+        "event": "Known timeout -> one allowlisted recovery",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "active",
+          "waiting"
+        ],
+        "progress": 0.048945629563159614,
+        "activeAgent": 3,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.2783203125,
+            "bodyWidth": 262.2275390625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 126.21533203125,
+            "bodyWidth": 247.19921875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 123.36474609375,
+            "bodyWidth": 229.2275390625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "06 / BOUNDED RECOVERY",
+          "One known fault. One permitted retry.",
+          "ORDER A / Known timeout -> one allowlisted recovery",
+          "KNOWN TIMEOUT",
+          "Allowlisted fault only.",
+          "No general-purpose tools.",
+          "RETRY ONCE",
+          "One approved playbook.",
+          "No endless loop.",
+          "HAND BACK",
+          "Return to provisioning.",
+          "Never reserve twice.",
+          "RECOVERY / ONE ALLOWLISTED PLAYBOOK, NO APPROVAL AUTHORITY",
+          "ONE ALLOWLISTED RETRY. HAND BACK. NO UNRESTRICTED TOOLS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "HELD",
+          "04",
+          "1/1",
+          "Fallout recovery",
+          "ACTIVE",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: FALLOUT RECOVERY",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The Fallout Recovery Agent retries one allowlisted timeout, then hands control back to the Provisioning",
+          "Agent.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:05 / 2:51"
+        ]
+      },
+      {
+        "scene": "recovery",
+        "beat": 1,
+        "event": "Unknown fault -> service-desk integration required",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "held",
+          "waiting"
+        ],
+        "progress": 0.055139051498036426,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 183.2783203125,
+            "bodyWidth": 262.2275390625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 126.21533203125,
+            "bodyWidth": 247.19921875,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 182.4375,
+            "bodyWidth": 263.033203125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": true,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "06 / BOUNDED RECOVERY",
+          "One known fault. One permitted retry.",
+          "ORDER A / Unknown fault -> service-desk integration required",
+          "KNOWN TIMEOUT",
+          "Allowlisted fault only.",
+          "No general-purpose tools.",
+          "RETRY ONCE",
+          "One approved playbook.",
+          "No endless loop.",
+          "UNKNOWN FAULT",
+          "Escalate to people.",
+          "Integrate the service desk.",
+          "RECOVERY / ONE ALLOWLISTED PLAYBOOK, NO APPROVAL AUTHORITY",
+          "ONE ALLOWLISTED RETRY. HAND BACK. NO UNRESTRICTED TOOLS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "HELD",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "HELD",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "HOLD: POLICY / HUMAN REVIEW",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Other faults require service-desk integration and human ownership, not broader agent authority.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:12 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5425
+  },
+  {
+    "scene": "human",
+    "beat": 0,
+    "event": "Order B / route conflict -> policy.hold",
+    "agentStates": [
+      "done",
+      "done",
+      "held",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7500000000000007,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 195.0498046875,
+        "bodyWidth": 245.91015625,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 238.41357421875,
+        "bodyWidth": 220.9453125,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 113.9619140625,
+        "bodyWidth": 237.7353515625,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 3073,
+    "beatChecks": [
+      {
+        "scene": "human",
+        "beat": 0,
+        "event": "Order B / route conflict -> policy.hold",
+        "agentStates": [
+          "done",
+          "done",
+          "held",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.04400491681603833,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.0498046875,
+            "bodyWidth": 245.91015625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 238.41357421875,
+            "bodyWidth": 220.9453125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 113.9619140625,
+            "bodyWidth": 237.7353515625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "07 / SERVICE-MANAGER IDENTITY",
+          "A named person owns the decision.",
+          "ORDER B / Order B / route conflict -> policy.hold",
+          "PERSONAL SIGN-IN",
+          "Own Microsoft Entra ID.",
+          "Named service manager.",
+          "ROLE-CHECKED ACTION",
+          "Approve or reject risk.",
+          "Record who decided.",
+          "NO BYPASS",
+          "Agents cannot approve.",
+          "Neither can partners.",
+          "PERSONAL ENTRA SIGN-IN / SERVICE MANAGER ROLE / AUDITED DECISIONS",
+          "MANAGER AUTHORITY IS NEVER SHARED WITH AGENTS OR PARTNERS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "HELD",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "HOLD: POLICY / HUMAN REVIEW",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Each service manager signs in with their own Microsoft Entra account. The manager role controls high-risk",
+          "decisions.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:18 / 2:51"
+        ]
+      },
+      {
+        "scene": "human",
+        "beat": 1,
+        "event": "Manager approval -> guarded provisioning",
+        "agentStates": [
+          "done",
+          "done",
+          "active",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.05233391831024272,
+        "activeAgent": 2,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.0498046875,
+            "bodyWidth": 245.91015625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 238.41357421875,
+            "bodyWidth": 220.9453125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 113.9619140625,
+            "bodyWidth": 237.7353515625,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "07 / SERVICE-MANAGER IDENTITY",
+          "A named person owns the decision.",
+          "ORDER B / Manager approval -> guarded provisioning",
+          "PERSONAL SIGN-IN",
+          "Own Microsoft Entra ID.",
+          "Named service manager.",
+          "ROLE-CHECKED ACTION",
+          "Approve or reject risk.",
+          "Record who decided.",
+          "NO BYPASS",
+          "Agents cannot approve.",
+          "Neither can partners.",
+          "PERSONAL ENTRA SIGN-IN / SERVICE MANAGER ROLE / AUDITED DECISIONS",
+          "MANAGER AUTHORITY IS NEVER SHARED WITH AGENTS OR PARTNERS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "ACTIVE",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: PROVISIONING",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Agents and partners cannot approve. Decisions are audited; approval cannot create missing capacity.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:25 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 3594
+  },
+  {
+    "scene": "communication",
+    "beat": 0,
+    "event": "services.activated -> customer update agent",
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "active"
+    ],
+    "progress": 0.7500000000000001,
+    "activeAgent": 4,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 203.4990234375,
+        "bodyWidth": 222.2880859375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 195.08056640625,
+        "bodyWidth": 273.1845703125,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 199.9716796875,
+        "bodyWidth": 245.1474609375,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4924,
+    "beatChecks": [
+      {
+        "scene": "communication",
+        "beat": 0,
+        "event": "services.activated -> customer update agent",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "active"
+        ],
+        "progress": 0.048204386599179895,
+        "activeAgent": 4,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 203.4990234375,
+            "bodyWidth": 222.2880859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.08056640625,
+            "bodyWidth": 273.1845703125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 199.9716796875,
+            "bodyWidth": 245.1474609375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "08 / CUSTOMER UPDATES AND SECURITY",
+          "Truthful status. Authorized access.",
+          "ORDER A / services.activated -> customer update agent",
+          "ACTIVATION RESULT",
+          "Verified service status.",
+          "No false success.",
+          "BILINGUAL UPDATE",
+          "Turkish and English.",
+          "Boundary-controlled email.",
+          "CUSTOMER SIGN-IN",
+          "Check order ownership.",
+          "No anonymous tracking.",
+          "BOUNDARY-ONLY EMAIL / CUSTOMER SIGN-IN AND ORDER OWNERSHIP",
+          "ACTIVATE FIRST. CONFIRM SECOND. SHOW ONLY THE CUSTOMER'S ORDER.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "DONE",
+          "04",
+          "1/1",
+          "Fallout recovery",
+          "DONE",
+          "05",
+          "TR/EN",
+          "Hello!",
+          "Customer updates",
+          "ACTIVE",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "DISPATCH: CUSTOMER UPDATES",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The Customer Updates AI Agent prepares Turkish and English confirmations. Only the boundary sends email.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:32 / 2:51"
+        ]
+      },
+      {
+        "scene": "communication",
+        "beat": 1,
+        "event": "TR / EN portal updates -> order completed",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.041732569349095736,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 203.4990234375,
+            "bodyWidth": 222.2880859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 195.08056640625,
+            "bodyWidth": 273.1845703125,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 199.9716796875,
+            "bodyWidth": 245.1474609375,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "08 / CUSTOMER UPDATES AND SECURITY",
+          "Truthful status. Authorized access.",
+          "ORDER A / TR / EN portal updates -> order completed",
+          "ACTIVATION RESULT",
+          "Verified service status.",
+          "No false success.",
+          "BILINGUAL UPDATE",
+          "Turkish and English.",
+          "Boundary-controlled email.",
+          "CUSTOMER SIGN-IN",
+          "Check order ownership.",
+          "No anonymous tracking.",
+          "BOUNDARY-ONLY EMAIL / CUSTOMER SIGN-IN AND ORDER OWNERSHIP",
+          "ACTIVATE FIRST. CONFIRM SECOND. SHOW ONLY THE CUSTOMER'S ORDER.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "DONE",
+          "04",
+          "1/1",
+          "Fallout recovery",
+          "DONE",
+          "05",
+          "TR/EN",
+          "Hello!",
+          "Customer updates",
+          "DONE",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "MISSION COMPLETE",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Status links require customer sign-in and order ownership. Partner tools remain authenticated and",
+          "organisation-scoped.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:38 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5621
+  },
+  {
+    "scene": "standards",
+    "beat": 0,
+    "event": "Separate Entra agent and runtime identities",
+    "agentStates": [
+      "waiting",
+      "waiting",
+      "waiting",
+      "standby",
+      "waiting"
+    ],
+    "progress": 0.7499999999999992,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 185.11376953125,
+        "bodyWidth": 262.5068359375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 168.78955078125,
+        "bodyWidth": 275.4833984375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 192.68115234375,
+        "bodyWidth": 275.794921875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 3073,
+    "beatChecks": [
+      {
+        "scene": "standards",
+        "beat": 0,
+        "event": "Separate Entra agent and runtime identities",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.040190449141665446,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 185.11376953125,
+            "bodyWidth": 262.5068359375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 168.78955078125,
+            "bodyWidth": 275.4833984375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 192.68115234375,
+            "bodyWidth": 275.794921875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "09 / AGENT IDENTITY AND LEAST PRIVILEGE",
+          "One identity. Only the permitted job.",
+          "Separate Entra agent and runtime identities",
+          "ENTRA IDENTITIES",
+          "Separate hosted agent IDs",
+          "and runtime identities.",
+          "LEAST PRIVILEGE",
+          "Only own project and tools.",
+          "No direct state access.",
+          "API ENFORCEMENT",
+          "Token, caller and operation.",
+          "Model output is a proposal.",
+          "AZURE RBAC + RECEIVING-API ALLOWLISTS / DENY CROSS-ROLE ACCESS",
+          "IDENTITY IS NOT UNLIMITED PERMISSION. ENFORCE THE LIMITS AT THE API.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Every agent has a separate Entra identity. Each runtime reaches only its own project and tools, with no direct",
+          "state access.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:46 / 2:51"
+        ]
+      },
+      {
+        "scene": "standards",
+        "beat": 1,
+        "event": "Exact role + caller + operation / reject excess authority",
+        "agentStates": [
+          "waiting",
+          "waiting",
+          "waiting",
+          "standby",
+          "waiting"
+        ],
+        "progress": 0.04085173136446021,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 185.11376953125,
+            "bodyWidth": 262.5068359375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 168.78955078125,
+            "bodyWidth": 275.4833984375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 192.68115234375,
+            "bodyWidth": 275.794921875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "09 / AGENT IDENTITY AND LEAST PRIVILEGE",
+          "One identity. Only the permitted job.",
+          "Exact role + caller + operation / reject excess authority",
+          "ENTRA IDENTITIES",
+          "Separate hosted agent IDs",
+          "and runtime identities.",
+          "LEAST PRIVILEGE",
+          "Only own project and tools.",
+          "No direct state access.",
+          "API ENFORCEMENT",
+          "Token, caller and operation.",
+          "Model output is a proposal.",
+          "AZURE RBAC + RECEIVING-API ALLOWLISTS / DENY CROSS-ROLE ACCESS",
+          "IDENTITY IS NOT UNLIMITED PERMISSION. ENFORCE THE LIMITS AT THE API.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "WAITING",
+          "02",
+          "Decomposition",
+          "WAITING",
+          "03",
+          "Provisioning",
+          "WAITING",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "STANDBY",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "WAITING",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "AWAITING THE ORDER",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "APIs verify the token, caller and permitted operation. Model output is a proposal, never permission to",
+          "bypass policy.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "1:54 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 3324
+  },
+  {
+    "scene": "residency",
+    "beat": 0,
+    "event": "Production target: approved Turkish operator site",
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "progress": 0.7499999999999996,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 160.0224609375,
+        "bodyWidth": 244.10546875,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 221.853515625,
+        "bodyWidth": 249.025390625,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 215.5576171875,
+        "bodyWidth": 249.8203125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [
+      "azure-local.svg"
+    ],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 4924,
+    "beatChecks": [
+      {
+        "scene": "residency",
+        "beat": 0,
+        "event": "Production target: approved Turkish operator site",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.040906989777342716,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 160.0224609375,
+            "bodyWidth": 244.10546875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 221.853515625,
+            "bodyWidth": 249.025390625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 215.5576171875,
+            "bodyWidth": 249.8203125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "azure-local.svg"
+        ],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "10 / SECURITY AND RESIDENCY",
+          "Protect the data. Mark the target.",
+          "Production target: approved Turkish operator site",
+          "PILOT SECURITY",
+          "HTTPS and private state.",
+          "Scoped identity access.",
+          "AZURE LOCAL TARGET",
+          "Turkish operator site.",
+          "Local data and inference.",
+          "CONTROLLED EGRESS",
+          "Local keys and backups.",
+          "Approve metadata flows.",
+          "TURKIYE PRODUCTION TARGET / CURRENT SYNTHETIC PILOT RUNS IN SWEDEN",
+          "PRIVATE PILOT STATE TODAY. LOCAL PRODUCTION DATA PLANE IS A DELIVERY GATE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "LOCAL",
+          "02",
+          "Decomposition",
+          "LOCAL",
+          "03",
+          "Provisioning",
+          "LOCAL",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "LOCAL",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "LOCAL",
+          "ORCHESTRATION AGENT",
+          "PRODUCTION TARGET",
+          "DELIVERY REQUIREMENTS",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The pilot protects state with private storage and scoped access. The production target places customer data",
+          "and inference in Turkey.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:02 / 2:51"
+        ]
+      },
+      {
+        "scene": "residency",
+        "beat": 1,
+        "event": "Local data, inference, keys and backups / approved egress",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.038477373380583414,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 160.0224609375,
+            "bodyWidth": 244.10546875,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 221.853515625,
+            "bodyWidth": 249.025390625,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 215.5576171875,
+            "bodyWidth": 249.8203125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [
+          "azure-local.svg"
+        ],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "10 / SECURITY AND RESIDENCY",
+          "Protect the data. Mark the target.",
+          "Local data, inference, keys and backups / approved egress",
+          "PILOT SECURITY",
+          "HTTPS and private state.",
+          "Scoped identity access.",
+          "AZURE LOCAL TARGET",
+          "Turkish operator site.",
+          "Local data and inference.",
+          "CONTROLLED EGRESS",
+          "Local keys and backups.",
+          "Approve metadata flows.",
+          "TURKIYE PRODUCTION TARGET / CURRENT SYNTHETIC PILOT RUNS IN SWEDEN",
+          "PRIVATE PILOT STATE TODAY. LOCAL PRODUCTION DATA PLANE IS A DELIVERY GATE.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "LOCAL",
+          "02",
+          "Decomposition",
+          "LOCAL",
+          "03",
+          "Provisioning",
+          "LOCAL",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "LOCAL",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "LOCAL",
+          "ORCHESTRATION AGENT",
+          "PRODUCTION TARGET",
+          "DELIVERY REQUIREMENTS",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Azure Local requires approved infrastructure, local keys and backups, and reviewed metadata flows. The",
+          "synthetic pilot runs in Sweden.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:10 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 5289
+  },
+  {
+    "scene": "hybrid",
+    "beat": 0,
+    "event": "Assign a named business sponsor and technical owner to every agent",
+    "agentStates": [
+      "local",
+      "local",
+      "local",
+      "local",
+      "local"
+    ],
+    "progress": 0.7499999999999988,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 202.77099609375,
+        "bodyWidth": 219.1728515625,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 198.8232421875,
+        "bodyWidth": 276.8583984375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 216.4599609375,
+        "bodyWidth": 267.2548828125,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 2,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 3073,
+    "beatChecks": [
+      {
+        "scene": "hybrid",
+        "beat": 0,
+        "event": "Assign a named business sponsor and technical owner to every agent",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.032004130666465784,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 202.77099609375,
+            "bodyWidth": 219.1728515625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 198.8232421875,
+            "bodyWidth": 276.8583984375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 216.4599609375,
+            "bodyWidth": 267.2548828125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "11 / ACCOUNTABLE AGENT GOVERNANCE",
+          "Name the sponsor. Name the owner.",
+          "Assign a named business sponsor and technical owner to every agent",
+          "BUSINESS SPONSOR",
+          "Approve purpose, risk",
+          "and budget.",
+          "TECHNICAL OWNER",
+          "Test releases and monitor.",
+          "Own incidents and rollback.",
+          "REVIEW AND REVOKE",
+          "Audit and access reviews.",
+          "Alerts; Agent 365 pending.",
+          "PRODUCTION OPERATING MODEL / OWNER ASSIGNMENTS AND ALERTS REQUIRED",
+          "SPONSOR: PURPOSE, RISK, BUDGET. TECHNICAL OWNER: RELEASES AND INCIDENTS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "LOCAL",
+          "02",
+          "Decomposition",
+          "LOCAL",
+          "03",
+          "Provisioning",
+          "LOCAL",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "LOCAL",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "LOCAL",
+          "ORCHESTRATION AGENT",
+          "PRODUCTION TARGET",
+          "DELIVERY REQUIREMENTS",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "For production, assign every agent a named business sponsor and technical owner. The sponsor approves",
+          "purpose, risk and budget; the owner controls releases and incidents.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:18 / 2:51"
+        ]
+      },
+      {
+        "scene": "hybrid",
+        "beat": 1,
+        "event": "Access reviews, alerts, revocation / Agent 365 registration pending",
+        "agentStates": [
+          "local",
+          "local",
+          "local",
+          "local",
+          "local"
+        ],
+        "progress": 0.028889209880110022,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 202.77099609375,
+            "bodyWidth": 219.1728515625,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 198.8232421875,
+            "bodyWidth": 276.8583984375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 216.4599609375,
+            "bodyWidth": 267.2548828125,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 2,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "11 / ACCOUNTABLE AGENT GOVERNANCE",
+          "Name the sponsor. Name the owner.",
+          "Access reviews, alerts, revocation / Agent 365 registration pending",
+          "BUSINESS SPONSOR",
+          "Approve purpose, risk",
+          "and budget.",
+          "TECHNICAL OWNER",
+          "Test releases and monitor.",
+          "Own incidents and rollback.",
+          "REVIEW AND REVOKE",
+          "Audit and access reviews.",
+          "Alerts; Agent 365 pending.",
+          "PRODUCTION OPERATING MODEL / OWNER ASSIGNMENTS AND ALERTS REQUIRED",
+          "SPONSOR: PURPOSE, RISK, BUDGET. TECHNICAL OWNER: RELEASES AND INCIDENTS.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "LOCAL",
+          "02",
+          "Decomposition",
+          "LOCAL",
+          "03",
+          "Provisioning",
+          "LOCAL",
+          "04",
+          "RETRY",
+          "Fallout recovery",
+          "LOCAL",
+          "05",
+          "TR/EN",
+          "Customer updates",
+          "LOCAL",
+          "ORCHESTRATION AGENT",
+          "PRODUCTION TARGET",
+          "DELIVERY REQUIREMENTS",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Use audit trails, access reviews, alerts and identity revocation. Agent 365 registration remains pending;",
+          "authorization already enforces the limits.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:28 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 3066
+  },
+  {
+    "scene": "impact",
+    "beat": 0,
+    "event": "Early checks + durable handoffs + bounded recovery",
+    "agentStates": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "done"
+    ],
+    "progress": 0.7499999999999999,
+    "activeAgent": -1,
+    "tower": {
+      "x": 1430,
+      "y": 180,
+      "width": 433,
+      "height": 761
+    },
+    "avatars": [
+      {
+        "role": "Validation",
+        "character": "Inspector",
+        "signature": "owl ears, checklist and magnifying glass"
+      },
+      {
+        "role": "Decomposition",
+        "character": "Architect",
+        "signature": "hard hat, blueprint and orbiting blocks"
+      },
+      {
+        "role": "Provisioning",
+        "character": "Cable crew",
+        "signature": "tall cyclops, wrench and connector arms"
+      },
+      {
+        "role": "Fallout recovery",
+        "character": "Rescue mechanic",
+        "signature": "round rescue ring and retry toolbox"
+      },
+      {
+        "role": "Customer updates",
+        "character": "Messenger",
+        "signature": "headset, paper plane and bilingual bubbles"
+      }
+    ],
+    "cardBounds": [
+      {
+        "x": 58,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 140.91943359375,
+        "bodyWidth": 177.6005859375,
+        "fontSize": 22
+      },
+      {
+        "x": 474,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 173.82421875,
+        "bodyWidth": 216.8740234375,
+        "fontSize": 22
+      },
+      {
+        "x": 890,
+        "y": 191,
+        "width": 320,
+        "height": 176,
+        "headingWidth": 218.61328125,
+        "bodyWidth": 269.8544921875,
+        "fontSize": 22
+      }
+    ],
+    "officialIcons": [],
+    "humanException": false,
+    "captionLines": 1,
+    "presetNarrator": true,
+    "distinctVoice": true,
+    "changedPixels": 8346,
+    "beatChecks": [
+      {
+        "scene": "impact",
+        "beat": 0,
+        "event": "Early checks + durable handoffs + bounded recovery",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.06843971145817883,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 140.91943359375,
+            "bodyWidth": 177.6005859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 173.82421875,
+            "bodyWidth": 216.8740234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 218.61328125,
+            "bodyWidth": 269.8544921875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "12 / CUSTOMER VALUE WITH GOVERNANCE",
+          "Faster progress. Controlled authority.",
+          "Early checks + durable handoffs + bounded recovery",
+          "LESS REWORK",
+          "Validate early.",
+          "Keep tasks linked.",
+          "SAFER PROGRESS",
+          "Bounded actions.",
+          "Human risk decisions.",
+          "ACCOUNTABLE VALUE",
+          "Visible customer status.",
+          "Review outcomes and cost.",
+          "BUSINESS OBJECTIVES / NOT MEASURED CARRIER RESULTS",
+          "FASTER DELIVERY WITHOUT GIVING AGENTS MORE AUTHORITY THAN THEIR JOB.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "DONE",
+          "04",
+          "1/1",
+          "Fallout recovery",
+          "DONE",
+          "05",
+          "TR/EN",
+          "Merhaba!",
+          "Customer updates",
+          "DONE",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "MISSION COMPLETE",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "Early validation, linked work and bounded recovery reduce avoidable waiting.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:39 / 2:51"
+        ]
+      },
+      {
+        "scene": "impact",
+        "beat": 1,
+        "event": "Named people + scoped identities + auditable decisions",
+        "agentStates": [
+          "done",
+          "done",
+          "done",
+          "done",
+          "done"
+        ],
+        "progress": 0.046952324609594316,
+        "activeAgent": -1,
+        "tower": {
+          "x": 1430,
+          "y": 180,
+          "width": 433,
+          "height": 761
+        },
+        "avatars": [
+          {
+            "role": "Validation",
+            "character": "Inspector",
+            "signature": "owl ears, checklist and magnifying glass"
+          },
+          {
+            "role": "Decomposition",
+            "character": "Architect",
+            "signature": "hard hat, blueprint and orbiting blocks"
+          },
+          {
+            "role": "Provisioning",
+            "character": "Cable crew",
+            "signature": "tall cyclops, wrench and connector arms"
+          },
+          {
+            "role": "Fallout recovery",
+            "character": "Rescue mechanic",
+            "signature": "round rescue ring and retry toolbox"
+          },
+          {
+            "role": "Customer updates",
+            "character": "Messenger",
+            "signature": "headset, paper plane and bilingual bubbles"
+          }
+        ],
+        "cardBounds": [
+          {
+            "x": 58,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 140.91943359375,
+            "bodyWidth": 177.6005859375,
+            "fontSize": 22
+          },
+          {
+            "x": 474,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 173.82421875,
+            "bodyWidth": 216.8740234375,
+            "fontSize": 22
+          },
+          {
+            "x": 890,
+            "y": 191,
+            "width": 320,
+            "height": 176,
+            "headingWidth": 218.61328125,
+            "bodyWidth": 269.8544921875,
+            "fontSize": 22
+          }
+        ],
+        "officialIcons": [],
+        "humanException": false,
+        "captionLines": 1,
+        "presetNarrator": true,
+        "distinctVoice": true,
+        "visibleText": [
+          "T\u00fcrkBizTel / MISSION: ACTIVATE",
+          "IDENTITY & GOVERNANCE",
+          "12 / CUSTOMER VALUE WITH GOVERNANCE",
+          "Faster progress. Controlled authority.",
+          "Named people + scoped identities + auditable decisions",
+          "LESS REWORK",
+          "Validate early.",
+          "Keep tasks linked.",
+          "SAFER PROGRESS",
+          "Bounded actions.",
+          "Human risk decisions.",
+          "ACCOUNTABLE VALUE",
+          "Visible customer status.",
+          "Review outcomes and cost.",
+          "BUSINESS OBJECTIVES / NOT MEASURED CARRIER RESULTS",
+          "FASTER DELIVERY WITHOUT GIVING AGENTS MORE AUTHORITY THAN THEIR JOB.",
+          "01",
+          "\u2713",
+          "\u2713",
+          "\u2713",
+          "Validation",
+          "DONE",
+          "02",
+          "Decomposition",
+          "DONE",
+          "03",
+          "Provisioning",
+          "DONE",
+          "04",
+          "1/1",
+          "Fallout recovery",
+          "DONE",
+          "05",
+          "TR/EN",
+          "Hello!",
+          "Customer updates",
+          "DONE",
+          "ORCHESTRATION AGENT",
+          "GUARDED SUPERVISOR",
+          "MISSION COMPLETE",
+          "One persisted handoff at a time.",
+          "No unlimited AI execution authority.",
+          "The objective: faster activation with visible status, named accountability, and no excess agent authority.",
+          "SYNTHETIC PILOT / PRODUCTION GATES MARKED",
+          "DISTINCT NEURAL NARRATOR / GENERATED LOCALLY",
+          "2:44 / 2:51"
+        ]
+      }
+    ],
+    "encodedChangedPixels": 9671
+  }
+]

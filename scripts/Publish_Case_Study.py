@@ -8,8 +8,8 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = ROOT / "app" / "static"
 DEST = STATIC / "case-study"
-RELEASE = "turkbiztel-case-study-2026-11-24"
-BUNDLE = "TurkBizTel-Case-Study-2026-11-24.zip"
+RELEASE = "turkbiztel-case-study-2026-11-27-proposal"
+BUNDLE = "TurkBizTel-Case-Study-2026-11-27-Proposal.zip"
 
 
 def main():
@@ -17,7 +17,8 @@ def main():
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     sources = {}
     for row in manifest["files"]:
-        name = row["file"]
+        name = row["file"].replace("solution-tower-v6", "solution-tower-v8").replace(
+            "solution-tower-v7", "solution-tower-v8")
         if name == "README.md":
             source = ROOT / name
         elif name.startswith("guides/"):
@@ -30,9 +31,11 @@ def main():
     for pattern in ("slide-*.webp", "thumb-*.webp"):
         sources.update((path.name, path) for path in sorted(DEST.glob(pattern)))
     for name in ("case-study.html", "case-study.css", "case-study.js", "current-scenario-turkbiztel-poster.jpg",
-                 "journey-data.json", "solution-tower-v6-turkbiztel-poster.jpg", "solution-tower-v6-data.json"):
+                 "journey-data.json", "solution-tower-v8-turkbiztel-poster.jpg", "solution-tower-v8-data.json",
+                 "solution-tower-v8.html", "solution-tower-v8-transcript.txt"):
         sources[name] = STATIC / name
     sources["guides/FOUNDRY-SSO-APP.md"] = ROOT / "docs" / "FOUNDRY-SSO-APP.md"
+    sources["guides/AGENT365-STATUS.md"] = ROOT / "docs" / "AGENT365-STATUS.md"
     for extension in ("pptx", "pdf"):
         name = f"TurkBizTel-Foundry-Model-Economics.{extension}"
         content = (ROOT / "docs" / "presentations" / name).read_bytes()
@@ -40,10 +43,13 @@ def main():
         sources[name] = DEST / name
     manifest.update(
         release=RELEASE,
-        githubRelease=manifest["github"] + "/releases/tag/" + RELEASE,
         bundle=BUNDLE,
         architectureRevision="2026-11-24-governed-production-target-19-slides",
+        solutionFilmRevision="2026-11-27-customer-proposal",
+        solutionFilmScope="Customer proposal; runbooks separately document the running application.",
+        solutionFilm=manifest["ssoApp"] + "/static/solution-tower-v8.mp4",
     )
+    manifest.pop("githubRelease", None)
     manifest["files"] = []
     for name, source in sources.items():
         content = source.read_bytes()

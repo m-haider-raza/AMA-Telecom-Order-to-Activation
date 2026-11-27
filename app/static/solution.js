@@ -161,7 +161,7 @@
     const p = progress(f), t = f.local, second = f.beat > 0;
     switch (f.scene.id) {
       case "opening":
-        person(140, 257, "CUSTOMER", "Demo Marmara Logistics", t);
+        person(140, 257, "CUSTOMER", f.scene.customerLabel || "Demo Marmara Logistics", t);
         laptop(240, 278, t);
         building(1035, 227, "TürkBizTel");
         arrow([[410, 320], [1000, 320]], C.blue);
@@ -172,7 +172,8 @@
         packet([[420, 320], [950, 320]], p, "ORDER A");
         box(500, 372, 213, 72, "#ffffff", "#ffffff", 8);
         ctx.drawImage(logo, 518, 382, 176, 60);
-        wrap("Turkish industry context only. No affiliation or live integration.", 741, 395, 400, 16, C.muted, 23);
+        wrap(f.scene.industryContextLabel || "Turkish industry context only. No affiliation or live integration.",
+          741, 395, 400, 16, C.muted, 23);
         banner(f.scene.banner || "Follow A / timeout recovery     |     B / human-review branch     |     C / partner intake");
         break;
       case "intake":

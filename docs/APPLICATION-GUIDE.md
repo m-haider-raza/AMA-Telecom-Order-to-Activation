@@ -49,7 +49,7 @@ existing sign-ins; they are compatibility identifiers, not public branding.
 | Intro | The case study, the story in one sentence, the headline numbers and the five stops |
 | 1 Today | The latest current-state film, `current-scenario.mp4` (1 min 51 s), with chapters, captions and a transcript |
 | 2 Architecture | The 16-slide architecture deck, including two market-research slides on where public B2B telecom orders stall and drop out (slides 3 and 10) and the cost of implementation (slide 15), as an interactive viewer (arrow keys, swipe, filmstrip, full screen), with the PowerPoint and a PDF to download |
-| 3 Solution | The customer solution film, `solution-tower-v6.mp4` (2 min 56 s), using the current-state film's British-English male narrator, introducing each AI agent once and using shorter agent names afterward, with chapters, captions and a transcript |
+| 3 Solution | The customer-proposal film, `solution-tower-v8.mp4` (2 min 45 s), retaining the British-English male narrator, introducing AI-powered agents once and then using agent names; Entra identities, least privilege, personal manager sign-in, sponsor/owner responsibilities and Agent 365 governance are explained with synchronized chapters, captions and transcript |
 | 4 Live App Demo | The 2:28 login-to-activation film (`app-walkthrough.mp4`) opens on the shared customer/partner `/login` screen, then follows **Staff sign in** to Microsoft SSO and access-token options. It retains customer service selection/contact preferences and approval, partner deliveries/payment status/order-linked concerns, and customer activation tracking and milestone updates. Service administration remains about two thirds of the film, covering enterprise requests, partner setup, exceptions, agent workspaces, Analytics and audit; detailed queue, billing and benchmark sections are omitted. The same George narrator speaks at normal speed, with seven chapter jumps, captions below the app and a transcript. Only public sign-in screens come from the live app; workflows use locally captured synthetic fixtures, with no actual Microsoft sign-in, hosted inference or carrier execution |
 | 5 Live App | Try the running app: sign in, place or track an order, or enter the service-team console. The embedded app loads only when this chapter is opened |
 
@@ -63,7 +63,7 @@ outbound email, or create orders in the deployed app. The unchanged full tour sh
 Move with **Start the journey**, the chapter rail or the *Next* and *Back* buttons, with ← → (slides inside the deck, chapters elsewhere), **1**–**5** to jump to a chapter and **F** for full screen on the deck. Every chapter and slide has a link you can share: `/case-study#/today`, `#/architecture/7`, `#/solution`, `#/demo`, `#/app`. Existing `#/app` links still open the interactive app.
 
 - **Self-contained.** Films, captions, slide images and downloads are all served by the app from `app/static/` and `app/static/case-study/`; there are no third-party scripts, fonts or images, and the page follows the same strict content-security policy as the rest of the site (no inline script or style). Films load only when their chapter is opened and never start by themselves.
-- **Current release download.** The 24 November bundle linked from the story contains the same latest videos, 19-slide target architecture and previews, captions, transcripts and current guides. Rebuild it with `python scripts/Publish_Case_Study.py` after updating those sources; the script refreshes `artefacts.json` and `SHA256SUMS.txt` and verifies every archived file. Older dated bundles remain unchanged.
+- **Current artifact download.** The 27 November Proposal bundle includes the new customer-proposal film, unchanged app tour and 19-slide target architecture, matching previews, captions, transcripts and current guides. Rebuild it with `python scripts/Publish_Case_Study.py`; the script refreshes `artefacts.json` and `SHA256SUMS.txt` and verifies every archived file. Earlier bundles remain unchanged; this artifact update does not create a new GitHub release.
 - **Framing.** The live-app chapter shows the app in a frame, so the site sends `X-Frame-Options: SAMEORIGIN` and `frame-ancestors 'self'` on every page: only this origin may frame it.
 - **Service-team entry.** Select **Service team sign-in** above the embedded app, or open `/login#staff` directly. The token option also appears above the email fields on the normal sign-in form. The frame's **Open in a new tab** link preserves that panel; each tab still signs in separately. On a single sign-on deployment the page asks the app which sign-in it uses and describes the entry that is really there: **Sign in with your Microsoft work account**.
 - **No credentials.** The page never shows a token or a password. Partner and service-team sign-in details are shared with the submission, not published on the page.
@@ -118,8 +118,32 @@ existing target or supported hardware and deployment prerequisites.
 
 ## Five-minute presentation
 
-For the **latest customer solution with first-mention AI-agent introductions**, open
-**http://localhost:8000/static/solution-tower-v6.html**. The narrator explicitly says
+For the **latest customer-proposal solution**, open
+**http://localhost:8000/static/solution-tower-v8.html**. It retains the British-English
+male `bm_george` voice, 1.08x local synthesis and pitch-preserving 1.20x delivery,
+without extending the film beyond three minutes. It explains separate hosted
+Entra agent IDs and runtime managed identities, personal service-manager sign-in,
+scoped tools/projects and receiving-API enforcement. Only the trusted boundary
+commits state and sends email; customer status links require sign-in and ownership.
+It introduces AI-powered agents once, then uses agent names. Agent 365 is presented
+as part of the proposed agent-governance solution, with inventory, ownership
+visibility and oversight alongside access reviews, audit, alerts and revocation.
+The narration, graphic overlays and player use customer-proposal framing, without
+demonstrator-data or deployment-status commentary. This film revision does not
+change the running application's identities, agent registration or governance setup.
+Source: `scripts/film3d/tower-proposal-story.json`. Synthesize with
+`Synthesize_Preset.py --voice bm_george --speed 1.08`, then use `Render_Crisp.py`
+with that `--story`, the matching `--narration-dir` and a fresh `--edition`.
+Brand with `Rebrand_Media.py --edition`, then rebuild the current case-study bundle
+with `Publish_Case_Study.py`. The standalone player, story chapter jumps,
+captions and transcript must use the same revised timing.
+The existing v6/v7 public link families resolve to v8 so old players do not combine
+new speech with old captions. Prior branded MP4s and bundles remain archived.
+The original v7 identity/governance film is `/static/solution-tower-v7-turkbiztel.mp4`,
+with its preserved `tower-governance-story.json` source.
+
+For the **archived first-mention-only AI-agent film**, open
+**http://localhost:8000/static/solution-tower-v6-turkbiztel.mp4**. The narrator explicitly says
 Orchestration AI Agent, Validation AI Agent, Decomposition AI Agent,
 Provisioning AI Agent, Fallout Recovery AI Agent and Customer Updates AI Agent
 on each role's first mention, then uses the shorter names such as
@@ -130,7 +154,8 @@ Its source is `scripts/film3d/tower-first-mention-story.json`; synthesize with
 `Synthesize_Preset.py --voice bm_george --speed 1.08`, render with `Render_Crisp.py`
 and that `--story`, then brand the new edition with `Rebrand_Media.py --edition`.
 The script selects pitch-preserving 1.20x delivery to keep the fuller names
-within three minutes. The standalone player and case-study embed use the same film.
+within three minutes. The archived 24 November bundle retains that film;
+the current standalone player and case-study embed use v8.
 The previous full-name-on-every-reference edition, `solution-tower-v5.html`,
 and its `tower-ai-agent-story.json` source remain unchanged.
 

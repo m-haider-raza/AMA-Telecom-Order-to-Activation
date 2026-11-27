@@ -149,7 +149,7 @@ def test_page_carries_no_credentials_or_local_paths():
 def test_every_file_the_page_uses_is_served(site):
     paths = static_paths()
     assert {"/static/case-study.css", "/static/case-study.js", "/static/current-scenario.mp4",
-            "/static/solution-tower-v6.mp4", "/static/case-study/slide-16.webp"} <= set(paths)
+            "/static/solution-tower-v8.mp4", "/static/case-study/slide-16.webp"} <= set(paths)
     for path in paths:
         reply = site.get(path, headers={"Range": "bytes=0-0"})
         assert reply.status_code in (200, 206), path
@@ -175,7 +175,10 @@ def test_script_and_markup_agree():
         assert f".{name}" in STYLES, name
 
 
-@pytest.mark.parametrize("name", ["current-scenario.mp4", "solution-tower-v6.mp4", "app-walkthrough.mp4"])
+@pytest.mark.parametrize("name", [
+    "current-scenario.mp4", "solution-tower-v6.mp4", "solution-tower-v7.mp4",
+    "solution-tower-v8.mp4", "app-walkthrough.mp4",
+])
 def test_films_can_be_seeked(site, name):
     reply = site.get(f"/static/{name}", headers={"Range": "bytes=100-199"})
     assert reply.status_code == 206
@@ -183,7 +186,10 @@ def test_films_can_be_seeked(site, name):
     assert reply.headers["content-type"] == "video/mp4" and len(reply.content) == 100
 
 
-@pytest.mark.parametrize("name", ["current-scenario.vtt", "solution-tower-v6.vtt", "app-walkthrough.vtt"])
+@pytest.mark.parametrize("name", [
+    "current-scenario.vtt", "solution-tower-v6.vtt", "solution-tower-v7.vtt",
+    "solution-tower-v8.vtt", "app-walkthrough.vtt",
+])
 def test_narration_is_served_as_webvtt(site, name):
     reply = site.get(f"/static/{name}")
     assert reply.status_code == 200 and reply.headers["content-type"].startswith("text/vtt")
@@ -192,7 +198,7 @@ def test_narration_is_served_as_webvtt(site, name):
 
 @pytest.mark.parametrize("scene,film,data", [
     ("today", "current-scenario", "journey-data.json"),
-    ("solution", "solution-tower-v6", "solution-tower-v6-data.json"),
+    ("solution", "solution-tower-v8", "solution-tower-v8-data.json"),
 ])
 def test_film_sources_and_chapter_jumps_match_the_latest_narration(scene, film, data):
     page = inventory()
@@ -207,6 +213,8 @@ def test_film_sources_and_chapter_jumps_match_the_latest_narration(scene, film, 
         starts.append(position)
         position += chapter["duration"]
     assert page.chapters[scene] == pytest.approx(starts, abs=.001)
+    card = re.search(rf'<a class="stop-card" href="#/{scene}".*?</a>', HTML, re.S).group()
+    assert f"Film · {int(position) // 60} min {int(position) % 60} s" in card
 
 
 def test_service_team_signin_is_a_direct_entry_in_the_live_app(site):
@@ -226,6 +234,8 @@ def test_app_tour_bridges_the_solution_and_interactive_app():
     }
     story = json.loads((STATIC / "app-walkthrough-data.json").read_text(encoding="utf-8"))
     assert page.chapters["demo"] == pytest.approx([chapter["start"] for chapter in story["chapters"]], abs=.001)
+    card = re.search(r'<a class="stop-card" href="#/demo".*?</a>', HTML, re.S).group()
+    assert f"Tour · {int(story['duration']) // 60} min {int(story['duration']) % 60} s" in card
     assert HTML.index('id="scene-solution"') < HTML.index('id="film-app"') < HTML.index('id="app-frame"')
     assert 'data-vtt="/static/app-walkthrough.vtt"' in HTML
     assert "Provisioning and payments are simulated" in HTML
@@ -246,7 +256,7 @@ def test_app_demo_and_live_app_are_separate_connected_steps():
 
 def test_current_bundle_matches_the_story_videos_and_architecture():
     manifest = json.loads((DECK / "artefacts.json").read_text(encoding="utf-8"))
-    assert manifest["release"] == "turkbiztel-case-study-2026-11-24"
+    assert manifest["release"] == "turkbiztel-case-study-2026-11-27-proposal"
     assert manifest["bundle"] in HTML
     with zipfile.ZipFile(DECK / manifest["bundle"]) as archive:
         for row in manifest["files"]:
@@ -256,7 +266,7 @@ def test_current_bundle_matches_the_story_videos_and_architecture():
             if Path(row["file"]).suffix in {".md", ".html", ".css", ".js", ".json", ".vtt", ".txt"}:
                 assert b"\r\n" not in content
         for name in ("app-walkthrough.mp4", "app-walkthrough.vtt", "app-walkthrough-data.json",
-                     "current-scenario-turkbiztel.mp4", "solution-tower-v6-turkbiztel.mp4"):
+                     "current-scenario-turkbiztel.mp4", "solution-tower-v8-turkbiztel.mp4"):
             assert archive.read(name) == (STATIC / name).read_bytes()
         for name in (PPTX.name, PDF.name, "slide-07.webp", "slide-19.webp"):
             assert archive.read(name) == (DECK / name).read_bytes()

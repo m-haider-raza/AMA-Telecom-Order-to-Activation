@@ -1,7 +1,6 @@
 {
-  "release": "turkbiztel-case-study-2026-11-24",
+  "release": "turkbiztel-case-study-2026-11-27-proposal",
   "github": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation",
-  "githubRelease": "https://github.com/m-haider-raza/AMA-Telecom-Order-to-Activation/releases/tag/turkbiztel-case-study-2026-11-24",
   "caseStudy": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study",
   "appHighlights": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/case-study#/demo",
   "appHighlightsRevision": "2026-11-24-ai-agent-workspaces",
@@ -28,14 +27,14 @@
       "sha256": "504730391b89e1b8b354de7ab081e49fa6bd5d73477659a81a193274d71ca63e"
     },
     {
-      "file": "solution-tower-v6-turkbiztel.mp4",
-      "bytes": 25049626,
-      "sha256": "60eb6d5ee5ea1876c2e62121042c4d9c2a1fe4947d9106c1a1f12447602b7ed7"
+      "file": "solution-tower-v8-turkbiztel.mp4",
+      "bytes": 23524288,
+      "sha256": "f5ef77e09b7bcc6c7c5744d59b4862b89d4b49a61cc60c53bf57c07bc83fede1"
     },
     {
-      "file": "solution-tower-v6.vtt",
-      "bytes": 3590,
-      "sha256": "d4fb66f94f1ca78b3a75999253e141ac9ce46ce64507d42ef11b5b246e0cfb96"
+      "file": "solution-tower-v8.vtt",
+      "bytes": 3353,
+      "sha256": "b1d72e36b944d3b8f7ba63ac689093bb2cf05b73a9d230f6221cb883feb593af"
     },
     {
       "file": "app-walkthrough.mp4",
@@ -104,18 +103,18 @@
     },
     {
       "file": "README.md",
-      "bytes": 46176,
-      "sha256": "50a3e6f3e350a32169eb74545b099b013db6e9ca683a418e06ca33869ce0c695"
+      "bytes": 50275,
+      "sha256": "2585077e7d052ee33cf0aa582b0f05bb9492b87eef5b9063e439feeb80b3edcb"
     },
     {
       "file": "guides/APPLICATION-GUIDE.md",
-      "bytes": 84202,
-      "sha256": "9fa64df6ce4591555a35d6a2001ae45f659f22da64a852b6635af253012803cd"
+      "bytes": 88273,
+      "sha256": "ece8992fe2363daaaeaf4c0438041b41a0bbbae2736d58c70ada9bb8bef9c36c"
     },
     {
       "file": "guides/azure-architecture.md",
-      "bytes": 21392,
-      "sha256": "8e528b4d8c29b7cb68e04ec081ddcf758ba90af823806d4e83764d41dce18da7"
+      "bytes": 16851,
+      "sha256": "2db3e81f5b21071adef6227d3b07c5a5db111f0dc235932dfec7d0884b27026b"
     },
     {
       "file": "guides/PRODUCTION.md",
@@ -329,8 +328,8 @@
     },
     {
       "file": "case-study.html",
-      "bytes": 56883,
-      "sha256": "c638adc8c19ab63e9506e5bdc3189e49d9ebe7a1c97d3866d3903849648d8974"
+      "bytes": 57212,
+      "sha256": "927f5d8c480d57909031e22b0e376ac962e6852848cc3bbc605f9c494f556aa0"
     },
     {
       "file": "case-study.css",
@@ -353,19 +352,19 @@
       "sha256": "285e9b061f2d1384c399e85bf0422afb32b560489c8f5031064c380e0bb08a36"
     },
     {
-      "file": "solution-tower-v6-turkbiztel-poster.jpg",
-      "bytes": 261312,
-      "sha256": "522db91f0a018918ece8e351e484dce3d6a1f364bd5039d4726ae9e622be4596"
+      "file": "solution-tower-v8-turkbiztel-poster.jpg",
+      "bytes": 259234,
+      "sha256": "8ab4646589c9f444f91817906a5d4bb7bd4a7a8c2a32422ffcdbf2bb91fde36b"
     },
     {
-      "file": "solution-tower-v6-data.json",
-      "bytes": 24926,
-      "sha256": "9f85b2a074cc58544ffa58a3d61e61b8d74e792e814a427524271e1dab8fb212"
+      "file": "solution-tower-v8-data.json",
+      "bytes": 25016,
+      "sha256": "841fd450627ffbf45f044e902074b06b764e9df9b8f70cf0c8bf2578d61017e1"
     },
     {
       "file": "guides/FOUNDRY-SSO-APP.md",
-      "bytes": 11361,
-      "sha256": "2988e7fb5c1eae167eae0bfd4d48eb0d501b90c6be81c09fe070026cb50248fd"
+      "bytes": 14537,
+      "sha256": "f3de7adc17b855465938f41e4ae0c80620a1e285f3cd369aa5173754654fad50"
     },
     {
       "file": "TurkBizTel-Foundry-Model-Economics.pptx",
@@ -376,8 +375,26 @@
       "file": "TurkBizTel-Foundry-Model-Economics.pdf",
       "bytes": 116611,
       "sha256": "71ea809761254d56c24b3e54cf99f6d8b782fa3f6f47350467ffd15ce5ad1697"
+    },
+    {
+      "file": "solution-tower-v8.html",
+      "bytes": 3400,
+      "sha256": "51f9f49c292954c339bb16cd9449ba8d25ea4536f3c141d3378a46dc25f052b2"
+    },
+    {
+      "file": "solution-tower-v8-transcript.txt",
+      "bytes": 3058,
+      "sha256": "48fec5dc5379c9981a2051d4e5eff5b5a6c288d12253d3b1dc197bf9e56dc8bc"
+    },
+    {
+      "file": "guides/AGENT365-STATUS.md",
+      "bytes": 5488,
+      "sha256": "58dfae5e5c3240af6498c6298d780557baf524cbf89979677548603ad9e5c9d3"
     }
   ],
-  "bundle": "TurkBizTel-Case-Study-2026-11-24.zip",
-  "architectureRevision": "2026-11-24-governed-production-target-19-slides"
+  "bundle": "TurkBizTel-Case-Study-2026-11-27-Proposal.zip",
+  "architectureRevision": "2026-11-24-governed-production-target-19-slides",
+  "solutionFilmRevision": "2026-11-27-customer-proposal",
+  "solutionFilm": "https://amai-boundary-qwc6ymcrjozog.mangosand-20d8d735.swedencentral.azurecontainerapps.io/static/solution-tower-v8.mp4",
+  "solutionFilmScope": "Customer proposal; runbooks separately document the running application."
 }
